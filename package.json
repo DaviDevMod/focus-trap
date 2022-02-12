@@ -74,5 +74,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "tabbable": "^5.2.1"
   }
 }
