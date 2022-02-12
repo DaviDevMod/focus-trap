@@ -1,0 +1,53 @@
+.give_choice {
+  width: min(84vw, 36rem);
+  color: #d5dbdb;
+  border: none;
+}
+
+.give_choice > legend {
+  font-size: larger;
+  line-height: 1.5em;
+}
+
+.options > label {
+  text-indent: calc(-1em - 5px);
+  line-height: 1.5em;
+  font-weight: bold;
+  display: block;
+  margin: 1rem 0;
+  margin-left: calc(1em + 5px);
+}
+
+.options > label > input {
+  position: relative;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  border-radius: 6px;
+  border: 2px dotted #999;
+  margin-right: 5px;
+  transition: 0.2s all linear;
+}
+
+.blue_pill:checked {
+  border: 6px solid #3498db;
+}
+
+.red_pill:checked {
+  border: 6px solid #e74c3c;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+
+.actions > button {
+  padding: 0.75rem 1.5rem;
+}
+
+.actions > button:first-of-type {
+  margin-right: 1rem;
+}
