@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "prestart": "rm -r .parcel-cache",
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
@@ -18,7 +19,7 @@
   "devDependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
-    "parcel": "^1.12.3",
+    "parcel": "^2.3.1",
     "typescript": "^3.4.5"
   }
 }
