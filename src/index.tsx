@@ -84,9 +84,16 @@ function useSimpleFocusTrap(
       // Handler for keybord events.
       const keyboardNavigationHandler = (event: KeyboardEvent) => {
         if (event.key === 'Tab' || event.keyCode === 9) {
+          // Little helper funciton.
+          const forceFocusFromAtoB = (a: FocusableElementRef, b: FocusableElementRef) => {
+            if (document.activeElement === a) {
+              event.preventDefault();
+              b!.focus();
+            }
+          };
           event.shiftKey
-            ? document.activeElement === firstTabbable && (lastTabbable!.focus(), event.preventDefault())
-            : document.activeElement === lastTabbable && (firstTabbable!.focus(), event.preventDefault());
+            ? forceFocusFromAtoB(firstTabbable, lastTabbable)
+            : forceFocusFromAtoB(lastTabbable, firstTabbable);
         } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
           if (!escaper) return;
           const { keepTrap, custom, identifier, beGentle } = escaper;
