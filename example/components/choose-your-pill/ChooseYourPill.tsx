@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './ChooseYourPill.css';
 import { PillChoice } from '../../types';
-import { TrapConfig } from '../../../src/types';
+import { TrapConfig } from '../../../src';
 import Modal from '../UI/modal/Modal';
 
 interface Props {

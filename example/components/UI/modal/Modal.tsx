@@ -2,8 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import './Modal.css';
-import { TrapConfig } from '../../../../src/types';
-import useFocusTrap from '../../../../src';
+import { useSimpleFocusTrap, TrapConfig } from '../../../../src';
 
 interface BackdropProps {
   onClose: () => void;
@@ -33,7 +32,7 @@ const ModalOverlay = (props: ModalOverlayProps) => {
 };
 
 function Modal(props: ModalProps) {
-  useFocusTrap(props.trapConfig);
+  useSimpleFocusTrap(props.trapConfig);
   const portalElement = React.useRef<HTMLElement | null>();
 
   portalElement.current = document.getElementById(props.rootId);

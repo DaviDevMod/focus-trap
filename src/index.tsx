@@ -1,16 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { tabbable, isFocusable, CheckOptions } from 'tabbable';
+import { tabbable, isFocusable, TabbableOptions, CheckOptions } from 'tabbable';
 
-import {
-  TrapConfig,
-  FocusableElementRef,
-  FocusableElementIdentifier,
-  ActionsOnTrappedElement,
-} from './types';
+type FocusableElementRef = HTMLElement | SVGElement | null;
+
+type FocusableElementIdentifier = string | FocusableElementRef;
+
+type ActionsOnTrappedElement = 'CLICK' | 'FOCUS';
+
+interface Escaper {
+  keepTrap?: boolean;
+  custom?: Function;
+  identifier?: FocusableElementIdentifier;
+  beGentle?: boolean;
+}
+
+export interface TrapConfig {
+  trapRoot: string | HTMLElement;
+  escaper?: Escaper;
+  initialFocus?: FocusableElementIdentifier;
+  returnFocus?: FocusableElementIdentifier;
+  locked?: boolean | Function;
+  tabbableConfig?: TabbableOptions & CheckOptions;
+}
 
 const tabbableOptions = { displayCheck: 'non-zero-area' } as CheckOptions;
 
-function useSimpleFocusTrap(
+export function useSimpleFocusTrap(
   { trapRoot, escaper, initialFocus, returnFocus, locked, tabbableConfig }: TrapConfig = { trapRoot: '' }
 ) {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -57,7 +72,7 @@ function useSimpleFocusTrap(
           : returnFocus
         : (document.activeElement as FocusableElementRef);
       // Start to watch for changes being made to the childList of the root element.
-      observerRef.current = new MutationObserver(() => setChildListUpdeate(state => !state));
+      observerRef.current = new MutationObserver(() => setChildListUpdeate((state) => !state));
       rootRef.current && observerRef.current.observe(rootRef.current, { childList: true });
       // Handle clicks outside of the trap.
       document.addEventListener('click', outsideClicksHandler);
@@ -119,5 +134,3 @@ function useSimpleFocusTrap(
     }
   }, [firstTabbable, lastTabbable]);
 }
-
-export default useSimpleFocusTrap;

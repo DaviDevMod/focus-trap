@@ -1,160 +1,222 @@
-# TSDX React User Guide
+# use-simple-focus-trap [![Node CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/node.js.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/node.js.yml) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+A lightweight custom hook to trap the focus within an HTML element.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+#### Features:
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+- Flexible and dynamic focus trap, built around the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API
+- Possibility to bound different behaviours to the `Esc` key
+- Possibility to choose an element receiving the initial focus
+- Possibility to choose an element receiving the focus after the trap breaks
+- Possibility to prevent clicks outside of the trap
 
-## Commands
-
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
-
-The recommended workflow is to run TSDX in one terminal:
-
-```bash
-npm start # or yarn start
-```
-
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-Then run the example inside another:
+## Installation
 
 ```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+npm install use-simple-focus-trap
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
+## Usage
 
-To do a one-off build, use `npm run build` or `yarn build`.
+Import the hook and and call it with an object having a `trapRoot` property.  
+The value of `trapRoot` must be either the `HTMLElement` in which you want to trap the focus, or its `id`.
 
-To run tests, use `npm test` or `yarn test`.
+```javascript
+import { useSimpleFocusTrap } from 'use-simple-focus-trap';
 
-## Configuration
+function MyComponent() {
+  useSimpleFocusTrap({ trapRoot: 'rootOfTheTrap' });
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+  return <h1>The focus is now trapped inside of an element with "rootOfTheTrap" as id</h1>;
+}
 
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle analysis
-
-Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+export default MyComponent;
 ```
 
-#### React Testing Library
+Having to deal with `id`s rather than actual elements, allows you to easily decouple the hook from the JSX that renders the elements in the trap. :zap:  
+This makes it easy to implement the trap in a reusable component, in which you would most likely want to call the hook in this more reusable way:
 
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+```javascript
+import { useSimpleFocusTrap } from 'use-simple-focus-trap';
 
-### Rollup
+function MyReusableComponent(props) {
+  useSimpleFocusTrap(props.trapConfig);
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+  return <h1>The focus is now trapped inside of the element referenced by `trapRoot`</h1>;
+}
 
-### TypeScript
+export default MyComponent;
+```
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+Where _MyReusableComponent_ would be used like so:
 
-## Continuous Integration
+```javascript
+import MyReusableComponent from '../UI/MyReusableComponent';
 
-### GitHub Actions
+const trapConfig = { trapRoot: 'rootOfTheTrap' };
 
-Two actions are added by default:
+function AnotherComponent() {
 
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+  return <MyReusableComponent trapConfig={trapConfig}>;
+}
 
-## Optimizations
+export default AnotherComponent;
+```
 
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+The `trapConfig` object can receive five more properties that help customising the behaviour of the trap, but they are not required.
 
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
+## Default behaviour
 
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+By default (ie, if only a valid `trapRoot` is provided) this is what happens when the hook is called:
+
+- Focus is given to the first tabbable element in the trap
+- The `Tab` and `Shift+Tab` keys cycles through the focus trap's [tabbable](https://github.com/focus-trap/tabbable) elements
+- Clicks outside of the trap behave as usual
+- The trap breaks whenever the `Esc` key is pressed
+- Once the trap breaks, focus is returned to what was the active element at the time the hook was called
+
+## Parameters
+
+The hook receives a single parameter being an object whose properties are listed below.
+
+| Name           | Required | Type                           |
+| -------------- | -------- | ------------------------------ |
+| trapRoot       | Yes      | string \| HTMLElement          |
+| escaper        | No       | Escaper                        |
+| initialFocus   | No       | FocusableElementIdentifier     |
+| returnFocus    | No       | FocusableElementIdentifier     |
+| locked         | No       | boolean \| Function            |
+| tabbableConfig | No       | TabbableOptions & CheckOptions |
+
+Where `FocusableElementIdentifier` and `Escaper` are defined as follows:
+
+```javascript
+type FocusableElementRef = HTMLElement | SVGElement | null;
+
+type FocusableElementIdentifier = string | FocusableElementRef;
+
+interface Escaper {
+  custom?: Function;
+  keepTrap?: boolean;
+  identifier?: FocusableElementIdentifier;
+  beGentle?: boolean;
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+- **trapRoot**  
+  It must be the `HTMLElement` in which you want to trap the focus, or its `id`.  
+  If it's missing or invalid, the hook does nothing.
 
-## Module Formats
+* **escaper**  
+  For accessibility purposes, it is recommended to provide the user with a keyboard shortcut to leave the trap.  
+  The `escaper` object is meant to aid on defining the behaviour bounded to the `Esc` key press.
 
-CJS, ESModules, and UMD module formats are supported.
+  - **keepTrap**  
+    By default the trap breaks when `Esc` is pressed.  
+    `keepTrap` must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+  - **custom**  
+    This property must be a `Function`, which will be executed whenever the `Esc` key is pressed.
 
-## Deploying the Example Playground
+  - **identifier** plus an optional **beGentle**  
+    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus has been trapped.  
+    It must be of type `FocusableElementIdentifier` and referencing a [focusable](https://github.com/focus-trap/tabbable#isfocusable) [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
+    `beGentle` must be a boolean.  
+    If a valid `identifier` is provided, anytime the `Esc` key is pressed, the referenced element will fire a click event; unless `beGentle` is `true`, in this case the element would get focused instead.  
+    Notice that the click event would not fire if the element is not clickable.
 
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+  It should not matter for the logic of your particular implementation, but for completeness, this is the order in which the above properties act on the trap whenever `Esc` is pressed:
 
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
-```
+  ```javascript
+  if (custom) custom();
+  if (identifier) either click or focus the referenced element;
+  if (!keepTrap) demolish the trap;
+  ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+* **initialFocus**  
+  It is the element that will receive the initial focus within the trap.
+  It must be of type `FocusableElementIdentifier` and referencing a [focusable](https://github.com/focus-trap/tabbable#isfocusable) [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
+  If it's missing or invalid, the initial focus defaults to the first focusable element in the trap.
 
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
-```
+* **returnFocus**  
+  It is the element that will receive the focus once the trap breaks.  
+  It must be of type `FocusableElementIdentifier`.  
+  If it's missing or invalid, the focus will be returned to what was the active element at the time the hook was called.
 
-## Named Exports
+* **locked**  
+  Must be either a `boolean` or a `Function`.  
+  By default clicks on elements not belonging to the trap's root behave as usual.
+  If `locked` is `true` clicks on elements outside of the trap are blocked, they do not fire any event.  
+  If instead, `locked` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be [bounded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) with the `MouseEvent` in question:
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+  ```javascript
+  if (locked instanceof Function) locked.bind(null, event);
+  ```
 
-## Including Styles
+* **tabbableConfig**  
+  The hook outsources the treatment of edge cases in matter of browser consistency regarding tabbing around in a page, to [tabbable](https://github.com/focus-trap/tabbable). This utility accepts [configuration options](https://github.com/focus-trap/tabbable#options-3) defaulting to:
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+  ```javascript
+  {includeContainer: false, displayCheck: 'full'}
+  ```
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+  They are overridden in the hook as follows:
 
-## Publishing to NPM
+  ```javascript
+  {includeContainer: false, displayCheck: 'non-zero-area'}
+  ```
 
-We recommend using [np](https://github.com/sindresorhus/np).
+  You can re-override them by providing the desired tabbable configuration.
 
-## Usage with Lerna
+## Return value
 
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
+`void` for the moment.
 
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
+Error handling will be added and the hook will return some informative status.
 
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
+## Example
 
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
-```
+In the "example" folder of this repo you can see the hook in action.  
+The example has three main components:
 
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+- App  
+  It conditionally renders, among the other things, a `<ChooseYourPill>` component
+
+- ChooseYourPill  
+  It defines a [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset), which is rendered wrapped in a reusable `<Modal>` component
+
+- Modal  
+  A reusable modal component.
+
+The hook is called directly in the `<Modal>` component. In this way the focus is trapped automatically when a modal is opened, and the trap breaks whenever the modal unmounts.
+
+An `escaper` is provided, which makes the `Esc` key close the modal and, by doing so, unmount the hook.
+
+An `initialFocus` is provided too and is pointing to the same element the `escapers`'s `identifier` is pointing to.
+
+`returnFocus`, `locked` and `tabbableConfig` are left `undefined`.  
+So focus is returned to what was the active element at the time the hook was called, and clicks outside of the trap are allowed; even though all they can do is closing the modal, because they are being catched by the backdrop's event handler.
+
+There is a group of radio buttons, which requires you to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
+
+It is worth noticing that when the hook is being called in the `<Modal>`, there is no element in the DOM with an `id` corresponding to the one provided as `identifier` and `initialFocus`; however thanks to the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API, the hook is dynamic and flexible enough to pick up elements whenever they appear.
+
+## Dependencies and browser support
+
+The hook has React as peer dependency and [tabbable](https://github.com/focus-trap/tabbable) as dependency.
+
+The browser support should be around 95%. See [Node.contains()](https://caniuse.com/mdn-api_node_contains) and [MutationObserver](https://caniuse.com/mutationobserver).
+
+## Known bugs and limitations
+
+- The hooks doesn't handle, yet, cases of non-trivial elements as first or last tabbable element in in the trap.
+
+  Eg: in the example provided, there is no tabbable element before the radio group and the first tabbable element should be considered the current checked radio input, instead at the moment it's just the first radio input; this means that by checking the second input and then shift-tabbing back, it's possible to leave the trap.
+
+  Another example is the case of elements with negative `tabIndex` as first or last element in the trap; after such element is focused (by means other than the keyboard) it is possible to leave the trap from the keyboard.
+
+- Error handling is missing.
+
+## Contributions
+
+Contributions are more than welcome! :rocket::rocket:
