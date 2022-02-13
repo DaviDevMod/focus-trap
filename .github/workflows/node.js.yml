@@ -30,8 +30,8 @@ jobs:
         with:
           install-command: yarn --ignore-engines
 
-      - name: Lint
-        run: yarn lint
+      # - name: Lint
+      #   run: yarn lint
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
