@@ -4,11 +4,15 @@ A lightweight custom hook to trap the focus within an HTML element.
 
 #### Features:
 
-- Flexible and dynamic focus trap, built around the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API
-- Possibility to bound different behaviours to the `Esc` key
-- Possibility to choose an element receiving the initial focus
-- Possibility to choose an element receiving the focus after the trap breaks
-- Possibility to prevent clicks outside of the trap
+_useSimpleFocusTrap_ gives you the possibility to:
+
+- Bind different behaviours to the `Esc` key
+- Choose an element receiving the initial focus
+- Choose an element receiving the focus after the trap breaks
+- Prevent clicks outside of the trap
+- Enjoy a flexible and dynamic focus trap, built around the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API
+
+All of this with an imperceptible footprint on size and performance. :cherries:
 
 ## Installation
 
@@ -116,10 +120,11 @@ interface Escaper {
     `keepTrap` must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
 
   - **custom**  
-    This property must be a `Function`, which will be executed whenever the `Esc` key is pressed.
+    This property must be a `Function`.
+    If provided, it will be executed whenever the `Esc` key is pressed.
 
   - **identifier** plus an optional **beGentle**  
-    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus has been trapped.  
+    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus was trapped.  
     It must be of type `FocusableElementIdentifier` and referencing a [focusable](https://github.com/focus-trap/tabbable#isfocusable) [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
     `beGentle` must be a boolean.  
     If a valid `identifier` is provided, anytime the `Esc` key is pressed, the referenced element will fire a click event; unless `beGentle` is `true`, in this case the element would get focused instead.  
@@ -145,8 +150,8 @@ interface Escaper {
 
 * **locked**  
   Must be either a `boolean` or a `Function`.  
-  By default clicks on elements not belonging to the trap's root behave as usual.
-  If `locked` is `true` clicks on elements outside of the trap are blocked, they do not fire any event.  
+  By default clicks on elements ouside of the trap behave as usual.
+  If `locked` is `true` clicks on elements not belonging to the trap's root are blocked, they do not fire any event.  
   If instead, `locked` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be [bounded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) with the `MouseEvent` in question:
 
   ```javascript
@@ -179,13 +184,13 @@ Error handling will be added and the hook will return some informative status.
 In the "example" folder of this repo you can see the hook in action.  
 The example has three main components:
 
-- App  
+- **App**  
   It conditionally renders, among the other things, a `<ChooseYourPill>` component
 
-- ChooseYourPill  
+- **ChooseYourPill**  
   It defines a [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset), which is rendered wrapped in a reusable `<Modal>` component
 
-- Modal  
+- **Modal**  
   A reusable modal component.
 
 The hook is called directly in the `<Modal>` component. In this way the focus is trapped automatically when a modal is opened, and the trap breaks whenever the modal unmounts.
@@ -216,6 +221,12 @@ The browser support should be around 95%. See [Node.contains()](https://caniuse.
   Another example is the case of elements with negative `tabIndex` as first or last element in the trap; after such element is focused (by means other than the keyboard) it is possible to leave the trap from the keyboard.
 
 - Error handling is missing.
+
+- Tests are missing.
+
+- The example doesn't cover all the functionalities and it is not deployed.
+
+- Features requiring a substantial addition in logic (and therefore most probably in size and speed) would not get implemented, since they would defeat the original purpose of the hook.
 
 ## Contributions
 
