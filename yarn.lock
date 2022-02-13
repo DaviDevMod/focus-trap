@@ -2017,6 +2017,8 @@
     "color-convert" "^2.0.1"
 
 "ansicolors@*":
+  "integrity" "sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk="
+  "resolved" "https://registry.npmjs.org/ansicolors/-/ansicolors-0.3.2.tgz"
   "version" "0.3.2"
 
 "ansicolors@~0.3.2":
@@ -2738,6 +2740,8 @@
   "version" "2.6.1"
 
 "cli-table3@*":
+  "integrity" "sha512-w0q/enDHhPLq44ovMGdQeeDLvwxwavsJX7oQGYt/LrBlYsyaxyDnp6z3QzFut/6kLLKnlcUVJLrpB7KBfgG/RA=="
+  "resolved" "https://registry.npmjs.org/cli-table3/-/cli-table3-0.6.1.tgz"
   "version" "0.6.1"
   dependencies:
     "string-width" "^4.2.0"
