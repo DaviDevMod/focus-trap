@@ -1,4 +1,4 @@
-# use-simple-focus-trap [![Node CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/node.js.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/node.js.yml) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+# use-simple-focus-trap [![CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 A lightweight custom hook to trap the focus within an HTML element.
 
@@ -6,10 +6,10 @@ A lightweight custom hook to trap the focus within an HTML element.
 
 _useSimpleFocusTrap_ gives you the possibility to:
 
-- Bind different behaviours to the `Esc` key
 - Choose an element receiving the initial focus
-- Choose an element receiving the focus after the trap breaks
 - Prevent clicks outside of the trap
+- Bind different behaviours to the `Esc` key
+- Choose an element receiving the focus after the trap breaks
 - Enjoy a flexible and dynamic focus trap, built around the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API
 
 All of this with an imperceptible footprint on size and performance. :cherries:

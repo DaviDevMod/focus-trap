@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prestart": "rm -r .parcel-cache",
+    "prestart": "rm -rf .parcel-cache",
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
