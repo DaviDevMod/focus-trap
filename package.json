@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-development.2",
+  "version": "0.0.1-development.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -45,6 +45,16 @@
     "type": "git",
     "url": "https://github.com/DaviDevMod/use-simple-focus-trap"
   },
+  "keywords": [
+    "use",
+    "simple",
+    "focus",
+    "trap",
+    "custom",
+    "hook",
+    "react",
+    "lightweight"
+  ],
   "module": "dist/use-simple-focus-trap.esm.js",
   "size-limit": [
     {

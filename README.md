@@ -157,7 +157,7 @@ So the focus will be returned to what was the active element at the time the hoo
 
 There is a group of radio buttons, which requires you to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
 
-## Dependencies and browser support
+## Dependencies & Browser Support
 
 The hook has no dependencies, just _React_ as peer dependency.
 

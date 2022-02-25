@@ -87,7 +87,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
         return false;
       }
       // form fields in a disabled <fieldset> are not focusable unless they are
-      // in the first <legend> element of the top-most disabled fieldset.
+      // in the first <legend> element of the top-most disabled <fieldset>.
       if (/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(candidate.tagName)) {
         let parentNode = candidate as HTMLElement | SVGElement | null;
         while ((parentNode = parentNode!.parentElement)) {
@@ -172,13 +172,12 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
         : (document.activeElement as FocusableElementRef);
       // Start to watch for changes being made to the subtree of the root element.
       observerRef.current = new MutationObserver(() => setUpdateSubtree((state) => !state));
-      rootRef.current &&
-        observerRef.current.observe(rootRef.current, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          attributeFilter: ['disabled', 'type', 'open', 'style'],
-        });
+      observerRef.current.observe(rootRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['disabled', 'type', 'open', 'style'],
+      });
       // Handle clicks outside of the trap.
       document.addEventListener('click', outsideClicksHandler);
       // Remove handler for outside clicks, disconnect observer and return focus when the hook unmounts.
@@ -215,8 +214,8 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
             ? forceFocusFromAtoB(firstTabbable, lastTabbable)
             : forceFocusFromAtoB(lastTabbable, firstTabbable);
         } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-          if (!escaper) return;
-          const { keepTrap, custom, identifier, polite } = escaper;
+          const proxy = escaper || { keepTrap: false };
+          const { keepTrap, custom, identifier, polite } = proxy;
           if (custom) custom();
           if (identifier) clickOrFocusTrappedElement(identifier, polite ? 'FOCUS' : 'CLICK');
           if (!keepTrap) {
