@@ -65,7 +65,7 @@ function ChooseYourPill(props: Props) {
           </div>
           <div className="actions">
             <button id="closeModal" type="button" onClick={closeHandler}>
-              Pass out
+              Turn back
             </button>
             <button type="submit">Take the pill</button>
           </div>

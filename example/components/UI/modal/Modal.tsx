@@ -16,7 +16,7 @@ interface ModalProps {
   rootId: string;
   onClose: () => void;
   children: React.ReactNode;
-  trapConfig?: TrapConfig;
+  trapConfig: TrapConfig;
 }
 
 const Backdrop = (props: BackdropProps) => {

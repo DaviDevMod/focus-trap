@@ -16,10 +16,6 @@ body {
     repeating-linear-gradient(to right, #003b00, #003b00 8px, black 8px, black 20px);
 }
 
-button {
-  cursor: pointer;
-}
-
 .evergreen {
   position: relative;
   top: 5rem;
@@ -41,6 +37,7 @@ button {
 }
 
 button {
+  cursor: pointer;
   font: inherit;
   font-weight: 500;
   color: #008f11;
@@ -51,6 +48,7 @@ button {
 }
 
 button:focus {
+  outline: none;
   box-shadow: 0 0 0 2px #008f11;
 }
 
