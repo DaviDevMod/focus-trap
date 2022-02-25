@@ -2,15 +2,15 @@
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
-### Features
+### Features:
 
 - Choose an element receiving the initial focus
 - Prevent clicks on elements outside of the trap
 - Bind different behaviours to the `Esc` key
 - Choose an element receiving the focus after the trap breaks
-- Enjoy a flexible and dynamic focus trap, built around the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API
+- Don't worry about edge cases and browser support, _use-simple-focus-trap_'s got your back
 
-All of this with an imperceptible footprint on size and performance. :cherries:
+Not to mention that the above possibilities come with little to no footprint on size and performance. :cherries:
 
 ## Installation
 
@@ -53,13 +53,13 @@ By default (ie, if only a valid `trapRoot` is provided) this is what happens whe
 
 The hook has to be called with a single parameter being an object with the following properties:
 
-| Name         | Required | Type                       |
-| ------------ | -------- | -------------------------- |
-| trapRoot     | Yes      | string \| HTMLElement      |
-| initialFocus | No       | FocusableElementIdentifier |
-| returnFocus  | No       | FocusableElementIdentifier |
-| locker       | No       | boolean \| Function        |
-| escaper      | No       | Escaper                    |
+| Name         | Required | Type                       |    Default value    |
+| ------------ | -------- | -------------------------- | :-----------------: |
+| trapRoot     | Yes      | string \| HTMLElement      |          -          |
+| initialFocus | No       | FocusableElementIdentifier |   first tabbable    |
+| returnFocus  | No       | FocusableElementIdentifier | last active element |
+| locker       | No       | boolean \| Function        |        false        |
+| escaper      | No       | Escaper                    | { keepTrap: false } |
 
 Where `FocusableElementIdentifier` and `Escaper` are defined as follows:
 
@@ -78,7 +78,7 @@ interface Escaper {
 
 - **trapRoot**  
   It must be the `HTMLElement` in which to trap the focus, or its `id`.  
-  It is required and if it doesn't reference and `HTMLElement` the hook does nothing.
+  It is required and if it doesn't point to an `HTMLElement` the hook does nothing.
 
 - **initialFocus**  
   It is the element that will receive the initial focus within the trap.
@@ -92,8 +92,7 @@ interface Escaper {
 
 - **locker**  
   Must be either a `boolean` or a `Function`.  
-  By default clicks on elements ouside of the trap behave as usual.
-  If `locker` is `true` clicks on elements not belonging to the trap's root are blocked, they do not fire any event.  
+  By default clicks on elements not belonging to the trap's root behave as usual, if `locker` is set to `true` they will not fire any event.  
   If instead, `locker` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be [bounded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) with the `MouseEvent` in question:
 
   ```javascript
@@ -105,8 +104,7 @@ interface Escaper {
   The `escaper` object is meant to aid on defining the behaviour bounded to the `Esc` key press.
 
   - **keepTrap**  
-    By default the trap breaks when `Esc` is pressed.  
-    `keepTrap` must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
+    Must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
 
   - **custom**  
     This property must be a `Function`.
@@ -135,6 +133,8 @@ Error handling will be added and the hook will return some informative status.
 ## Example
 
 In the "example" folder of this repo you can see the hook in action.  
+Simply navigate to the "example" folder and run `npm start` to enjoy it.
+
 The example has three main components:
 
 - **App**  
@@ -167,7 +167,7 @@ The browser support is around 97%, from IE11+. See [Node.contains()](https://can
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-The reason why _tabbable_ is not being used directly as a dependency is that the hook aims to be as light and fast as possible and tabbable is, for the purposes of the hook, too powerful.
+The reason why _tabbable_ is not being used directly as a dependency is that the hook aims to be as light and fast as possible and _tabbable_ is, for the purposes of this hook, too powerful.
 
 The hook leaves the responsibility of choosing focusable and tabbable elements up to the browser, and only tests the tabbability of the first and last supposed-to-be-tabbable elements in the trap. The whole _tabbable_'s logic is oversimplified to about 50 lines of code.
 
