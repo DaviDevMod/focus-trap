@@ -15,10 +15,10 @@ interface Escaper {
 
 export interface TrapConfig {
   trapRoot: string | HTMLElement;
-  escaper?: Escaper;
   initialFocus?: FocusableElementIdentifier;
   returnFocus?: FocusableElementIdentifier;
   locker?: boolean | Function;
+  escaper?: Escaper;
 }
 
 const focusable =
@@ -36,7 +36,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   // Handler for clicks happening on nodes not belonging to the trap's root.
   const outsideClicksHandler = useCallback((event: MouseEvent) => {
     if (rootRef.current?.contains(event.target as Node)) {
-      if (locker instanceof Function) locker.bind(null, event);
+      if (locker instanceof Function) locker(event);
       else if (locker) event.stopImmediatePropagation();
     }
   }, []);
@@ -86,15 +86,25 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       if (matches.call(nodeUnderDetails, 'details:not([open]) *')) {
         return false;
       }
-      // form fields in a disabled <fieldset> are not focusable unless they are
+      // Form fields in a disabled <fieldset> are not focusable unless they are
       // in the first <legend> element of the top-most disabled <fieldset>.
       if (/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(candidate.tagName)) {
-        let parentNode = candidate as HTMLElement | SVGElement | null;
+        let parentNode = candidate as FocusableElementRef;
         while ((parentNode = parentNode!.parentElement)) {
+          // If `candidate` is nested in a disabled <fieldset>
           if (parentNode.tagName === 'FIELDSET' && (parentNode as any).disabled) {
-            for (let i = 0; i < parentNode.children.length; i++) {
-              if (parentNode.children.item(i)?.tagName === 'LEGEND') {
-                return parentNode.children.item(i)!.contains(candidate);
+            for (let i = 0; i < parentNode!.children.length; i++) {
+              // containing a <legend>,
+              if (parentNode!.children.item(i)?.tagName === 'LEGEND') {
+                // check whether the disabled <fieldset> is nested in another disabled <fieldset>.
+                while ((parentNode = parentNode!.parentElement)) {
+                  if (parentNode.tagName === 'FIELDSET' && (parentNode as any).disabled) {
+                    // It's nested, so `candidate` is not focusable.
+                    return false;
+                  }
+                  // It's the top-most one, so return whether `candidate` is in its <legend>
+                  return parentNode.children.item(i)!.contains(candidate);
+                }
               }
             }
             return false; // There is no <legend> in the top-most <fieldset>
@@ -107,14 +117,15 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
 
     // Little utility that explicitly sets a tabIndex for elements that
     // are not treated consistently (in matter of tabIndexes) across browsers.
-    const tuneTabIndex = (node: HTMLElement | SVGElement) => {
+    const getTabIndex = (node: HTMLElement | SVGElement) => {
       if (
-        ((node.nodeName === 'AUDIO' || node.nodeName === 'VIDEO') &&
-          node.getAttribute('tabindex') === null) ||
+        node.tabIndex === 0 ||
+        (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) && node.getAttribute('tabindex') === null) ||
         (node instanceof HTMLElement && node.isContentEditable)
       ) {
-        node.tabIndex = 0;
-      }
+        return 0;
+      } else if (node.tabIndex > 0) return node.tabIndex;
+      else return -1;
     };
 
     // firstTabbable will be one of the following two:
@@ -124,30 +135,29 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
     let lastMaxPositiveTabIndex = null as FocusableElementRef;
     let lastZeroTabIndex = null as FocusableElementRef;
     const len = nodeList.length;
-    const mid = Math.floor(len / 2);
-    for (let i = 0; i <= mid; i++) {
+    for (let i = 0; i < len; i++) {
       const left = nodeList[i];
       const right = nodeList[len - 1 - i];
-      tuneTabIndex(left);
-      tuneTabIndex(right);
-      if (left.tabIndex === 0) {
+      const leftTabIndex = getTabIndex(left);
+      const rightTabIndex = getTabIndex(right);
+      if (leftTabIndex === 0) {
         if (!firstZeroTabIndex && !firstMinPositiveTabIndex && isActuallyFocusable(left)) {
           firstZeroTabIndex = left;
         }
-      } else if (left.tabIndex > 0) {
+      } else if (leftTabIndex > 0) {
         if (
-          (!firstMinPositiveTabIndex || firstMinPositiveTabIndex.tabIndex > left.tabIndex) &&
+          (!firstMinPositiveTabIndex || firstMinPositiveTabIndex.tabIndex > leftTabIndex) &&
           isActuallyFocusable(left)
         ) {
           firstMinPositiveTabIndex = left;
         }
       }
-      if (right.tabIndex === 0) {
+      if (rightTabIndex === 0) {
         if (!lastZeroTabIndex && isActuallyFocusable(right)) lastZeroTabIndex = right;
-      } else if (right.tabIndex > 0) {
+      } else if (rightTabIndex > 0) {
         if (
           !lastZeroTabIndex &&
-          (!lastMaxPositiveTabIndex || lastMaxPositiveTabIndex.tabIndex < right.tabIndex)
+          (!lastMaxPositiveTabIndex || lastMaxPositiveTabIndex.tabIndex < rightTabIndex)
         ) {
           lastMaxPositiveTabIndex = right;
         }
@@ -204,18 +214,17 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       const keyboardNavigationHandler = (event: KeyboardEvent) => {
         if (event.key === 'Tab' || event.keyCode === 9) {
           // Little helper funciton.
-          const forceFocusFromAtoB = (a: FocusableElementRef, b: FocusableElementRef) => {
+          const forceFocusFromAToB = (a: FocusableElementRef, b: FocusableElementRef) => {
             if (document.activeElement === a) {
               event.preventDefault();
               b!.focus();
             }
           };
           event.shiftKey
-            ? forceFocusFromAtoB(firstTabbable, lastTabbable)
-            : forceFocusFromAtoB(lastTabbable, firstTabbable);
+            ? forceFocusFromAToB(firstTabbable, lastTabbable)
+            : forceFocusFromAToB(lastTabbable, firstTabbable);
         } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-          const proxy = escaper || { keepTrap: false };
-          const { keepTrap, custom, identifier, polite } = proxy;
+          const { keepTrap, custom, identifier, polite } = escaper || {};
           if (custom) custom();
           if (identifier) clickOrFocusTrappedElement(identifier, polite ? 'FOCUS' : 'CLICK');
           if (!keepTrap) {

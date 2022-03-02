@@ -2,15 +2,14 @@
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
-### Features:
+### The hook offers the possibility to:
 
 - Choose an element receiving the initial focus
 - Prevent clicks on elements outside of the trap
 - Bind different behaviours to the `Esc` key
 - Choose an element receiving the focus after the trap breaks
-- Don't worry about edge cases and browser support, _use-simple-focus-trap_'s got your back
-
-Not to mention that the above possibilities come with little to no footprint on size and performance. :cherries:
+- Do not worry about edge cases and browser support
+- Enjoy all of the above with little to no footprint on size and performance. :cherries:
 
 ## Installation
 
@@ -53,13 +52,13 @@ By default (ie, if only a valid `trapRoot` is provided) this is what happens whe
 
 The hook has to be called with a single parameter being an object with the following properties:
 
-| Name         | Required | Type                       |    Default value    |
-| ------------ | -------- | -------------------------- | :-----------------: |
-| trapRoot     | Yes      | string \| HTMLElement      |          -          |
-| initialFocus | No       | FocusableElementIdentifier |   first tabbable    |
-| returnFocus  | No       | FocusableElementIdentifier | last active element |
-| locker       | No       | boolean \| Function        |        false        |
-| escaper      | No       | Escaper                    | { keepTrap: false } |
+| Name         | Required | Type                         |    Default value    |
+| ------------ | -------- | ---------------------------- | :-----------------: |
+| trapRoot     | **Yes**  | `string \| HTMLElement`      |          -          |
+| initialFocus | No       | `FocusableElementIdentifier` |   first tabbable    |
+| returnFocus  | No       | `FocusableElementIdentifier` | last active element |
+| locker       | No       | `boolean \| Function`        |     `undefined`     |
+| escaper      | No       | `Escaper`                    |     `undefined`     |
 
 Where `FocusableElementIdentifier` and `Escaper` are defined as follows:
 
@@ -93,15 +92,15 @@ interface Escaper {
 - **locker**  
   Must be either a `boolean` or a `Function`.  
   By default clicks on elements not belonging to the trap's root behave as usual, if `locker` is set to `true` they will not fire any event.  
-  If instead, `locker` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be [bounded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) with the `MouseEvent` in question:
+  If instead, `locker` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be called with the `MouseEvent` in question:
 
   ```javascript
-  if (locker instanceof Function) locker.bind(null, event);
+  if (locker instanceof Function) locker(event);
   ```
 
 - **escaper**  
   For accessibility purposes, it is highly recommended to provide the user with a keyboard shortcut to leave the trap.  
-  The `escaper` object is meant to aid on defining the behaviour bounded to the `Esc` key press.
+  By default, the trap breaks whenever the `Esc` key is pressed. The `escaper` object can be used to override the default behaviour for the `Esc` key press.
 
   - **keepTrap**  
     Must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
@@ -111,7 +110,7 @@ interface Escaper {
     If provided, it will be executed whenever the `Esc` key is pressed.
 
   - **identifier** plus an optional **polite**  
-    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus was trapped.  
+    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus has been trapped.  
     It must be of type `FocusableElementIdentifier` and referencing a focusable [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
     `polite` must be a boolean.  
     If a valid `identifier` is provided, whenever the `Esc` key is pressed, the referenced element will fire a click event; unless `polite` is `true`, in this case the element would get focused instead.
@@ -132,8 +131,7 @@ Error handling will be added and the hook will return some informative status.
 
 ## Example
 
-In the "example" folder of this repo you can see the hook in action.  
-Simply navigate to the "example" folder and run `npm start` to enjoy it.
+You can see the hook in action by navigating to the "example" folder of this project and then running `npm start`.
 
 The example has three main components:
 
@@ -144,7 +142,7 @@ The example has three main components:
   It defines a [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset), which is rendered wrapped in a reusable `<Modal>` component
 
 - **Modal**  
-  A reusable modal component.
+  It is a reusable modal component.
 
 The hook is called directly in the `<Modal>` component. In this way the focus is trapped automatically when a modal is opened, and the trap breaks whenever the modal unmounts.
 
@@ -187,7 +185,7 @@ The hook leaves the responsibility of choosing focusable and tabbable elements u
 
 - A way to optimise the MutationObserver will be made available.
 
-- Features requiring a substantial addition in logic (and therefore most probably in size and speed) would probably not get implemented, as the original purpose of the hook is to provide a basic, easy-to-use, light & superfast :zap: focus trap.
+- Features requiring a substantial addition in logic (and therefore most probably in size and speed) would probably not get implemented, as the original purpose of the hook is to provide a basic, easy-to-use, light & fast :fire: focus trap.
 
 ## Contributions
 
