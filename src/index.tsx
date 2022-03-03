@@ -28,18 +28,10 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   const rootRef = useRef<HTMLElement | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
   const returnFocusRef = useRef<FocusableElementRef>(null);
+  const firstTabbable = useRef<FocusableElementRef>(null);
+  const lastTabbable = useRef<FocusableElementRef>(null);
   const focusHasBeenReturnedRef = useRef(false);
-  const [firstTabbable, setFirstTabbable] = useState<FocusableElementRef>(null);
-  const [lastTabbable, setLastTabbable] = useState<FocusableElementRef>(null);
-  const [updateSubtree, setUpdateSubtree] = useState(false);
-
-  // Handler for clicks happening on nodes not belonging to the trap's root.
-  const outsideClicksHandler = useCallback((event: MouseEvent) => {
-    if (rootRef.current?.contains(event.target as Node)) {
-      if (locker instanceof Function) locker(event);
-      else if (locker) event.stopImmediatePropagation();
-    }
-  }, []);
+  const [updateTrapBoundaries, setUpdateTrapBoundaries] = useState(false);
 
   // Utility function used to click or focus an element contained in the trap.
   // It returns either undefined or whehter the focus action was successful.
@@ -58,7 +50,20 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   );
 
   // Function returning the first and last tabbable within a nodeList of focusable elements.
-  const getFirstAndLastTabbableInNodeList = useCallback((nodeList: NodeListOf<HTMLElement | SVGElement>) => {
+  const getFirstAndlastTabbableInNodeList = useCallback((nodeList: NodeListOf<HTMLElement | SVGElement>) => {
+    // Little utility that explicitly sets a tabIndex for elements that
+    // are not treated consistently (in matter of tabIndexes) across browsers.
+    const getTabIndex = (node: HTMLElement | SVGElement) => {
+      if (
+        node.tabIndex === 0 ||
+        (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) && node.getAttribute('tabindex') === null) ||
+        (node instanceof HTMLElement && node.isContentEditable)
+      ) {
+        return 0;
+      } else if (node.tabIndex > 0) return node.tabIndex;
+      else return -1;
+    };
+
     // Helper function checking edge cases.
     const isActuallyFocusable = (candidate: HTMLElement | SVGElement) => {
       if (
@@ -113,25 +118,12 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       }
       // Consider any other `candidate` as being actually focusable.
       return true;
-    };
+    }; // End of isActuallyFocusable().
 
-    // Little utility that explicitly sets a tabIndex for elements that
-    // are not treated consistently (in matter of tabIndexes) across browsers.
-    const getTabIndex = (node: HTMLElement | SVGElement) => {
-      if (
-        node.tabIndex === 0 ||
-        (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) && node.getAttribute('tabindex') === null) ||
-        (node instanceof HTMLElement && node.isContentEditable)
-      ) {
-        return 0;
-      } else if (node.tabIndex > 0) return node.tabIndex;
-      else return -1;
-    };
-
-    // firstTabbable will be one of the following two:
+    // firstTabbable.current will be one of the following two:
     let firstMinPositiveTabIndex = null as FocusableElementRef;
     let firstZeroTabIndex = null as FocusableElementRef;
-    // lastTabbable will be one of the following two:
+    // lastTabbable.current will be one of the following two:
     let lastMaxPositiveTabIndex = null as FocusableElementRef;
     let lastZeroTabIndex = null as FocusableElementRef;
     const len = nodeList.length;
@@ -167,7 +159,73 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       first: firstMinPositiveTabIndex || firstZeroTabIndex,
       last: lastZeroTabIndex || lastMaxPositiveTabIndex,
     };
+  }, []); // End of getFirstAndlastTabbableInNodeList().
+
+  // Handler for clicks happening on nodes not belonging to the trap's root.
+  const outsideClicksHandler = useCallback((event: MouseEvent) => {
+    if (rootRef.current?.contains(event.target as Node)) {
+      if (locker instanceof Function) locker(event);
+      else if (locker) event.stopImmediatePropagation();
+    }
   }, []);
+
+  // Handler for keybord events.
+  const keyboardNavigationHandler = useCallback((event: KeyboardEvent) => {
+    if (event.key === 'Tab' || event.keyCode === 9) {
+      // Little helper funciton.
+      const forceFocusFromAToB = (a: FocusableElementRef, b: FocusableElementRef) => {
+        if (document.activeElement === a) {
+          event.preventDefault();
+          b?.focus();
+        }
+      };
+      event.shiftKey
+        ? forceFocusFromAToB(firstTabbable.current, lastTabbable.current)
+        : forceFocusFromAToB(lastTabbable.current, firstTabbable.current);
+    } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+      const { keepTrap, custom, identifier, polite } = escaper || {};
+      if (custom) custom();
+      if (identifier) clickOrFocusTrappedElement(identifier, polite ? 'FOCUS' : 'CLICK');
+      if (!keepTrap) {
+        observerRef.current?.disconnect();
+        returnFocusRef.current?.focus();
+        document.removeEventListener('click', outsideClicksHandler);
+        document.removeEventListener('keydown', keyboardNavigationHandler);
+        focusHasBeenReturnedRef.current = true;
+      }
+    }
+  }, []);
+
+  // Callback for MutationObserver's constructor.
+  const mutationCallback = useCallback(
+    (records) =>
+      setUpdateTrapBoundaries((state) => {
+        let i = records.length;
+        while (i--) {
+          const record = records[i];
+          // If a mutation was observed on an element preceding firstTabbable or succeding lastTabbable.
+          if (
+            (firstTabbable.current && record.target.compareDocumentPosition(firstTabbable.current) & 11) ||
+            (lastTabbable.current && record.target.compareDocumentPosition(lastTabbable.current) & 13)
+          ) {
+            // If the mutation affected the style of the element
+            if (record.attributeName === 'style') {
+              // modifying its tabbability, then update the trap's boundaries.
+              return /^(none|contents)$/.test((record.target as any).style.display) ||
+                (record.target as any).style.visibility === 'hidden' ||
+                /display: (none|contents)/.test(record.oldValue || '') ||
+                record.oldValue === 'visibility: hidden'
+                ? !state
+                : state;
+            } else return !state;
+          } else return state;
+        }
+        // Since this callback is not executed unless a mutation occurs, `records.length` is granted
+        // to be positive and the following line will never be reached. But TS wants a `return` here.
+        return false;
+      }),
+    []
+  );
 
   // Build the trap when mounting the hook and demolish it when unmounting.
   useEffect(() => {
@@ -181,69 +239,39 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
           : returnFocus
         : (document.activeElement as FocusableElementRef);
       // Start to watch for changes being made to the subtree of the root element.
-      observerRef.current = new MutationObserver(() => setUpdateSubtree((state) => !state));
+      observerRef.current = new MutationObserver(mutationCallback);
       observerRef.current.observe(rootRef.current, {
         childList: true,
         subtree: true,
         attributes: true,
         attributeFilter: ['disabled', 'type', 'open', 'style'],
+        attributeOldValue: true,
       });
       // Handle clicks outside of the trap.
       document.addEventListener('click', outsideClicksHandler);
-      // Remove handler for outside clicks, disconnect observer and return focus when the hook unmounts.
+      // Handle keyboard navigation inside of the trap.
+      document.addEventListener('keydown', keyboardNavigationHandler);
+      // Remove event handlers, disconnect observer and return focus when the hook unmounts.
       return () => {
         document.removeEventListener('click', outsideClicksHandler);
+        document.removeEventListener('keydown', keyboardNavigationHandler);
         observerRef.current?.disconnect();
         if (!focusHasBeenReturnedRef.current) returnFocusRef.current?.focus();
       };
     }
   }, []);
 
-  // Update firstTabbable and lastTabbable whenever the root's subtree changes.
+  // Whenever the trap's bounsaries need to be updated...
   useEffect(() => {
-    const nodeListOfFocusable = rootRef.current!.querySelectorAll<HTMLElement | SVGElement>(focusable);
-    const { first, last } = getFirstAndLastTabbableInNodeList(nodeListOfFocusable);
-    setFirstTabbable(first);
-    setLastTabbable(last);
-  }, [updateSubtree]);
-
-  // Whenever one of first/lastTabbable changes, redefine the trap's behaviour.
-  useEffect(() => {
-    if (firstTabbable) {
-      // Handler for keybord events.
-      const keyboardNavigationHandler = (event: KeyboardEvent) => {
-        if (event.key === 'Tab' || event.keyCode === 9) {
-          // Little helper funciton.
-          const forceFocusFromAToB = (a: FocusableElementRef, b: FocusableElementRef) => {
-            if (document.activeElement === a) {
-              event.preventDefault();
-              b!.focus();
-            }
-          };
-          event.shiftKey
-            ? forceFocusFromAToB(firstTabbable, lastTabbable)
-            : forceFocusFromAToB(lastTabbable, firstTabbable);
-        } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-          const { keepTrap, custom, identifier, polite } = escaper || {};
-          if (custom) custom();
-          if (identifier) clickOrFocusTrappedElement(identifier, polite ? 'FOCUS' : 'CLICK');
-          if (!keepTrap) {
-            observerRef.current?.disconnect();
-            returnFocusRef.current?.focus();
-            document.removeEventListener('click', outsideClicksHandler);
-            document.removeEventListener('keydown', keyboardNavigationHandler);
-            focusHasBeenReturnedRef.current = true;
-          }
-        }
-      };
-      // If the current active element is not a descendant of the trap's root node,
-      // give focus to either initialFocus or firstTabbable.
-      if (!rootRef.current?.contains(document.activeElement)) {
-        clickOrFocusTrappedElement(initialFocus, 'FOCUS') || firstTabbable.focus();
-      }
-      // Handle keyboard navigation.
-      document.addEventListener('keydown', keyboardNavigationHandler);
-      return () => document.removeEventListener('keydown', keyboardNavigationHandler);
+    // If the current active element is not a descendant of the trap's root node,
+    // give focus to either initialFocus or firstTabbable.current.
+    if (!rootRef.current!.contains(document.activeElement)) {
+      clickOrFocusTrappedElement(initialFocus, 'FOCUS') || firstTabbable.current?.focus();
     }
-  }, [firstTabbable, lastTabbable]);
+    // Update firstTabbable and lastTabbable.
+    const nodeListOfFocusable = rootRef.current!.querySelectorAll<HTMLElement | SVGElement>(focusable);
+    const { first, last } = getFirstAndlastTabbableInNodeList(nodeListOfFocusable);
+    firstTabbable.current = first;
+    lastTabbable.current = last;
+  }, [updateTrapBoundaries]);
 }

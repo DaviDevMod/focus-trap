@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-development.5",
+  "version": "0.0.1-development.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -15,11 +15,9 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "commit": "git-cz",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why",
-    "semantic-release": "semantic-release"
+    "analyze": "size-limit --why"
   },
   "peerDependencies": {
     "react": ">=16"

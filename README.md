@@ -57,8 +57,8 @@ The hook has to be called with a single parameter being an object with the follo
 | trapRoot     | **Yes**  | `string \| HTMLElement`      |          -          |
 | initialFocus | No       | `FocusableElementIdentifier` |   first tabbable    |
 | returnFocus  | No       | `FocusableElementIdentifier` | last active element |
-| locker       | No       | `boolean \| Function`        |     `undefined`     |
-| escaper      | No       | `Escaper`                    |     `undefined`     |
+| locker       | No       | `boolean \| Function`        |       `false`       |
+| escaper      | No       | `Escaper`                    | `{keepTrap: false}` |
 
 Where `FocusableElementIdentifier` and `Escaper` are defined as follows:
 
@@ -182,8 +182,6 @@ The hook leaves the responsibility of choosing focusable and tabbable elements u
 - Tests are missing.
 
 - The example doesn't cover all the functionalities and it is not deployed.
-
-- A way to optimise the MutationObserver will be made available.
 
 - Features requiring a substantial addition in logic (and therefore most probably in size and speed) would probably not get implemented, as the original purpose of the hook is to provide a basic, easy-to-use, light & fast :fire: focus trap.
 
