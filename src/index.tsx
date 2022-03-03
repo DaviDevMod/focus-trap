@@ -174,15 +174,17 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
     if (event.key === 'Tab' || event.keyCode === 9) {
       // Little helper funciton.
       const forceFocusFromAToB = (a: FocusableElementRef, b: FocusableElementRef) => {
-        const active = document.activeElement;
-        // If the activeElement is `a` or a radio button having the same `name` as `a`.
+        const active = document.activeElement as FocusableElementRef;
+        // If the activeElement is `a` or a radio button having the same `name` as `a`
         if (
           active === a ||
           (active instanceof HTMLInputElement &&
             active.type === 'radio' &&
             a instanceof HTMLInputElement &&
             a.type === 'radio' &&
-            active.name === a.name)
+            active.name === a.name) ||
+          // or an element with negative tabIndex.
+          (active?.tabIndex && active.tabIndex < 0)
         ) {
           // Force the focus to either:
           event.preventDefault();
