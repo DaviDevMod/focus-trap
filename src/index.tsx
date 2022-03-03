@@ -51,7 +51,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
 
   // Function returning the first and last tabbable within a nodeList of focusable elements.
   const getFirstAndlastTabbableInNodeList = useCallback((nodeList: NodeListOf<HTMLElement | SVGElement>) => {
-    // Little utility that explicitly sets a tabIndex for elements that
+    // Little utility that returns a consistent tabIndex for elements that
     // are not treated consistently (in matter of tabIndexes) across browsers.
     const getTabIndex = (node: HTMLElement | SVGElement) => {
       if (
@@ -112,7 +112,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
                 }
               }
             }
-            return false; // `candidate` is nested in <fieldset> with no <legend>/
+            return false; // `candidate` is nested in a <fieldset> with no <legend>/
           }
         }
       }
@@ -120,10 +120,10 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       return true;
     }; // End of isActuallyFocusable().
 
-    // firstTabbable.current will be one of the following two:
+    // firstTabbable will be one of the following two:
     let firstMinPositiveTabIndex = null as FocusableElementRef;
     let firstZeroTabIndex = null as FocusableElementRef;
-    // lastTabbable.current will be one of the following two:
+    // lastTabbable will be one of the following two:
     let lastMaxPositiveTabIndex = null as FocusableElementRef;
     let lastZeroTabIndex = null as FocusableElementRef;
     const len = nodeList.length;
@@ -174,9 +174,23 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
     if (event.key === 'Tab' || event.keyCode === 9) {
       // Little helper funciton.
       const forceFocusFromAToB = (a: FocusableElementRef, b: FocusableElementRef) => {
-        if (document.activeElement === a) {
+        const active = document.activeElement;
+        // If the activeElement is `a` or a radio button having the same `name` as `a`.
+        if (
+          active === a ||
+          (active instanceof HTMLInputElement &&
+            active.type === 'radio' &&
+            a instanceof HTMLInputElement &&
+            a.type === 'radio' &&
+            active.name === a.name)
+        ) {
+          // Force the focus to either:
           event.preventDefault();
-          b?.focus();
+          // The checked radio button belonging to the same group `b` belongs to
+          if (b instanceof HTMLInputElement && b.type === 'radio' && !b.checked) {
+            (document.querySelector('input[name=' + b.name + ']:checked') as FocusableElementRef)?.focus();
+            // or simply `b`.
+          } else b?.focus();
         }
       };
       event.shiftKey
@@ -208,9 +222,9 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
             (firstTabbable.current && record.target.compareDocumentPosition(firstTabbable.current) & 11) ||
             (lastTabbable.current && record.target.compareDocumentPosition(lastTabbable.current) & 13)
           ) {
-            // If the mutation affected the style of the element
+            // If the mutation modified the style of the element
             if (record.attributeName === 'style') {
-              // modifying its tabbability, then update the trap's boundaries.
+              // in a way that affects its tabbability, then update the trap's boundaries.
               return /^(none|contents)$/.test((record.target as any).style.display) ||
                 (record.target as any).style.visibility === 'hidden' ||
                 /display: (none|contents)/.test(record.oldValue || '') ||
@@ -261,10 +275,10 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
     }
   }, []);
 
-  // Whenever the trap's bounsaries need to be updated...
+  // Whenever the trap's boundaries need to be updated...
   useEffect(() => {
     // If the current active element is not a descendant of the trap's root node,
-    // give focus to either initialFocus or firstTabbable.current.
+    // give focus to either initialFocus or firstTabbable.
     if (!rootRef.current!.contains(document.activeElement)) {
       clickOrFocusTrappedElement(initialFocus, 'FOCUS') || firstTabbable.current?.focus();
     }

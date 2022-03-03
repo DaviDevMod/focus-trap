@@ -30,8 +30,16 @@
   transition: 0.2s all linear;
 }
 
+.blue_pill:focus {
+  box-shadow: 0 0 0 3px hsl(204, 70%, 33%);
+}
+
 .blue_pill:checked {
   border: 6px solid #3498db;
+}
+
+.red_pill:focus {
+  box-shadow: 0 0 0 3px hsl(6, 78%, 37%);
 }
 
 .red_pill:checked {

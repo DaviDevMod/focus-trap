@@ -173,7 +173,7 @@ The hook leaves the responsibility of choosing focusable and tabbable elements u
 
 - The hook doesn't handle, yet, cases of non-trivial elements as first or last tabbable element in in the trap.
 
-  Eg: in the example provided, there is no tabbable element before the radio group and the first tabbable element should be considered the current checked radio input, instead at the moment it's just the first radio input; this means that by checking the second input and then shift-tabbing back, it's possible to leave the trap.
+  <del>Eg: in the example provided, there is no tabbable element before the radio group and the first tabbable element should be considered the current checked radio input, instead at the moment it's just the first radio input; this means that by checking the second input and then shift-tabbing back, it's possible to leave the trap.</del> Radio groups are now handled.
 
   Another example is the case of elements with negative `tabIndex` as first or last element in the trap; after such element is focused (by means other than the keyboard) it is possible to leave the trap from the keyboard.
 
