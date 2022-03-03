@@ -102,12 +102,12 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
                     // It's nested, so `candidate` is not focusable.
                     return false;
                   }
-                  // It's the top-most one, so return whether `candidate` is in its <legend>
+                  // It's the top-most one, so return whether `candidate` is in its <legend>.
                   return parentNode.children.item(i)!.contains(candidate);
                 }
               }
             }
-            return false; // There is no <legend> in the top-most <fieldset>
+            return false; // `candidate` is nested in <fieldset> with no <legend>/
           }
         }
       }
