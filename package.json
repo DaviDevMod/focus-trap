@@ -28,7 +28,7 @@
     }
   },
   "prettier": {
-    "printWidth": 110,
+    "printWidth": 120,
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"

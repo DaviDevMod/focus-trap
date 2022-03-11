@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import './ChooseYourPill.css';
+import { TrapConfig } from '../../../src/types';
 import { PillChoice } from '../../types';
-import { TrapConfig } from '../../../src';
 import Modal from '../UI/modal/Modal';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const trapConfig: TrapConfig = {
-  trapRoot: 'overlays',
+  trapRoot: 'modalOverlay',
   escaper: { identifier: 'closeModal' },
   initialFocus: 'closeModal',
 };
@@ -19,7 +19,7 @@ function ChooseYourPill(props: Props) {
   const [chosenPill, setChosenPill] = React.useState(PillChoice.BluePill);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChosenPill(event.currentTarget.value as PillChoice);
+    setChosenPill(event.target.value as PillChoice);
   };
 
   const closeHandler = () => props.onChoice(PillChoice.NoChoice);
@@ -30,11 +30,10 @@ function ChooseYourPill(props: Props) {
   };
 
   return (
-    <Modal onClose={closeHandler} rootId="overlays" trapConfig={trapConfig}>
+    <Modal onClose={closeHandler} portalId="overlays" trapConfig={trapConfig}>
       <fieldset className="give_choice">
         <legend>
-          You take the blue pill - the story ends, you wake up in your bed and believe whatever you want to
-          believe.
+          You take the blue pill - the story ends, you wake up in your bed and believe whatever you want to believe.
           <br />
           You take the red pill - you stay in Wonderland and I show you how deep the rabbit-hole goes.
         </legend>
