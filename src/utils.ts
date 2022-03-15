@@ -3,6 +3,18 @@ import { FocusableElementRef, FocusableElementIdentifier, TrapBoundaries } from 
 const focusable =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
+export function isMutationAffectingTabbability(record: MutationRecord) {
+  if (record.attributeName === 'style') {
+    // Update `trapBoundaries` only if the mutation occurred in the style of
+    // an element and in a way that affected the tabbability of the element.
+    return (
+      (record.target as any).style.visibility === 'hidden' ||
+      /^(none|contents)$/.test((record.target as any).style.display) ||
+      /visibility: hidden|display: (none|contents)/.test(record.oldValue || '')
+    );
+  } else return true;
+}
+
 // Utility function used to click or focus an element contained in the trap.
 // It returns either undefined or whehter the focus action was successful.
 export function clickOrFocusDescendant(
@@ -25,7 +37,7 @@ export function clickOrFocusDescendant(
 function normalizeTabIndex(node: HTMLElement | SVGElement) {
   node.tabIndex =
     (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) || (node as any).isContentEditable) &&
-    node.getAttribute('tabindex') === null
+    isNaN(parseInt(node.getAttribute('tabindex')!, 10))
       ? 0
       : -1;
 }
@@ -87,7 +99,7 @@ export function updateTrap(
   trapBoundariesRef: React.MutableRefObject<TrapBoundaries>,
   initialFocus: FocusableElementIdentifier = null
 ) {
-  // if (!rootRef.current) throw some Error;
+  if (!rootRef.current) return; // will throw some error
 
   // Get all the focusable elements that are descendants of the trap's root node.
   const focusables = rootRef.current?.querySelectorAll<HTMLElement | SVGElement>(focusable);
@@ -158,6 +170,7 @@ export function forceFocus(trapBoundariesRef: React.MutableRefObject<TrapBoundar
   // Note that the type predicate does not narrow `element`'s type properly,
   // (see `(target as HTMLInputElement).name === boundary.name` few lines below)
   // There is an open issue: https://github.com/microsoft/TypeScript/issues/45770
+  // Note: VSC doesn't complain, but build throws error.
 
   const targetIsRadio = isRadioInput(target);
 

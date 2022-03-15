@@ -2,14 +2,19 @@ import { EventHandler, useCallback, useEffect, useRef } from 'react';
 
 import { FocusableElementRef, TrapBoundaries, TrapConfig } from './types';
 
-import { clickOrFocusDescendant, updateTrap, forceFocus } from './utils';
+import { isMutationAffectingTabbability, clickOrFocusDescendant, updateTrap, forceFocus } from './utils';
 
 export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker, escaper }: TrapConfig) {
   const rootRef = useRef<HTMLElement | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
   const returnFocusRef = useRef<FocusableElementRef>(null);
   const focusHasBeenReturnedRef = useRef(false);
-  const trapBoundariesRef = useRef<TrapBoundaries>({} as TrapBoundaries);
+  const trapBoundariesRef = useRef<TrapBoundaries>({
+    firstTabbable: null,
+    lastTabbable: null,
+    lastMaxPositiveTabIndex: null,
+    firstZeroTabIndex: null,
+  });
 
   // Handler for clicks happening on nodes not belonging to the trap's root.
   const outsideClicksHandler = useCallback((event: MouseEvent | TouchEvent) => {
@@ -55,21 +60,28 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
 
   // Callback for MutationObserver's constructor. It just calls updateTrap() when required.
   const mutationCallback: MutationCallback = useCallback((records) => {
-    // Update the trap's boundaries, unless
-    let mustRecomputeBoundaries = true;
+    const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex } = trapBoundariesRef.current;
+    if (!firstTabbable || !lastTabbable) return; // will throw some error
     let i = records.length;
     while (i--) {
       const record = records[i];
-      // the mutation occurred in the style of an element
-      if (record.attributeName === 'style') {
-        // in a way that did not affect the tabbability of the element.
-        mustRecomputeBoundaries =
-          (record.target as any).style.visibility === 'hidden' ||
-          /^(none|contents)$/.test((record.target as any).style.display) ||
-          /visibility: hidden|display: (none|contents)/.test(record.oldValue || '');
+      // If the mutation is affecting the tabbability of an element AND one of the following:
+      // either one of `lastMaxPositiveTabIndex` or `firstZeroTabIndex` exists, or
+      // `record.target` precedes `firstTabbable` or succeedes `lastTabbable` or
+      // it is one of them, or one of their ancestors.
+      if (
+        isMutationAffectingTabbability(record) &&
+        (lastMaxPositiveTabIndex ||
+          firstZeroTabIndex ||
+          record.target === firstTabbable ||
+          record.target === lastTabbable ||
+          firstTabbable.compareDocumentPosition(record.target) & 11 ||
+          lastTabbable.compareDocumentPosition(record.target) & 13)
+      ) {
+        // Update the trap and return from `mutationCallback`.
+        return updateTrap(rootRef, trapBoundariesRef, initialFocus);
       }
     }
-    if (mustRecomputeBoundaries) updateTrap(rootRef, trapBoundariesRef, initialFocus);
   }, []);
 
   // Build the trap when mounting the hook and demolish it when unmounting.

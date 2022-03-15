@@ -11,7 +11,7 @@ A lightweight React custom hook to trap the focus within an HTML element.
 - Do not worry about edge cases and browser support
 - Enjoy all of the above with little to no footprint on performance. :cherries:
 
-It is worth noticing that the hook has no states, thus it will not cause re-renders.  
+It's worth noting that the hook has no states, thus it will not cause re-renders.  
 (Though the return value that will be added will be a state. But still re-renders will be minimal, just to deliver errors.)
 
 ## Installation
@@ -101,7 +101,7 @@ interface Escaper {
   if (locker instanceof Function) locker(event);
   ```
 
-  [1] Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So you can make a specific node outisde of the trap _clickable_ even when `locker` is `true`, for example by listening for `mouseup` events.
+  [1] Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it is possible to make a specific node outisde of the trap _clickable_ even when `locker` is `true`, for example by listening for `mouseup` events.
 
 - **escaper**  
   By default, the trap breaks whenever the `Esc` key is pressed. The `escaper` object can be used to override this behaviour.
@@ -157,13 +157,13 @@ An `initialFocus` is provided too and is pointing to the same element the `escap
 `returnFocus` and `locker` are left `undefined`.  
 So the focus will be returned to what was the active element at the time the hook was called, and clicks outside of the trap are allowed (even though all they can do is closing the modal, because they are being catched by the backdrop's event handler).
 
-There is a group of radio buttons, which requires you to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
+There is a group of radio buttons, which requires to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
 
 ## Dependencies & Browser Support
 
 The are no dependencies.
 
-The browser support is from IE11+. See [MutationObserver](https://caniuse.com/mdn-api_mutationobserver) and [Node.contains()](https://caniuse.com/mdn-api_node_contains) for more details.
+The browser support is from IE11+. See [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver) and [Node.contains()](https://caniuse.com/mdn-api_node_contains) for more details.
 
 ## Special thanks
 
