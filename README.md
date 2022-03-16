@@ -11,9 +11,6 @@ A lightweight React custom hook to trap the focus within an HTML element.
 - Do not worry about edge cases and browser support
 - Enjoy all of the above with little to no footprint on performance. :cherries:
 
-It's worth noting that the hook has no states, thus it will not cause re-renders.  
-(Though the return value that will be added will be a state. But still re-renders will be minimal, just to deliver errors.)
-
 ## Installation
 
 ```bash
@@ -129,9 +126,17 @@ interface Escaper {
 
 ## Return value
 
-`void` for the moment.
+The return value is an array of two elements:
 
-Error handling will be added and the hook will return some informative status.
+| Index | Type            |
+| ----- | --------------- |
+| 0     | `Error \| null` |
+| 1     | `() => void`    |
+
+The first element is a React state being either an `Error` or `null`.  
+The second element is an handy function that, when called, resets the error state (sets the first element to `null`).
+
+It's worth noting that the hook doesn't have any state other than the aforementioned error one, thus it's unlikely to cause rerenders. :zap:
 
 ## Example
 
@@ -174,8 +179,6 @@ The reason why _tabbable_ is not being used directly as a dependency is that the
 The hook leaves the responsibility of choosing focusable and tabbable elements up to the browser, and only tests the tabbability of a few (from 2 to 4) key elements in the trap. The whole _tabbable_'s logic is oversimplified to about 50 lines of code.
 
 ## Development status
-
-- Error handling is missing.
 
 - Tests are missing.
 
