@@ -4,7 +4,7 @@ import { FocusableElementRef, TrapBoundaries, TrapConfig } from './types';
 
 import { isMutationAffectingTabbability, clickOrFocusDescendant, updateTrap, forceFocus } from './utils';
 
-export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker, escaper }: TrapConfig) {
+export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker, escaper }: TrapConfig = {}) {
   const rootRef = useRef<HTMLElement | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
   const returnFocusRef = useRef<FocusableElementRef>(null);
@@ -93,7 +93,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   // Build the trap when mounting the hook and demolish it when unmounting.
   useEffect(() => {
     // Get the trap's root node.
-    rootRef.current = typeof trapRoot === 'string' ? document.getElementById(trapRoot) : trapRoot;
+    rootRef.current = typeof trapRoot === 'string' ? document.getElementById(trapRoot) : trapRoot || null;
     if (__DEV__) {
       if (!rootRef.current) throw new Error('The provided trapRoot does not reference any existing DOM node');
     }

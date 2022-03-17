@@ -17,7 +17,7 @@ export interface Escaper {
 }
 
 export interface TrapConfig {
-  trapRoot: string | HTMLElement;
+  trapRoot?: string | HTMLElement;
   initialFocus?: FocusableElementIdentifier;
   returnFocus?: FocusableElementIdentifier;
   locker?: boolean | Function;
