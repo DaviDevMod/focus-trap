@@ -1,11 +1,10 @@
-import { EventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import { EventHandler, useCallback, useEffect, useRef } from 'react';
 
 import { FocusableElementRef, TrapBoundaries, TrapConfig } from './types';
 
 import { isMutationAffectingTabbability, clickOrFocusDescendant, updateTrap, forceFocus } from './utils';
 
 export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker, escaper }: TrapConfig) {
-  const [error, setError] = useState<Error | null>(null);
   const rootRef = useRef<HTMLElement | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
   const returnFocusRef = useRef<FocusableElementRef>(null);
@@ -16,9 +15,6 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
     lastMaxPositiveTabIndex: null,
     firstZeroTabIndex: null,
   });
-
-  // Returned function allowing to reset the `error` state (useful after having handled the error).
-  const clearError = useCallback(() => setError(null), []);
 
   // Handler for clicks happening on nodes not belonging to the trap's root.
   const outsideClicksHandler = useCallback((event: MouseEvent | TouchEvent) => {
@@ -35,11 +31,11 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   // Handler for keybord events.
   const keyboardNavigationHandler = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Tab' || event.keyCode === 9) {
-      forceFocus(setError, trapBoundariesRef, event);
+      forceFocus(event, trapBoundariesRef);
     } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
       const { keepTrap, custom, identifier, focus } = escaper || {};
       if (custom) custom();
-      if (identifier) clickOrFocusDescendant(setError, rootRef.current, identifier, focus ? 'FOCUS' : 'CLICK');
+      if (identifier) clickOrFocusDescendant(rootRef.current, identifier, focus ? 'FOCUS' : 'CLICK');
       if (!keepTrap) eventListeners('REMOVE');
     }
   }, []);
@@ -65,10 +61,13 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   // Callback for MutationObserver's constructor. It just calls updateTrap() when required.
   const mutationCallback: MutationCallback = useCallback((records) => {
     const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex } = trapBoundariesRef.current;
-    // Checking both of them just to let TS know that they both exist afterwards.
-    if (!firstTabbable || !lastTabbable) {
-      return setError(new Error('Looks like there are no tabbable elements in the trap'));
+    if (__DEV__) {
+      if (!rootRef.current) throw new Error('The provided trapRoot does not reference any existing DOM node');
+      if (!trapBoundariesRef.current.firstTabbable) {
+        throw new Error('Looks like there are no tabbable elements in the trap');
+      }
     }
+    if (!rootRef.current || !firstTabbable || !lastTabbable) return;
     let i = records.length;
     while (i--) {
       const record = records[i];
@@ -86,7 +85,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
           lastTabbable.compareDocumentPosition(record.target) & 13)
       ) {
         // Update the trap and return from `mutationCallback`.
-        return updateTrap(setError, rootRef, trapBoundariesRef, initialFocus);
+        return updateTrap(rootRef.current, trapBoundariesRef, initialFocus);
       }
     }
   }, []);
@@ -95,9 +94,10 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
   useEffect(() => {
     // Get the trap's root node.
     rootRef.current = typeof trapRoot === 'string' ? document.getElementById(trapRoot) : trapRoot;
-    // Set an error if `rootRef` doesn't reference an element in the current DOM.
-    if (!rootRef.current) return setError(new Error('The provided trapRoot does not reference any existing DOM node'));
-    try {
+    if (__DEV__) {
+      if (!rootRef.current) throw new Error('The provided trapRoot does not reference any existing DOM node');
+    }
+    if (rootRef.current) {
       // Store a reference to either the provided `returnFocus` or the current `activeElement`.
       returnFocusRef.current = returnFocus
         ? typeof returnFocus === 'string'
@@ -105,7 +105,7 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
           : returnFocus
         : (document.activeElement as FocusableElementRef);
       // Update the trap's boundaries and set the initial focus.
-      updateTrap(setError, rootRef, trapBoundariesRef, initialFocus);
+      updateTrap(rootRef.current, trapBoundariesRef, initialFocus);
       // Start to watch for changes being made to the subtree of the root element.
       observerRef.current = new MutationObserver(mutationCallback);
       observerRef.current.observe(rootRef.current, {
@@ -117,16 +117,12 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       });
       // Handle keyboard navigation inside of the trap and clicks outside of the trap.
       eventListeners('SET');
-    } catch (error) {
-      setError(error as Error);
+      // Remove listeners, disconnect observer and return focus when the hook unmounts.
+      return () => {
+        eventListeners('REMOVE');
+        observerRef.current?.disconnect();
+        if (!focusHasBeenReturnedRef.current) returnFocusRef.current?.focus();
+      };
     }
-    // Remove listeners, disconnect observer and return focus when the hook unmounts.
-    return () => {
-      eventListeners('REMOVE');
-      observerRef.current?.disconnect();
-      if (!focusHasBeenReturnedRef.current) returnFocusRef.current?.focus();
-    };
   }, []);
-
-  return [error, clearError];
 }

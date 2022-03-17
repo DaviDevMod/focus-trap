@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import './Modal.css';
 import { TrapConfig } from '../../../../src/types';
-import { useSimpleFocusTrap } from '../../../../src';
+import { useSimpleFocusTrap } from '../../../../.';
 
 interface BackdropProps {
   onClose: () => void;

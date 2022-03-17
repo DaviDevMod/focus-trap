@@ -126,17 +126,19 @@ interface Escaper {
 
 ## Return value
 
-The return value is an array of two elements:
+`Void`.
 
-| Index | Type            |
-| ----- | --------------- |
-| 0     | `Error \| null` |
-| 1     | `() => void`    |
+## Dependencies & Browser Support
 
-The first element is a React state being either an `Error` or `null`.  
-The second element is an handy function that, when called, resets the error state (sets the first element to `null`).
+The are no dependencies. :trophy:
 
-It's worth noting that the hook doesn't have any state other than the aforementioned error one, thus it's unlikely to cause rerenders. :zap:
+The browser support is from IE11+. See [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver) and [Node.contains()](https://caniuse.com/mdn-api_node_contains) for more details.
+
+## Nice to know
+
+The hook is stateless, thus it will never cause a rerender. :fire:
+
+Errors are not thrown in production, since a web page can live without focus trap, but they are thrown in development in order to help with eventual debugging.
 
 ## Example
 
@@ -164,12 +166,6 @@ So the focus will be returned to what was the active element at the time the hoo
 
 There is a group of radio buttons, which requires to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
 
-## Dependencies & Browser Support
-
-The are no dependencies.
-
-The browser support is from IE11+. See [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver) and [Node.contains()](https://caniuse.com/mdn-api_node_contains) for more details.
-
 ## Special thanks
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
@@ -183,8 +179,6 @@ The hook leaves the responsibility of choosing focusable and tabbable elements u
 - Tests are missing.
 
 - The example doesn't cover all the functionalities and it is not deployed.
-
-- Features with a poor value/performance ratio may not get implemented, as the original purpose of the hook is to provide a basic, easy-to-use, light & fast :fire: focus trap.
 
 ## Contributions
 
