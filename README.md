@@ -138,7 +138,7 @@ The browser support is from IE11+. See [MutationObserver API](https://caniuse.co
 
 - The hook is stateless, thus it will never cause a rerender. :fire:
 
-- Errors are not thrown in production, since a web page can live without focus trap.  
+- Errors are not thrown in production, since a web page can live without focus trap. :speak_no_evil:  
   So it is possible, for example, to call the hook with no arguments without getting any feedback, the trap would just silently do nothing.
 
   However in development environment, errors are thrown if no valid `trapRoot` is provided or if at any given time, the trap doesn't contain at least one tabbable element. More errors may be added in the future.
