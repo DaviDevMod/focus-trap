@@ -60,32 +60,32 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
 
   // Callback for MutationObserver's constructor. It just calls updateTrap() when required.
   const mutationCallback: MutationCallback = useCallback((records) => {
-    const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex } = trapBoundariesRef.current;
+    const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex } = trapBoundariesRef.current;
     if (__DEV__) {
-      if (!rootRef.current) throw new Error('The provided trapRoot does not reference any existing DOM node');
       if (!trapBoundariesRef.current.firstTabbable) {
         throw new Error('Looks like there are no tabbable elements in the trap');
       }
     }
-    if (!rootRef.current || !firstTabbable || !lastTabbable) return;
+    if (!firstTabbable || !lastTabbable) return;
     let i = records.length;
     while (i--) {
       const record = records[i];
-      // If the mutation is affecting the tabbability of an element AND one of the following:
-      // either one of `lastMaxPositiveTabIndex` or `firstZeroTabIndex` exists, or
-      // `record.target` precedes `firstTabbable` or succeeds `lastTabbable` or
-      // it is one of them, or one of their ancestors.
-      if (
-        isMutationAffectingTabbability(record) &&
-        (lastMaxPositiveTabIndex ||
-          firstZeroTabIndex ||
-          record.target === firstTabbable ||
-          record.target === lastTabbable ||
-          firstTabbable.compareDocumentPosition(record.target) & 11 ||
-          lastTabbable.compareDocumentPosition(record.target) & 13)
-      ) {
-        // Update the trap and return from `mutationCallback`.
-        return updateTrap(rootRef.current, trapBoundariesRef, initialFocus);
+      if (isMutationAffectingTabbability(record)) {
+        // If there are no positive tab indexes in the trap and the mutation doesn't concern tab indexes,
+        // it is possible to ignore mutations on inner elements.
+        if (!lastMaxPositiveTabIndex && record.attributeName !== 'tabindex') {
+          // If `record.target` precedes `firstTabbable` or succeeds `lastTabbable`,
+          // or it is one of them, or one of their ancestors.
+          if (
+            record.target === firstTabbable ||
+            record.target === lastTabbable ||
+            firstTabbable.compareDocumentPosition(record.target) & 11 ||
+            lastTabbable.compareDocumentPosition(record.target) & 13
+          ) {
+            // Update the trap and return from `mutationCallback`.
+            return updateTrap(rootRef.current!, trapBoundariesRef, initialFocus);
+          }
+        } else return updateTrap(rootRef.current!, trapBoundariesRef, initialFocus);
       }
     }
   }, []);
@@ -125,4 +125,12 @@ export function useSimpleFocusTrap({ trapRoot, initialFocus, returnFocus, locker
       };
     }
   }, []);
+
+  if (__DEV__) {
+    return {
+      trapRoot: rootRef.current,
+      returnFocus: returnFocusRef.current,
+      ...trapBoundariesRef.current,
+    };
+  }
 }

@@ -4,7 +4,7 @@ A lightweight React custom hook to trap the focus within an HTML element.
 
 ### The hook offers the possibility to:
 
-- Choose an element receiving the initial focus
+- Choose an element receiving the initial focus within the trap
 - Prevent clicks on elements outside of the trap
 - Bind different behaviours to the `Esc` key
 - Choose an element receiving the focus after the trap breaks
@@ -126,7 +126,7 @@ interface Escaper {
 
 ## Return value
 
-`Void`.
+**`Void`**
 
 ## Dependencies & Browser Support
 
@@ -136,9 +136,29 @@ The browser support is from IE11+. See [MutationObserver API](https://caniuse.co
 
 ## Nice to know
 
-The hook is stateless, thus it will never cause a rerender. :fire:
+- The hook is stateless, thus it will never cause a rerender. :fire:
 
-Errors are not thrown in production, since a web page can live without focus trap, but they are thrown in development in order to help with eventual debugging.
+- Errors are not thrown in production, since a web page can live without focus trap.  
+  So it is possible, for example, to call the hook with no arguments without getting any feedback, the trap would just silently do nothing.
+
+  However in development environment, errors are thrown if no valid `trapRoot` is provided or if at any given time, the trap doesn't contain at least one tabbable element. More errors may be added in the future.
+
+- **Only in development**, in order to help with debugging, the hook returns the following object:
+
+  ```javascript
+  {
+    trapRoot,
+    returnFocus,
+    firstTabbable,
+    lastMaxPositiveTabIndex,
+    firstZeroTabIndex,
+    lastTabbable,
+  }
+  ```
+
+  Where `trapRoot` is the element in which the focus is being trapped, `returnFocus` is the element getting the focus once the trap breaks and the other four are key elements in the trap for which the tabbing has to be handled programmatically.
+
+  :warning: Accessing properties of the return value in production will break your application, so to avoid any problem, just don't use the return value unless you need a quick insight on what's going on.
 
 ## Example
 
@@ -172,7 +192,7 @@ The logic for the treatement of edge cases, in matter of browser consistency reg
 
 The reason why _tabbable_ is not being used directly as a dependency is that the hook aims to be as light and fast as possible and _tabbable_ is, for the purposes of this hook, too powerful.
 
-The hook leaves the responsibility of choosing focusable and tabbable elements up to the browser, and only tests the tabbability of a few (from 2 to 4) key elements in the trap. The whole _tabbable_'s logic is oversimplified to about 50 lines of code.
+The hook leaves the responsibility of choosing focusable and tabbable elements up to the browser, and only tests the actual tabbability of a few key elements in the trap. The whole _tabbable_'s logic is oversimplified to about 50 lines of code.
 
 ## Development status
 
