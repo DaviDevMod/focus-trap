@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    commit-message:
+      prefix: '[DEPENDABOT]'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'DaviDevMod'
+    versioning-strategy: 'increase'
+
+  - package-ecosystem: 'npm'
+    directory: '/example'
+    schedule:
+      interval: 'weekly'
+    commit-message:
+      prefix: '[DEPENDABOT]'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'DaviDevMod'
+    versioning-strategy: 'increase'
