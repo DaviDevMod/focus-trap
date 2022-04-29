@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useState } from 'react';
 
-import './ChooseYourPill.css';
+//import './ChooseYourPill.css';
 import { TrapConfig } from '../../../src/types';
-import { PillChoice } from '../../types';
+import { PillChoice } from '../../types/types';
 import Modal from '../UI/modal/Modal';
 
 interface Props {
@@ -10,13 +10,12 @@ interface Props {
 }
 
 const trapConfig: TrapConfig = {
-  trapRoot: 'modalOverlay',
-  escaper: { identifier: 'closeModal' },
+  root: 'modalOverlay',
   initialFocus: 'closeModal',
 };
 
 function ChooseYourPill(props: Props) {
-  const [chosenPill, setChosenPill] = React.useState(PillChoice.BluePill);
+  const [chosenPill, setChosenPill] = useState(PillChoice.BluePill);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChosenPill(event.target.value as PillChoice);

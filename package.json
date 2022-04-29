@@ -1,8 +1,8 @@
 {
+  "name": "use-simple-focus-trap",
   "version": "0.0.1-development.12",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "repository": "https://github.com/DaviDevMod/use-simple-focus-trap",
   "files": [
     "dist",
     "src"
@@ -11,37 +11,26 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16.8.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 120,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "name": "use-simple-focus-trap",
-  "author": {
-    "name": "Davide Modica",
-    "email": "davidevmod@gmail.com",
-    "url": "https://github.com/DaviDevMod"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DaviDevMod/use-simple-focus-trap"
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "@vitejs/plugin-react": "^1.0.7",
+    "eslint": "^8.0.0",
+    "eslint-config-react-app": "^7.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.8",
+    "prettier": "^2.6.1",
+    "typescript": "4.6.2",
+    "vite": "^2.8.0"
   },
   "keywords": [
     "use",
@@ -51,34 +40,12 @@
     "custom",
     "hook",
     "react",
-    "lightweight",
-    "TypeScript"
+    "TypeScript",
+    "lightweight"
   ],
-  "module": "dist/use-simple-focus-trap.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/use-simple-focus-trap.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/use-simple-focus-trap.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.8",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
-    "eslint-config-react-app": "^7.0.0",
-    "eslint-plugin-jest-dom": "^4.0.1",
-    "eslint-plugin-testing-library": "^5.0.5",
-    "husky": "^7.0.4",
-    "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "size-limit": "^7.0.8",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.6.2"
+  "author": {
+    "name": "Davide Modica",
+    "email": "davidevmod@gmail.com",
+    "url": "https://github.com/DaviDevMod"
   }
 }

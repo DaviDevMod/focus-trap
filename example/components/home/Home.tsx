@@ -1,14 +1,12 @@
-import 'react-app-polyfill/ie11';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { Fragment, useState } from 'react';
 
-import './index.css';
-import { PillChoice } from './types';
-import ChooseYourPill from './components/choose-your-pill/ChooseYourPill';
+//import './index.css';
+import { PillChoice } from '../../types/types';
+import ChooseYourPill from '../choose-your-pill/ChooseYourPill';
 
-function App() {
-  const [showChoice, setShowChoice] = React.useState(false);
-  const [choice, setChoice] = React.useState(PillChoice.NoChoice);
+function Home() {
+  const [showChoice, setShowChoice] = useState(false);
+  const [choice, setChoice] = useState(PillChoice.NoChoice);
 
   const goAheadHandler = () => setShowChoice(true);
 
@@ -20,13 +18,13 @@ function App() {
   const turnBackHandler = () => setChoice(PillChoice.NoChoice);
 
   const openingLine = (
-    <React.Fragment>
+    <Fragment>
       <h1>This is your last chance</h1>
       <p>After this, there is no turning back.</p>
       <button type="button" onClick={goAheadHandler}>
         Go ahead
       </button>
-    </React.Fragment>
+    </Fragment>
   );
 
   const bluePillLine = <h1 className="white_text">You have chosen to believe whatever you want.</h1>;
@@ -50,9 +48,4 @@ function App() {
   );
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export default Home;

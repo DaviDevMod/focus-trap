@@ -2,204 +2,140 @@
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
-### The hook offers the possibility to:
+### What can you do with use-simple-focus-trap?
 
-- Choose an element receiving the initial focus within the trap
-- Prevent clicks on elements outside of the trap
+- Create a simple focus trap
+- Choose an element receiving the initial focus within a trap
+- Decide whether to prevent clicks on elements outside of a trap
 - Bind different behaviours to the `Esc` key
-- Choose an element receiving the focus after the trap breaks
-- Do not worry about edge cases and browser support
-- Enjoy all of the above with little to no footprint on performance. :cherries:
+- Choose an element receiving the focus after a trap is left
+- Create a focus trap from inside another one
+- Build, demolish, pause and resume a trap at any time
 
 ## Installation
 
 ```bash
 npm install use-simple-focus-trap
+
+# or
+
+yarn add use-simple-focus-trap
 ```
 
 ## Usage
 
-Import the hook and and call it with an object having a `trapRoot` property.  
-The value of `trapRoot` must be either the `HTMLElement` in which the focus has to be trapped, or its `id`.
+All that is needed to get a trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.
+The hook will stop trapping the focus as soon as it is unmounted or whenever the user presses the `Esc` key.
 
 ```javascript
-import { useSimpleFocusTrap } from 'use-simple-focus-trap';
+import useFocusTrap from 'use-simple-focus-trap';
 
 function MyComponent() {
-  useSimpleFocusTrap({ trapRoot: 'rootOfTheTrap' });
+  useFocusTrap({ root: 'aValidOne' });
 
-  return <h1>The focus is now trapped inside of an element with "rootOfTheTrap" as id</h1>;
+  return <h1>The focus is now trapped inside of an HTMLlement with "aValidOne" as id</h1>;
 }
 
 export default MyComponent;
 ```
 
-Dealing with `id`s rather than actual elements, allows to easily decouple the hook from the JSX that renders the elements in the trap. :zap:
-
-It is possible to customise the beahviour of the trap by providing certain additional properties.
-
 ## Default behaviour
 
-By default (if `trapRoot` is the only property provided with a valid value) this is what happens when the hook is called:
+By default (if `root` is the only property provided with a valid value) this is what happens when a focus trap is built:
 
-- Focus is given to the first tabbable element in the trap
-- The `Tab` and `Shift+Tab` keys cycles through the focus trap's tabbable elements
-- Clicks outside of the trap behave as usual
-- The trap breaks whenever the `Esc` key is pressed
+- Focus is given to the first tabbable descendant of `root`
+- The `Tab` and `Shift+Tab` keys cycles through the rap's tabbable elements
+- Clicks outside of the trap are prevented<sup>[[1]](#note-expansion-1)</sup>
+- The trap breaks whenever the `Esc` key is pressed or the hook unmounts
 - Once the trap breaks, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
 
 ## Parameters
 
-The hook has to be called with a single parameter being an object with the following properties:
+The hook receives a single parameter being an object with a few optional properties that help customize the beahviour of the trap.
 
 | Name         | Required | Type                         |    Default value    |
 | ------------ | -------- | ---------------------------- | :-----------------: |
-| trapRoot     | **Yes**  | `string \| HTMLElement`      |          -          |
+| root         | No       | `HTMLElement \| string`      |          -          |
 | initialFocus | No       | `FocusableElementIdentifier` |   first tabbable    |
-| returnFocus  | No       | `FocusableElementIdentifier` | last activeElement  |
-| locker       | No       | `boolean \| Function`        |       `false`       |
-| escaper      | No       | `Escaper`                    | `{keepTrap: false}` |
+| returnFocus  | No       | `FocusableElementIdentifier` | last active element |
+| lock         | No       | `boolean \| Function`        |       `true`        |
+| escape       | No       | `boolean \| Function`        |       `true`        |
 
-Where `FocusableElementIdentifier` and `Escaper` are defined as follows:
-
-```javascript
+```ts
 type FocusableElementRef = HTMLElement | SVGElement | null;
 
-type FocusableElementIdentifier = string | FocusableElementRef;
-
-interface Escaper {
-  keepTrap?: boolean;
-  custom?: Function;
-  identifier?: FocusableElementIdentifier;
-  focus?: boolean;
+interface TrapConfig {
+  root?: HTMLElement | string;
+  initialFocus?: FocusableElementRef | string;
+  returnFocus?: FocusableElementRef | string;
+  lock?: boolean | Function;
+  escape?: boolean | Function;
 }
 ```
 
-- **trapRoot**  
-  It must be the `HTMLElement` in which to trap the focus, or its `id`.  
-  It is required and if it doesn't point to an `HTMLElement` the hook does nothing.
+- **root**  
+  It is the `HTMLElement` in which the focus has to be trapped, or its `id`.  
+  If it's missing or invalid, the hook does nothing.
 
 - **initialFocus**  
-  It is the element that will receive the initial focus within the trap.
-  It must be of type `FocusableElementIdentifier` and referencing a focusable [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
-  If it's missing or invalid, the initial focus defaults to the first tabbable element in the trap.
+  It is the element that will receive the initial focus within the trap.  
+  If it's missing or invalid, it defaults to the first tabbable element in the trap.
 
 - **returnFocus**  
   It is the element that will receive the focus once the trap breaks.  
-  It must be of type `FocusableElementIdentifier`.  
   If it's missing or invalid, the focus will be returned to what was the active element at the time the hook was called.
 
-- **locker**  
-  Must be either a `boolean` or a `Function`.  
-  By default clicks on elements not belonging to the trap's root behave as usual, if `locker` is set to `true` they will not fire events<sup>[1]</sup>.  
-  If instead, `locker` is provided as a funciton, this will be used as an event handler for clicks on elements outside of the trap. The function will be called with the `MouseEvent | TouchEvent` in question:
+- **lock**  
+  By default clicks on elements not belonging to the trap's root are prevented<sup>[[1]](#note-expansion-1)</sup>.  
+  If `lock` is set to `false`, clicks behave as usual.  
+  If `lock` is provided as a funciton, it will be used as an event handler, it will be called with the `MouseEvent | TouchEvent` in question.
 
-  ```javascript
-  if (locker instanceof Function) locker(event);
-  ```
+  <span id='note-expansion-1'>[1]</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
-  [1] Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it is possible to make a specific node outisde of the trap _clickable_ even when `locker` is `true`, for example by listening for `mouseup` events.
-
-- **escaper**  
-  By default, the trap breaks whenever the `Esc` key is pressed. The `escaper` object can be used to override this behaviour.
-
-  - **keepTrap**  
-    Must be a boolean, which if `true` prevents the trap from breaking in the event of an `Esc` key press.
-
-  - **custom**  
-    This property must be a `Function`.
-    If provided, it will be executed whenever the `Esc` key is pressed.
-
-  - **identifier** plus an optional **focus**  
-    The `identifier` is meant to reference a button that when clicked closes a modal in which the focus has been trapped.  
-    It must be of type `FocusableElementIdentifier` and referencing a focusable [descendant](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) of the trap's root node.  
-    `focus` must be a boolean.  
-    Whenever the `Esc` key is pressed, if a valid `identifier` is provided, the referenced element will fire a click event, unless `focus` is `true`, in this case the element would get focused instead.
-
-  For completeness, this is the order in which the above properties act on the trap whenever `Esc` is pressed:
-
-  ```javascript
-  if (custom) custom();
-  if (identifier) either click or focus the referenced element;
-  if (!keepTrap) demolish the trap;
-  ```
+- **escape**  
+  Whenever the `Esc` key is pressed, the trap breaks by default.  
+  If `escape` is set to `false`, the trap is kept running. If it's provided as a function, instead, it will be executed.
 
 ## Return value
 
-**`Void`**
+The return value is a funciton that can be used to build, demolish, pause and resume a trap.  
+The function receives a single argument, being an object of type `TrapsControllerArgs`.
+
+```ts
+type TrapsControllerArgs =
+  | { action: 'BUILD'; config: TrapConfig }
+  | { action: 'DEMOLISH'; config?: never }
+  | { action: 'RESUME'; config?: never }
+  | { action: 'PAUSE'; config?: never };
+```
+
+The hook automatically manages a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.  
+Whenever a new trap is built, the current trap (if any) is paused.  
+Whenever a trap is demolished, the previous trap (if any) is resumed.
 
 ## Dependencies & Browser Support
 
-The are no dependencies. :trophy:
+The are no dependencies :cherries: and the hook can run in virtually any major browser except for IE.
 
-The browser support is from IE11+. See [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver) and [Node.contains()](https://caniuse.com/mdn-api_node_contains) for more details.
+The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver), which is supported by IE11. However a couple of tweaks are required (even [from your side](https://create-react-app.dev/docs/supported-browsers-features/#supported-browsers)) to make the hook work in IE and since even Microsoft itself started to [drop support for IE](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support), the hook refrains from adding suppport for it.
 
 ## Nice to know
 
-- The hook is stateless, thus it will never cause a rerender. :fire:
+- Each focus trap is stateless :zap: and the hook can cause a rerender only when a trap is demolished or a new trap is created.
 
-- Errors are not thrown in production, since a web page can live without focus trap. :speak_no_evil:  
-  So it is possible, for example, to call the hook with no arguments without getting any feedback, the trap would just silently do nothing.
+- A web page can live without focus trap. :speak_no_evil:
 
-  However in development environment, errors are thrown if no valid `trapRoot` is provided or if at any given time, the trap doesn't contain at least one tabbable element. More errors may be added in the future.
-
-- **Only in development**, in order to help with debugging, the hook returns the following object:
-
-  ```javascript
-  {
-    trapRoot,
-    returnFocus,
-    firstTabbable,
-    lastMaxPositiveTabIndex,
-    firstZeroTabIndex,
-    lastTabbable,
-  }
-  ```
-
-  Where `trapRoot` is the element in which the focus is being trapped, `returnFocus` is the element getting the focus once the trap breaks and the other four are key elements in the trap for which the tabbing has to be handled programmatically.
-
-  :warning: Accessing properties of the return value in production will break your application, so to avoid any problem, just don't use the return value unless you need a quick insight on what's going on.
-
-## Example
-
-You can see the hook in action by navigating to the "example" folder of this project and then running `npm start`.
-
-The example has three main components:
-
-- **App**  
-  It conditionally renders, among the other things, a `<ChooseYourPill>` component
-
-- **ChooseYourPill**  
-  It defines a [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset), which is rendered wrapped in a reusable `<Modal>` component
-
-- **Modal**  
-  It is a reusable modal component.
-
-The hook is called directly in the `<Modal>` component. In this way the focus is trapped automatically when a modal is opened, and the hook unmounts automatically when the `<Modal>` unmounts.
-
-An `escaper` is provided, which makes the `Esc` key fire a click on a button and the `<Modal>` component is unmounted as result of the click.
-
-An `initialFocus` is provided too and is pointing to the same element the `escaper`'s `identifier` is pointing to. (This is a good practice [according to React](https://reactjs.org/docs/accessibility.html#programmatically-managing-focus), since it prevents "_the keyboard user from accidentally activating the success action_")
-
-`returnFocus` and `locker` are left `undefined`.  
-So the focus will be returned to what was the active element at the time the hook was called, and clicks outside of the trap are allowed (even though all they can do is closing the modal, because they are being catched by the backdrop's event handler).
-
-There is a group of radio buttons, which requires to [use arrow keys for interaction](https://www.w3.org/wiki/RadioButton).
+  So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application.  
+  Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable element in the current trap; it has been attempted to resume, pause or demolish an inexistent trap.
 
 ## Special thanks
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-The reason why _tabbable_ is not being used directly as a dependency is that the hook aims to be as light and fast as possible and _tabbable_ is, for the purposes of this hook, too powerful.
+This small library has been around for many years and, at the time of writing, can boast 180 dependdant packages and one million weekly downloads while having zero open issues. Which makes feel safe regarding the edge cases logic.
 
-The hook leaves the responsibility of choosing focusable and tabbable elements up to the browser, and only tests the actual tabbability of a few key elements in the trap. The whole _tabbable_'s logic is oversimplified to about 50 lines of code.
-
-## Development status
-
-- Tests are missing.
-
-- The example doesn't cover all the functionalities and it is not deployed.
+The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
 
 ## Contributions
 
-Contributions are more than welcome! :rocket::rocket:
+Any kind of contribution is more than welcome!

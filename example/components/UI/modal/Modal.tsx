@@ -1,9 +1,9 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { Fragment, useRef } from 'react';
+import ReactDOM from 'react-dom';
 
-import './Modal.css';
+//import './Modal.css';
 import { TrapConfig } from '../../../../src/types';
-import { useSimpleFocusTrap } from '../../../../.';
+import useSimpleFocusTrap from '../../../../src';
 
 interface BackdropProps {
   onClose: () => void;
@@ -34,17 +34,17 @@ const ModalOverlay = (props: ModalOverlayProps) => {
 
 function Modal(props: ModalProps) {
   useSimpleFocusTrap(props.trapConfig);
-  const portalElement = React.useRef<HTMLElement | null>();
+  const portalElement = useRef<HTMLElement | null>();
 
   portalElement.current = document.getElementById(props.portalId);
 
   if (portalElement.current) {
     return (
-      <React.Fragment>
+      <Fragment>
         {portalElement.current && ReactDOM.createPortal(<Backdrop onClose={props.onClose} />, portalElement.current)}
         {portalElement.current &&
           ReactDOM.createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement.current)}
-      </React.Fragment>
+      </Fragment>
     );
   }
   return null;

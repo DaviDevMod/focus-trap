@@ -1,25 +1,51 @@
 export type FocusableElementRef = HTMLElement | SVGElement | null;
 
-export type FocusableElementIdentifier = string | FocusableElementRef;
-
-export interface TrapBoundaries {
+export interface TrapRefs {
+  mutationObserver: MutationObserver | null;
   firstTabbable: FocusableElementRef;
   lastTabbable: FocusableElementRef;
   lastMaxPositiveTabIndex: FocusableElementRef;
   firstZeroTabIndex: FocusableElementRef;
 }
 
-export interface Escaper {
-  keepTrap?: boolean;
-  custom?: Function;
-  identifier?: FocusableElementIdentifier;
-  focus?: boolean;
+// export interface SingleTrapEscaper {
+//   keepTrap?: boolean;
+//   custom?: Function;
+//   identifier?: FocusableElementRef;
+//   focus?: boolean;
+// }
+
+// export interface Escaper extends Omit<SingleTrapEscaper, 'identifier'> {
+//   identifier?: FocusableElementRef | string;
+// }
+
+export interface SingleTrapConfig {
+  root: HTMLElement;
+  initialFocus?: FocusableElementRef;
+  returnFocus?: FocusableElementRef;
+  lock?: boolean | Function;
+  escape?: boolean | Function;
+  stackIsEmpty?: true;
 }
 
 export interface TrapConfig {
-  trapRoot?: string | HTMLElement;
-  initialFocus?: FocusableElementIdentifier;
-  returnFocus?: FocusableElementIdentifier;
-  locker?: boolean | Function;
-  escaper?: Escaper;
+  root?: HTMLElement | string;
+  initialFocus?: FocusableElementRef | string;
+  returnFocus?: FocusableElementRef | string;
+  lock?: boolean | Function;
+  escape?: boolean | Function;
 }
+
+// Doing groupings like `'BUILD' | 'DEMOLISH'` and `'RESUME' | 'PAUSE'` would cause
+// indirect narrowing to fail: https://github.com/microsoft/TypeScript/issues/48846
+export type SingleTrapControllerArgs =
+  | { action: 'BUILD'; config: SingleTrapConfig }
+  | { action: 'DEMOLISH'; config: SingleTrapConfig }
+  | { action: 'RESUME'; config?: never }
+  | { action: 'PAUSE'; config?: never };
+
+export type TrapsControllerArgs =
+  | { action: 'BUILD'; config: TrapConfig }
+  | { action: 'DEMOLISH'; config?: never }
+  | { action: 'RESUME'; config?: never }
+  | { action: 'PAUSE'; config?: never };
