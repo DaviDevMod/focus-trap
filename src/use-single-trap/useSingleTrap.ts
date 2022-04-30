@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SingleTrapControllerArgs, TrapRefs, SingleTrapConfig } from '../types';
-import { isMutationAffectingTabbability, clickOrFocusDescendant, updateTrap, assistTabbing } from './single-utils';
+import { isMutationAffectingTabbability, updateTrap, assistTabbing } from './single-utils';
 
 // A simple object would require some extra care every time it is used,
 // as any change made to it would persist through distinct single-traps.

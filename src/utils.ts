@@ -26,7 +26,7 @@ export function resolveConfig(config: TrapConfig = {}): SingleTrapConfig | null 
   return {
     ...config,
     root,
-    initalFocus: resolveId(config.initialFocus),
+    initialFocus: resolveId(config.initialFocus),
     returnFocus: resolveId(config.returnFocus) ?? (document.activeElement as FocusableElementRef),
   } as SingleTrapConfig;
 }

@@ -16,18 +16,6 @@ export function isMutationAffectingTabbability(record: MutationRecord) {
   } else return true;
 }
 
-// Utility function used to click or focus an element contained in the trap.
-// It returns either `undefined` or whehter the 'FOCUS' action succeded.
-export function clickOrFocusDescendant(root: HTMLElement, target: FocusableElementRef, action: 'CLICK' | 'FOCUS') {
-  if (root.contains(target)) {
-    if (action === 'CLICK' && target instanceof HTMLElement) target.click();
-    else if (action === 'FOCUS' && target) {
-      target.focus();
-      return target === document.activeElement;
-    }
-  }
-}
-
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
 // nodes. In these cases the `tabIndex` is assumed to be 0 if it's not specifically set to a valid value.
@@ -145,7 +133,8 @@ export function updateTrap(
   // If the focus is not in the trap, give focus to either `initialFocus` or `firstTabbable`.
   // TODO: This behaviour may be undesired. Consider adding logic.
   if (!root.contains(document.activeElement)) {
-    clickOrFocusDescendant(root, initialFocus, 'FOCUS') || trapRefs.current.firstTabbable?.focus();
+    initialFocus?.focus();
+    if (document.activeElement !== initialFocus) trapRefs.current.firstTabbable?.focus();
   }
 } // End of updateTrap().
 
