@@ -2,7 +2,7 @@
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
-### What can you do with use-simple-focus-trap?
+### What can I do with use-simple-focus-trap?
 
 - Create a simple focus trap
 - Choose an element receiving the initial focus within a trap
@@ -16,15 +16,17 @@ A lightweight React custom hook to trap the focus within an HTML element.
 
 ```bash
 npm install use-simple-focus-trap
+```
 
-# or
+or
 
+```
 yarn add use-simple-focus-trap
 ```
 
 ## Usage
 
-All that is needed to get a trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.
+All that is needed to get a trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.  
 The hook will stop trapping the focus as soon as it is unmounted or whenever the user presses the `Esc` key.
 
 ```javascript
@@ -44,7 +46,7 @@ export default MyComponent;
 By default (if `root` is the only property provided with a valid value) this is what happens when a focus trap is built:
 
 - Focus is given to the first tabbable descendant of `root`
-- The `Tab` and `Shift+Tab` keys cycles through the rap's tabbable elements
+- The `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
 - Clicks outside of the trap are prevented<sup>[[1]](#note-expansion-1)</sup>
 - The trap breaks whenever the `Esc` key is pressed or the hook unmounts
 - Once the trap breaks, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
@@ -90,7 +92,7 @@ interface TrapConfig {
   If `lock` is set to `false`, clicks behave as usual.  
   If `lock` is provided as a funciton, it will be used as an event handler, it will be called with the `MouseEvent | TouchEvent` in question.
 
-  <span id='note-expansion-1'>[1]</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
+  <b id='note-expansion-1'>[1]</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
 - **escape**  
   Whenever the `Esc` key is pressed, the trap breaks by default.  
@@ -115,9 +117,9 @@ Whenever a trap is demolished, the previous trap (if any) is resumed.
 
 ## Dependencies & Browser Support
 
-The are no dependencies :cherries: and the hook can run in virtually any major browser except for IE.
+The are no dependencies :cherries: and the hook can run in virtually any major browser except IE.
 
-The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver), which is supported by IE11. However a couple of tweaks are required (even [from your side](https://create-react-app.dev/docs/supported-browsers-features/#supported-browsers)) to make the hook work in IE and since even Microsoft itself started to [drop support for IE](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support), the hook refrains from adding suppport for it.
+The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver), which is supported by IE11. However a couple of tweaks are required (even [from your side](https://create-react-app.dev/docs/supported-browsers-features/#supported-browsers)) to make the hook work in IE and since even Microsoft itself started to [drop support for IE](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support), the hook refrains from supporting it.
 
 ## Nice to know
 
@@ -126,13 +128,13 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 - A web page can live without focus trap. :speak_no_evil:
 
   So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application.  
-  Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable element in the current trap; it has been attempted to resume, pause or demolish an inexistent trap.
+  Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable elements in the trap; it has been attempted to resume, pause or demolish an inexistent trap.
 
 ## Special thanks
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-This small library has been around for many years and, at the time of writing, can boast 180 dependdant packages and one million weekly downloads while having zero open issues. Which makes feel safe regarding the edge cases logic.
+This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues. Which makes feel safe regarding the edge cases logic.
 
 The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
 

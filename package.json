@@ -3,6 +3,12 @@
   "version": "0.0.2-development.0",
   "license": "MIT",
   "repository": "https://github.com/DaviDevMod/use-simple-focus-trap",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare": "husky install"
+  },
   "files": [
     "dist"
   ],
@@ -14,15 +20,6 @@
       "import": "./dist/use-simple-focus-trap.es.js",
       "require": "./dist/use-simple-focus-trap.umd.js"
     }
-  },
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "prepare": "husky install"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
@@ -50,7 +47,7 @@
     "hook",
     "react",
     "TypeScript",
-    "lightweight"
+    "JavaScript"
   ],
   "author": {
     "name": "Davide Modica",
