@@ -16,7 +16,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "baseUrl": ".",
+    "paths": {
+      "@react/": ["./example/node_modules/@types/react/*"],
+      "@react": ["./example/node_modules/@types/react/index"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

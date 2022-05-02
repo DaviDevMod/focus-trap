@@ -1,40 +1,47 @@
-name: CI
+name: main-ci
 
 on:
   push:
-    branches: [main]
+    branches: 'main'
   pull_request:
     branches: '*'
 
 jobs:
-  build:
-    name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+  build_example:
+    name: Build on Node ${{ matrix.node }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-
+    defaults:
+      run:
+        working-directory: example
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-
+        node: [16]
+        os: [ubuntu-latest]
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout hook
+        uses: actions/checkout@v3
 
-      - name: Use Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Checkout example
+        uses: actions/checkout@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          repository: daviDevMod/use-simple-focus-trap
+          path: use-simple-focus-trap/example
 
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - name: Setup Node.js environment with caches
+        uses: actions/setup-node@v3
         with:
-          install-command: yarn --ignore-engines
+          node-version: ${{ matrix.node }}
+          cache: yarn
 
-      - name: Lint
-        run: yarn lint
+      - name: Restore nextjs build from cache
+        uses: actions/cache@v3
+        with:
+          path: example/.next/cache
+          key: ${{ runner.os }}-nextjs-example-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('example/src/**.[jt]sx?', 'example/src/**.json') }}
+          restore-keys: ${{ runner.os }}-example-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+      - name: Install packages withouth updating yarn.lock
+        run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn build

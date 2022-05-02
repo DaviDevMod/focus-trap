@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from '@react';
 import { TrapsControllerArgs, SingleTrapConfig, TrapConfig } from './types';
 import { noConfig, resolveConfig, deepCompareConfings } from './utils';
 import useSingleTrap from './use-single-trap/useSingleTrap';

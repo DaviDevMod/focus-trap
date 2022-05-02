@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import resolve from '@rollup/plugin-node-resolve';
 import dts from 'vite-plugin-dts';
 const path = require('path');
 
@@ -21,6 +22,12 @@ module.exports = defineConfig({
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ['react', 'react-dom'],
+      plugins: [
+        resolve({
+          // pass custom options to the resolve plugin
+          moduleDirectories: ['example/node_modules'],
+        }),
+      ],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps

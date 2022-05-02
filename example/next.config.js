@@ -10,7 +10,7 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      react: path.resolve(__dirname, './node_modules/react'),
+      '@react': path.resolve(__dirname, './node_modules/react'),
     };
     return config;
   },

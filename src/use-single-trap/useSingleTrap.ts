@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from '@react';
 import { SingleTrapControllerArgs, TrapRefs, SingleTrapConfig } from '../types';
 import { isMutationAffectingTabbability, updateTrap, assistTabbing } from './single-utils';
 
