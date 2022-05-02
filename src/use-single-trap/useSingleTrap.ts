@@ -83,23 +83,22 @@ function useSingleTrap(config: SingleTrapConfig, popConfig: () => SingleTrapConf
       let i = records.length;
       while (i--) {
         const record = records[i];
-        if (isMutationAffectingTabbability(record)) {
-          // If there are no positive tab indexes in the trap and the mutation doesn't concern tab indexes,
-          // it is possible to take into consideration only mutations occurring on outer elements.
-          if (!lastMaxPositiveTabIndex && record.attributeName !== 'tabindex') {
-            // If `record.target` precedes `firstTabbable` or succeeds `lastTabbable`,
-            // or it is one of them, or one of their ancestors.
-            if (
-              record.target === firstTabbable ||
-              record.target === lastTabbable ||
-              firstTabbable.compareDocumentPosition(record.target) & 11 ||
-              lastTabbable.compareDocumentPosition(record.target) & 13
-            ) {
-              // Update the trap and return from `mutationCallback`.
-              return updateTrap(root, trapRefs, initialFocus);
-            }
-          } else return updateTrap(root, trapRefs, initialFocus);
-        }
+        // If there are no positive tab indexes in the trap                    (most of the times)
+        // and the mutation doesn't concern tab indexes,                       (most of the times)
+        // it is possible consider only mutations occurring on outer elements. (relatively rare)
+        if (!lastMaxPositiveTabIndex && record.attributeName !== 'tabindex') {
+          // If `record.target` precedes `firstTabbable` or succeeds `lastTabbable`,
+          // or it is one of them, or one of their ancestors.
+          if (
+            record.target === firstTabbable ||
+            record.target === lastTabbable ||
+            firstTabbable.compareDocumentPosition(record.target) & 11 ||
+            lastTabbable.compareDocumentPosition(record.target) & 13
+          ) {
+            // If it's the case, update the trap and return from `mutationCallback`.
+            if (isMutationAffectingTabbability(record)) return updateTrap(root, trapRefs, initialFocus);
+          }
+        } else if (isMutationAffectingTabbability(record)) return updateTrap(root, trapRefs, initialFocus);
       }
     },
     [trapState]
