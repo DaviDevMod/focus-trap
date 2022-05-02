@@ -21,7 +21,7 @@ module.exports = defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['react', 'react-dom'],
+      external: ['@react', 'react-dom'],
       plugins: [
         resolve({
           // pass custom options to the resolve plugin
