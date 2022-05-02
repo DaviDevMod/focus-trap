@@ -26,24 +26,22 @@ jobs:
 
       - name: Setup Node.js environment with caches
         uses: actions/setup-node@v3
-        # with:
-        #   node-version: ${{ matrix.node }}
-        #   cache: yarn
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
 
-      # - name: Restore nextjs build from cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: example/.next/cache
-      #     key: ${{ runner.os }}-nextjs-example-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('example/src/**.[jt]sx?', 'example/src/**.json') }}
-      #     restore-keys: ${{ runner.os }}-example-${{ hashFiles('**/yarn.lock') }}
+      - name: Restore nextjs build from cache
+        uses: actions/cache@v3
+        with:
+          path: example/.next/cache
+          key: ${{ runner.os }}-nextjs-example-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('example/src/**.[jt]sx?', 'example/src/**.json') }}
+          restore-keys: ${{ runner.os }}-example-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install packages in hook
-        # run: yarn install --frozen-lockfile
         run: yarn install --frozen-lockfile
 
       - name: Install packages in example
         working-directory: example
-        # run: yarn install --frozen-lockfile
         run: yarn install --frozen-lockfile
 
       - name: Build hook
