@@ -1,4 +1,4 @@
-name: main-ci
+name: CI
 
 on:
   push:
@@ -37,10 +37,10 @@ jobs:
           key: ${{ runner.os }}-nextjs-example-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('example/src/**.[jt]sx?', 'example/src/**.json') }}
           restore-keys: ${{ runner.os }}-example-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install packages in hook
+      - name: Install dependencies in hook
         run: yarn install --frozen-lockfile
 
-      - name: Install packages in example
+      - name: Install dependencies in example
         working-directory: example
         run: yarn install --frozen-lockfile
 

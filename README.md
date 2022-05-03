@@ -1,4 +1,6 @@
-# use-simple-focus-trap [![CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+# use-simple-focus-trap :mouse_trap:
+
+[![CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
@@ -47,7 +49,7 @@ By default (if `root` is the only property provided with a valid value) this is 
 
 - Focus is given to the first tabbable descendant of `root`
 - The `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
-- Clicks outside of the trap are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>
+- Clicks outside of the trap are prevented
 - The trap is demolished when the `Esc` key is pressed or the hook unmounts
 - Once the trap is demolished, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
 
@@ -88,16 +90,23 @@ interface TrapConfig {
   If it's missing or invalid, the focus will be returned to what was the active element at the time the trap was built.
 
 - **lock** :lock:  
-  By default clicks on elements that are not descendant of the `root` are prevented<sup>[[1]](#note-expansion-1)</sup>.  
+  By default clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>.  
   If `lock` is set to `false`, clicks behave as usual.  
   If `lock` is provided as a funciton, it will be used as an event handler, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
   <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
 - **escape** :runner:  
-  Whenever the `Esc` key is pressed, the trap demolished by default.  
-  If `escape` is set to `false`, the trap is kept running.
-  If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but it can be easily demolished using the hook's return value.
+  Whenever the `Esc` key is pressed, the trap is demolished by default.  
+  If `escape` is set to `false`, the trap is kept running.  
+  If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but you can easily demolish it with the help of the hook's return value.
+
+<span id="note-expansion-2-warning" />:warning: When providing a property as a function you should [memoize](https://reactjs.org/docs/hooks-reference.html#usecallback) it to avoid unintended behaviours.  
+Why?
+
+> The component mounting the hook may use [the return value](#return-value) to build a new trap. If the component rerenders multiple times, it may create multiple copies of a trap. The hook can prevent this from happening by deep comparing the configuration objects received. However when comparing functions it merely compares their reference, so a function that is not memoized will be perceived as a different one at every rerender and the hook may end up building a pile of duplicate traps.
+
+Note that this precaution is relevant only when the return value is being used to build traps, and even then it may not be necessary depending on how you use it. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So if you feel confortable doing so, you can avoid the memoization until a warning is shown to you.
 
 ## Return value
 
@@ -135,7 +144,7 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe regarding the edge cases logic.
+This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe regarding the edge case logic.
 
 The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
 
