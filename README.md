@@ -57,13 +57,13 @@ By default (if `root` is the only property provided with a valid value) this is 
 
 The hook receives a single parameter being an object with a few optional properties that help customize the beahviour of the trap.
 
-| Name         | Required | Type                         |    Default value    |
-| ------------ | -------- | ---------------------------- | :-----------------: |
-| root         | No       | `HTMLElement \| string`      |          -          |
-| initialFocus | No       | `FocusableElementIdentifier` |   first tabbable    |
-| returnFocus  | No       | `FocusableElementIdentifier` | last active element |
-| lock         | No       | `boolean \| Function`        |       `true`        |
-| escape       | No       | `boolean \| Function`        |       `true`        |
+| Name         | Required | Type                            |    Default value    |
+| ------------ | -------- | ------------------------------- | :-----------------: |
+| root         | No       | `HTMLElement \| string`         |          -          |
+| initialFocus | No       | `FocusableElementRef \| string` |   first tabbable    |
+| returnFocus  | No       | `FocusableElementRef \| string` | last active element |
+| lock         | No       | `boolean \| Function`           |       `true`        |
+| escape       | No       | `boolean \| Function`           |       `true`        |
 
 ```ts
 type FocusableElementRef = HTMLElement | SVGElement | null;
@@ -78,7 +78,7 @@ interface TrapConfig {
 ```
 
 - **root** :carrot:  
-  It is the `HTMLElement` in which the focus has to be trapped, or its `id`.  
+  It is the `HTMLElement` in which the focus has to be trapped.  
   If it's missing or invalid, the hook does nothing.
 
 - **initialFocus** :fire:  
@@ -106,7 +106,7 @@ Why?
 
 > The component mounting the hook may use [the return value](#return-value) to build a new trap. If the component rerenders multiple times, it may create multiple copies of a trap. The hook can prevent this from happening by deep comparing the configuration objects received. However when comparing functions it merely compares their reference, so a function that is not memoized will be perceived as a different one at every rerender and the hook may end up building a pile of duplicate traps.
 
-Note that this precaution is relevant only when the return value is being used to build traps, and even then it may not be necessary depending on how you use it. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So if you feel confortable doing so, you can avoid the memoization until a warning is shown to you.
+Note that this precaution is relevant only when the return value is being used to build traps, and even then it may not be necessary depending on how you use it. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So if you feel confortable in doing so, you can avoid the memoization until a warning shows up.
 
 ## Return value
 
