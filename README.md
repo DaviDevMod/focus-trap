@@ -78,7 +78,7 @@ interface TrapConfig {
 ```
 
 - **root** :carrot:  
-  It is the `HTMLElement` in which the focus has to be trapped.  
+  It is the element within which the focus has to be trapped.  
   If it's missing or invalid, the hook does nothing.
 
 - **initialFocus** :fire:  
@@ -92,7 +92,7 @@ interface TrapConfig {
 - **lock** :lock:  
   By default clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>.  
   If `lock` is set to `false`, clicks behave as usual.  
-  If `lock` is provided as a funciton, it will be used as an event handler, thus it will be called with the `MouseEvent | TouchEvent` in question.
+  If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
   <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
@@ -144,10 +144,10 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe regarding the edge case logic.
+This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
 The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
 
 ## Contributions
 
-Any kind of contribution is more than welcome!
+Any kind of contribution is more than welcome! :tada:
