@@ -31,8 +31,7 @@ function useSingleTrap(config: SingleTrapConfig, popConfig: () => SingleTrapConf
     },
     // In the rare case two subsequent traps in the `trapStack` have the same `root` and `lock`
     // it would be possible to not change the refence of this handler (using `[root, lock]` as dep array).
-    // However getting different handlers for different traps is conceptually cleaner and it's even faster
-    // as it makes possible to use a single object reference as dependency, making checks marginally quicker.
+    // However getting different handlers for different traps is conceptually cleaner and even marginally faster.
     // This reasoning applies to all the depenndency arrays of this hook (`useSingleTrap`).
     [trapState]
   );
@@ -83,9 +82,9 @@ function useSingleTrap(config: SingleTrapConfig, popConfig: () => SingleTrapConf
       let i = records.length;
       while (i--) {
         const record = records[i];
-        // If there are no positive tab indexes in the trap                    (most of the times)
-        // and the mutation doesn't concern tab indexes,                       (most of the times)
-        // it is possible consider only mutations occurring on outer elements. (relatively rare)
+        // If there are no positive tab indexes in the trap             (most of the times)
+        // and the mutation doesn't concern tab indexes,                (most of the times)
+        // it is possible to consider only mutations on outer elements. (relatively rare)
         if (!lastMaxPositiveTabIndex && record.attributeName !== 'tabindex') {
           // If `record.target` precedes `firstTabbable` or succeeds `lastTabbable`,
           // or it is one of them, or one of their ancestors.

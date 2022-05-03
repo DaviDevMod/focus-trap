@@ -87,7 +87,6 @@ export function updateTrap(
   const len = focusables.length;
 
   for (let i = 0; i < len; i++) {
-    focusables[i].getClientRects();
     const left = focusables[i];
     const right = focusables[len - 1 - i];
     const leftTabIndex = left.tabIndex >= 0 ? left.tabIndex : getConsistentTabIndex(left);
@@ -119,7 +118,6 @@ export function updateTrap(
     mutationObserver: trapRefs.current.mutationObserver,
     firstTabbable: firstMinPositiveTabIndex || firstZeroTabIndex,
     lastTabbable: lastZeroTabIndex || lastMaxPositiveTabIndex,
-    // The following two are needed in `forceFocus()` in case the trap contains positive tabindexes.
     lastMaxPositiveTabIndex,
     firstZeroTabIndex,
   };

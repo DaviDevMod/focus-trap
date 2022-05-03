@@ -2,9 +2,9 @@
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
-### What can I do with use-simple-focus-trap?
+### Features
 
-- Create a simple focus trap
+- Create a simple focus trap :lotus_position:
 - Choose an element receiving the initial focus within a trap
 - Decide whether to prevent clicks on elements outside of a trap
 - Bind different behaviours to the `Esc` key
@@ -47,9 +47,9 @@ By default (if `root` is the only property provided with a valid value) this is 
 
 - Focus is given to the first tabbable descendant of `root`
 - The `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
-- Clicks outside of the trap are prevented<sup>[[1]](#note-expansion-1)</sup>
-- The trap breaks whenever the `Esc` key is pressed or the hook unmounts
-- Once the trap breaks, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
+- Clicks outside of the trap are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>
+- The trap is demolished when the `Esc` key is pressed or the hook unmounts
+- Once the trap is demolished, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
 
 ## Parameters
 
@@ -75,33 +75,34 @@ interface TrapConfig {
 }
 ```
 
-- **root**  
+- **root** :carrot:  
   It is the `HTMLElement` in which the focus has to be trapped, or its `id`.  
   If it's missing or invalid, the hook does nothing.
 
-- **initialFocus**  
+- **initialFocus** :fire:  
   It is the element that will receive the initial focus within the trap.  
   If it's missing or invalid, it defaults to the first tabbable element in the trap.
 
-- **returnFocus**  
-  It is the element that will receive the focus once the trap breaks.  
-  If it's missing or invalid, the focus will be returned to what was the active element at the time the hook was called.
+- **returnFocus** :drop_of_blood:  
+  It is the element that will receive the focus once the trap is demolished.  
+  If it's missing or invalid, the focus will be returned to what was the active element at the time the trap was built.
 
-- **lock**  
-  By default clicks on elements not belonging to the trap's root are prevented<sup>[[1]](#note-expansion-1)</sup>.  
+- **lock** :lock:  
+  By default clicks on elements that are not descendant of the `root` are prevented<sup>[[1]](#note-expansion-1)</sup>.  
   If `lock` is set to `false`, clicks behave as usual.  
-  If `lock` is provided as a funciton, it will be used as an event handler, it will be called with the `MouseEvent | TouchEvent` in question.
+  If `lock` is provided as a funciton, it will be used as an event handler, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
-  <b id='note-expansion-1'>[1]</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
+  <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
-- **escape**  
-  Whenever the `Esc` key is pressed, the trap breaks by default.  
-  If `escape` is set to `false`, the trap is kept running. If it's provided as a function, instead, it will be executed.
+- **escape** :runner:  
+  Whenever the `Esc` key is pressed, the trap demolished by default.  
+  If `escape` is set to `false`, the trap is kept running.
+  If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but it can be easily demolished using the hook's return value.
 
 ## Return value
 
 The return value is a funciton that can be used to build, demolish, pause and resume a trap.  
-The function receives a single argument, being an object of type `TrapsControllerArgs`.
+This function receives a single argument, being an object of type `TrapsControllerArgs`.
 
 ```ts
 type TrapsControllerArgs =
@@ -111,7 +112,7 @@ type TrapsControllerArgs =
   | { action: 'PAUSE'; config?: never };
 ```
 
-The hook automatically manages a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.  
+The hook automatically manages a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps :juggling_person:  
 Whenever a new trap is built, the current trap (if any) is paused.  
 Whenever a trap is demolished, the previous trap (if any) is resumed.
 
@@ -125,16 +126,16 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 - Each focus trap is stateless :zap: and the hook can cause a rerender only when a trap is demolished or a new trap is created.
 
-- A web page can live without focus trap. :speak_no_evil:
+- A web page can live without focus trap :speak_no_evil:
 
-  So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application.  
+  So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application :shield:  
   Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable elements in the trap; it has been attempted to resume, pause or demolish an inexistent trap.
 
-## Special thanks
+## Special thanks :blue_heart:
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
-This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues. Which makes feel safe regarding the edge cases logic.
+This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe regarding the edge cases logic.
 
 The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
 

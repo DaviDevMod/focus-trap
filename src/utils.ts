@@ -2,7 +2,7 @@ import { FocusableElementRef, SingleTrapConfig, TrapConfig } from './types';
 
 // `stackIsEmpty` is a flag that makes possible resetting `trapState` (in `useSingleTrap`) without triggering `buildTrap()`.
 // To allow `trapState` to update just with the flag, `root` has to be typed as optional (`HTMLElement | undefined`)
-// however since a trap is built only when there is an actual `root`, the optional type would introduce unecessary
+// however since a trap is built only when there is an actual `root`, the optional typing would introduce unecessary
 // non-null assertions all over the place in `useSingleTrap`. Hence the fictious HTMLElement, which will simply be ignored.
 export const noConfig: SingleTrapConfig = {
   root: 'noUnnecessaryAssertions' as unknown as HTMLElement,

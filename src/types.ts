@@ -8,17 +8,6 @@ export interface TrapRefs {
   firstZeroTabIndex: FocusableElementRef;
 }
 
-// export interface SingleTrapEscaper {
-//   keepTrap?: boolean;
-//   custom?: Function;
-//   identifier?: FocusableElementRef;
-//   focus?: boolean;
-// }
-
-// export interface Escaper extends Omit<SingleTrapEscaper, 'identifier'> {
-//   identifier?: FocusableElementRef | string;
-// }
-
 export interface SingleTrapConfig {
   root: HTMLElement;
   initialFocus?: FocusableElementRef;
