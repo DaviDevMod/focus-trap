@@ -13,12 +13,6 @@
     "lint-staged": "12.4.1",
     "prettier": "2.6.2"
   },
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx,yml}": [
-      "prettier --write",
-      "eslint --cached"
-    ]
-  },
   "scripts": {
     "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
     "g:changeset": "changeset",
