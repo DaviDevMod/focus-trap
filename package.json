@@ -12,8 +12,10 @@
     "prettier": "2.6.2"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,ts,jsx,tsx,yml}": [
+      "prettier --write",
+      "eslint --cached"
+    ]
   },
   "scripts": {
     "postinstall": "husky install"
