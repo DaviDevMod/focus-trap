@@ -1,5 +1,5 @@
 {
-  "name": "use-simple-focus-trap",
+  "name": "usft-monorepo",
   "packageManager": "yarn@3.2.0",
   "private": true,
   "workspaces": [
