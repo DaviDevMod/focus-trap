@@ -41,7 +41,7 @@ jobs:
           # Fetch all git history so that yarn workspaces --since can compare with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js environment with caches
+      - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
@@ -99,4 +99,4 @@ jobs:
       # apps build are done already. Otherwise --from & --since
       - name: Run build for changed packages
         run: |
-          yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main run build
+          yarn workspaces foreach -tv --since=origin/main run build
