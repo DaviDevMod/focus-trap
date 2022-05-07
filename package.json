@@ -6,8 +6,10 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.22.0",
     "eslint": "8.15.0",
     "husky": "7.0.4",
+    "is-ci": "^3.0.1",
     "lint-staged": "12.4.1",
     "prettier": "2.6.2"
   },
@@ -18,6 +20,9 @@
     ]
   },
   "scripts": {
-    "postinstall": "husky install"
+    "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
+    "g:changeset": "changeset",
+    "g:release": "yarn g:build && changeset publish",
+    "postinstall": "is-ci || husky install"
   }
 }
