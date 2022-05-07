@@ -1,57 +1,8 @@
 {
   "name": "use-simple-focus-trap",
-  "version": "0.0.2-development.0",
-  "license": "MIT",
-  "repository": "https://github.com/DaviDevMod/use-simple-focus-trap",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/use-simple-focus-trap.umd.js",
-  "module": "./dist/use-simple-focus-trap.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/use-simple-focus-trap.es.js",
-      "require": "./dist/use-simple-focus-trap.umd.js"
-    }
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
-  },
-  "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.2.1",
-    "@types/node": "^17.0.31",
-    "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.1",
-    "@vitejs/plugin-react": "^1.0.7",
-    "eslint": "^8.14.0",
-    "eslint-config-react-app": "^7.0.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.4.1",
-    "prettier": "^2.6.1",
-    "typescript": "4.6.4",
-    "vite": "^2.9.6",
-    "vite-plugin-dts": "^1.1.1"
-  },
-  "keywords": [
-    "use",
-    "simple",
-    "focus",
-    "trap",
-    "custom",
-    "hook",
-    "react",
-    "TypeScript",
-    "JavaScript"
-  ],
-  "author": {
-    "name": "Davide Modica",
-    "email": "davidevmod@gmail.com",
-    "url": "https://github.com/DaviDevMod"
-  }
+  "packageManager": "yarn@3.2.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
 }
