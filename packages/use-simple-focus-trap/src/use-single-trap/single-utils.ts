@@ -132,7 +132,7 @@ export function updateTrap(
   // TODO: This behaviour may be undesired. Consider adding logic.
   if (!root.contains(document.activeElement)) {
     initialFocus?.focus();
-    if (document.activeElement !== initialFocus) trapRefs.current.firstTabbable?.focus();
+    if (initialFocus && document.activeElement !== initialFocus) trapRefs.current.firstTabbable?.focus();
   }
 } // End of updateTrap().
 
