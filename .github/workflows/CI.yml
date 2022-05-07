@@ -1,0 +1,102 @@
+name: CI-packages
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - 'packages/**'
+      - '.yarnrc.yml'
+      - 'yarn.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/workflows/**'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - 'packages/**'
+      - '.yarnrc.yml'
+      - 'yarn.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/workflows/**'
+
+jobs:
+  build:
+    name: Build on Node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: [16]
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v3
+        with:
+          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          fetch-depth: 0
+
+      - name: Setup Node.js environment with caches
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Why not using setup-node 2.2+ cache option (yet) ?
+      # see https://github.com/belgattitude/nextjs-monorepo-example/pull/369
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Restore yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
+
+      - name: Restore packages cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+            ${{ github.workspace }}/**/.eslintcache
+
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: Install dependencies
+        run: |
+          yarn install --immutable
+
+      # # Typecheck packages that have changed + packages and apps that depends on them (--from & --since)
+      # # That allows to see if we're introducing "surface" regressions (just the types)
+      # - name: Typecheck
+      #   run: |
+      #     yarn workspaces foreach -tv --from '@your-org/*' --since=origin/main --recursive run typecheck
+
+      # # Lint packages that have changed (--include & --since)
+      # - name: Linter
+      #   run: |
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run lint --cache
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run lint-styles
+
+      # # Test packages that have changed (--include & --since)
+      # - name: Unit tests changed packages
+      #   run: |
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run test-unit --runInBand --colors
+      # # to debug cache issues: ls ${{ github.workspace }}/.cache
+
+      # Build packages that have changed (--include & --since), assuming that
+      # apps build are done already. Otherwise --from & --since
+      - name: Run build for changed packages
+        run: |
+          yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main run build
