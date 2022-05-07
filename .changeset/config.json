@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "https://github.com/DaviDevMod/use-simple-focus-trap" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "DaviDevMod/use-simple-focus-trap" }],
   "commit": false,
   "fixed": [],
   "linked": [],
