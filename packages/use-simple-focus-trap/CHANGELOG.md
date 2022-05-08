@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- [`a18b245`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/a18b2453f74e4e775139ee7ed70ab3369b2f8a50) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix exported types
+
+## 0.0.2
+
+### Patch Changes
+
 - [`411030b`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/411030b1a9c8d0bc36224d3ab693cb448559abab) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix bug in `updateTrap`.
 
   When bringing the focus inside the trap, if `initialFocus` was `null`, falling back to `firstTabbable` could have been prevented.
