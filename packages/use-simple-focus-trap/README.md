@@ -1,6 +1,6 @@
 # use-simple-focus-trap :mouse_trap:
 
-[![CI](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI-packages.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/CI-packages.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 A lightweight React custom hook to trap the focus within an HTML element.
 
@@ -94,19 +94,24 @@ interface TrapConfig {
   If `lock` is set to `false`, clicks behave as usual.  
   If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
-  <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
+  > <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
 - **escape** :runner:  
   Whenever the `Esc` key is pressed, the trap is demolished by default.  
   If `escape` is set to `false`, the trap is kept running.  
   If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but you can easily demolish it with the help of the hook's return value.
 
-<span id="note-expansion-2-warning" />:warning: When providing a property as a function you should [memoize](https://reactjs.org/docs/hooks-reference.html#usecallback) it to avoid unintended behaviours.  
-Why?
+<blockquote id="note-expansion-2-warning">:warning: When providing a property as a function you should [memoize](https://reactjs.org/docs/hooks-reference.html#usecallback) it to avoid unintended behaviours. </blockquote>
 
-> The component mounting the hook may use [the return value](#return-value) to build a new trap. If the component rerenders multiple times, it may create multiple copies of a trap. The hook can prevent this from happening by deep comparing the configuration objects received. However when comparing functions it merely compares their reference, so a function that is not memoized will be perceived as a different one at every rerender and the hook may end up building a pile of duplicate traps.
+<details>
+<summary>Why?</summary>
 
-Note that this precaution is relevant only when the return value is being used to build traps, and even then it may not be necessary depending on how you use it. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So if you feel confortable in doing so, you can avoid the memoization until a warning shows up.
+The [the return value](#return-value) won't build two identic traps one on top of the other. It does so by deep-comparing the configuration objects received, but it only shallow-compares functions.  
+So if at every rerender, the return value is called with an unmemoized function in the config, it will end up creating a pile of duplicate traps.
+
+Note that the memoization precaution is relevant only when the return value is used to build traps, and even then it may not be necessary depending on it is used. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So **if you feel confortable in doing so, you can avoid the memoization until a warning shows up.**
+
+</details>
 
 ## Return value
 
@@ -133,16 +138,16 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 ## Nice to know
 
-- Each focus trap is stateless :zap: and the hook can cause a rerender only when a trap is demolished or a new trap is created.
+- Each focus trap is stateless :zap: and the hook can cause a rerender only when a trap is created or demolished.
 
 - A web page can live without focus trap :speak_no_evil:
 
-  So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application :shield:  
+  So the hook has been built to be resilient and can, for example, be caled with `undefined` without crashing your application :shield:  
   Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable elements in the trap; it has been attempted to resume, pause or demolish an inexistent trap.
 
 ## Special thanks :blue_heart:
 
-The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
+The logic for the treatement of edge cases, in matter of browser consistency regarding tabbability and tab indexes, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
