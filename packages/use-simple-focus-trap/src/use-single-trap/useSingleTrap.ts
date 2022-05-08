@@ -70,7 +70,7 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
   // Callback for MutationObserver's constructor. It just calls `updateTrap()` when required.
   const mutationCallback: MutationCallback = useCallback(
     (records) => {
-      const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex } = trapRefs.current;
+      const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex } = trapRefs.current;
 
       if (process.env.NODE_ENV === 'development') {
         if (!firstTabbable) {
