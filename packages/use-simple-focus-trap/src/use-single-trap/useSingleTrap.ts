@@ -10,6 +10,8 @@ const initialTrapRefs = (): TrapRefs => ({
   lastTabbable: null,
   lastMaxPositiveTabIndex: null,
   firstZeroTabIndex: null,
+  topTabbable: null,
+  bottomTabbable: null,
 });
 
 function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapConfig) {
@@ -70,9 +72,10 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
   // Callback for MutationObserver's constructor. It just calls `updateTrap()` when required.
   const mutationCallback: MutationCallback = useCallback(
     (records) => {
-      const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex } = trapRefs.current;
+      const { lastMaxPositiveTabIndex, topTabbable, bottomTabbable } = trapRefs.current;
 
-      if (!firstTabbable || !lastTabbable) return;
+      // Just pleasing TypeScript here. Checking just one random `trapRef` would be enough.
+      if (!topTabbable || !bottomTabbable) return;
 
       let i = records.length;
       while (i--) {
@@ -80,15 +83,15 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
         // If there are no positive tab indexes in the trap             (very likely)
         // and the mutation doesn't concern tab indexes,                (very likely)
         // it is possible to consider only mutations on outer elements. (quite rare)
-        // The same could be done if there are no zero tab indexes, but would be counter productive.
+        // The same could be done if there are no zero tab indexes, but it would be counter productive.
         if (!lastMaxPositiveTabIndex && record.attributeName !== 'tabindex') {
-          // If `record.target` precedes `firstTabbable` or succeeds `lastTabbable`,
+          // If `record.target` precedes `topTabbable` or succeeds `bottomTabbable`,
           // or it is one of them, or one of their ancestors.
           if (
-            record.target === firstTabbable ||
-            record.target === lastTabbable ||
-            firstTabbable.compareDocumentPosition(record.target) & 11 ||
-            lastTabbable.compareDocumentPosition(record.target) & 13
+            record.target === topTabbable ||
+            record.target === bottomTabbable ||
+            topTabbable.compareDocumentPosition(record.target) & 11 ||
+            bottomTabbable.compareDocumentPosition(record.target) & 13
           ) {
             if (isMutationAffectingTabbability(record)) return updateTrap(root, trapRefs, initialFocus);
           }

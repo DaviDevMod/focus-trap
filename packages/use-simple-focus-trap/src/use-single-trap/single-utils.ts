@@ -84,6 +84,8 @@ export function updateTrap(
   let lastMaxPositiveTabIndex = null as FocusableElementRef;
   let firstZeroTabIndex = null as FocusableElementRef;
   let lastZeroTabIndex = null as FocusableElementRef;
+  let topTabbable = null as FocusableElementRef;
+  let bottomTabbable = null as FocusableElementRef;
   const len = focusables.length;
 
   for (let i = 0; i < len; i++) {
@@ -94,6 +96,7 @@ export function updateTrap(
     if (leftTabIndex === 0) {
       if (!firstZeroTabIndex && isActuallyFocusable(left)) {
         firstZeroTabIndex = left;
+        if (!topTabbable) topTabbable = left;
       }
     } else if (leftTabIndex > 0) {
       if (
@@ -101,15 +104,18 @@ export function updateTrap(
         isActuallyFocusable(left)
       ) {
         firstMinPositiveTabIndex = left;
+        if (!topTabbable) topTabbable = left;
       }
     }
     if (rightTabIndex === 0) {
       if (!lastZeroTabIndex && isActuallyFocusable(right)) {
         lastZeroTabIndex = right;
+        if (!bottomTabbable) bottomTabbable = left;
       }
     } else if (rightTabIndex > 0) {
       if (!lastMaxPositiveTabIndex || lastMaxPositiveTabIndex.tabIndex < right.tabIndex) {
         lastMaxPositiveTabIndex = right;
+        if (!bottomTabbable) bottomTabbable = left;
       }
     }
   }
@@ -120,6 +126,8 @@ export function updateTrap(
     lastTabbable: lastZeroTabIndex ?? lastMaxPositiveTabIndex,
     lastMaxPositiveTabIndex,
     firstZeroTabIndex,
+    topTabbable,
+    bottomTabbable,
   };
 
   if (process.env.NODE_ENV === 'development') {
@@ -143,29 +151,32 @@ const isRadioInput = (element: unknown): element is HTMLInputElement =>
 // Function that manages the tabbing, also leaving it up to the browser if it's safe to do so.
 export function assistTabbing(event: KeyboardEvent, trapRefs: React.MutableRefObject<TrapRefs>) {
   const { target, shiftKey } = event;
-  const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex } = trapRefs.current;
+  const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex, firstZeroTabIndex, topTabbable, bottomTabbable } =
+    trapRefs.current;
 
-  if (!firstTabbable || !lastTabbable) return;
+  if (!firstTabbable || !lastTabbable || !topTabbable || !bottomTabbable) return;
 
   // `to` is the destination of the assisted tabbing.
   let to = null as FocusableElementRef;
 
   // Funtion telling whether `target` requires assisted tabbing.
-  const isAssistedTabbingRequired = (boundary: HTMLElement | SVGElement, comparison?: number) =>
+  const isAssistedTabbingRequired = (
+    boundary: HTMLElement | SVGElement,
+    edge?: HTMLElement | SVGElement,
+    comparison?: number
+  ) =>
     // Return `true` if `target` is the givem trap's `boundary`,
     target === boundary ||
     // or a radio input belonging to the same radio group `boundary` belongs to,
     (isRadioInput(target) && isRadioInput(boundary) && target.name === boundary.name) ||
-    // or if it either precedes `firstTabbable` or succeeds `lastTabbable` (only one of the two is checked).
-    // BUG: compareDocumentPossition doesn't take in consideration tabindexes in the comparison, so this works only
-    // as long as there no positive tabindexes. compare with top and bottom tabbables rather thatn first and last.
+    // or if it either precedes `topTabbable` or succeeds `bottomTabbable` (only one of the two is checked).
     !!(comparison && boundary.compareDocumentPosition(target as Node) & comparison);
 
   if (shiftKey) {
-    if (isAssistedTabbingRequired(firstTabbable, 3)) to = lastTabbable;
+    if (isAssistedTabbingRequired(firstTabbable, topTabbable, 3)) to = lastTabbable;
     else if (firstZeroTabIndex && isAssistedTabbingRequired(firstZeroTabIndex)) to = lastMaxPositiveTabIndex;
   } else {
-    if (isAssistedTabbingRequired(lastTabbable, 5)) to = firstTabbable;
+    if (isAssistedTabbingRequired(lastTabbable, bottomTabbable, 5)) to = firstTabbable;
     else if (lastMaxPositiveTabIndex && isAssistedTabbingRequired(lastMaxPositiveTabIndex)) to = firstZeroTabIndex;
   }
 

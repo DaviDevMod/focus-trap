@@ -6,6 +6,8 @@ export interface TrapRefs {
   lastTabbable: FocusableElementRef;
   lastMaxPositiveTabIndex: FocusableElementRef;
   firstZeroTabIndex: FocusableElementRef;
+  topTabbable: FocusableElementRef;
+  bottomTabbable: FocusableElementRef;
 }
 
 export interface SingleTrapConfig {
