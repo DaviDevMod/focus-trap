@@ -1514,7 +1514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:^0.4.4":
+"@changesets/changelog-github@npm:0.4.4":
   version: 0.4.4
   resolution: "@changesets/changelog-github@npm:0.4.4"
   dependencies:
@@ -1525,7 +1525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/cli@npm:^2.22.0":
+"@changesets/cli@npm:2.22.0":
   version: 2.22.0
   resolution: "@changesets/cli@npm:2.22.0"
   dependencies:
@@ -4776,7 +4776,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-ci@npm:^3.0.1":
+"is-ci@npm:3.0.1, is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
@@ -8047,11 +8047,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "usft-monorepo@workspace:."
   dependencies:
-    "@changesets/changelog-github": ^0.4.4
-    "@changesets/cli": ^2.22.0
+    "@changesets/changelog-github": 0.4.4
+    "@changesets/cli": 2.22.0
     eslint: 8.15.0
     husky: 8.0.0
-    is-ci: ^3.0.1
+    is-ci: 3.0.1
     lint-staged: 12.4.1
     prettier: 2.6.2
   languageName: unknown
