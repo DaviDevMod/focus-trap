@@ -48,7 +48,7 @@ export function deepCompareConfings(x: SingleTrapConfig, y: SingleTrapConfig): b
       if (shallow(x3, y3) && shallow(x4, y4)) return true;
     }
     console.warn(
-      '`useSimpleFocusTrap` detected two trap configuration objects differing only in function references. Chances are you need to memoize the functions passed to the hook to avoid unwanted behaviours. More information can be found here: https://github.com/DaviDevMod/use-simple-focus-trap#note-expansion-2-warning'
+      '`useSimpleFocusTrap` detected two trap configuration objects differing only in function references. Chances are you need to memoize the functions passed to the hook to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/use-simple-focus-trap/blob/main/packages/use-simple-focus-trap/README.md#note-expansion-2-warning'
     );
     return false;
   }
