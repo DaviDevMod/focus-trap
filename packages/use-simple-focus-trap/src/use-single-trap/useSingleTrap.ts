@@ -12,7 +12,7 @@ const initialTrapRefs = (): TrapRefs => ({
   firstZeroTabIndex: null,
 });
 
-function useSingleTrap(config: SingleTrapConfig, popConfig: () => SingleTrapConfig) {
+function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapConfig) {
   const [trapState, setTrapState] = useState(config);
   const { root, initialFocus, returnFocus, lock, escape } = trapState;
   const trapRefs = useRef(initialTrapRefs());
@@ -43,7 +43,7 @@ function useSingleTrap(config: SingleTrapConfig, popConfig: () => SingleTrapConf
         assistTabbing(event, trapRefs);
       } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
         if (escape instanceof Function) return escape();
-        if (escape !== false) setTrapState(popConfig());
+        if (escape !== false) setTrapState(getPrevTrap());
       }
     },
     [trapState]
