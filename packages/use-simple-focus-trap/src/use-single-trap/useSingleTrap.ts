@@ -43,7 +43,7 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
         assistTabbing(event, trapRefs);
       } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
         if (escape instanceof Function) return escape();
-        if (escape !== false) setTrapState(getPrevTrap());
+        if (escape === true) setTrapState(getPrevTrap());
       }
     },
     [trapState]

@@ -11,7 +11,7 @@ export const noConfig: SingleTrapConfig = {
 
 const resolveId = (el?: FocusableElementRef | string) => (typeof el === 'string' ? document.getElementById(el) : el);
 
-// Function resolving all the ids in `config` and possibly setting `returnFocus` to `document.activeElement`
+// Function resolving all the ids in `config` and setting default values where needed.
 // If `root` is still not an HTMLElement after its id resolution, `config` must not be added to the `trapsStack`.
 export function resolveConfig(config: TrapConfig = {}): SingleTrapConfig | null {
   const root = resolveId(config.root);
@@ -24,10 +24,11 @@ export function resolveConfig(config: TrapConfig = {}): SingleTrapConfig | null 
   if (!(root instanceof HTMLElement)) return null;
 
   return {
-    ...config,
     root,
     initialFocus: resolveId(config.initialFocus),
     returnFocus: resolveId(config.returnFocus) ?? (document.activeElement as FocusableElementRef),
+    lock: config.lock,
+    escape: config.escape === undefined ? true : config.escape,
   } as SingleTrapConfig;
 }
 
