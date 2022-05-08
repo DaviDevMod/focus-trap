@@ -28,7 +28,7 @@ const getConsistentTabIndex = (node: HTMLElement | SVGElement) =>
 // Function testing various edge cases. Returns `true` if `candidate` is actually focusable.
 const isActuallyFocusable = (candidate: HTMLElement | SVGElement) => {
   if (
-    // If the element is missing a layout box (eg, it has `display: "none"`);
+    // If the element has no layout boxes (eg, it has `display: "none"`);
     !candidate.getClientRects().length ||
     // or is disabled or hidden;
     (candidate as any).disabled ||
@@ -116,8 +116,8 @@ export function updateTrap(
 
   trapRefs.current = {
     mutationObserver: trapRefs.current.mutationObserver,
-    firstTabbable: firstMinPositiveTabIndex || firstZeroTabIndex,
-    lastTabbable: lastZeroTabIndex || lastMaxPositiveTabIndex,
+    firstTabbable: firstMinPositiveTabIndex ?? firstZeroTabIndex,
+    lastTabbable: lastZeroTabIndex ?? lastMaxPositiveTabIndex,
     lastMaxPositiveTabIndex,
     firstZeroTabIndex,
   };
@@ -152,7 +152,7 @@ export function assistTabbing(event: KeyboardEvent, trapRefs: React.MutableRefOb
 
   // Funtion telling whether `target` requires assisted tabbing.
   const isAssistedTabbingRequired = (boundary: HTMLElement | SVGElement, comparison?: number) =>
-    // If `target` is the givem trap's `boundary`,
+    // Return `true` if `target` is the givem trap's `boundary`,
     target === boundary ||
     // or a radio input belonging to the same radio group `boundary` belongs to,
     (isRadioInput(target) && isRadioInput(boundary) && target.name === boundary.name) ||

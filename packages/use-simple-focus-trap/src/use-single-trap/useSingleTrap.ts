@@ -72,11 +72,6 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
     (records) => {
       const { firstTabbable, lastTabbable, lastMaxPositiveTabIndex } = trapRefs.current;
 
-      if (process.env.NODE_ENV === 'development') {
-        if (!firstTabbable) {
-          throw new Error('It looks like there are no tabbable elements in the trap');
-        }
-      }
       if (!firstTabbable || !lastTabbable) return;
 
       let i = records.length;

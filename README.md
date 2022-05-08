@@ -137,12 +137,12 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 - A web page can live without focus trap :speak_no_evil:
 
-  So the hook has been build to be resilient and can, for example, be caled with `undefined` without crashing your application :shield:  
+  So the hook has been build to be resilient and can, for example, be called with `undefined` without crashing your application :shield:  
   Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable elements in the trap; it has been attempted to resume, pause or demolish an inexistent trap.
 
 ## Special thanks :blue_heart:
 
-The logic for the treatement of edge cases, in matter of browser consistency regarding tabbing around in a page, is took from [tabbable](https://github.com/focus-trap/tabbable).
+The logic for the treatement of edge cases, in matter of browser consistency regarding tabbability and tab indexes, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
