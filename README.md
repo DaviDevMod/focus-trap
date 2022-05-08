@@ -4,4 +4,4 @@
 
 **`use-simple-focus-trap`** is a lightweight React custom hook useful to trap the focus within an HTML element, and this is a monorepo entirely dedicated to it.
 
-## [Link to use-simple-focus-trap README](https://github.com/DaviDevMod/use-simple-focus-trap/blob/main/packages/use-simple-focus-trap/README.md)
+## [Link to use-simple-focus-trap](https://github.com/DaviDevMod/use-simple-focus-trap/tree/main/packages/use-simple-focus-trap)

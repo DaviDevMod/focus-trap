@@ -90,7 +90,7 @@ interface TrapConfig {
   If it's missing or invalid, the focus will be returned to what was the active element at the time the trap was built.
 
 - **lock**  
-  By default clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>.  
+  By default, clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[[1]](#note-expansion-1)</sup>.  
   If `lock` is set to `false`, clicks behave as usual.  
   If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
@@ -106,8 +106,8 @@ interface TrapConfig {
 <details>
 <summary>Why?</summary>
 
-> The <a href="#return-value">the return value</a> avoid building two identic traps one on top of the other. It does so by deep-comparing the configuration objects received, but it only shallow-compares any function.  
-> So if at every rerender, the return value is called with an unmemoized function in the config, it will end up creating a pile of duplicate traps.
+> The <a href="#return-value">the return value</a> avoids building two identic traps one on top of the other. It does so by deep-comparing the configuration objects received, but it only shallow-compares functions found in it.  
+> So if at every rerender, the return value is called with the same configuration object containing an unmemoized function, it will end up creating a pile of duplicate traps.
 
 Note that the memoization precaution is relevant only when the return value is used to build traps, and even then it may not be necessary depending on how it is used. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So **if you feel confortable in doing so, you can avoid the memoization until a warning shows up.**
 
@@ -132,13 +132,13 @@ Whenever a trap is demolished, the previous trap (if any) is resumed.
 
 ## Dependencies & Browser Support
 
-The are no dependencies and the hook can run in virtually any major browser except IE :cherries:
+The are no dependencies :cherries: and the hook can run in virtually any major browser except IE
 
 The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver), which is supported by IE11. However a couple of tweaks are required (even [from your side](https://create-react-app.dev/docs/supported-browsers-features/#supported-browsers)) to make the hook work in IE and since even Microsoft itself started to [drop support for IE](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support-windows-10), the hook refrains from supporting it.
 
 ## Nice to know
 
-- Each focus trap is stateless and the hook can cause a rerender only when a trap is created or demolished :zap:
+- Each focus trap is stateless and the hook causes rerenders only when a trap is created or demolished :zap:
 
 - A web page can live without focus trap :speak_no_evil:
 
@@ -147,7 +147,7 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
 
 ## Special thanks :blue_heart:
 
-The logic for the treatement of edge cases, in matter of browser consistency regarding tabbability and tab indexes, is took from [tabbable](https://github.com/focus-trap/tabbable).
+The logic for the treatement of edge cases, in matter of browser consistency regarding tab indexes and tabbability, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 

@@ -29,10 +29,10 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
         }
       }
     },
-    // In the rare case two subsequent traps in the `trapStack` have the same `root` and `lock`
+    // In the rare case two subsequent traps in the `trapsStack` have the same `root` and `lock`
     // it would be possible to not change the refence of this handler (using `[root, lock]` as dep array).
     // However getting different handlers for different traps is conceptually cleaner and even marginally faster.
-    // This reasoning applies to all the depenndency arrays of this hook (`useSingleTrap`).
+    // The same reasoning applies to all the depenndency arrays of this hook (`useSingleTrap`).
     [trapState]
   );
 
@@ -90,7 +90,6 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
             firstTabbable.compareDocumentPosition(record.target) & 11 ||
             lastTabbable.compareDocumentPosition(record.target) & 13
           ) {
-            // If it's the case, update the trap and return from `mutationCallback`.
             if (isMutationAffectingTabbability(record)) return updateTrap(root, trapRefs, initialFocus);
           }
         } else if (isMutationAffectingTabbability(record)) return updateTrap(root, trapRefs, initialFocus);
