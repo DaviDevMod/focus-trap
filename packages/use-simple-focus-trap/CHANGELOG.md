@@ -4,6 +4,16 @@
 
 ### Patch Changes
 
+- [`cf213df`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/cf213df0940263214b5383c1f6e77669221b5c0c) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Chores in README
+
+* [`1ce451e`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/1ce451eef2704bb16e64e1b255d74f2ac7d916b0) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Add error for attempting to build a trap with a missing or invalid configuration
+
+- [`d5d03f2`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/d5d03f230f489cb66e9d0eeaca58a22789c5f048) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Chores on documentation
+
+## 0.0.2
+
+### Patch Changes
+
 - [`c44624d`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/c44624dd128f8e1364ab2ecabf3ed5444c354129) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Testing CI for releasing packages
 
 ## 0.0.2
