@@ -1,16 +1,14 @@
-name: release
+name: release-PR
 
 on:
   push:
     branches:
       - main
-    paths:
-      - '**/CHANGELOG.md'
 
 jobs:
-  release:
+  release-pr:
     if: github.repository == 'DaviDevMod/use-simple-focus-trap'
-    name: Publish release
+    name: Create release PR and changelog
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -50,10 +48,7 @@ jobs:
       - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@v1.2.2
-        with:
-          publish: yarn g:release
         env:
           # See https://github.com/changesets/action/issues/147
           HOME: ${{ github.workspace }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
