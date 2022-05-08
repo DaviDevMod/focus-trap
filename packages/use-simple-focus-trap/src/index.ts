@@ -12,6 +12,11 @@ function useSimpleFocusTrap(config: TrapConfig) {
     switch (action) {
       case 'BUILD':
         const resolvedConfig = resolveConfig(config);
+        if (process.env.NODE_ENV === 'development') {
+          if (!resolvedConfig) {
+            throw new Error('Cannot build focus trap with missing or invalid configuration.');
+          }
+        }
         if (!resolvedConfig) return;
         if (trapsStack.length && deepCompareConfings(trapsStack[trapsStack.length - 1], resolvedConfig)) return;
         trapsStack.push(resolvedConfig);

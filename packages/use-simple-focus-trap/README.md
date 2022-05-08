@@ -109,7 +109,7 @@ interface TrapConfig {
 > The <a href="#return-value">the return value</a> avoid building two identic traps one on top of the other. It does so by deep-comparing the configuration objects received, but it only shallow-compares any function.  
 > So if at every rerender, the return value is called with an unmemoized function in the config, it will end up creating a pile of duplicate traps.
 
-> Note that the memoization precaution is relevant only when the return value is used to build traps, and even then it may not be necessary depending on how it is used. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So **if you feel confortable in doing so, you can avoid the memoization until a warning shows up.**
+Note that the memoization precaution is relevant only when the return value is used to build traps, and even then it may not be necessary depending on how it is used. Furthermore a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So **if you feel confortable in doing so, you can avoid the memoization until a warning shows up.**
 
 </details>
 
