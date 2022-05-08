@@ -1,4 +1,4 @@
-name: release
+name: publish
 
 on:
   push:
@@ -45,13 +45,36 @@ jobs:
         run: yarn install --immutable
         env:
           HUSKY: 0
+      #       # Automatic .npmrc generation will be removed, for now it's hard to debug
+      #       # See https://github.com/changesets/action/issues/147#issuecomment-1030597823
+      #       - name: Debug if .npmrc is present in working directory
+      #         run: |
+      #           cat ${{ github.workspace }}/.npmrc
+      #       - name: Publish release
+      #         id: changesets
+      #         uses: changesets/action@v1.2.1
+      #         with:
+      #           publish: yarn g:release
+      #           cwd: ${{ github.workspace }}
+      #           title: '[Release] Version packages'
+      #         env:
+      #           # See https://github.com/changesets/action/issues/147
+      #           HOME: ${{ github.workspace }}
+      #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # //registry.npmjs.org/:_authToken=${NPM_TOKEN}
 
       # @link https://github.com/changesets/action
-      - name: Create Release Pull Request
+      - name: Publish release
         id: changesets
         uses: changesets/action@v1.2.2
         with:
           publish: yarn g:release
+          cwd: ${{ github.workspace }}
+          title: '[Release] Version packages'
         env:
+          # See https://github.com/changesets/action/issues/147
+          HOME: ${{ github.workspace }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
