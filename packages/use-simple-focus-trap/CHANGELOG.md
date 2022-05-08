@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- [`c44624d`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/c44624dd128f8e1364ab2ecabf3ed5444c354129) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Testing CI
+
+## 0.0.2
+
+### Patch Changes
+
 - [`a8d0e3f`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/a8d0e3fca48e4abd988a1bf063f2b25944ef3d5c) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix exported types
 
 ## 0.0.2
