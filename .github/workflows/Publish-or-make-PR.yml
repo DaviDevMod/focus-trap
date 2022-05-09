@@ -1,4 +1,4 @@
-name: release-PR
+name: Publish-or-make-PR
 
 on:
   push:
