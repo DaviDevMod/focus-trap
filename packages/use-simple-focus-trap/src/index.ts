@@ -41,4 +41,5 @@ function useSimpleFocusTrap(config: TrapConfig) {
   return trapsController;
 }
 
+export { TrapsControllerArgs, TrapConfig };
 export default useSimpleFocusTrap;
