@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- [`c6d1e58`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/c6d1e58c7d16a068ab288f98144823812431b99c) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix exported types
+
+## 0.0.2
+
+### Patch Changes
+
 - [`583cb2a`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/583cb2aea8e24308d7efc53cc26ae3f4bdfb823c) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix shallow comparison of `escape` properties by setting the default `true` before the falsy `undefined` and `false` are compared.
 
 * [`e03d726`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/e03d7262e8704f9acebb7d70fbc77838eb6a582c) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Chores on docs
