@@ -7,7 +7,6 @@ on:
       - main
     paths:
       - 'packages/**'
-      - '!packages/**/CHANGELOG.md'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
