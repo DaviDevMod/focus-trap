@@ -9,28 +9,22 @@ function useSimpleFocusTrap(config: TrapConfig) {
   const singleTrapController = useSingleTrap(noConfig, getPrevTrap);
 
   const trapsController = ({ action, config }: TrapsControllerArgs) => {
-    switch (action) {
-      case 'BUILD':
-        const resolvedConfig = resolveConfig(config);
-        if (process.env.NODE_ENV === 'development') {
-          if (!resolvedConfig) {
-            throw new Error('Cannot build focus trap with missing or invalid configuration.');
-          }
+    if (action === 'BUILD') {
+      const resolvedConfig = resolveConfig(config);
+      // In development an error is thrown inside of `resolveConfig()`
+      if (!resolvedConfig) return;
+      if (trapsStack.length && areConfigsEquivalent(trapsStack[trapsStack.length - 1], resolvedConfig)) return;
+      trapsStack.push(resolvedConfig);
+      return singleTrapController({ action, config: resolvedConfig });
+    } else if (action === 'DEMOLISH') {
+      if (process.env.NODE_ENV === 'development') {
+        if (!trapsStack.length) {
+          throw new Error('Cannot demolish inexistent trap.');
         }
-        if (!resolvedConfig) return;
-        if (trapsStack.length && deepCompareConfings(trapsStack[trapsStack.length - 1], resolvedConfig)) return;
-        trapsStack.push(resolvedConfig);
-        return singleTrapController({ action, config: resolvedConfig });
-      case 'DEMOLISH':
-        if (process.env.NODE_ENV === 'development') {
-          if (!trapsStack.length) {
-            throw new Error('Cannot demolish inexistent trap.');
-          }
-        }
-        return singleTrapController({ action, config: getPrevTrap() });
-      default:
-        return singleTrapController({ action });
+      }
+      return singleTrapController({ action, config: getPrevTrap() });
     }
+    return singleTrapController({ action });
   };
 
   useEffect(() => {
