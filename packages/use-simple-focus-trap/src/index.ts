@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { TrapsControllerArgs, SingleTrapConfig, TrapConfig } from './types';
-import { noConfig, resolveConfig, deepCompareConfings } from './utils';
+import { noConfig, resolveConfig, areConfigsEquivalent } from './utils';
 import useSingleTrap from './use-single-trap/useSingleTrap';
 
 function useSimpleFocusTrap(config: TrapConfig) {
