@@ -219,13 +219,13 @@ then focus must always jump also from `lastMaxPositiveTabIndex` to `firstZeroTab
   to make this logic worth to be implemented.
   This logic differs from the currently implemented one, only in case the trap contains at least two elemnts
   with positive tab indexes (say "1" and "2"), and there is at least one element outside of the trap with a tab index
-  whose value "T" is: 1 <= T <= 2.
+  whose value "T" is: 1 <= T <= 2 which has to be placed in a *fortunate* document order relative to those in the trap.
 
 III.
 Assisted tabbing is always required when the focus is entering or leaving a radio group.
 
   This is because when `firstTabbable`, `lastTabbable`, `lastMaxPositiveTabIndex`, `firstZeroTabIndex`
-  are to be set to an input being part of a radio group, they should be set to the currently chacked input,
+  are to be set to an input being part of a radio group, they should be set to the currently checked input,
   but the hook actually set them to a fixed radio input acting as a representative for the whole group.
 
   Here the choice is between the current approach, which consist in having logic to assist the tabbing from and to
@@ -246,9 +246,11 @@ Assisted tabbing is always required when the focus is entering or leaving a radi
     they don't use the keyboard to navigate through the page.
 
   How does the current approach work?
+
   Whenever `TAB` is pressed the `event.target` is checkd to know if it's part of a radio group containing also one of
   `firstTabbable`, `lastTabbable`, `lastMaxPositiveTabIndex`, `firstZeroTabIndex` and in that case the tab would be assisted
   as if `event.target` was the one of the four`trapRefs` in question.
+
   Whenever the tabbing has to be assisted (eg, `TAB` is pressed with `event.target` being `lastTabbable`), a check will be done
   on the destination of the assisted tabbing (eg, `firstTabbable`) to know if it's part of a radio group, and in that case
   the focus would go to the checked radio input in the group (rather than to what the hook considers as `firstTabbable`).
