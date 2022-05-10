@@ -16,7 +16,8 @@ function useSimpleFocusTrap(config: TrapConfig) {
       if (trapsStack.length && areConfigsEquivalent(trapsStack[trapsStack.length - 1], resolvedConfig)) return;
       trapsStack.push(resolvedConfig);
       return singleTrapController({ action, config: resolvedConfig });
-    } else if (action === 'DEMOLISH') {
+    }
+    if (action === 'DEMOLISH') {
       if (process.env.NODE_ENV === 'development') {
         if (!trapsStack.length) {
           throw new Error('Cannot demolish inexistent trap.');
