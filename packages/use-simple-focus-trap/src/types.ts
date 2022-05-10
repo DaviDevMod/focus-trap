@@ -20,7 +20,7 @@ export interface SingleTrapConfig {
 }
 
 export interface TrapConfig {
-  root?: HTMLElement | string;
+  root: HTMLElement | string;
   initialFocus?: FocusableElementRef | string;
   returnFocus?: FocusableElementRef | string;
   lock?: boolean | Function;

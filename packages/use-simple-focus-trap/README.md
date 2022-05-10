@@ -59,7 +59,7 @@ The hook receives a single parameter being an object with a few optional propert
 
 | Name         | Required | Type                            |    Default value    |
 | ------------ | -------- | ------------------------------- | :-----------------: |
-| root         | No       | `HTMLElement \| string`         |          -          |
+| root         | Yes      | `HTMLElement \| string`         |          -          |
 | initialFocus | No       | `FocusableElementRef \| string` |   first tabbable    |
 | returnFocus  | No       | `FocusableElementRef \| string` | last active element |
 | lock         | No       | `boolean \| Function`           |       `true`        |

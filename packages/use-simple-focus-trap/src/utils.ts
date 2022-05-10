@@ -13,7 +13,7 @@ const resolveId = (el?: FocusableElementRef | string) => (typeof el === 'string'
 
 // Function resolving all the ids in `config` and setting default values where needed.
 // If `root` is still not an HTMLElement after its id resolution, `config` must not be added to the `trapsStack`.
-export function resolveConfig(config: TrapConfig = {}): SingleTrapConfig | null {
+export function resolveConfig(config: TrapConfig = { root: '' }): SingleTrapConfig | null {
   const root = resolveId(config.root);
 
   if (process.env.NODE_ENV === 'development') {
