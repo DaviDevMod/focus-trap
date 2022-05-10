@@ -1,4 +1,4 @@
-name: Publish-or-make-PR
+name: release
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  release-pr:
+  release:
     if: github.repository == 'DaviDevMod/use-simple-focus-trap'
-    name: Create release PR and changelog
+    name: Create release pull request or publish new release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -45,7 +45,7 @@ jobs:
           HUSKY: 0
 
       # @link https://github.com/changesets/action
-      - name: Create release pull request or publish
+      - name: Create release PR and changelog or publish
         id: changesets
         uses: changesets/action@v1.2.2
         with:

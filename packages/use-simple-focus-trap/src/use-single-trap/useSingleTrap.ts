@@ -52,6 +52,8 @@ function useSingleTrap(config: SingleTrapConfig, getPrevTrap: () => SingleTrapCo
   );
 
   // Funtion that adds and removes event listeners.
+  // TODO: need to test this to check if needs memoization, I think it doesn't as the `useEffect`
+  // building and demolishing traps shoud be a closure with an old ref of this funciton, but I am not sure
   const eventListeners = (action: 'ADD' | 'REMOVE') => {
     const actionMap = {
       ADD: 'addEventListener' as keyof Document,

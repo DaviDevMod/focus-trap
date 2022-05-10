@@ -28,7 +28,7 @@ yarn add use-simple-focus-trap
 
 ## Usage
 
-All that is needed to get a trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.  
+All that is needed to get your simple focus trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.  
 The hook will stop trapping the focus as soon as it is unmounted or whenever the user presses the `Esc` key.
 
 ```javascript
@@ -94,7 +94,7 @@ interface TrapConfig {
   If `lock` is set to `false`, clicks behave as usual.  
   If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap, thus it will be called with the `MouseEvent | TouchEvent` in question.
 
-  > <b id="note-expansion-1">[[1]](#note-reference-1)</b> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
+  > <span id="note-expansion-1">[[1]](#note-reference-1)</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented. So it's possible to make a specific node outisde of the trap _clickable_ even when `lock` is `true`, for example by listening for `mouseup` events.
 
 - **escape**  
   Whenever the `Esc` key is pressed, the trap is demolished by default.  
