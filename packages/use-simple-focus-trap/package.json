@@ -2,7 +2,7 @@
   "name": "use-simple-focus-trap",
   "version": "0.0.2-development.7",
   "license": "MIT",
-  "repository": "https://github.com/DaviDevMod/use-simple-focus-trap",
+  "repository": "https://github.com/DaviDevMod/use-simple-focus-trap/tree/main/packages/use-simple-focus-trap",
   "type": "module",
   "source": "./src/index.ts",
   "exports": {
