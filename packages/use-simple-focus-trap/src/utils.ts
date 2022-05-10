@@ -28,7 +28,7 @@ export function resolveConfig(config: TrapConfig = { root: '' }): SingleTrapConf
     initialFocus: resolveId(config.initialFocus),
     returnFocus: resolveId(config.returnFocus) ?? (document.activeElement as FocusableElementRef),
     lock: config.lock,
-    escape: config.escape === undefined ? true : config.escape,
+    escape: config.escape !== false,
   } as SingleTrapConfig;
 }
 

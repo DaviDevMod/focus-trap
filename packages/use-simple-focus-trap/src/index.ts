@@ -5,7 +5,7 @@ import useSingleTrap from './use-single-trap/useSingleTrap';
 
 function useSimpleFocusTrap(config: TrapConfig) {
   const trapsStack = useRef<SingleTrapConfig[]>([]).current;
-  const getPrevTrap = () => (trapsStack?.pop() && trapsStack.length ? trapsStack[trapsStack.length - 1] : noConfig);
+  const getPrevTrap = () => (trapsStack.pop() && trapsStack.length ? trapsStack[trapsStack.length - 1] : noConfig);
   const singleTrapController = useSingleTrap(noConfig, getPrevTrap);
 
   const trapsController = ({ action, config }: TrapsControllerArgs) => {
