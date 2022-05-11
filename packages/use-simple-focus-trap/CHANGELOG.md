@@ -1,5 +1,27 @@
 # use-simple-focus-trap
 
+## 1.0.0
+
+### Major Changes
+
+- [`cbf24a6`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/cbf24a669aedf6dac372b7279224ae0b90b35b80) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Set the `root` as a required property
+
+### Patch Changes
+
+- [`0110b9e`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/0110b9e801596cc2a35d8b11176d7445952b893a) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Remove redundant error in index.ts
+
+* [`c6e1a06`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/c6e1a06916bca6771cb7414d461269c18a17c395) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix logic of `resolveConfig` and `areConfigsEquivalent` (former `deepCompareConfings`)
+
+- [`586eca8`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/586eca86b255611f5b4ad2375d1f73f1d7567e3e) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix resolution of `escape`
+
+* [`ff5b5bb`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/ff5b5bbae6fd898a709d4468c164c95306510cae) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fill README with emoji
+
+- [`1c196a9`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/1c196a97db0edfe129d58d90a64aaf6765554a5e) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Modify repository for use-simple-focus-trap
+
+* [`246a673`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/246a6739c85dcd82db4e2fcbe93161246dd73eb8) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Chores on docs
+
+- [`f5305f5`](https://github.com/DaviDevMod/use-simple-focus-trap/commit/f5305f526fe0d8bd45ce0a54333da672fe5cd260) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Chores in comments
+
 ## 0.0.2
 
 ### Patch Changes
