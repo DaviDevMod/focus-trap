@@ -1,5 +1,11 @@
 # use-simple-focus-trap
 
+## 0.0.3
+
+### Patch Changes
+
+- [`7466edd`](https://github.com/DaviDevMod/focus-trap/commit/7466edd70d081bc5105b93ad764ef27bd8eb237f) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Change repo links
+
 ## 1.0.0
 
 ### Major Changes
