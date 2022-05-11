@@ -102,7 +102,7 @@ interface TrapConfig {
   If `escape` is set to `false`, the trap is kept running.  
   If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but you can easily demolish it with the help of the hook's return value.
 
-## :mirror: Return value
+## :recycle: Return value
 
 The return value is a funciton that can be used to build, demolish, pause and resume a trap.  
 This function receives a single argument, being an object of type `TrapsControllerArgs`.

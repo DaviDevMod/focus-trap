@@ -172,10 +172,11 @@ export function assistTabbing(event: KeyboardEvent, trapRefs: React.MutableRefOb
     // or if it either precedes `topTabbable` or succeeds `bottomTabbable` (only one of the two is checked).
     !!(comparison && edge!.compareDocumentPosition(target as Node) & comparison);
 
+  // If all the elements in the trap have zero tab index, or all of them have positive tab index, the two `else if`
+  // below, can kick in only when their `if` kicks in, that is, they can't kick in. So it would be reduntand to
+  // check for both `firstZeroTabIndex && lastMaxPositiveTabIndex`, if one of them exists, so does the other.
   if (shiftKey) {
     if (isAssistedTabbingRequired(firstTabbable, topTabbable, 3)) to = lastTabbable;
-    // Should check `firstZeroTabIndex && lastMaxPositiveTabIndex`, but if there are no positive tab indexes
-    // `firstZeroTabIndex` is also `firstTabbable` and the above `if` is entered.
     else if (firstZeroTabIndex && isAssistedTabbingRequired(firstZeroTabIndex)) to = lastMaxPositiveTabIndex;
   } else {
     if (isAssistedTabbingRequired(lastTabbable, bottomTabbable, 5)) to = firstTabbable;
@@ -219,7 +220,7 @@ then focus must always jump also from `lastMaxPositiveTabIndex` to `firstZeroTab
   to make this logic worth to be implemented.
   This logic differs from the currently implemented one, only in case the trap contains at least two elemnts
   with positive tab indexes (say "1" and "2"), and there is at least one element outside of the trap with a tab index
-  whose value "T" is: 1 <= T <= 2 which has to be placed in a *fortunate* document order relative to those in the trap.
+  whose value "T" is: 1 <= T <= 2 which has to be placed in a "fortunate" document order relative to those in the trap.
 
 III.
 Assisted tabbing is always required when the focus is entering or leaving a radio group.
@@ -258,13 +259,13 @@ Assisted tabbing is always required when the focus is entering or leaving a radi
 IV.
 Assisted tabbing may be required when `event.target` is outside of the "edges" of the tabbable elements in the trap.
 
-  If the trap contains an element with negative tab index, the user can focus it (by means other than the keyboard) and
-  then `TAB` (or `SHIFT + TAB`) away from it.
-  If such element comes before `topTabbable` or after `bottomTabbable`, in document order, assisted tabbing is required
+  If there are elements with a negative tab index, the user can focus them (by means other than the keyboard) and
+  then `TAB` (or `SHIFT + TAB`) away.
+  If such elements come before `topTabbable` or after `bottomTabbable`, in document order, assisted tabbing is required
   to keep the focus within the trap (from before `topTabbable` with a `SHIFT + TAB` to `lastTabbable` and
   from after `bottomTabbable` with a `TAB` to `firstTabbable`).
 
   It's not possible to use eg, `firstTabbable` instead of `topTabbable` because there could be tabbable elements
-  in the trap that come before `firstTabbable` in document order and in that case assisting the tabbing would be a mistake.
+  in the trap that come before `firstTabbable` in document order and in that case assisting the tabbing could be a mistake.
 
 */
