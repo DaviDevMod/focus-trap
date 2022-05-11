@@ -10,7 +10,7 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'DaviDevMod/use-simple-focus-trap'
+    if: github.repository == 'DaviDevMod/focus-trap'
     name: Create release pull request or publish new release
     runs-on: ubuntu-latest
     steps:

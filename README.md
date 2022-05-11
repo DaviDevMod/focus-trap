@@ -1,7 +1,7 @@
-# use-simple-focus-trap :mouse_trap:
+# focus-trap
 
-[![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml)[![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+This monorepo is meant to provide a productive dev environment for open source packages that I am developing primarily for myself.
 
-**`use-simple-focus-trap`** is a lightweight React custom hook useful to trap the focus within an HTML element, and this is a monorepo entirely dedicated to it.
+:construction: I advise against using them as they are in an early stage and likely to incur into several breking changes :construction:
 
 ## [Link to use-simple-focus-trap](https://github.com/DaviDevMod/use-simple-focus-trap/tree/main/packages/use-simple-focus-trap)

@@ -52,7 +52,7 @@ export function areConfigsEquivalent(x: SingleTrapConfig, y: SingleTrapConfig): 
     if (x.root === y.root && x.initialFocus === y.initialFocus && x.returnFocus === y.returnFocus) {
       if (x.lock === y.lock && x.escape === y.escape) return true;
       console.warn(
-        "`useSimpleFocusTrap` detected two focus trap configurations differing only in function references. Chances are you need to memoize the functions you pass to the hook's return value to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/use-simple-focus-trap/blob/main/packages/use-simple-focus-trap#note-expansion-2-warning"
+        "`useSimpleFocusTrap` detected two focus trap configurations differing only in function references. Chances are you need to memoize the functions you pass to the hook's return value to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/focus-trap/blob/main/packages/use-simple-focus-trap#note-expansion-2-warning"
       );
     }
     return false;
