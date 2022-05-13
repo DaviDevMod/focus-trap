@@ -1,6 +1,6 @@
 {
   "name": "use-simple-focus-trap",
-  "version": "0.0.3-development.0",
+  "version": "0.0.3",
   "license": "MIT",
   "repository": "https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap",
   "type": "module",
