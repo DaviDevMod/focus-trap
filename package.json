@@ -20,5 +20,10 @@
     "g:changeset": "changeset",
     "g:release": "yarn g:build && changeset publish",
     "postinstall": "is-ci || husky install"
+  },
+  "author": {
+    "name": "Davide Modica",
+    "email": "davidevmod@gmail.com",
+    "url": "https://github.com/DaviDevMod"
   }
 }

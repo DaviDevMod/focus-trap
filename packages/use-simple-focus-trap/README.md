@@ -2,19 +2,26 @@
 
 [![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
-A lightweight React custom hook to trap the focus within an HTML element.
+This React custom hook it's a tiny wrapper around [single-focus-trap](), that allows you to trap the focus within a group of HTML elements.
 
 ## :sparkles: Features
 
-- Create a simple focus trap :lotus_position:
+The same features as [single-focus-trap]():
+
+- Trap the focus within an HTMLElement, or an array of them.
 - Choose an element receiving the initial focus within a trap
 - Decide whether to prevent clicks on elements outside of a trap
 - Bind different behaviours to the `Esc` key
 - Choose an element receiving the focus after a trap is left
-- Create a focus trap from inside another one
 - Build, demolish, pause and resume a trap at any time
 
-## :wrench: Installation
+But with:
+
+- A more ergonomic API, that makes it simple to create a simple focus trap :lotus_position:
+- A good layer of error handling, that makes the hook viable for plain JavaScript
+- The ability to push traps into an automated [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of traps
+
+## Installation
 
 ```bash
 npm install use-simple-focus-trap
@@ -26,18 +33,20 @@ or
 yarn add use-simple-focus-trap
 ```
 
-## :hook: Usage
+## Usage
 
-All that is needed to get your simple focus trap up and running is to provide the hook with an `HTMLElement` or the `id` of such element.  
+Import the hook and call it with an HTML element, or the id of such element, or even an array of elements and ids.  
+And that's it, the focus is trapped.
+
 The hook will stop trapping the focus as soon as it is unmounted or whenever the user presses the `Esc` key.
 
 ```javascript
 import useFocusTrap from 'use-simple-focus-trap';
 
 function MyComponent() {
-  useFocusTrap({ root: 'aValidOne' });
+  useFocusTrap('elementId');
 
-  return <h1>The focus is now trapped inside of an HTMLlement with "aValidOne" as id</h1>;
+  return <h1>The focus is now trapped inside of an HTML element with "elementId" as id</h1>;
 }
 
 export default MyComponent;
@@ -45,9 +54,9 @@ export default MyComponent;
 
 ## :shrug: Default behaviour
 
-By default (if `root` is the only property provided with a valid value) this is what happens when a focus trap is built:
+By default, i.e. if a valid root for the trap is provided, but a valid configuration object is missing, this is what happens when a focus trap is built:
 
-- Focus is given to the first tabbable descendant of `root`
+- Focus is given to the first tabbable element in the trap
 - The `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
 - Clicks outside of the trap are prevented
 - The trap is demolished when the `Esc` key is pressed or the hook unmounts
@@ -55,108 +64,115 @@ By default (if `root` is the only property provided with a valid value) this is 
 
 ## :gear: Parameters
 
-The hook receives a single parameter being an object with a few optional properties that help customize the beahviour of the trap.
-
-| Name         | Required | Type                            |    Default value    |
-| ------------ | -------- | ------------------------------- | :-----------------: |
-| root         | Yes      | `HTMLElement \| string`         |          -          |
-| initialFocus | No       | `FocusableElementRef \| string` |   first tabbable    |
-| returnFocus  | No       | `FocusableElementRef \| string` | last active element |
-| lock         | No       | `boolean \| Function`           |       `true`        |
-| escape       | No       | `boolean \| Function`           |       `true`        |
+The hook receives a single parameter of type `TrapParam`, defined as follow:
 
 ```ts
-type FocusableElementRef = HTMLElement | SVGElement | null;
+type Focusable = HTMLElement | SVGElement;
+
+type TrapRoot = (HTMLElement | string)[] | HTMLElement | string;
 
 interface TrapConfig {
-  root?: HTMLElement | string;
-  initialFocus?: FocusableElementRef | string;
-  returnFocus?: FocusableElementRef | string;
+  root: TrapRoot;
+  initialFocus?: Focusable | string;
+  returnFocus?: Focusable | string;
   lock?: boolean | Function;
   escape?: boolean | Function;
 }
+
+type TrapParam = TrapRoot | TrapConfig;
 ```
 
+Basically, you can either call the hook with just a group of elements and use the default behaviour, or call it with a whole configuration object. Note that any element in the configuration can be provided as id.  
+Let's have a closer look at the configuration object.
+
+| Property     | Required | Type                             | Default value |
+| ------------ | -------- | -------------------------------- | :-----------: |
+| root         | Yes      | `TrapRoot`                       |       -       |
+| initialFocus | No       | `boolean \| Focusable \| string` |    `true`     |
+| returnFocus  | No       | `boolean \| Focusable \| string` |    `true`     |
+| lock         | No       | `boolean \| Function`            |    `true`     |
+| escape       | No       | `boolean \| Function`            |    `true`     |
+
 - **root**  
-  It is the element within which the focus has to be trapped.  
-  If it's missing or invalid, the hook does nothing.
+  It's the grop of elements within which the focus has to be trapped.  
+  If it's missing or invalid, no trap is built.
 
 - **initialFocus**  
-  It is the element that will receive the initial focus within the trap.  
-  If it's missing or invalid, it defaults to the first tabbable element in the trap.
+  By default, the first tabbable element in the trap receives the focus when a trap is built.  
+  You can switch off the default behaviour by giving `initialFocus` a value of `false`.  
+  Alternatively, you can specify an element, or the id of an element, which will receive the initial focus.
 
 - **returnFocus**  
-  It is the element that will receive the focus once the trap is demolished.  
-  If it's missing or invalid, the focus will be returned to what was the active element at the time the trap was built.
+  By default, once a trap is demolished, the focus is returned to what was the active element at the time the trap was built.  
+  You can switch off the default behaviour by giving `returnFocus` a value of `false`.  
+  Alternatively, you can specify an element, or the id of an element, which will receive the focus once the trap is demolished.
 
 - **lock**  
   By default, clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[:placard:](#note-expansion-1)</sup>.  
-  If `lock` is set to `false`, clicks behave as usual.  
-  If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap, thus it will be called with the `MouseEvent | TouchEvent` in question.
+  If `lock` is set to `false`, clicks will behave as usual.  
+  If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap.  
+  In this last case, preventing default behaviour and other handlers is up to you.
 
   > <span id="note-expansion-1">[:placard:](#note-reference-1)</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented.  
   > So, if you want, you can make an element outside of the trap clickable even when `lock` is true, for example, by listening for `mouseup` events.
 
 - **escape**  
-  Whenever the `Esc` key is pressed, the trap is demolished by default.  
-  If `escape` is set to `false`, the trap is kept running.  
-  If `escape` is provided as a function, it will be executed. Note that in this last case the trap would be kept running, but you can easily demolish it with the help of the hook's return value.
+  By default, the trap is demolished Whenever the `Esc` key is pressed.  
+  If `escape` is set to `false`, the trap is kept running in such cases.  
+  If `escape` is provided as a function, it will be used as an event handler.  
+  In this last case, demolishing the trap is up to you.
 
-## :recycle: Return value
+## Return value
 
-The return value is a funciton that can be used to build, demolish, pause and resume a trap.  
-This function receives a single argument, being an object of type `TrapsControllerArgs`.
+The return value is a funciton that can be used to push, build, demolish, pause and resume a trap.  
+This function receives a single parameter of type `TrapsControllerParam`.
 
 ```ts
-type TrapsControllerArgs =
-  | { action: 'BUILD'; config: TrapConfig }
+export type TrapsControllerParam =
+  | { action: 'PUSH'; config: TrapParam }
+  | { action: 'BUILD'; config: TrapParam }
   | { action: 'DEMOLISH'; config?: never }
   | { action: 'RESUME'; config?: never }
-  | { action: 'PAUSE'; config?: never };
+  | { action: 'PAUSE'; config?: never }
+  | TrapParam
+  | 'DEMOLISH'
+  | 'RESUME'
+  | 'PAUSE';
 ```
 
-The hook automatically manages a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps :juggling_person:  
+The hook automatically manages a stack of focus traps  
 Whenever a new trap is built, the current trap (if any) is paused.  
 Whenever a trap is demolished, the previous trap (if any) is resumed.
 
-<blockquote id="note-expansion-2-warning">:warning: Properties of a `TrapConfig` that are provided as a function should be <a href="https://reactjs.org/docs/hooks-reference.html#usecallback">memoized</a> to avoid unintended behaviours. </blockquote>
+The difference between a `"BUILD"` and a `"PUSH"`is that the latter builds a trap on top of the current one (if any), while `"BUILD"` replaces the current trap with another one.
+
+Note that only one trap can be active at a time. When pushing a new trap, the current is paused and will automatically resumed once the pushed trap is demolished.
+
+When `TrapsControllerParam` is provided as a `TrapParam`, the action defaults to `"PUSH"`.
+
+<blockquote id="note-expansion-2-warning">:warning: Properties that are provided as a function should be <a href="https://reactjs.org/docs/hooks-reference.html#usecallback">memoized</a> to avoid unintended behaviours.</blockquote>
 
 <details>
 <summary>Why?</summary>
 
-> The hook's return value avoids building two equivalent traps one on top of the other. It does so by comparing the configuration objects received, but it only shallow-compares functions found in it.  
-> So if at every rerender, the return value is called with the same configuration object containing an unmemoized function, it will end up creating a pile of duplicate traps.
+> The hook's return value avoids building the same trap twice in a row. It does so by comparing the configuration objects received, but it only shallow-compares functions found in it.
 
-Note that a warning will be shown if two subsequent trap configurations differ only in the reference of a function. So if you feel confortable in doing so, you can avoid the memoization until a warning shows up.
+Note that a warning will be shown if you attempt to build a trap with a configuration object that differs only in the reference of a function from the configuration object of the trap that is currently on top of the stack.  
+So if you feel confortable in doing so, you can avoid memoizations until a warning shows up.
 
 </details>
 
-## :statue_of_liberty: Dependencies & Browser Support
+## Dependencies & Browser Support
 
-The are no dependencies :cherries: and the hook can run in virtually any major browser except IE
+The hook depends on [single-focus-trap](), from which it eredits the [browser support]().
 
-The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutationobserver), which is supported by IE11. However a couple of tweaks are required (even [from your side](https://create-react-app.dev/docs/supported-browsers-features/#supported-browsers)) to make the hook work in IE and since even Microsoft itself started to [drop support for IE](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support-windows-10), the hook refrains from supporting it.
+## Nice to know
 
-## :gem: Nice to know
+- The hook is stateless, so it will never cause a rerender :zap:
 
-- Each focus trap is stateless and the hook causes rerenders only when a trap is created or demolished :zap:
+- Traps are extremely dynamic, light and responsive :fire: they are able to aknowledge key changes to key elements of the trap and take actions against these only when required, effectively minimizing their footprint on your application.
 
-- Traps are extremely dynamic and responsive :fire: they automatically aknowledge changes in the order of their tabbable elements and react with the necessary tweaks.
-
-  Such changes are for example: a new element appearing in the trap; an element being removed; an element becoming hidden or showing up via CSS; a change in the `tabindex` attribute; a `<details>` that expands or hides its content; changes in the `disabled` attribute.
-
-- A web page can live without focus trap :speak_no_evil:
-
-  So the hook has been built to be resilient and can, for example, be caled with `undefined` without crashing your application :shield:  
-  Errors are thrown only in development, for cases like: no valid `root` is provided; at any given time there are no tabbable elements in the trap; it has been attempted to resume, pause or demolish an inexistent trap.
-
-## Special thanks :blue_heart:
-
-The logic for the treatement of edge cases, in matter of browser consistency regarding tab indexes and tabbability, is took from [tabbable](https://github.com/focus-trap/tabbable).
-
-This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
-
-The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
+- A focus trap may be a huge gain in matter of accessibility, but it's not strictly necessary for an application to be functional. That's why `use-simple-focus-trap` choose to throw errors only in the development environment, avoiding to crash you application in production.
 
 ## :earth_americas: Contributions
 

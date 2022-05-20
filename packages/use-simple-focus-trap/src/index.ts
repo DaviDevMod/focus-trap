@@ -1,40 +1,72 @@
-import { useEffect, useRef } from 'react';
-import { TrapsControllerArgs, SingleTrapConfig, TrapConfig } from './types';
-import { noConfig, resolveConfig, areConfigsEquivalent } from './utils';
-import useSingleTrap from './use-single-trap/useSingleTrap';
+import { useCallback, useEffect, useRef } from 'react';
+import { singleTrap, Focusable } from '@single-focus-trap';
 
-function useSimpleFocusTrap(config: TrapConfig) {
-  const trapsStack = useRef<SingleTrapConfig[]>([]).current;
-  const getPrevTrap = () => (trapsStack.pop() && trapsStack.length ? trapsStack[trapsStack.length - 1] : noConfig);
-  const singleTrapController = useSingleTrap(noConfig, getPrevTrap);
+import { TrapConfig, ResolvedConfig, TrapsControllerParam, TrapParam, TrapRoot } from './types';
+import { resolveConfig, areConfigsEquivalent, normalizeParam } from './utils';
 
-  const trapsController = ({ action, config }: TrapsControllerArgs) => {
-    if (action === 'BUILD') {
+function useSimpleFocusTrap(config?: TrapParam) {
+  const trapsStack = useRef<ResolvedConfig[]>([]).current;
+
+  const trapsController = useCallback((param: TrapsControllerParam): void => {
+    if (process.env.NODE_ENV === 'development') {
+      if (!param) throw new Error('Missing parameter.');
+    }
+    if (!param) return;
+
+    const normalizedParam = normalizeParam(param);
+
+    if (process.env.NODE_ENV === 'development') {
+      if (!normalizedParam) {
+        throw new Error('Invalid parameter.');
+      }
+    }
+    if (!normalizedParam) return;
+
+    const { action, config } = normalizedParam;
+
+    if (action === 'PUSH' || action === 'BUILD') {
       const resolvedConfig = resolveConfig(config);
-      // In development an error is thrown inside of `resolveConfig()`
+
+      if (process.env.NODE_ENV === 'development') {
+        if (!resolvedConfig) throw new Error('No valid root found.');
+      }
       if (!resolvedConfig) return;
+
       if (trapsStack.length && areConfigsEquivalent(trapsStack[trapsStack.length - 1], resolvedConfig)) return;
-      trapsStack.push(resolvedConfig);
-      return singleTrapController({ action, config: resolvedConfig });
+
+      if (action === 'PUSH') trapsStack.push(resolvedConfig);
+      else trapsStack[trapsStack.length - 1] = resolvedConfig;
+
+      return singleTrap({ action: 'BUILD', config: resolvedConfig });
     }
     if (action === 'DEMOLISH') {
-      if (process.env.NODE_ENV === 'development') {
-        if (!trapsStack.length) {
-          throw new Error('Cannot demolish inexistent trap.');
-        }
+      // Skip the step of demolishing a trap before resuming (actually rebuilding) the previous one,
+      // thus need to take care of the `returnFocus`. This is just faster and recycles the previous MutationObserver.
+      const resumeFocus = trapsStack.pop()?.returnFocus;
+      const trapToResume = trapsStack[trapsStack.length - 1];
+      if (trapToResume) {
+        return singleTrap({
+          action: 'BUILD',
+          config: { ...trapToResume, initialFocus: resumeFocus ?? trapToResume.initialFocus },
+        });
       }
-      return singleTrapController({ action, config: getPrevTrap() });
+      // Actually demolishing the trap only if it was at the bottomo of the stack.
+      return singleTrap({ action });
     }
-    return singleTrapController({ action });
-  };
-
-  useEffect(() => {
-    trapsController({ action: 'BUILD', config });
+    singleTrap({ action });
   }, []);
 
-  // TODO: Think about whether it's the case to memoize `trapsController`.
+  useEffect(() => {
+    if (config) trapsController({ action: 'PUSH', config });
+    else if (process.env.NODE_ENV === 'development') {
+      // One may intend to call the hook just to get the returned controller, and only later build a trap.
+      console.warn(
+        '`use-simple-focus-trap` was called without a parameter. If it was intended, you can ignore this message.'
+      );
+    }
+  }, []);
+
   return trapsController;
 }
 
-export { TrapsControllerArgs, TrapConfig };
-export default useSimpleFocusTrap;
+export { useSimpleFocusTrap, Focusable, TrapRoot, TrapConfig, TrapParam, TrapsControllerParam };
