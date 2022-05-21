@@ -1,5 +1,12 @@
 # use-simple-focus-trap-demo
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`1885a70`](https://github.com/DaviDevMod/focus-trap/commit/1885a70ff14e943f678067ae1b46855e7ce742bc)]:
+  - use-simple-focus-trap@0.0.4
+
 ## 0.1.1
 
 ### Patch Changes
