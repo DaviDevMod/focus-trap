@@ -275,6 +275,7 @@ class SingleTrap {
     this.eventListeners('ADD');
   };
 
+  // @ts-ignore
   private build = (config: SingleTrapConfig): void => {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
