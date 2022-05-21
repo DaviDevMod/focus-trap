@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.changeset/**'
-      - 'packages/**/CHANGELOG.md'
 
 jobs:
   release:
