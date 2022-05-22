@@ -1,11 +1,17 @@
 {
   "name": "focus-trap",
-  "packageManager": "yarn@3.2.1",
+  "packageManager": "yarn@4.0.0-rc.4",
   "private": true,
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
+  "scripts": {
+    "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
+    "g:changeset": "changeset",
+    "g:release": "yarn g:build && changeset publish",
+    "postinstall": "is-ci || husky install"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.4",
     "@changesets/cli": "2.22.0",
@@ -13,13 +19,9 @@
     "husky": "8.0.1",
     "is-ci": "3.0.1",
     "lint-staged": "12.4.1",
-    "prettier": "2.6.2"
-  },
-  "scripts": {
-    "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
-    "g:changeset": "changeset",
-    "g:release": "yarn g:build && changeset publish",
-    "postinstall": "is-ci || husky install"
+    "prettier": "2.6.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4"
   },
   "author": {
     "name": "Davide Modica",

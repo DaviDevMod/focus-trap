@@ -83,7 +83,7 @@ By default, i.e. if the trap is built with a `config` that only has a `root` pro
 - The trap is demolished when the `Esc` key is pressed
 - Once the trap is demolished, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
 
-## `SingleTrapConfig` in detail
+## `SingleTrapConfig` in detail 🔍
 
 Let's have a closer look at the configuration object needed to build a trap.
 
@@ -124,7 +124,7 @@ Let's have a closer look at the configuration object needed to build a trap.
   If `escape` is provided as a function, it will be used as an event handler.  
   In this last case, demolishing the trap is up to you.
 
-## :recycle: Return value
+## Return value
 
 `void` :shrug:
 
@@ -143,7 +143,7 @@ The bottleneck is the [MutationObserver API](https://caniuse.com/mdn-api_mutatio
   Though you should note that the error handling only covers cases like: at a certain point there are no tabbable elements in the trap, or it has been attempted to resume, pause, demolish an inexistent trap.  
   Which ideally would be enough if the libraty is used in a typesafe environment (though that's not necessarily the case).
 
-  If you want further protection, for cases like calling `singleTrap()` with a missing or invalid parameter, consider writing a small wrap around `single-focus-trap` enhancing it with the desired features (check [use-simple-focus-trap]() for an example, which is limited to React).
+  If you want further protection, for cases like calling `singleTrap()` with a missing or invalid parameter, consider writing a small wrap around `single-focus-trap` enhancing it with the desired features (check [use-simple-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap) for an example, which is limited to React).
 
 ## Special thanks :blue_heart:
 

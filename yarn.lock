@@ -4490,6 +4490,8 @@ __metadata:
     is-ci: 3.0.1
     lint-staged: 12.4.1
     prettier: 2.6.2
+    rimraf: ^3.0.2
+    typescript: ^4.6.4
   languageName: unknown
   linkType: soft
 
@@ -7781,13 +7783,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-focus-trap@workspace:*, single-focus-trap@workspace:packages/single-focus-trap":
+"single-focus-trap@workspace:^, single-focus-trap@workspace:packages/single-focus-trap":
   version: 0.0.0-use.local
   resolution: "single-focus-trap@workspace:packages/single-focus-trap"
   dependencies:
     eslint: 8.16.0
     microbundle: 0.15.0
     prettier: 2.6.2
+    rimraf: ^3.0.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -8487,7 +8490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.4, typescript@npm:^4.1.3":
+"typescript@npm:4.6.4, typescript@npm:^4.1.3, typescript@npm:^4.6.4":
   version: 4.6.4
   resolution: "typescript@npm:4.6.4"
   bin:
@@ -8497,7 +8500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.6.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.1.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.6.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.1.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.4#~builtin<compat/typescript>":
   version: 4.6.4
   resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"
   bin:
@@ -8603,11 +8606,11 @@ __metadata:
     tailwindcss: 3.0.24
     tailwindcss-debug-screens: 2.2.1
     typescript: 4.6.4
-    use-simple-focus-trap: "workspace:*"
+    use-simple-focus-trap: "workspace:^"
   languageName: unknown
   linkType: soft
 
-"use-simple-focus-trap@workspace:*, use-simple-focus-trap@workspace:packages/use-simple-focus-trap":
+"use-simple-focus-trap@workspace:^, use-simple-focus-trap@workspace:packages/use-simple-focus-trap":
   version: 0.0.0-use.local
   resolution: "use-simple-focus-trap@workspace:packages/use-simple-focus-trap"
   dependencies:
@@ -8616,7 +8619,8 @@ __metadata:
     eslint-config-react-app: 7.0.1
     microbundle: 0.15.0
     prettier: 2.6.2
-    single-focus-trap: "workspace:*"
+    rimraf: ^3.0.2
+    single-focus-trap: "workspace:^"
     typescript: 4.6.4
   peerDependencies:
     react: ">=16.8.0"

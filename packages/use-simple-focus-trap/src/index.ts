@@ -69,4 +69,5 @@ function useSimpleFocusTrap(config?: TrapParam) {
   return trapsController;
 }
 
-export { useSimpleFocusTrap, Focusable, TrapRoot, TrapConfig, TrapParam, TrapsControllerParam };
+export { useSimpleFocusTrap };
+export type { Focusable, TrapRoot, TrapConfig, TrapParam, TrapsControllerParam };

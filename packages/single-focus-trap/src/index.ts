@@ -320,4 +320,5 @@ class SingleTrap {
 
 const singleTrap = new SingleTrap().controller;
 
-export { singleTrap, Focusable, SingleTrapConfig, SingleTrapControllerArgs };
+export { singleTrap };
+export type { Focusable, SingleTrapConfig, SingleTrapControllerArgs };

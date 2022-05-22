@@ -2,11 +2,11 @@
 
 [![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
-This React custom hook it's a tiny wrapper around [single-focus-trap](), that allows you to trap the focus within a group of HTML elements.
+This React custom hook it's a tiny wrapper around [single-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap), that allows you to trap the focus within a group of HTML elements.
 
 ## :sparkles: Features
 
-The same features as [single-focus-trap]():
+The same features as [single-focus-trap]https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap):
 
 - Trap the focus within an HTMLElement, or an array of them.
 - Choose an element receiving the initial focus within a trap
@@ -52,7 +52,7 @@ function MyComponent() {
 export default MyComponent;
 ```
 
-## :shrug: Default behaviour
+## Default behaviour
 
 By default, i.e. if a valid root for the trap is provided, but a valid configuration object is missing, this is what happens when a focus trap is built:
 
@@ -62,7 +62,7 @@ By default, i.e. if a valid root for the trap is provided, but a valid configura
 - The trap is demolished when the `Esc` key is pressed or the hook unmounts
 - Once the trap is demolished, focus is returned to what was the [active element](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the hook was called
 
-## :gear: Parameters
+## Parameters
 
 The hook receives a single parameter of type `TrapParam`, defined as follow:
 
@@ -164,7 +164,7 @@ So if you feel confortable in doing so, you can avoid memoizations until a warni
 
 ## Dependencies & Browser Support
 
-The hook depends on [single-focus-trap](), from which it eredits the [browser support]().
+The hook depends on [single-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap), from which it eredits the [browser support](https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap#dependencies--browser-support).
 
 ## Nice to know
 
