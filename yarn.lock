@@ -1528,14 +1528,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:0.4.4":
-  version: 0.4.4
-  resolution: "@changesets/changelog-github@npm:0.4.4"
+"@changesets/changelog-github@npm:0.4.5":
+  version: 0.4.5
+  resolution: "@changesets/changelog-github@npm:0.4.5"
   dependencies:
-    "@changesets/get-github-info": "npm:^0.5.0"
+    "@changesets/get-github-info": "npm:^0.5.1"
     "@changesets/types": "npm:^5.0.0"
     dotenv: "npm:^8.1.0"
-  checksum: 86db486d90d7bd58c5a38c5cf10b0814806ba0cdc0aa7808121b5fb7bee1961ee8365e4abdba6cab02aa3481522cc98577be7e31ae1ef2e3f84a99cfb747adbd
+  checksum: 9/ae167b09f8fafeecbb48d56bae45745781929af24aa752946e3c7175e412ad7d80699a81967c0830d95f1eebea3ef257ca5717f97833dbbd7e50659e5ebf1bb3
   languageName: node
   linkType: hard
 
@@ -1618,13 +1618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@changesets/get-github-info@npm:0.5.0"
+"@changesets/get-github-info@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@changesets/get-github-info@npm:0.5.1"
   dependencies:
     dataloader: "npm:^1.4.0"
     node-fetch: "npm:^2.5.0"
-  checksum: 9867a787532cafe6d0bee579e882c93a815fc9a2b5843d5b476d8115b2cdbc3aa8000a8504ac18932793a6f0a0cdb97fc20f8f82c05d10bec6f1a3df9b97981b
+  checksum: 9/f9b29152721b66b0f6c1f072068b345bb821d1c727c950bd2a770787600dde0c0e6fe3cf0b86f5938ecbb4b8dc8a60400dbb46c168129ad697fb79e4bd281a97
   languageName: node
   linkType: hard
 
@@ -4483,7 +4483,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "focus-trap@workspace:."
   dependencies:
-    "@changesets/changelog-github": "npm:0.4.4"
+    "@changesets/changelog-github": "npm:0.4.5"
     "@changesets/cli": "npm:2.22.0"
     eslint: "npm:8.16.0"
     husky: "npm:8.0.1"
