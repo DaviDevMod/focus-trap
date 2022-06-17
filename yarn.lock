@@ -4491,7 +4491,7 @@ __metadata:
     lint-staged: "npm:12.4.1"
     prettier: "npm:2.6.2"
     rimraf: "npm:^3.0.2"
-    typescript: "npm:^4.6.4"
+    typescript: "npm:4.7.4"
   languageName: unknown
   linkType: soft
 
@@ -7791,7 +7791,7 @@ __metadata:
     microbundle: "npm:0.15.0"
     prettier: "npm:2.6.2"
     rimraf: "npm:^3.0.2"
-    typescript: "npm:4.6.4"
+    typescript: "npm:4.7.4"
   languageName: unknown
   linkType: soft
 
@@ -8490,23 +8490,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.4, typescript@npm:^4.1.3, typescript@npm:^4.6.4":
-  version: 4.6.4
-  resolution: "typescript@npm:4.6.4"
+"typescript@npm:4.7.4, typescript@npm:^4.1.3":
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
+  checksum: 9/0cec8f1c0fb0c6a9b437ee4e17819510eb294aad85291e940188fc4542a5554ffe1f73e4bc396c77d0a4d7dd1c17fd795634d50938fc3558e34f32d8a682118b
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.6.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
-  version: 4.6.4
-  resolution: "typescript@patch:typescript@npm%3A4.6.4#optional!builtin<compat/typescript>::version=4.6.4&hash=7ad353"
+"typescript@patch:typescript@npm%3A4.7.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.1.3#optional!builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#optional!builtin<compat/typescript>::version=4.7.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 9/0ee0e98dae9f55e67ce31749066b581698b563d2b6edc89430f5203ad770d51c43068ee00970df24b078c359dd6a8eb82da55a45b3e0ac2c61a0cf13f15c050a
+  checksum: 9/19bcd9153bbacaabed753b39fbd6adb5417690230b07db63f02e22588865b444b7504da9b9fcdcca5b4ac34be19904271a266bfa54d75fcfb0f5d699cb1e2314
   languageName: node
   linkType: hard
 
@@ -8605,7 +8605,7 @@ __metadata:
     react-dom: "npm:18.1.0"
     tailwindcss: "npm:3.0.24"
     tailwindcss-debug-screens: "npm:2.2.1"
-    typescript: "npm:4.6.4"
+    typescript: "npm:4.7.4"
     use-simple-focus-trap: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -8621,7 +8621,7 @@ __metadata:
     prettier: "npm:2.6.2"
     rimraf: "npm:^3.0.2"
     single-focus-trap: "workspace:^"
-    typescript: "npm:4.6.4"
+    typescript: "npm:4.7.4"
   peerDependencies:
     react: ">=16.8.0"
   languageName: unknown
