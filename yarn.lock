@@ -2219,14 +2219,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.9":
-  version: 18.0.9
-  resolution: "@types/react@npm:18.0.9"
+"@types/react@npm:*, @types/react@npm:18.0.15":
+  version: 18.0.15
+  resolution: "@types/react@npm:18.0.15"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 162364dad716d9017ee34aabf2ea37499709ebbdef70392ae1b39225985971e1a46f121efb9c5c7da92144ee1d96d4525df806a7c1c03a5db7fd31dd034ddc7a
+  checksum: 9/4c6dd07079c8403d8733450289a1fc1b5626af058261cf0128f8b6e0e600bcdd6b789d6304703eb9c1986236bee5f917ff4ca08559b45e06376c6871b7658f30
   languageName: node
   linkType: hard
 
@@ -8592,7 +8592,7 @@ __metadata:
   resolution: "use-simple-focus-trap-demo@workspace:apps/use-simple-focus-trap-demo"
   dependencies:
     "@types/node": "npm:17.0.32"
-    "@types/react": "npm:18.0.9"
+    "@types/react": "npm:18.0.15"
     "@types/react-dom": "npm:18.0.4"
     autoprefixer: "npm:10.4.7"
     eslint: "npm:8.16.0"
@@ -8614,7 +8614,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "use-simple-focus-trap@workspace:packages/use-simple-focus-trap"
   dependencies:
-    "@types/react": "npm:18.0.9"
+    "@types/react": "npm:18.0.15"
     eslint: "npm:8.16.0"
     eslint-config-react-app: "npm:7.0.1"
     microbundle: "npm:0.15.0"
