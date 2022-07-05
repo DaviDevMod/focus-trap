@@ -2210,12 +2210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.4":
-  version: 18.0.4
-  resolution: "@types/react-dom@npm:18.0.4"
+"@types/react-dom@npm:18.0.6":
+  version: 18.0.6
+  resolution: "@types/react-dom@npm:18.0.6"
   dependencies:
     "@types/react": "npm:*"
-  checksum: decde42d02a90ac2fe94fd6bfd9c78d002c03762a2d940df9422bf61af89c03d05e2113fd55fe45521fe27fa872a79dfd654b7d6b89652b455425efdcb763c58
+  checksum: 9/aa49049d928c14bb0268bc7acca2ff5101d9191c73fcb748c0d8a546638bc8d2ce86b32ae57260b72ce5fe4bf2c64775208cf528db1e394768ed5755e261890a
   languageName: node
   linkType: hard
 
@@ -8593,7 +8593,7 @@ __metadata:
   dependencies:
     "@types/node": "npm:17.0.32"
     "@types/react": "npm:18.0.9"
-    "@types/react-dom": "npm:18.0.4"
+    "@types/react-dom": "npm:18.0.6"
     autoprefixer: "npm:10.4.7"
     eslint: "npm:8.16.0"
     eslint-config-next: "npm:12.1.6"
