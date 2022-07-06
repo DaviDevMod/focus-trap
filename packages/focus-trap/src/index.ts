@@ -7,7 +7,7 @@ type TrapAction = 'RESUME' | 'DEMOLISH' | 'PAUSE';
 type TrapArg = Roots | TrapConfig | TrapAction;
 
 export const focusTrap = (arg: TrapArg): NormalisedTrapConfig => {
-  const result =
+  const actionResult =
     typeof arg !== 'string'
       ? build(Array.isArray(arg) ? { roots: arg } : arg)
       : arg === 'DEMOLISH'
@@ -16,7 +16,7 @@ export const focusTrap = (arg: TrapArg): NormalisedTrapConfig => {
       ? pause()
       : resume();
 
-  if (result.isErr) throw new Error(result.error);
+  if (actionResult.isErr) throw new Error(actionResult.error);
 
   // There must be a config, otherwise an error would have been thrown.
   return { ...state.normalisedConfig! };
