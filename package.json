@@ -13,7 +13,7 @@
     "postinstall": "is-ci || husky install"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.4",
+    "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "2.22.0",
     "eslint": "8.16.0",
     "husky": "8.0.1",

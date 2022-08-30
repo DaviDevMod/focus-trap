@@ -1528,14 +1528,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:0.4.4":
-  version: 0.4.4
-  resolution: "@changesets/changelog-github@npm:0.4.4"
+"@changesets/changelog-github@npm:0.4.6":
+  version: 0.4.6
+  resolution: "@changesets/changelog-github@npm:0.4.6"
   dependencies:
-    "@changesets/get-github-info": "npm:^0.5.0"
-    "@changesets/types": "npm:^5.0.0"
+    "@changesets/get-github-info": "npm:^0.5.1"
+    "@changesets/types": "npm:^5.1.0"
     dotenv: "npm:^8.1.0"
-  checksum: 86db486d90d7bd58c5a38c5cf10b0814806ba0cdc0aa7808121b5fb7bee1961ee8365e4abdba6cab02aa3481522cc98577be7e31ae1ef2e3f84a99cfb747adbd
+  checksum: 9/092c5c9ef766c36cb3a42f3859e7bc9269ace96c13eea470f28e9ccb6387d8488322ea118bcfe83914884f90922a8c1d3fa1bb6a6a32f5dc21c1e06502f90f4a
   languageName: node
   linkType: hard
 
@@ -1618,13 +1618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@changesets/get-github-info@npm:0.5.0"
+"@changesets/get-github-info@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@changesets/get-github-info@npm:0.5.1"
   dependencies:
     dataloader: "npm:^1.4.0"
     node-fetch: "npm:^2.5.0"
-  checksum: 9867a787532cafe6d0bee579e882c93a815fc9a2b5843d5b476d8115b2cdbc3aa8000a8504ac18932793a6f0a0cdb97fc20f8f82c05d10bec6f1a3df9b97981b
+  checksum: 9/f9b29152721b66b0f6c1f072068b345bb821d1c727c950bd2a770787600dde0c0e6fe3cf0b86f5938ecbb4b8dc8a60400dbb46c168129ad697fb79e4bd281a97
   languageName: node
   linkType: hard
 
@@ -1719,10 +1719,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/types@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@changesets/types@npm:5.0.0"
-  checksum: b494cd3d6508ecff8903afdbc0bb4a001df7c6bf5657c8c78f97b974cf48ee790d64d2381321de6b8fb961217ebe12d600b786a634d0c91073369ddbb410bb4d
+"@changesets/types@npm:^5.0.0, @changesets/types@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@changesets/types@npm:5.1.0"
+  checksum: 9/83af9e644ad6b398dbc4054e872a63a01a7c9173322ac4abf9dd159a2369186aa09b603ea652e1681a13d6f0a9ce5b7c1b4631a0a164817e9bd38f18c1ffc24e
   languageName: node
   linkType: hard
 
@@ -4483,7 +4483,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "focus-trap@workspace:."
   dependencies:
-    "@changesets/changelog-github": "npm:0.4.4"
+    "@changesets/changelog-github": "npm:0.4.6"
     "@changesets/cli": "npm:2.22.0"
     eslint: "npm:8.16.0"
     husky: "npm:8.0.1"
