@@ -4539,7 +4539,7 @@ __metadata:
     is-ci: "npm:3.0.1"
     lint-staged: "npm:13.0.3"
     prettier: "npm:2.7.1"
-    rimraf: "npm:^3.0.2"
+    rimraf: "npm:3.0.2"
     typescript: "npm:4.8.2"
   languageName: unknown
   linkType: soft
@@ -7604,7 +7604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^3.0.2":
+"rimraf@npm:3.0.2, rimraf@npm:^3.0.2":
   version: 3.0.2
   resolution: "rimraf@npm:3.0.2"
   dependencies:
@@ -7892,7 +7892,7 @@ __metadata:
     eslint: "npm:8.23.0"
     microbundle: "npm:0.15.1"
     prettier: "npm:2.7.1"
-    rimraf: "npm:^3.0.2"
+    rimraf: "npm:3.0.2"
     typescript: "npm:4.8.2"
   languageName: unknown
   linkType: soft
@@ -8708,7 +8708,7 @@ __metadata:
     eslint-config-react-app: "npm:7.0.1"
     microbundle: "npm:0.15.1"
     prettier: "npm:2.7.1"
-    rimraf: "npm:^3.0.2"
+    rimraf: "npm:3.0.2"
     single-focus-trap: "workspace:^"
     typescript: "npm:4.8.2"
   peerDependencies:
