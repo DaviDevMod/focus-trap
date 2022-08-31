@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf --no-glob ./dist && microbundle --alias @single-focus-trap=single-focus-trap --define process.env.NODE_ENV=production --tsconfig ./tsconfig.build.json -f cjs,es --no-compress",
+    "build": "rimraf --no-glob ./dist && microbundle --define process.env.NODE_ENV=production -f cjs,es --no-compress",
     "dev": "microbundle watch"
   },
   "dependencies": {
@@ -27,13 +27,13 @@
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@types/react": "18.0.17",
-    "eslint": "8.16.0",
+    "@types/react": "18.0.18",
+    "eslint": "8.23.0",
     "eslint-config-react-app": "7.0.1",
-    "microbundle": "0.15.0",
-    "prettier": "2.6.2",
+    "microbundle": "0.15.1",
+    "prettier": "2.7.1",
     "rimraf": "^3.0.2",
-    "typescript": "4.7.4"
+    "typescript": "4.8.2"
   },
   "keywords": [
     "use",

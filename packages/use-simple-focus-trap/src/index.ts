@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { singleTrap, Focusable } from '@single-focus-trap';
+import { singleTrap, Focusable } from 'single-focus-trap';
 
 import { TrapConfig, ResolvedConfig, TrapsControllerParam, TrapParam, TrapRoot } from './types';
 import { resolveConfig, areConfigsEquivalent, normalizeParam } from './utils';

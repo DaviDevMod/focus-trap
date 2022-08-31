@@ -10,18 +10,21 @@
     "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
     "g:changeset": "changeset",
     "g:release": "yarn g:build && changeset publish",
-    "postinstall": "is-ci || husky install"
+    "postinstall": "is-ci || husky install",
+    "deps:check": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml --deep --mergeConfig",
+    "deps:update": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml -u --deep --mergeConfig",
+    "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 ."
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.4",
-    "@changesets/cli": "2.22.0",
-    "eslint": "8.16.0",
+    "@changesets/changelog-github": "0.4.6",
+    "@changesets/cli": "2.24.4",
+    "eslint": "8.23.0",
     "husky": "8.0.1",
     "is-ci": "3.0.1",
-    "lint-staged": "12.5.0",
-    "prettier": "2.6.2",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
     "rimraf": "^3.0.2",
-    "typescript": "4.7.4"
+    "typescript": "4.8.2"
   },
   "author": {
     "name": "Davide Modica",

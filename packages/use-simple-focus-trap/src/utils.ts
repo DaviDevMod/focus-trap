@@ -1,4 +1,4 @@
-import { Focusable } from '@single-focus-trap';
+import { Focusable } from 'single-focus-trap';
 
 import { NormalizedParam, ResolvedConfig, TrapConfig, TrapsControllerParam } from './types';
 

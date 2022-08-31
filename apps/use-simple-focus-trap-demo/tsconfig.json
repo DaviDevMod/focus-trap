@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "es5",
@@ -16,8 +17,10 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@single-focus-trap": ["../../../packages/single-focus-trap/src/index"],
-      "@use-simple-focus-trap": ["../../../packages/use-simple-focus-trap/src/index"]
+      "single-focus-trap/*": ["../../../packages/single-focus-trap/src/*"],
+      "single-focus-trap": ["../../../packages/single-focus-trap/src/index"],
+      "use-simple-focus-trap/*": ["../../../packages/use-simple-focus-trap/src/*"],
+      "use-simple-focus-trap": ["../../../packages/use-simple-focus-trap/src/index"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

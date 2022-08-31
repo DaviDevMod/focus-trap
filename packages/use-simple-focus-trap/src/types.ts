@@ -1,4 +1,4 @@
-import { Focusable } from '@single-focus-trap';
+import { Focusable } from 'single-focus-trap';
 
 export type TrapRoot = (HTMLElement | string)[] | HTMLElement | string;
 
