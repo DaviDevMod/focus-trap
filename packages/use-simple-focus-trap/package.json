@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf --no-glob ./dist && microbundle --define process.env.NODE_ENV=production -f cjs,es --no-compress",
+    "build": "rimraf --no-glob ./dist && microbundle -f cjs,es --no-compress",
     "dev": "microbundle watch"
   },
   "dependencies": {

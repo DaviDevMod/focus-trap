@@ -8,14 +8,14 @@ function useSimpleFocusTrap(config?: TrapParam) {
   const trapsStack = useRef<ResolvedConfig[]>([]).current;
 
   const trapsController = useCallback((param: TrapsControllerParam): void => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!param) throw new Error('Missing parameter.');
     }
     if (!param) return;
 
     const normalizedParam = normalizeParam(param);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!normalizedParam) {
         throw new Error('Invalid parameter.');
       }
@@ -27,7 +27,7 @@ function useSimpleFocusTrap(config?: TrapParam) {
     if (action === 'PUSH' || action === 'BUILD') {
       const resolvedConfig = resolveConfig(config);
 
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV !== 'production') {
         if (!resolvedConfig) throw new Error('No valid root found.');
       }
       if (!resolvedConfig) return;
@@ -58,7 +58,7 @@ function useSimpleFocusTrap(config?: TrapParam) {
 
   useEffect(() => {
     if (config) trapsController({ action: 'PUSH', config });
-    else if (process.env.NODE_ENV === 'development') {
+    else if (process.env.NODE_ENV !== 'production') {
       // One may intend to call the hook just to get the returned controller, and only later build a trap.
       console.warn(
         '`use-simple-focus-trap` was called without a parameter. If it was intended, you can ignore this message.'

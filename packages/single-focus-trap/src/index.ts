@@ -78,7 +78,7 @@ class SingleTrap {
       if (this.pushConfines(listsOfFocusables[i])) this.tabbables.roots.push(this.config.root[i]);
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!this.tabbables.roots.length) {
         throw new Error('It looks like there are no tabbable elements in the trap');
       }
@@ -265,7 +265,7 @@ class SingleTrap {
   };
 
   private resume = (isBuild?: boolean): void => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot resume inexistent trap.');
     }
     if (!this.mutationObserver) return;
@@ -294,7 +294,7 @@ class SingleTrap {
   };
 
   private pause = (): void => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot pause inexistent trap.');
     }
     if (!this.mutationObserver) return;
@@ -303,7 +303,7 @@ class SingleTrap {
   };
 
   private demolish = (): void => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot demolish inexistent trap.');
     }
     if (!this.mutationObserver) return;

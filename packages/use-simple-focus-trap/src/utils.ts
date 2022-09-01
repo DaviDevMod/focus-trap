@@ -33,7 +33,7 @@ const resolveId = (prop?: Focusable | string): Focusable | undefined =>
 export function resolveConfig(config: TrapConfig): ResolvedConfig | false {
   const resolvedRoot = (config.root instanceof Array ? config.root : [config.root]).map((el) => resolveId(el));
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     for (let i = 0; i < resolvedRoot.length; i++) {
       if (!(resolvedRoot[i] instanceof HTMLElement)) {
         console.warn(`"${config.root instanceof Array ? config.root[i] : config.root}" is not a valid root.`);
@@ -49,7 +49,7 @@ export function resolveConfig(config: TrapConfig): ResolvedConfig | false {
   if (rootSet.size !== root.length) {
     root = Array.from(rootSet);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       console.warn('Duplicate elements were found in the "root" array. They have been deduplicated.');
     }
   }
@@ -80,7 +80,7 @@ export function areConfigsEquivalent(x: ResolvedConfig, y: ResolvedConfig): bool
   if (x.root.length !== y.root.length) return false;
   for (let i = 0; i < x.root.length; i++) if (x.root[i] !== y.root[i]) return false;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     if (x.initialFocus === y.initialFocus && x.returnFocus === y.returnFocus) {
       if (x.lock === y.lock && x.escape === y.escape) return true;
       console.warn(

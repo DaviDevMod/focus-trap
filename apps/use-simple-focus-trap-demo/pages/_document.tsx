@@ -8,7 +8,7 @@ class Document extends NextDocument<Props> {
     return (
       <Html lang="en">
         <Head />
-        <body className={process.env.NODE_ENV === 'development' ? 'debug-screens' : ''}>
+        <body className={process.env.NODE_ENV !== 'production' ? 'debug-screens' : ''}>
           <div id="overlays" />
           <Main />
           <NextScript />
