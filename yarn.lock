@@ -3645,9 +3645,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"demo@workspace:apps/use-simple-focus-trap-demo":
+"demo@workspace:apps/demo":
   version: 0.0.0-use.local
-  resolution: "demo@workspace:apps/use-simple-focus-trap-demo"
+  resolution: "demo@workspace:apps/demo"
   dependencies:
     "@types/node": "npm:18.7.14"
     "@types/react": "npm:18.0.18"
