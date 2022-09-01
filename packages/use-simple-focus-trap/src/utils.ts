@@ -80,19 +80,21 @@ export function areConfigsEquivalent(x: ResolvedConfig, y: ResolvedConfig): bool
   if (x.root.length !== y.root.length) return false;
   for (let i = 0; i < x.root.length; i++) if (x.root[i] !== y.root[i]) return false;
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (x.initialFocus === y.initialFocus && x.returnFocus === y.returnFocus) {
-      if (x.lock === y.lock && x.escape === y.escape) return true;
-      console.warn(
-        "`use-simple-focus-trap` detected two focus trap configurations differing only in function references. Chances are you need to memoize the functions you pass to the hook's return value to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/focus-trap/blob/main/packages/use-simple-focus-trap#note-expansion-2-warning"
-      );
+  if (x.initialFocus === y.initialFocus && x.returnFocus === y.returnFocus) {
+    if (x.lock === y.lock && x.escape === y.escape) return true;
+    if (
+      x.lock instanceof Function &&
+      y.lock instanceof Function &&
+      x.escape instanceof Function &&
+      y.escape instanceof Function
+    ) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(
+          "`use-simple-focus-trap` detected two focus trap configurations differing only in function references. Chances are you need to memoize the functions you pass to the hook's return value to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/focus-trap/blob/main/packages/use-simple-focus-trap#note-expansion-2-warning"
+        );
+      }
+      return true;
     }
-    return false;
   }
-
-  const props: (keyof ResolvedConfig)[] = ['initialFocus', 'returnFocus', 'lock', 'escape'];
-
-  for (let prop of props) if (x[prop] !== y[prop]) return false;
-
-  return true;
+  return false;
 }
