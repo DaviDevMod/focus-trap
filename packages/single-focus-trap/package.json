@@ -22,8 +22,8 @@
     "cypress": "cypress open"
   },
   "devDependencies": {
-    "cypress": "^10.7.0",
-    "cypress-real-events": "^1.7.1",
+    "cypress": "10.7.0",
+    "cypress-real-events": "1.7.1",
     "eslint": "8.23.0",
     "microbundle": "0.15.1",
     "prettier": "2.7.1",
