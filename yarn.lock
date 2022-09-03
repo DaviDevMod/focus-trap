@@ -2630,17 +2630,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.0":
+"async@npm:^3.2.0, async@npm:^3.2.3":
   version: 3.2.4
   resolution: "async@npm:3.2.4"
   checksum: 9719e38d24e9922c255ee9ae925fb668ef52243f9866a1b59e423a3bb6150a886b3c37287348ceefa09cd3f6fa1a29dcc770eeb70642acb13674363b2d5b2b21
-  languageName: node
-  linkType: hard
-
-"async@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "async@npm:3.2.3"
-  checksum: bbcd0ff4b79ff63dffb2cf82a17f4249554a0505a85bf7c9157e1a8c813a873a5135aa9e8f9db5032d2f64e4b9711caeab81b711ce1b7ebd3d4a51c59cad1eef
   languageName: node
   linkType: hard
 
@@ -3570,7 +3563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.7.1":
+"cypress-real-events@npm:1.7.1":
   version: 1.7.1
   resolution: "cypress-real-events@npm:1.7.1"
   peerDependencies:
@@ -3579,7 +3572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^10.7.0":
+"cypress@npm:10.7.0":
   version: 10.7.0
   resolution: "cypress@npm:10.7.0"
   dependencies:
@@ -7969,21 +7962,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.5.1":
+"rxjs@npm:^7.5.1, rxjs@npm:^7.5.5":
   version: 7.5.6
   resolution: "rxjs@npm:7.5.6"
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: f16db58531d9fdc9e7cce0e33676cf791128db889304247249ba434885d35b1d173eed68ac255fca770da4c0277f97727c5fbbdc659b0b1f04d10fe42ed0dc67
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:^7.5.5":
-  version: 7.5.5
-  resolution: "rxjs@npm:7.5.5"
-  dependencies:
-    tslib: "npm:^2.1.0"
-  checksum: dcb9d0e21cd80ff48b8bb105819aa1f6860943c92023e46c14437c28c18734aa8bfa7019d0cf70731dfe34ea103a8496daf1df5a25d86f56fc69eca29776e542
   languageName: node
   linkType: hard
 
@@ -8132,8 +8116,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "single-focus-trap@workspace:packages/single-focus-trap"
   dependencies:
-    cypress: "npm:^10.7.0"
-    cypress-real-events: "npm:^1.7.1"
+    cypress: "npm:10.7.0"
+    cypress-real-events: "npm:1.7.1"
     eslint: "npm:8.23.0"
     microbundle: "npm:0.15.1"
     prettier: "npm:2.7.1"
