@@ -35,3 +35,34 @@
 //     }
 //   }
 // }
+
+export {};
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getNextTabId: () => Cypress.Chainable<string>;
+      getTabCycle: (
+        len: number,
+        from?: JQuery<HTMLElement>,
+        firstCall?: boolean,
+        cycle?: string
+      ) => Cypress.Chainable<string>;
+    }
+  }
+}
+
+Cypress.Commands.add('getNextTabId', () => {
+  cy.realPress('Tab');
+  cy.focused().then((activeElement) => activeElement.get(0).id);
+});
+
+Cypress.Commands.add('getTabCycle', (len, from = null, firstCall = true, cycle = '') => {
+  if (len <= 0) throw new Error('Please provide a positive length for the tab cycle.');
+  if (firstCall) cy.wrap(from).focus();
+
+  cy.getNextTabId().then((id) => {
+    if (len === 1) return cycle + id;
+    return cy.getTabCycle(len - 1, null, false, cycle + id);
+  });
+});
