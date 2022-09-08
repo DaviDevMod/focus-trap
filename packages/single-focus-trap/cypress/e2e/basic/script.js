@@ -1,4 +1,4 @@
-import { singleTrap } from '../../../dist/index.module.js';
+import { singleTrap } from '../../../instrumented/dist/index.module.js';
 
 window.process = {
   env: {

@@ -60,9 +60,5 @@ Cypress.Commands.add('getNextTabId', () => {
 Cypress.Commands.add('getTabCycle', (len, from = null, firstCall = true, cycle = '') => {
   if (len <= 0) throw new Error('Please provide a positive length for the tab cycle.');
   if (firstCall) cy.wrap(from).focus();
-
-  cy.getNextTabId().then((id) => {
-    if (len === 1) return cycle + id;
-    return cy.getTabCycle(len - 1, null, false, cycle + id);
-  });
+  cy.getNextTabId().then((id) => (len === 1 ? cycle + id : cy.getTabCycle(len - 1, null, false, cycle + id)));
 });
