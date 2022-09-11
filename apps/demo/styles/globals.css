@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body button {
+    @apply border-4 bg-gray-300 p-4 hover:border-yellow-500 active:border-4 active:border-orange-500;
+  }
+  div {
+    @apply m-2 p-2;
+  }
+  input[type='radio'] {
+    @apply my-2 mx-4;
+  }
+}
