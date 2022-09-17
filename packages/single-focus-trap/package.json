@@ -19,12 +19,15 @@
   "scripts": {
     "build": "rimraf --no-glob ./dist && microbundle -f cjs,es --no-compress",
     "dev": "microbundle watch",
-    "instrument": "rimraf --no-glob ./instrumented && nyc instrument --compact false ./dist/index.module.js ./instrumented",
+    "instrument": "rimraf --no-glob ./instrumented && nyc instrument --compact true ./src ./instrumented",
+    "cyp": "rimraf --no-glob ./coverage ./.nyc_output && cypress open",
     "report-codecov": "nyc report --compact",
     "test": "yarn instrument && cypress run && yarn report-codecov"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.10.0",
+    "@cypress/code-coverage": "^3.10.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/node": "^18.7.18",
     "cypress": "10.7.0",
     "cypress-real-events": "1.7.1",
     "eslint": "8.23.0",
@@ -33,6 +36,8 @@
     "nyc": "15.1.0",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
     "typescript": "4.8.3"
   },
   "keywords": [

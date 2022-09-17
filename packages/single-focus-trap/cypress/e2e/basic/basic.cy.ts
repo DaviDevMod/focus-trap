@@ -6,7 +6,7 @@ let possibleTabbables: HTMLCollectionOf<HTMLButtonElement>;
 
 context('Basic tab testing', () => {
   before(() => {
-    cy.visit('./cypress/e2e/basic/test-sandbox.html', {
+    cy.visit('http://localhost:3000', {
       onLoad(win) {
         possibleTabbables = win.document.getElementsByTagName('button');
       },
