@@ -1762,7 +1762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:^3.10.0":
+"@cypress/code-coverage@npm:3.10.0":
   version: 3.10.0
   resolution: "@cypress/code-coverage@npm:3.10.0"
   dependencies:
@@ -1902,7 +1902,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@istanbuljs/nyc-config-typescript@npm:^1.0.2":
+"@istanbuljs/nyc-config-typescript@npm:1.0.2":
   version: 1.0.2
   resolution: "@istanbuljs/nyc-config-typescript@npm:1.0.2"
   dependencies:
@@ -2371,7 +2371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:18.7.18, @types/node@npm:^18.7.18":
+"@types/node@npm:*, @types/node@npm:18.7.18":
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 833883d724d9f980c6918f1a52f396cb351bf22e83b787481c992402e702e4a3658bd3ff5b561c878d3d9e253fb315eb6f7eb0db95804222669f18d3b54ea0f2
@@ -2422,18 +2422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 18.0.19
-  resolution: "@types/react@npm:18.0.19"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 894b7ba6cb777689d83716abec5b8b7dcdc70beedddab2423666b4d8cd99649a9d7b3f7dee8d2fc16e0eb42e1c4ca48a9588ccd24c6e4297a393adac7723124e
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.0.20":
+"@types/react@npm:*, @types/react@npm:18.0.20":
   version: 18.0.20
   resolution: "@types/react@npm:18.0.20"
   dependencies:
@@ -3032,7 +3021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:10.4.11":
+"autoprefixer@npm:10.4.11, autoprefixer@npm:^10.1.0":
   version: 10.4.11
   resolution: "autoprefixer@npm:10.4.11"
   dependencies:
@@ -3047,24 +3036,6 @@ __metadata:
   bin:
     autoprefixer: bin/autoprefixer
   checksum: e893bb48348916d33ec84b3fe5565b58f82760e402fd38da6dfd26f6b2b7fe271e49092a8bbbb1bb242fb9ae7dab6be6b9a85ae3ea53b8b449ad47ad74ce2546
-  languageName: node
-  linkType: hard
-
-"autoprefixer@npm:^10.1.0":
-  version: 10.4.8
-  resolution: "autoprefixer@npm:10.4.8"
-  dependencies:
-    browserslist: "npm:^4.21.3"
-    caniuse-lite: "npm:^1.0.30001373"
-    fraction.js: "npm:^4.2.0"
-    normalize-range: "npm:^0.1.2"
-    picocolors: "npm:^1.0.0"
-    postcss-value-parser: "npm:^4.2.0"
-  peerDependencies:
-    postcss: ^8.1.0
-  bin:
-    autoprefixer: bin/autoprefixer
-  checksum: a4f6e2954e5d74c8bc82035c1229bfcce0b8dfae7adc42d5bfbdebe0cb0f447ba9a4540722e735e3851ba3d4921b444e1f0a6964e99d31f777517ed5887f6dc3
   languageName: node
   linkType: hard
 
@@ -3465,14 +3436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001332, caniuse-lite@npm:^1.0.30001370, caniuse-lite@npm:^1.0.30001373":
-  version: 1.0.30001393
-  resolution: "caniuse-lite@npm:1.0.30001393"
-  checksum: 6efd97947fde74af4f013620f403e4d35e0605ccf191159ddf4d5277e11442cf08341819f97c368a0799e8185c20b872c37e22ab88bce2f8bae261e6ce07b14a
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001399":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001332, caniuse-lite@npm:^1.0.30001370, caniuse-lite@npm:^1.0.30001399":
   version: 1.0.30001402
   resolution: "caniuse-lite@npm:1.0.30001402"
   checksum: 8e2136b48e43f95f0a36ab5e4f9e82b34ed5a1c47399a58749377858d7987dee04503a639dda9af214101318b5b8be6bdc7d74e1399ef77c6c78164bcefb4a39
@@ -3774,7 +3738,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:^7.4.0":
+"concurrently@npm:7.4.0":
   version: 7.4.0
   resolution: "concurrently@npm:7.4.0"
   dependencies:
@@ -4050,7 +4014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.8.0, cypress@npm:^10.8.0":
+"cypress@npm:10.8.0":
   version: 10.8.0
   resolution: "cypress@npm:10.8.0"
   dependencies:
@@ -5274,8 +5238,8 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": "npm:0.4.6"
     "@changesets/cli": "npm:2.24.4"
-    concurrently: "npm:^7.4.0"
-    cypress: "npm:^10.8.0"
+    concurrently: "npm:7.4.0"
+    cypress: "npm:10.8.0"
     eslint: "npm:8.23.1"
     husky: "npm:8.0.1"
     is-ci: "npm:3.0.1"
@@ -8781,7 +8745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"replace-in-file@npm:^6.3.5":
+"replace-in-file@npm:6.3.5":
   version: 6.3.5
   resolution: "replace-in-file@npm:6.3.5"
   dependencies:
@@ -9200,10 +9164,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "single-focus-trap@workspace:packages/single-focus-trap"
   dependencies:
-    "@cypress/code-coverage": "npm:^3.10.0"
-    "@istanbuljs/nyc-config-typescript": "npm:^1.0.2"
-    "@types/node": "npm:^18.7.18"
-    concurrently: "npm:^7.4.0"
+    "@cypress/code-coverage": "npm:3.10.0"
+    "@istanbuljs/nyc-config-typescript": "npm:1.0.2"
+    "@types/node": "npm:18.7.18"
+    concurrently: "npm:7.4.0"
     cypress: "npm:10.8.0"
     cypress-real-events: "npm:1.7.1"
     eslint: "npm:8.23.1"
@@ -9211,10 +9175,10 @@ __metadata:
     microbundle: "npm:0.15.1"
     nyc: "npm:15.1.0"
     prettier: "npm:2.7.1"
-    replace-in-file: "npm:^6.3.5"
+    replace-in-file: "npm:6.3.5"
     rimraf: "npm:3.0.2"
-    source-map-support: "npm:^0.5.21"
-    ts-node: "npm:^10.9.1"
+    source-map-support: "npm:0.5.21"
+    ts-node: "npm:10.9.1"
     typescript: "npm:4.8.3"
   languageName: unknown
   linkType: soft
@@ -9309,7 +9273,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.21, source-map-support@npm:~0.5.20":
+"source-map-support@npm:0.5.21, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -9916,7 +9880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1":
+"ts-node@npm:10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:
