@@ -17,9 +17,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "single-focus-trap/*": ["../../../packages/single-focus-trap/instrumented/*"],
-      "single-focus-trap": ["../../../packages/single-focus-trap/instrumented/index"],
-      "use-simple-focus-trap/*": ["../../../packages/use-simple-focus-trap/src/*"],
+      "single-focus-trap": ["../../../packages/single-focus-trap/src/index"],
       "use-simple-focus-trap": ["../../../packages/use-simple-focus-trap/src/index"]
     }
   },
