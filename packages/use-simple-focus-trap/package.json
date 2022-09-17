@@ -27,8 +27,8 @@
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@types/react": "18.0.19",
-    "eslint": "8.23.0",
+    "@types/react": "18.0.20",
+    "eslint": "8.23.1",
     "eslint-config-react-app": "7.0.1",
     "microbundle": "0.15.1",
     "prettier": "2.7.1",

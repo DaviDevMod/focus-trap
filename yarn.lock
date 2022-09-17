@@ -1833,9 +1833,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^1.3.1":
-  version: 1.3.1
-  resolution: "@eslint/eslintrc@npm:1.3.1"
+"@eslint/eslintrc@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "@eslint/eslintrc@npm:1.3.2"
   dependencies:
     ajv: "npm:^6.12.4"
     debug: "npm:^4.3.2"
@@ -1846,7 +1846,7 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     minimatch: "npm:^3.1.2"
     strip-json-comments: "npm:^3.1.1"
-  checksum: b7acedaf305141fc5b6b591bf2f08ad824eeaa8325040f0a9ed65e0391d334ee74f0de494be3075a6747698d74125d9f92fe23deba8bb126afde7e404166c18f
+  checksum: 76a8814ddb5f8e94a486cf0ce2a68f6d94dcc6ee204c4ed960ebddd65afc9ce0f84a115e8f499e27ec471722f9ff03a996ae915a0d288b0095516e578e1fef24
   languageName: node
   linkType: hard
 
@@ -2371,17 +2371,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.7.18":
+"@types/node@npm:*, @types/node@npm:18.7.18, @types/node@npm:^18.7.18":
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 833883d724d9f980c6918f1a52f396cb351bf22e83b787481c992402e702e4a3658bd3ff5b561c878d3d9e253fb315eb6f7eb0db95804222669f18d3b54ea0f2
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:18.7.16":
-  version: 18.7.16
-  resolution: "@types/node@npm:18.7.16"
-  checksum: 4cc44499cd2a12542100e875d4bc6a0164fa0ba7f5943e11cd8a7863a37d19320ef8fbd23fcd39c76f25be464d00378a84b918f68d39b932cf9b0d9e6e6f6d4e
   languageName: node
   linkType: hard
 
@@ -2429,7 +2422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.19":
+"@types/react@npm:*":
   version: 18.0.19
   resolution: "@types/react@npm:18.0.19"
   dependencies:
@@ -2437,6 +2430,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 894b7ba6cb777689d83716abec5b8b7dcdc70beedddab2423666b4d8cd99649a9d7b3f7dee8d2fc16e0eb42e1c4ca48a9588ccd24c6e4297a393adac7723124e
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.20":
+  version: 18.0.20
+  resolution: "@types/react@npm:18.0.20"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: fe7d9b466cbfeacf426a2a28c3def31e149f9496aa661315bdc1f406036c37b6a2d3dcbcdc9bbd29ee27dd02be3385174cf71b2a0c27ed38419354e44675f135
   languageName: node
   linkType: hard
 
@@ -3028,7 +3032,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:10.4.8, autoprefixer@npm:^10.1.0":
+"autoprefixer@npm:10.4.11":
+  version: 10.4.11
+  resolution: "autoprefixer@npm:10.4.11"
+  dependencies:
+    browserslist: "npm:^4.21.3"
+    caniuse-lite: "npm:^1.0.30001399"
+    fraction.js: "npm:^4.2.0"
+    normalize-range: "npm:^0.1.2"
+    picocolors: "npm:^1.0.0"
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: e893bb48348916d33ec84b3fe5565b58f82760e402fd38da6dfd26f6b2b7fe271e49092a8bbbb1bb242fb9ae7dab6be6b9a85ae3ea53b8b449ad47ad74ce2546
+  languageName: node
+  linkType: hard
+
+"autoprefixer@npm:^10.1.0":
   version: 10.4.8
   resolution: "autoprefixer@npm:10.4.8"
   dependencies:
@@ -3447,6 +3469,13 @@ __metadata:
   version: 1.0.30001393
   resolution: "caniuse-lite@npm:1.0.30001393"
   checksum: 6efd97947fde74af4f013620f403e4d35e0605ccf191159ddf4d5277e11442cf08341819f97c368a0799e8185c20b872c37e22ab88bce2f8bae261e6ce07b14a
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001399":
+  version: 1.0.30001402
+  resolution: "caniuse-lite@npm:1.0.30001402"
+  checksum: 8e2136b48e43f95f0a36ab5e4f9e82b34ed5a1c47399a58749377858d7987dee04503a639dda9af214101318b5b8be6bdc7d74e1399ef77c6c78164bcefb4a39
   languageName: node
   linkType: hard
 
@@ -4021,59 +4050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.7.0":
-  version: 10.7.0
-  resolution: "cypress@npm:10.7.0"
-  dependencies:
-    "@cypress/request": "npm:^2.88.10"
-    "@cypress/xvfb": "npm:^1.2.4"
-    "@types/node": "npm:^14.14.31"
-    "@types/sinonjs__fake-timers": "npm:8.1.1"
-    "@types/sizzle": "npm:^2.3.2"
-    arch: "npm:^2.2.0"
-    blob-util: "npm:^2.0.2"
-    bluebird: "npm:^3.7.2"
-    buffer: "npm:^5.6.0"
-    cachedir: "npm:^2.3.0"
-    chalk: "npm:^4.1.0"
-    check-more-types: "npm:^2.24.0"
-    cli-cursor: "npm:^3.1.0"
-    cli-table3: "npm:~0.6.1"
-    commander: "npm:^5.1.0"
-    common-tags: "npm:^1.8.0"
-    dayjs: "npm:^1.10.4"
-    debug: "npm:^4.3.2"
-    enquirer: "npm:^2.3.6"
-    eventemitter2: "npm:^6.4.3"
-    execa: "npm:4.1.0"
-    executable: "npm:^4.1.1"
-    extract-zip: "npm:2.0.1"
-    figures: "npm:^3.2.0"
-    fs-extra: "npm:^9.1.0"
-    getos: "npm:^3.2.1"
-    is-ci: "npm:^3.0.0"
-    is-installed-globally: "npm:~0.4.0"
-    lazy-ass: "npm:^1.6.0"
-    listr2: "npm:^3.8.3"
-    lodash: "npm:^4.17.21"
-    log-symbols: "npm:^4.0.0"
-    minimist: "npm:^1.2.6"
-    ospath: "npm:^1.2.2"
-    pretty-bytes: "npm:^5.6.0"
-    proxy-from-env: "npm:1.0.0"
-    request-progress: "npm:^3.0.0"
-    semver: "npm:^7.3.2"
-    supports-color: "npm:^8.1.1"
-    tmp: "npm:~0.2.1"
-    untildify: "npm:^4.0.0"
-    yauzl: "npm:^2.10.0"
-  bin:
-    cypress: bin/cypress
-  checksum: 3ad2c992cc4379db39b456c21822413ea4e87b18934853c05c06f28373eb13adf6c3c414ba958b36921241bc161eff74edc2381729cd677543077324350cd77a
-  languageName: node
-  linkType: hard
-
-"cypress@npm:^10.8.0":
+"cypress@npm:10.8.0, cypress@npm:^10.8.0":
   version: 10.8.0
   resolution: "cypress@npm:10.8.0"
   dependencies:
@@ -4290,11 +4267,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "demo@workspace:apps/demo"
   dependencies:
-    "@types/node": "npm:18.7.16"
-    "@types/react": "npm:18.0.19"
+    "@types/node": "npm:18.7.18"
+    "@types/react": "npm:18.0.20"
     "@types/react-dom": "npm:18.0.6"
-    autoprefixer: "npm:10.4.8"
-    eslint: "npm:8.23.0"
+    autoprefixer: "npm:10.4.11"
+    eslint: "npm:8.23.1"
     eslint-config-next: "npm:12.3.0"
     next: "npm:12.3.0"
     postcss: "npm:8.4.16"
@@ -4876,11 +4853,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.23.0":
-  version: 8.23.0
-  resolution: "eslint@npm:8.23.0"
+"eslint@npm:8.23.1":
+  version: 8.23.1
+  resolution: "eslint@npm:8.23.1"
   dependencies:
-    "@eslint/eslintrc": "npm:^1.3.1"
+    "@eslint/eslintrc": "npm:^1.3.2"
     "@humanwhocodes/config-array": "npm:^0.10.4"
     "@humanwhocodes/gitignore-to-minimatch": "npm:^1.0.2"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
@@ -4899,7 +4876,6 @@ __metadata:
     fast-deep-equal: "npm:^3.1.3"
     file-entry-cache: "npm:^6.0.1"
     find-up: "npm:^5.0.0"
-    functional-red-black-tree: "npm:^1.0.1"
     glob-parent: "npm:^6.0.1"
     globals: "npm:^13.15.0"
     globby: "npm:^11.1.0"
@@ -4908,6 +4884,7 @@ __metadata:
     import-fresh: "npm:^3.0.0"
     imurmurhash: "npm:^0.1.4"
     is-glob: "npm:^4.0.0"
+    js-sdsl: "npm:^4.1.4"
     js-yaml: "npm:^4.1.0"
     json-stable-stringify-without-jsonify: "npm:^1.0.1"
     levn: "npm:^0.4.1"
@@ -4921,7 +4898,7 @@ __metadata:
     text-table: "npm:^0.2.0"
   bin:
     eslint: bin/eslint.js
-  checksum: ea414f83f8b08f12f5e163492959c17a908552f2f44d4ce7530c73b24e9a4eb1f48c49fac4f079a1b05ead38511f832a5cd51a63db2587f1495b3aa0e78aff16
+  checksum: 06d584eb477cc577c39cb627f7099327b58b76979b275b3df9f1ee5eff36c68926231593b4ff0610ed8570a128b03c2c48c02c19421065a0333fdd17e0f44b2b
   languageName: node
   linkType: hard
 
@@ -5006,7 +4983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter2@npm:6.4.7, eventemitter2@npm:^6.4.3":
+"eventemitter2@npm:6.4.7":
   version: 6.4.7
   resolution: "eventemitter2@npm:6.4.7"
   checksum: 7789fb06f51d0ffd22fef2623451a449eaf38df32c61269024d4a50e42d8878e4e0c5ae1b8d60dd0f0e3cf4d97bfeb3795ce0fa773810610c40745b6eb6fe3c3
@@ -5299,7 +5276,7 @@ __metadata:
     "@changesets/cli": "npm:2.24.4"
     concurrently: "npm:^7.4.0"
     cypress: "npm:^10.8.0"
-    eslint: "npm:8.23.0"
+    eslint: "npm:8.23.1"
     husky: "npm:8.0.1"
     is-ci: "npm:3.0.1"
     lint-staged: "npm:13.0.3"
@@ -6438,6 +6415,13 @@ __metadata:
     merge-stream: "npm:^2.0.0"
     supports-color: "npm:^7.0.0"
   checksum: 244d4034e43b47cfae2c896ce9273d18597dc18648ca7d7974c522fb3fe61f5bd91a2dae22222c710c5f14f17fbc3033656cca92fb64fd9e677f77e7a66caf62
+  languageName: node
+  linkType: hard
+
+"js-sdsl@npm:^4.1.4":
+  version: 4.1.4
+  resolution: "js-sdsl@npm:4.1.4"
+  checksum: bf97179276b433ff4f138bd53fe411549893999f5571cc0da7cc5d16bc24cd50631bad83a61c32ed7e6f4ded7cc2ae06ad5ad4d56e05ed70d5c6993fc4553c41
   languageName: node
   linkType: hard
 
@@ -9220,9 +9204,9 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.2"
     "@types/node": "npm:^18.7.18"
     concurrently: "npm:^7.4.0"
-    cypress: "npm:10.7.0"
+    cypress: "npm:10.8.0"
     cypress-real-events: "npm:1.7.1"
-    eslint: "npm:8.23.0"
+    eslint: "npm:8.23.1"
     istanbul-lib-coverage: "npm:3.2.0"
     microbundle: "npm:0.15.1"
     nyc: "npm:15.1.0"
@@ -10222,8 +10206,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "use-simple-focus-trap@workspace:packages/use-simple-focus-trap"
   dependencies:
-    "@types/react": "npm:18.0.19"
-    eslint: "npm:8.23.0"
+    "@types/react": "npm:18.0.20"
+    eslint: "npm:8.23.1"
     eslint-config-react-app: "npm:7.0.1"
     microbundle: "npm:0.15.1"
     prettier: "npm:2.7.1"
