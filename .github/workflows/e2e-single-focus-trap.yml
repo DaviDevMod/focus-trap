@@ -112,15 +112,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
+          install: false
           working-directory: packages/single-focus-trap
-          start: yarn ../../apps/demo dev
+          start: yarn workspace demo dev
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:3000'
-
-      - name: Report codecov
-        run: |
-          yarn report-codecov
-        working-directory: packages/single-focus-trap
 
       - name: Upload codecov
         uses: codecov/codecov-action@v3
