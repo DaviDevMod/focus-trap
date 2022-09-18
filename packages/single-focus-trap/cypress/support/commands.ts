@@ -41,10 +41,11 @@ export {};
 declare global {
   namespace Cypress {
     interface Chainable {
-      getNextTabId: () => Cypress.Chainable<string>;
+      getNextTabId: (forward: boolean) => Cypress.Chainable<string>;
       getTabCycle: (
-        len: number,
-        from?: JQuery<HTMLElement>,
+        from: JQuery<HTMLElement>,
+        forward?: boolean,
+        len?: number,
         firstCall?: boolean,
         cycle?: string
       ) => Cypress.Chainable<string>;
@@ -52,13 +53,31 @@ declare global {
   }
 }
 
-Cypress.Commands.add('getNextTabId', () => {
-  cy.realPress('Tab');
-  cy.focused().then((activeElement) => activeElement.get(0).id);
+Cypress.Commands.add('getNextTabId', (forward) => {
+  cy.focused().then((from) => {
+    const keysPressed = ['Tab'];
+    if (!forward) keysPressed.unshift('Shift');
+
+    // Module '"cypress-real-events/commands/realPress"' declares 'KeyOrShortcut' locally, but it is not exported.
+    cy.realPress(keysPressed as any);
+
+    cy.focused().then((to) => {
+      const fromId = from.get(0).id;
+      const toId = to.get(0).id;
+
+      if (fromId.startsWith('-')) expect(fromId.charAt(Number(forward) * -2 + 3)).to.equal(toId);
+      // else expect(Number(fromId) + Number(forward) * 2 - 1 === Number(toId));
+      // unnecessary cause the `cycle` would not match the `CORRECT_CYCLE` and the test would fail anyway.
+
+      return toId;
+    });
+  });
 });
 
-Cypress.Commands.add('getTabCycle', (len, from = null, firstCall = true, cycle = '') => {
+Cypress.Commands.add('getTabCycle', (from, forward = true, len = 4, firstCall = true, cycle = '') => {
   if (len <= 0) throw new Error('Please provide a positive length for the tab cycle.');
-  if (firstCall) cy.wrap(from).focus();
-  cy.getNextTabId().then((id) => (len === 1 ? cycle + id : cy.getTabCycle(len - 1, null, false, cycle + id)));
+  if (firstCall) cy.wrap(from).focus(); // `if (firstCall && !from) { Cypress throws an error };`
+  cy.getNextTabId(forward).then((id) =>
+    len === 1 ? cycle + id : cy.getTabCycle(null, forward, len - 1, false, cycle + id)
+  );
 });

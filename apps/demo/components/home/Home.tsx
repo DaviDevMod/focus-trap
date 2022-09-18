@@ -15,46 +15,46 @@ function Home() {
   return (
     <Fragment>
       <section>
-        <button tabIndex={1} id="Z">
+        <button tabIndex={1} id="-0-4">
           1
         </button>
-        <button tabIndex={0} id="Y">
+        <button tabIndex={0} id="-3-2">
           0
         </button>
-        <button tabIndex={-1} id="X">
+        <button tabIndex={-1} id="-2-4">
           -1
         </button>
 
         <div id="trap-one">
-          <button tabIndex={2} id="c">
+          <button tabIndex={2} id="2">
             2
           </button>
-          <button tabIndex={1} id="a">
+          <button tabIndex={1} id="0">
             1
           </button>
-          <button tabIndex={0} id="d">
+          <button tabIndex={0} id="3">
             0
           </button>
         </div>
 
-        <button tabIndex={1} id="W">
+        <button tabIndex={1} id="-1-0">
           1
         </button>
-        <button tabIndex={0} id="V">
+        <button tabIndex={0} id="-4-3">
           0
         </button>
-        <button tabIndex={-1} id="U">
+        <button tabIndex={-1} id="-1-3">
           -1
         </button>
 
         <div id="trap-two">
-          <button tabIndex={1} id="b">
+          <button tabIndex={1} id="1">
             1
           </button>
-          <button tabIndex={-1} id="T">
+          <button tabIndex={-1} id="-4-1">
             -1
           </button>
-          <button tabIndex={0} id="e">
+          <button tabIndex={0} id="4">
             0
           </button>
         </div>
