@@ -195,7 +195,13 @@ class SingleTrap {
         destination = boundaries[(index + (shiftKey ? -x : x) + 5 * boundaries.length) % boundaries.length];
       }
     } else {
-      destination = edges[(rootIndex * 2 + 2 - Number(shiftKey) + edges.length) % edges.length];
+      const topTabbable = edges[rootIndex * 2];
+      const bottomTabbable = edges[rootIndex * 2 + 1];
+      if (topTabbable.compareDocumentPosition(target) & 2) {
+        destination = edges[(rootIndex * 2 - Number(shiftKey) + edges.length) % edges.length];
+      } else if (bottomTabbable.compareDocumentPosition(target) & 4) {
+        destination = edges[(rootIndex * 2 + 2 - Number(shiftKey) + edges.length) % edges.length];
+      }
     }
 
     if (destination) {

@@ -26,6 +26,9 @@ function Home() {
         </button>
 
         <div id="trap-one">
+          <button tabIndex={-1} id="-2-4">
+            -1 before edge
+          </button>
           <button tabIndex={2} id="2">
             2
           </button>
@@ -52,10 +55,13 @@ function Home() {
             1
           </button>
           <button tabIndex={-1} id="-4-1">
-            -1
+            -1 within edges
           </button>
           <button tabIndex={0} id="4">
             0
+          </button>
+          <button tabIndex={-1} id="-2-4">
+            -1 after edge
           </button>
         </div>
       </section>
