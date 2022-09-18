@@ -1,1 +1,1 @@
-{ "*.{js,ts,jsx,tsx,yml}": ["prettier --write", "eslint --cache"] }
+{ "*.{js,ts,jsx,tsx}": ["prettier --write", "eslint --cache"] }
