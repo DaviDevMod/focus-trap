@@ -16,12 +16,7 @@ declare global {
         firstCall?: boolean,
         cycle?: string
       ) => Cypress.Chainable<string>;
-      verifyTabCycle: (
-        collection: HTMLCollectionOf<HTMLButtonElement>,
-        direction?: Direction,
-        len?: number,
-        order?: string
-      ) => void;
+      verifyTabCycle: (collection: JQuery<HTMLElement>, direction?: Direction, len?: number, order?: string) => void;
     }
   }
 }
