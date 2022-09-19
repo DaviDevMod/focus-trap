@@ -1,11 +1,9 @@
 /// <reference types="cypress" />
 
-export {};
+export const EXPECTED_ORDER = '0123456';
+export const DEFAULT_TEST_CYCLE_LENGTH = 4;
 
 type Direction = 'FORWARD' | 'BACKWARD';
-
-const EXPECTED_ORDER = '01234';
-const DEFAULT_TEST_CYCLE_LENGTH = 4;
 
 declare global {
   namespace Cypress {
