@@ -118,6 +118,11 @@ jobs:
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:3000'
 
+      - name: Report codecov
+        run: |
+          yarn report-codecov
+        working-directory: packages/single-focus-trap
+
       - name: Upload codecov
         uses: codecov/codecov-action@v3
         with:
