@@ -4,7 +4,7 @@ export {};
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
-const CORRECT_CYCLE = '01234';
+const EXPECTED_ORDER = '01234';
 const DEFAULT_TEST_CYCLE_LENGTH = 4;
 
 declare global {
@@ -18,7 +18,12 @@ declare global {
         firstCall?: boolean,
         cycle?: string
       ) => Cypress.Chainable<string>;
-      verifyTabCycle: (collection: HTMLCollectionOf<HTMLButtonElement>, direction?: Direction, len?: number) => void;
+      verifyTabCycle: (
+        collection: HTMLCollectionOf<HTMLButtonElement>,
+        direction?: Direction,
+        len?: number,
+        order?: string
+      ) => void;
     }
   }
 }
@@ -51,18 +56,21 @@ Cypress.Commands.add('getTabCycle', (from, direction = 'FORWARD', len = 0, first
   );
 });
 
-Cypress.Commands.add('verifyTabCycle', (collection, direction = 'FORWARD', len = DEFAULT_TEST_CYCLE_LENGTH) => {
-  const extendedCorrectCycle = {
-    FORWARD: CORRECT_CYCLE.repeat(Math.ceil(DEFAULT_TEST_CYCLE_LENGTH / CORRECT_CYCLE.length) + 1),
-    get BACKWARD() {
-      return this.FORWARD.split('').reverse().join('');
-    },
-  };
+Cypress.Commands.add(
+  'verifyTabCycle',
+  (collection, direction = 'FORWARD', len = DEFAULT_TEST_CYCLE_LENGTH, order = EXPECTED_ORDER) => {
+    const correctCycle = {
+      FORWARD: order.repeat(Math.ceil(len / order.length) + 1),
+      get BACKWARD() {
+        return this.FORWARD.split('').reverse().join('');
+      },
+    };
 
-  cy.wrap(collection).each((element) => {
-    cy.getTabCycle(element, direction, len).then((cycle) => {
-      expect(cycle).to.have.length(DEFAULT_TEST_CYCLE_LENGTH);
-      expect(extendedCorrectCycle[direction]).to.have.string(cycle);
+    cy.wrap(collection).each((element) => {
+      cy.getTabCycle(element, direction, len).then((cycle) => {
+        expect(cycle).to.have.length(len);
+        expect(correctCycle[direction]).to.have.string(cycle);
+      });
     });
-  });
-});
+  }
+);
