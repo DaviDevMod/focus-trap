@@ -15,52 +15,52 @@ function Home() {
   return (
     <Fragment>
       <section>
-        <button tabIndex={1} id="-0-4">
+        <button tabIndex={1} title="-0-4">
           1
         </button>
-        <button tabIndex={0} id="-3-2">
+        <button tabIndex={0} title="-3-2">
           0
         </button>
-        <button tabIndex={-1} id="-2-4">
+        <button tabIndex={-1} title="-2-4">
           -1
         </button>
 
         <div id="trap-one">
-          <button tabIndex={-1} id="-2-4">
+          <button tabIndex={-1} title="-2-4">
             -1 before edge
           </button>
-          <button tabIndex={2} id="2">
+          <button tabIndex={2} title="2">
             2
           </button>
-          <button tabIndex={1} id="0">
+          <button tabIndex={1} title="0">
             1
           </button>
-          <button tabIndex={0} id="3">
+          <button tabIndex={0} title="3">
             0
           </button>
         </div>
 
-        <button tabIndex={1} id="-1-0">
+        <button tabIndex={1} title="-1-0">
           1
         </button>
-        <button tabIndex={0} id="-4-3">
+        <button tabIndex={0} title="-4-3">
           0
         </button>
-        <button tabIndex={-1} id="-1-3">
+        <button tabIndex={-1} title="-1-3">
           -1
         </button>
 
         <div id="trap-two">
-          <button tabIndex={1} id="1">
+          <button tabIndex={1} title="1">
             1
           </button>
-          <button tabIndex={-1} id="-4-1">
+          <button tabIndex={-1} title="-4-1">
             -1 within edges
           </button>
-          <button tabIndex={0} id="4">
+          <button tabIndex={0} title="4">
             0
           </button>
-          <button tabIndex={-1} id="-2-4">
+          <button tabIndex={-1} title="-2-4">
             -1 after edge
           </button>
         </div>
