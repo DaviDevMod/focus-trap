@@ -32,11 +32,11 @@
   "devDependencies": {
     "@cypress/code-coverage": "3.10.0",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
-    "@types/node": "18.7.18",
+    "@types/node": "18.7.21",
     "concurrently": "7.4.0",
     "cypress": "10.8.0",
     "cypress-real-events": "1.7.1",
-    "eslint": "8.23.1",
+    "eslint": "8.24.0",
     "istanbul-lib-coverage": "3.2.0",
     "microbundle": "0.15.1",
     "nyc": "15.1.0",

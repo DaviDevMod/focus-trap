@@ -13,14 +13,15 @@
     "postinstall": "is-ci || husky install",
     "deps:check": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml --deep --mergeConfig",
     "deps:update": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml -u --deep --mergeConfig",
-    "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 ."
+    "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 .",
+    "upup": "yarn deps:update && yarn check:install && yarn dedupe"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "2.24.4",
     "concurrently": "7.4.0",
     "cypress": "10.8.0",
-    "eslint": "8.23.1",
+    "eslint": "8.24.0",
     "husky": "8.0.1",
     "is-ci": "3.0.1",
     "lint-staged": "13.0.3",
