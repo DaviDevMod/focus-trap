@@ -5,13 +5,14 @@ function Home() {
   // const rootRef = useRef<HTMLDivElement>(null);
   // const controller = useSimpleFocusTrap({ root: 'secondRoot' });
   const controller = useSimpleFocusTrap();
-  const clickMeRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     controller({ root: ['root-one', 'root-two'], lock: false });
   }, []);
 
-  const clickMeHandler = () => (clickMeRef.current!.tabIndex = -1);
+  const activateNestedTrapHandler = () => {
+    controller({ root: 'nested-trap', lock: false });
+  };
 
   return (
     <Fragment>
@@ -33,15 +34,17 @@ function Home() {
           <button tabIndex={1} title="0">
             1
           </button>
-          <button tabIndex={0} title="3">
-            0
-          </button>
-          <button tabIndex={0} title="4" id="clickMe" onClick={clickMeHandler} ref={clickMeRef}>
-            0
-          </button>
-          <button tabIndex={0} title="5">
-            0
-          </button>
+          <div id="nested-trap">
+            <button tabIndex={0} title="3" id="activate-nested-trap" onClick={activateNestedTrapHandler}>
+              0 Click me to activate a nested trap
+            </button>
+            <button tabIndex={0} title="4" id="modify-me">
+              0
+            </button>
+            <button tabIndex={0} title="5">
+              0
+            </button>
+          </div>
         </div>
 
         <button tabIndex={1} title="-1-0">

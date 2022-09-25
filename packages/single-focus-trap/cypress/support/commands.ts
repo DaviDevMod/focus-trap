@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
+// Totally depending on the elements in the Next.js demo app
 export const EXPECTED_ORDER = '0123456';
-export const DEFAULT_TEST_CYCLE_LENGTH = 4;
+// A minimum of `2` is required to get miningfull tests. Large values make the tests last longer.
+export const DEFAULT_TEST_CYCLE_LENGTH = 2;
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
@@ -16,11 +18,12 @@ declare global {
         firstCall?: boolean,
         cycle?: string
       ) => Cypress.Chainable<string>;
-      verifyTabCycle: (collection: JQuery<HTMLElement>, direction?: Direction, len?: number, order?: string) => void;
+      verifyTabCycle: (collection: JQuery<HTMLElement>, direction?: Direction, order?: string, len?: number) => void;
     }
   }
 }
 
+// Fire a `Tab` event and return the `title` of the element that received the focus.
 Cypress.Commands.add('getNextTabTitle', (direction = 'FORWARD') => {
   cy.focused().then((from) => {
     const keysPressed = ['Tab'];
@@ -41,17 +44,21 @@ Cypress.Commands.add('getNextTabTitle', (direction = 'FORWARD') => {
   });
 });
 
+// Call `getNextTabTitle` multiple times and return a concatenation of the `title`s of the focused elements.
 Cypress.Commands.add('getTabCycle', (from, direction = 'FORWARD', len = 0, firstCall = true, cycle = '') => {
-  if (len <= 0) throw new Error('Please provide a positive length for the tab cycle.');
-  if (firstCall) cy.wrap(from).focus(); // `if (firstCall && !from) { Cypress throws an error };`
+  if (firstCall) {
+    if (len < 2) throw new Error('Please provide a greater length for the tab cycle.');
+    cy.wrap(from).focus();
+  }
   cy.getNextTabTitle(direction).then((title) =>
     len === 1 ? cycle + title : cy.getTabCycle(null, direction, len - 1, false, cycle + title)
   );
 });
 
+// Call `getTabCycle` and verify that its returned tab cycle is a substring of `correctCycle`.
 Cypress.Commands.add(
   'verifyTabCycle',
-  (collection, direction = 'FORWARD', len = DEFAULT_TEST_CYCLE_LENGTH, order = EXPECTED_ORDER) => {
+  (collection, direction = 'FORWARD', order = EXPECTED_ORDER, len = DEFAULT_TEST_CYCLE_LENGTH) => {
     const correctCycle = {
       FORWARD: order.repeat(Math.ceil(len / order.length) + 1),
       get BACKWARD() {
