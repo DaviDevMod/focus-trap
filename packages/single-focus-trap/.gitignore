@@ -1,8 +1,9 @@
 node_modules
 dist
 
-videos
+cypress/videos
 cypress/screenshots
+cypress/download
 coverage
 instrumented
 .nyc_output
