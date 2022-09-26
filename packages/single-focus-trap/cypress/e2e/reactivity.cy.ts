@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { EXPECTED_ORDER } from '../support/commands';
+import { EXPECTED_ORDER, NESTED_EXPECTED_ORDER } from '../support/commands';
 
 context('Testing reactivity of the focus trap in regard to changes in the tab order of its elements.', () => {
   // e.g.: new tabbable elements appearing in the trap, or former tabbable elements becoming untabbable.
@@ -71,9 +71,9 @@ context('Testing reactivity of the focus trap in regard to changes in the tab or
         });
     });
 
-    it.skip(`Should ignore changes affecting the tabbability of an element succeeding "topTabbable"
-    or preceding "bottomTabbable" when the trap doesn't contain elements with a positive tab index
-    and the mutation doesn't concern tab index values.`);
+    // it.skip(`Should ignore changes affecting the tabbability of an element succeeding "topTabbable"
+    // or preceding "bottomTabbable" when the trap doesn't contain elements with a positive tab index
+    // and the mutation doesn't concern tab index values.`);
     // The only way to test this, would be to check whether the focus trap shedules an update;
     // Which, if possible, would surely be cumbersome and wouldn't even improve the coverage
     // (cause there are only statements to schedule an update,
@@ -93,20 +93,26 @@ context('Testing reactivity of the focus trap in regard to changes in the tab or
       cy.get('#nested-trap').find('button').as('nestedPossibleTabbables');
 
       cy.get('@nestedPossibleTabbables').then((nestedPossibleTabbables) => {
-        const nestedExpectedOrder = '345';
-        cy.verifyTabCycle(nestedPossibleTabbables, 'FORWARD', nestedExpectedOrder);
-        cy.verifyTabCycle(nestedPossibleTabbables, 'BACKWARD', nestedExpectedOrder);
+        cy.verifyTabCycle(nestedPossibleTabbables, 'FORWARD', NESTED_EXPECTED_ORDER);
+        cy.verifyTabCycle(nestedPossibleTabbables, 'BACKWARD', NESTED_EXPECTED_ORDER);
       });
 
       // Change tabbability of "topTabbable", without changing its tab index.
       cy.get('@activateNestedTrap').invoke('attr', 'disabled', 'yeah');
 
-      cy.get('@nestedPossibleTabbables')
-        .not('#activate-nested-trap')
-        .then((nestedPossibleTabbables) => {
-          const nestedExpectedOrder = '45';
-          cy.verifyTabCycle(nestedPossibleTabbables, 'FORWARD', nestedExpectedOrder);
-          cy.verifyTabCycle(nestedPossibleTabbables, 'BACKWARD', nestedExpectedOrder);
+      cy.get('@activateNestedTrap')
+        .invoke('attr', 'title')
+        .then((title) => {
+          cy.get('@nestedPossibleTabbables').then((nestedPossibleTabbables) => {
+            // The disabled element is being removed from the collection of elements to focus and tab away from.
+            const newNestedPossibleTabbables = nestedPossibleTabbables.not('#activate-nested-trap');
+
+            // The `title` of the disabled element is being removed from the `order` expected by `verifyTabCycle`.
+            const newNestedExpectedOrder = NESTED_EXPECTED_ORDER.replace(title, '');
+
+            cy.verifyTabCycle(newNestedPossibleTabbables, 'FORWARD', newNestedExpectedOrder);
+            cy.verifyTabCycle(newNestedPossibleTabbables, 'BACKWARD', newNestedExpectedOrder);
+          });
         });
     });
   });

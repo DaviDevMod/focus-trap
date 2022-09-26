@@ -5,6 +5,9 @@ export const EXPECTED_ORDER = '0123456';
 // A minimum of `2` is required to get miningfull tests. Large values make the tests last longer.
 export const DEFAULT_TEST_CYCLE_LENGTH = 2;
 
+// Used only by "../e2e/reactivity.cy.ts"
+export const NESTED_EXPECTED_ORDER = '345';
+
 type Direction = 'FORWARD' | 'BACKWARD';
 
 declare global {
