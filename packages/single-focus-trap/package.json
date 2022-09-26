@@ -26,8 +26,8 @@
     "cy-open": "yarn clean-codecov && cypress open",
     "cy-run": "yarn clean-codecov && cypress run",
     "report-codecov": "nyc report --compact",
-    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn ../../apps/demo dev-test\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-codecov",
-    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn ../../apps/demo dev-test\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-codecov"
+    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-test\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-codecov",
+    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-test\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-codecov"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.10.0",
