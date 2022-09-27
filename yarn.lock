@@ -2371,14 +2371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 18.7.18
-  resolution: "@types/node@npm:18.7.18"
-  checksum: 833883d724d9f980c6918f1a52f396cb351bf22e83b787481c992402e702e4a3658bd3ff5b561c878d3d9e253fb315eb6f7eb0db95804222669f18d3b54ea0f2
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:18.7.21":
+"@types/node@npm:*, @types/node@npm:18.7.21":
   version: 18.7.21
   resolution: "@types/node@npm:18.7.21"
   checksum: 3de253a220d6ddbc72811a6806ff43f2c5f038cd2e1ac573bc19fa78a5207a9db7a7216f5a94c329b8f9e738671633896e945c54e7c8c558d68a24e23e751ba2
@@ -2429,18 +2422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 18.0.20
-  resolution: "@types/react@npm:18.0.20"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: fe7d9b466cbfeacf426a2a28c3def31e149f9496aa661315bdc1f406036c37b6a2d3dcbcdc9bbd29ee27dd02be3385174cf71b2a0c27ed38419354e44675f135
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.0.21":
+"@types/react@npm:*, @types/react@npm:18.0.21":
   version: 18.0.21
   resolution: "@types/react@npm:18.0.21"
   dependencies:
@@ -3039,7 +3021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:10.4.12":
+"autoprefixer@npm:10.4.12, autoprefixer@npm:^10.1.0":
   version: 10.4.12
   resolution: "autoprefixer@npm:10.4.12"
   dependencies:
@@ -3054,24 +3036,6 @@ __metadata:
   bin:
     autoprefixer: bin/autoprefixer
   checksum: a13c3666500092555c7ef370162868f6553035f7a7ec45dd101733665d84c7c2e510a6c87ac9be046be0f34dc51124dac59eefc891fd1068f62f2b77cc9ff12c
-  languageName: node
-  linkType: hard
-
-"autoprefixer@npm:^10.1.0":
-  version: 10.4.11
-  resolution: "autoprefixer@npm:10.4.11"
-  dependencies:
-    browserslist: "npm:^4.21.3"
-    caniuse-lite: "npm:^1.0.30001399"
-    fraction.js: "npm:^4.2.0"
-    normalize-range: "npm:^0.1.2"
-    picocolors: "npm:^1.0.0"
-    postcss-value-parser: "npm:^4.2.0"
-  peerDependencies:
-    postcss: ^8.1.0
-  bin:
-    autoprefixer: bin/autoprefixer
-  checksum: e893bb48348916d33ec84b3fe5565b58f82760e402fd38da6dfd26f6b2b7fe271e49092a8bbbb1bb242fb9ae7dab6be6b9a85ae3ea53b8b449ad47ad74ce2546
   languageName: node
   linkType: hard
 
@@ -3321,21 +3285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.0.0, browserslist@npm:^4.16.6, browserslist@npm:^4.20.2, browserslist@npm:^4.20.3, browserslist@npm:^4.21.3":
-  version: 4.21.3
-  resolution: "browserslist@npm:4.21.3"
-  dependencies:
-    caniuse-lite: "npm:^1.0.30001370"
-    electron-to-chromium: "npm:^1.4.202"
-    node-releases: "npm:^2.0.6"
-    update-browserslist-db: "npm:^1.0.5"
-  bin:
-    browserslist: cli.js
-  checksum: 1c12b4b9b69138e1697aee58ad8b7e706fc868a90c03f9973ad8cf2bc5b283ccda07b4e7e751b7301b6df4726a41c6e8a9245e18ab3b11e0e4bc2cbfaeabaff3
-  languageName: node
-  linkType: hard
-
-"browserslist@npm:^4.21.4":
+"browserslist@npm:^4.0.0, browserslist@npm:^4.16.6, browserslist@npm:^4.20.2, browserslist@npm:^4.20.3, browserslist@npm:^4.21.4":
   version: 4.21.4
   resolution: "browserslist@npm:4.21.4"
   dependencies:
@@ -3486,14 +3436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001370, caniuse-lite@npm:^1.0.30001399":
-  version: 1.0.30001402
-  resolution: "caniuse-lite@npm:1.0.30001402"
-  checksum: 8e2136b48e43f95f0a36ab5e4f9e82b34ed5a1c47399a58749377858d7987dee04503a639dda9af214101318b5b8be6bdc7d74e1399ef77c6c78164bcefb4a39
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001400, caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001407":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001400, caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001407":
   version: 1.0.30001412
   resolution: "caniuse-lite@npm:1.0.30001412"
   checksum: 80fb00eee589df54f958ddc3fc00ded52e7025d093bb0a1d4d27c62b47117ed1cd87dd3fe58da966be1bf7d4f99378bec96fb1d1294705c8346d6e22e965aa39
@@ -4071,9 +4014,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.8.0":
-  version: 10.8.0
-  resolution: "cypress@npm:10.8.0"
+"cypress@npm:10.9.0":
+  version: 10.9.0
+  resolution: "cypress@npm:10.9.0"
   dependencies:
     "@cypress/request": "npm:^2.88.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -4119,7 +4062,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: f4bdc9c907499391744a344f9c2080bd62449a06bcc225c276bc5f2ae519967357f0962375a342c8bbd417ad6585b37128c577f712bef502e36d0003f331773e
+  checksum: 5d5933f96790ec7602f316f4b505e013ffef7495110ce32219996693a22b31d060c3cc9051f810937e0a12ddc2e4a20f76a0b97da1e8017a0fdcc2ab1835e01a
   languageName: node
   linkType: hard
 
@@ -4466,13 +4409,6 @@ __metadata:
   bin:
     ejs: bin/cli.js
   checksum: 0135c63a1e0745cbbad1a44f64674535f46821b58a30f55b14f25812cdd8dc3036b70bdbb6fe79f8d7c438fb10ede54adcd2ac3f5a88a4734d0dee48b91e614f
-  languageName: node
-  linkType: hard
-
-"electron-to-chromium@npm:^1.4.202":
-  version: 1.4.234
-  resolution: "electron-to-chromium@npm:1.4.234"
-  checksum: 61f5a9062d4cc0bd70eee377e96604c55230663185f2fd3c4ccdbe75f954403fcf1c6c387ecb8b9cfc744706641ed8f70fce6bdd6420af57312ad1e99e6ba357
   languageName: node
   linkType: hard
 
@@ -5303,7 +5239,7 @@ __metadata:
     "@changesets/changelog-github": "npm:0.4.6"
     "@changesets/cli": "npm:2.24.4"
     concurrently: "npm:7.4.0"
-    cypress: "npm:10.8.0"
+    cypress: "npm:10.9.0"
     eslint: "npm:8.24.0"
     husky: "npm:8.0.1"
     is-ci: "npm:3.0.1"
@@ -9232,7 +9168,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": "npm:1.0.2"
     "@types/node": "npm:18.7.21"
     concurrently: "npm:7.4.0"
-    cypress: "npm:10.8.0"
+    cypress: "npm:10.9.0"
     cypress-real-events: "npm:1.7.1"
     eslint: "npm:8.24.0"
     istanbul-lib-coverage: "npm:3.2.0"
@@ -10204,20 +10140,6 @@ __metadata:
   version: 4.0.0
   resolution: "untildify@npm:4.0.0"
   checksum: f2541665b5b8923cce426a0ee79cae326c84de93ba3b577343833910d4b5aafd82ea4544814144d64e90e4cdbdf71bf3cc95f2221c4b6005a7219165e0fb369a
-  languageName: node
-  linkType: hard
-
-"update-browserslist-db@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "update-browserslist-db@npm:1.0.5"
-  dependencies:
-    escalade: "npm:^3.1.1"
-    picocolors: "npm:^1.0.0"
-  peerDependencies:
-    browserslist: ">= 4.21.0"
-  bin:
-    browserslist-lint: cli.js
-  checksum: 53d12ebf5b266acd5795a4e2231b58cfefd2f0549a3cf4eb4e619370a35178293bcfad4d84f37b30a8df699a41e3bee77bcb17c8a5cf9b3b23d57042971493b1
   languageName: node
   linkType: hard
 
