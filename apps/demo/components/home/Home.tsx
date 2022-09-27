@@ -7,11 +7,11 @@ function Home() {
   const controller = useSimpleFocusTrap();
 
   useEffect(() => {
-    controller({ root: ['root-one', 'root-two'], lock: false });
+    controller({ roots: ['root-one', 'root-two'], lock: false });
   }, []);
 
   const activateNestedTrapHandler = () => {
-    controller({ root: 'nested-trap', lock: false });
+    controller({ roots: 'nested-trap', lock: false });
   };
 
   return (

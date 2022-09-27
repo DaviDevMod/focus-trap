@@ -3,7 +3,7 @@ import { Focusable } from 'single-focus-trap';
 export type TrapRoot = (HTMLElement | string)[] | HTMLElement | string;
 
 export interface TrapConfig {
-  root: TrapRoot;
+  roots: TrapRoot;
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
   lock?: boolean | Function;
@@ -11,7 +11,7 @@ export interface TrapConfig {
 }
 
 export interface ResolvedConfig {
-  root: HTMLElement[];
+  roots: HTMLElement[];
   initialFocus?: boolean | Focusable;
   returnFocus?: boolean | Focusable;
   lock?: boolean | Function;

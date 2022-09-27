@@ -71,11 +71,11 @@ class SingleTrap {
     this.kingpins.topBottom = [];
 
     const cnadidatesLists: NodeListOf<HTMLElement | SVGElement>[] = [];
-    for (const el of this.config.root) cnadidatesLists.push(el.querySelectorAll<HTMLElement | SVGElement>(candidate));
+    for (const el of this.config.roots) cnadidatesLists.push(el.querySelectorAll<HTMLElement | SVGElement>(candidate));
 
     for (let i = 0; i < cnadidatesLists.length; i++) {
       // Push a root to `this.kingpins.roots` only if it contains at least one tabbable element.
-      if (this.getKingpins(cnadidatesLists[i])) this.kingpins.roots.push(this.config.root[i]);
+      if (this.getKingpins(cnadidatesLists[i])) this.kingpins.roots.push(this.config.roots[i]);
     }
 
     if (process.env.NODE_ENV !== 'production') {
@@ -223,7 +223,7 @@ class SingleTrap {
   };
 
   private outsideClicksHandler = (event: MouseEvent | TouchEvent): void => {
-    if (this.config.root.every((el) => !el.contains(event.target as Node))) {
+    if (this.config.roots.every((el) => !el.contains(event.target as Node))) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
@@ -283,7 +283,7 @@ class SingleTrap {
       if (!this.mutationObserver) throw new Error('Cannot resume inexistent trap.');
     }
     if (!this.mutationObserver) return;
-    for (const el of this.config.root) this.mutationObserver.observe(el, mutationObserverInit);
+    for (const el of this.config.roots) this.mutationObserver.observe(el, mutationObserverInit);
     // `RESUME` called indirectly, through `BUILD`. A trap update may be needed to give the initial focus.
     if (this.isUpdateScheduled) this.giveInitialFocus(this.config);
     // `RESUME` called directly. Just schedule an update. There is no need to update the trap right now.
@@ -300,10 +300,10 @@ class SingleTrap {
     } else this.mutationObserver = new MutationObserver(this.mutationCallback);
     this.config = {
       ...config,
-      root:
-        config.root instanceof Array
-          ? config.root.sort((a, b) => (a.compareDocumentPosition(b) & 4 ? -1 : 1))
-          : [config.root],
+      roots:
+        config.roots instanceof Array
+          ? config.roots.sort((a, b) => (a.compareDocumentPosition(b) & 4 ? -1 : 1))
+          : [config.roots],
       returnFocus: this.getReturnFocus(config),
     };
     this.kingpins = {} as Kingpins;

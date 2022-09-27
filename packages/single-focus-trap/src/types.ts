@@ -18,7 +18,7 @@ export interface Kingpins {
 
 // The shape of the config provided by the user of the trap.
 export interface TrapConfig {
-  root: HTMLElement | HTMLElement[];
+  roots: HTMLElement | HTMLElement[];
   initialFocus?: boolean | Focusable;
   returnFocus?: boolean | Focusable;
   lock?: boolean | Function;
@@ -28,7 +28,7 @@ export interface TrapConfig {
 // The shape of the config used internally by the singleton instance of `SingleTrap`.
 // The `returnFocus` in `Config` is the one resolved to its default,
 // while the `initialFocus` is never stored in `this.config`, just consumed straight away.
-export type Config = Omit<TrapConfig, 'root' | 'initialFocus' | 'returnFocus'> & { root: HTMLElement[] } & {
+export type Config = Omit<TrapConfig, 'roots' | 'initialFocus' | 'returnFocus'> & { roots: HTMLElement[] } & {
   returnFocus?: Focusable;
 };
 
