@@ -18,7 +18,7 @@ export interface Kingpins {
 
 // The shape of the config provided by the user of the trap.
 export interface TrapConfig {
-  roots: HTMLElement | HTMLElement[];
+  roots: HTMLElement[];
   initialFocus?: boolean | Focusable;
   returnFocus?: boolean | Focusable;
   lock?: boolean | Function;

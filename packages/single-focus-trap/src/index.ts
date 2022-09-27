@@ -300,10 +300,7 @@ class SingleTrap {
     } else this.mutationObserver = new MutationObserver(this.mutationCallback);
     this.config = {
       ...config,
-      roots:
-        config.roots instanceof Array
-          ? config.roots.sort((a, b) => (a.compareDocumentPosition(b) & 4 ? -1 : 1))
-          : [config.roots],
+      roots: config.roots.sort((a, b) => (a.compareDocumentPosition(b) & 4 ? -1 : 1)),
       returnFocus: this.getReturnFocus(config),
     };
     this.kingpins = {} as Kingpins;
