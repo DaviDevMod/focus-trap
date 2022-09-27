@@ -1,26 +1,26 @@
 import { Focusable } from 'single-focus-trap';
 
-import { NormalizedParam, ResolvedConfig, TrapConfig, TrapsControllerParam } from './types';
+import { NormalizedTrapArg, ResolvedConfig, TrapConfig, TrapArg } from './types';
 
-// Returns false if `param` is not a valid `TrapsControllerParam`, which can happen
+// Returns false if `arg` is not a valid `TrapArg`, which can happen
 // only if the hook is used with plain JavaScript, or with non-typesafe TypeScript.
-export function normalizeParam(param: TrapsControllerParam): NormalizedParam | false {
-  if (param === 'DEMOLISH' || param === 'RESUME' || param === 'PAUSE') {
-    return { action: param };
-  } else if (typeof param === 'string' || param instanceof Array || param instanceof HTMLElement) {
-    return { action: 'PUSH', config: { roots: param } };
-  } else if ('action' in param) {
-    if (!/^(PUSH|BUILD|DEMOLISH|RESUME|PAUSE)$/.test(param.action)) return false;
-    if (typeof param.config === 'string' || param.config instanceof Array || param.config instanceof HTMLElement) {
-      return { action: 'PUSH', config: { roots: param.config } };
-    } else if (param.config && 'roots' in param.config) {
-      // `param.config` is actually granted to be a `TrapConfig` at this point.
+export function normalizeTrapArg(arg: TrapArg): NormalizedTrapArg | false {
+  if (arg === 'DEMOLISH' || arg === 'RESUME' || arg === 'PAUSE') {
+    return { action: arg };
+  } else if (typeof arg === 'string' || arg instanceof Array || arg instanceof HTMLElement) {
+    return { action: 'PUSH', config: { roots: arg } };
+  } else if ('action' in arg) {
+    if (!/^(PUSH|BUILD|DEMOLISH|RESUME|PAUSE)$/.test(arg.action)) return false;
+    if (typeof arg.config === 'string' || arg.config instanceof Array || arg.config instanceof HTMLElement) {
+      return { action: 'PUSH', config: { roots: arg.config } };
+    } else if (arg.config && 'roots' in arg.config) {
+      // `arg.config` is actually granted to be a `TrapConfig` at this point.
       // But TypeScript can't perform the narrowing and needs the cast.
-      return param as NormalizedParam;
+      return arg as NormalizedTrapArg;
     }
     return false;
-  } else if ('roots' in param) {
-    return { action: 'PUSH', config: param };
+  } else if ('roots' in arg) {
+    return { action: 'PUSH', config: arg };
   }
   return false;
 }

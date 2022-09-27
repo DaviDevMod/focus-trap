@@ -2,8 +2,6 @@ import { Fragment, useEffect, useRef } from 'react';
 import { useSimpleFocusTrap } from 'use-simple-focus-trap';
 
 function Home() {
-  // const rootRef = useRef<HTMLDivElement>(null);
-  // const controller = useSimpleFocusTrap({ root: 'secondRoot' });
   const controller = useSimpleFocusTrap();
 
   useEffect(() => {

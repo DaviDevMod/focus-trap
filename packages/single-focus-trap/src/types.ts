@@ -16,7 +16,7 @@ export interface Kingpins {
   topBottom: Focusable[];
 }
 
-// The shape of the config provided by the user of the trap.
+// The shape of the config expected from the user of the trap.
 export interface TrapConfig {
   roots: HTMLElement[];
   initialFocus?: boolean | Focusable;

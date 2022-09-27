@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { singleFocusTrap, Focusable } from 'single-focus-trap';
 
-import { TrapConfig, ResolvedConfig, TrapsControllerParam, TrapParam, TrapRoot } from './types';
-import { resolveConfig, areConfigsEquivalent, normalizeParam } from './utils';
+import { TrapConfig, ResolvedConfig, TrapArg, TrapRoot } from './types';
+import { resolveConfig, areConfigsEquivalent, normalizeTrapArg } from './utils';
 
-function useSimpleFocusTrap(config?: TrapParam) {
+function useSimpleFocusTrap() {
   const trapsStack = useRef<ResolvedConfig[]>([]).current;
 
-  const trapsController = useCallback((param: TrapsControllerParam): void => {
+  const trapsController = useCallback((arg: TrapArg): void => {
     if (process.env.NODE_ENV !== 'production') {
-      if (!param) throw new Error('Missing parameter.');
+      if (arg == null) throw new Error('Missing argument.');
     }
-    if (!param) return;
+    if (arg == null) return;
 
-    const normalizedParam = normalizeParam(param);
+    const normalizedParam = normalizeTrapArg(arg);
 
     if (process.env.NODE_ENV !== 'production') {
       if (!normalizedParam) {
-        throw new Error('Invalid parameter.');
+        throw new Error('Invalid argument.');
       }
     }
     if (!normalizedParam) return;
@@ -56,18 +56,8 @@ function useSimpleFocusTrap(config?: TrapParam) {
     singleFocusTrap({ action });
   }, []);
 
-  useEffect(() => {
-    if (config) trapsController({ action: 'PUSH', config });
-    else if (process.env.NODE_ENV !== 'production') {
-      // One may intend to call the hook just to get the returned controller, and only later build a trap.
-      console.warn(
-        '`use-simple-focus-trap` was called without a parameter. If it was intended, you can ignore this message.'
-      );
-    }
-  }, []);
-
   return trapsController;
 }
 
 export { useSimpleFocusTrap };
-export type { Focusable, TrapRoot, TrapConfig, TrapParam, TrapsControllerParam };
+export type { Focusable, TrapRoot, TrapConfig, TrapArg };
