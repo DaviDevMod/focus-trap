@@ -1,7 +1,7 @@
 import { Focusable } from './types';
 
 // String used to query all the candidate focusable elements within the trap.
-export const focusable =
+export const candidate =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
 // Oprions for the `.observe()` method of the mutation observer.
@@ -15,7 +15,7 @@ export const mutationObserverInit: MutationObserverInit = {
 
 // MutationObserver has to watch the entire `style` to know if `visibility` or `display` mutates,
 // but scheduling a `refs` update for any kind of style change would indeed be inefficient.
-// Returns `false` for `style` mutations that do not affect tabbability and `true` in any other case.
+// Returns `false` for `style` mutations that do not affect tabbability and `true` otherwise.
 export const isMutationAffectingTabbability = (record: MutationRecord) =>
   record.attributeName === 'style'
     ? (record.target as any).style?.visibility === 'hidden' ||
@@ -26,12 +26,11 @@ export const isMutationAffectingTabbability = (record: MutationRecord) =>
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
 // nodes. In these cases the `tabIndex` is assumed to be 0 if it's not explicitly set to a valid value.
-// This check (makes sense and) is run only if `node.tabIndex < 0`, hence the return -1 rather than `node.tabIndex`.
 export const getConsistentTabIndex = (node: HTMLElement | SVGElement) =>
   (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) || (node as any).isContentEditable) &&
   isNaN(parseInt(node.getAttribute('tabindex')!, 10))
     ? 0
-    : -1;
+    : node.tabIndex;
 
 // Function testing various edge cases. Returns `true` if `candidate` is actually focusable.
 export function isActuallyFocusable(candidate: HTMLElement | SVGElement) {
@@ -83,7 +82,7 @@ export function isActuallyFocusable(candidate: HTMLElement | SVGElement) {
 export const isRadioInput = (element: unknown): element is HTMLInputElement =>
   element instanceof HTMLInputElement && element.type === 'radio';
 
-export const areTwoRadiosInSameGroup = (a: unknown, b: unknown): boolean =>
+export const areTwoRadiosInTheSameGroup = (a: unknown, b: unknown): boolean =>
   isRadioInput(a) && isRadioInput(b) && a.name === b.name;
 
 export const getTheCheckedRadio = (radio: HTMLInputElement): HTMLInputElement | null =>

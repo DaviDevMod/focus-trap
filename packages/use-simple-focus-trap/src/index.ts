@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { singleTrap, Focusable } from 'single-focus-trap';
+import { singleFocusTrap, Focusable } from 'single-focus-trap';
 
 import { TrapConfig, ResolvedConfig, TrapsControllerParam, TrapParam, TrapRoot } from './types';
 import { resolveConfig, areConfigsEquivalent, normalizeParam } from './utils';
@@ -37,7 +37,7 @@ function useSimpleFocusTrap(config?: TrapParam) {
       if (action === 'PUSH') trapsStack.push(resolvedConfig);
       else trapsStack[trapsStack.length - 1] = resolvedConfig;
 
-      return singleTrap({ action: 'BUILD', config: resolvedConfig });
+      return singleFocusTrap({ action: 'BUILD', config: resolvedConfig });
     }
     if (action === 'DEMOLISH') {
       // Skip the step of demolishing a trap before resuming (actually rebuilding) the previous one,
@@ -45,15 +45,15 @@ function useSimpleFocusTrap(config?: TrapParam) {
       const resumeFocus = trapsStack.pop()?.returnFocus;
       const trapToResume = trapsStack[trapsStack.length - 1];
       if (trapToResume) {
-        return singleTrap({
+        return singleFocusTrap({
           action: 'BUILD',
           config: { ...trapToResume, initialFocus: resumeFocus ?? trapToResume.initialFocus },
         });
       }
       // Actually demolishing the trap only if it was at the bottomo of the stack.
-      return singleTrap({ action });
+      return singleFocusTrap({ action });
     }
-    singleTrap({ action });
+    singleFocusTrap({ action });
   }, []);
 
   useEffect(() => {

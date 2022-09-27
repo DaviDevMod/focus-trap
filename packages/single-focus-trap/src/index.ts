@@ -1,7 +1,7 @@
-import { Config, Focusable, SingleTrapConfig, SingleTrapControllerArgs, Tabbables } from './types';
+import { Config, Focusable, TrapConfig, TrapArg, Kingpins } from './types';
 import {
-  areTwoRadiosInSameGroup,
-  focusable,
+  areTwoRadiosInTheSameGroup,
+  candidate,
   getConsistentTabIndex,
   getTheCheckedRadio,
   isActuallyFocusable,
@@ -13,7 +13,7 @@ import {
 class SingleTrap {
   private static singletonInstance?: SingleTrap;
   private config!: Config;
-  private tabbables!: Tabbables;
+  private kingpins!: Kingpins;
   private mutationObserver?: MutationObserver;
   private isUpdateScheduled!: boolean;
 
@@ -22,9 +22,9 @@ class SingleTrap {
     SingleTrap.singletonInstance = this;
   }
 
-  // Finds `edges` and `boundaries` within a list of elements and pushes them to the arrays in `this.tabbables`.
-  // If there are no tabbable elements in the `list`, it returs `false` rather than performing the pushes.
-  private pushConfines = (list: NodeListOf<HTMLElement | SVGElement>): boolean => {
+  // Finds `topBottom` and `firstLast_positive` within a list of elements and pushes them to the arrays in `this.kingpins`.
+  // If there are no tabbable elements in the list, it returs `false` rather than performing the pushes, `true` otherwise.
+  private getKingpins = (list: NodeListOf<HTMLElement | SVGElement>): boolean => {
     let firstZero: Focusable | null = null;
     let lastZero: Focusable | null = null;
     let topTabbable: Focusable | null = null;
@@ -49,65 +49,65 @@ class SingleTrap {
         }
       } else if (right.tabIndex > 0 && !bottomTabbable && isActuallyFocusable(right)) bottomTabbable = right;
 
-      if (firstZero && lastZero) break; // In most cases this happens right after the first run of the loop.
+      if (firstZero && lastZero) break; // In most cases this happens in the first run of the loop.
     }
 
     if (!topTabbable) return false;
 
-    this.tabbables.edges.push(topTabbable, bottomTabbable!);
+    this.kingpins.topBottom.push(topTabbable, bottomTabbable!);
 
     // Here we are potentially pushing `null`, but it's necessary to maintain proportionality between the indexes in
-    // `roots`, `boundaries` and `edges`. So using the `boundaries` array always needs some extra care to avoid `null`.
-    this.tabbables.boundaries.push(firstZero, lastZero);
+    // `roots`, `firstLast_positive` and `topBottom`. So using the `firstLast_positive` array always needs some extra care to avoid `null`.
+    this.kingpins.firstLast_positive.push(firstZero, lastZero);
 
     return true;
   };
 
-  // Function that creates the arrays of tabbable elements that are found in `this.tabbables`.
+  // Function that creates the arrays of tabbable elements that are found in `this.kingpins`.
   // Returns a boolean telling whether there is at least one tabbable element in the trap.
-  private updateTabbables = (): boolean => {
-    this.tabbables.roots = [];
-    this.tabbables.boundaries = [];
-    this.tabbables.edges = [];
+  private updateKingpins = (): boolean => {
+    this.kingpins.roots = [];
+    this.kingpins.firstLast_positive = [];
+    this.kingpins.topBottom = [];
 
-    const listsOfFocusables: NodeListOf<HTMLElement | SVGElement>[] = [];
-    for (const el of this.config.root) listsOfFocusables.push(el.querySelectorAll<HTMLElement | SVGElement>(focusable));
+    const cnadidatesLists: NodeListOf<HTMLElement | SVGElement>[] = [];
+    for (const el of this.config.root) cnadidatesLists.push(el.querySelectorAll<HTMLElement | SVGElement>(candidate));
 
-    for (let i = 0; i < listsOfFocusables.length; i++) {
-      // Push a root to `this.tabbable.roots` only if it contains at least one tabbable.
-      if (this.pushConfines(listsOfFocusables[i])) this.tabbables.roots.push(this.config.root[i]);
+    for (let i = 0; i < cnadidatesLists.length; i++) {
+      // Push a root to `this.kingpins.roots` only if it contains at least one tabbable element.
+      if (this.getKingpins(cnadidatesLists[i])) this.kingpins.roots.push(this.config.root[i]);
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      if (!this.tabbables.roots.length) {
+      if (!this.kingpins.roots.length) {
         throw new Error('It looks like there are no tabbable elements in the trap');
       }
     }
-    if (!this.tabbables.roots.length) return false;
+    if (!this.kingpins.roots.length) return false;
 
-    const positiveTabIndexes = listsOfFocusables
+    const positiveTabIndexes = cnadidatesLists
       .reduce((prev, curr) => {
         for (let i = 0; i < curr.length; i++) if (curr[i].tabIndex > 0) prev.push(curr[i]);
         return prev;
       }, [] as (HTMLElement | SVGElement)[])
       .sort((a, b) => a.tabIndex - b.tabIndex);
 
-    this.tabbables.boundaries = this.tabbables.boundaries.concat(positiveTabIndexes);
+    this.kingpins.firstLast_positive = this.kingpins.firstLast_positive.concat(positiveTabIndexes);
 
-    // WARNING: do not move the following assignment elsewhere. Expecially, do not put it before a `return false`.
-    // If the trap doesn't have tabbables, the update must remain scheduled otherwise an infinite loop in `assistTabbing()`
+    // WARNING: do not move the following assignment elsewhere, especially not before a `return false`.
+    // If the trap doesn't have tabbables, the update must remain scheduled; otherwise an infinite loop in `assistTabbing()`
     // may occur when looping through an array of `null`. This problem culd be solved in different ways eg, setting
-    // a flag to `this`, or a limit of `2 * loopedArray.length` in the loops. However this is a quite remote scenario and
-    // the current solution of unscheduling updates only in the very last statement of `updateTabbables` is just fine.
+    // a flag on `this`, or a limit of `2 * loopedArray.length` in the loops. However this is a quite remote scenario and
+    // the current solution of unscheduling updates only in the very last statement of `updateKingpins` is just fine.
     return !(this.isUpdateScheduled = false);
   };
 
-  // Callback for MutationObserver's constructor. It just schedules `tabbables` updates when required.
+  // Callback for MutationObserver's constructor. It just schedules a `kingpins` update when required.
   private mutationCallback: MutationCallback = (records) => {
     if (this.isUpdateScheduled) return;
-    const rootIndex = this.tabbables.roots.findIndex((el) => el.contains(records[0].target));
-    const topTabbable = this.tabbables.edges[rootIndex * 2];
-    const bottomTabbable = this.tabbables.edges[rootIndex * 2 + 1];
+    const rootIndex = this.kingpins.roots.findIndex((el) => el.contains(records[0].target));
+    const topTabbable = this.kingpins.topBottom[rootIndex * 2];
+    const bottomTabbable = this.kingpins.topBottom[rootIndex * 2 + 1];
 
     let i = records.length;
     while (i--) {
@@ -116,10 +116,10 @@ class SingleTrap {
       // (or even just in the given root, but the chances are basically the same and checking the trap is easier)
       // and the mutation doesn't concern tab indexes,        (very likely)
       // it is possible to consider only mutations at
-      // the edges of the given root, or outside of them.     (quite rare)
+      // the topBottom of the given root, or outside of them.     (quite rare)
       // The same could be done if there are no zero tab indexes, but it would be counter productive.
       if (
-        !this.tabbables.boundaries[this.tabbables.boundaries.length - 1]!.tabIndex &&
+        !this.kingpins.firstLast_positive[this.kingpins.firstLast_positive.length - 1]!.tabIndex &&
         record.attributeName !== 'tabindex'
       ) {
         // If `record.target` precedes `topTabbable` or succeeds `bottomTabbable`,
@@ -139,80 +139,90 @@ class SingleTrap {
   private assistTabbing = (event: KeyboardEvent): void => {
     const { target, shiftKey } = event;
     if (!(target instanceof HTMLElement || target instanceof SVGElement)) return;
-    if (this.isUpdateScheduled && !this.updateTabbables()) return;
-    const { roots, boundaries, edges } = this.tabbables;
+    if (this.isUpdateScheduled && !this.updateKingpins()) return;
+    const { roots, firstLast_positive, topBottom } = this.kingpins;
     let rootIndex = roots.findIndex((el) => el.contains(target as Node));
     let surrogateIndex = -1;
     if (rootIndex === -1) {
       // Index of first root that follows target, found as the index of the first root that precedes target + 1
       surrogateIndex =
-        (boundaries.findIndex((el) => el && target.compareDocumentPosition(el) & 3) + 1) % boundaries.length;
+        (firstLast_positive.findIndex((el) => el && target.compareDocumentPosition(el) & 3) + 1) %
+        firstLast_positive.length;
     }
     let destination: Focusable | null = null;
 
     // All the loops that follow are here just to reassing `destination` in case it got assigned one of
-    // the `null`s in `boundaries`. They are required to keep proportionality between the arrays in `this.tabbables`.
+    // the `null`s in `firstLast_positive`. They are required to keep proportionality between the arrays in `this.kingpins`.
     // The loops can't be infinite ones unless the trap is empty, but in this case `assistTabbing()` returns early.
 
+    // `target` doesn't belong to the focus trap.
     if (rootIndex === -1) {
       if (target.tabIndex === 0) {
         for (let x = 0; !destination; x += 2) {
           destination =
-            boundaries[(surrogateIndex * 2 + (shiftKey ? -x - 1 : x) + 5 * boundaries.length) % boundaries.length];
+            firstLast_positive[
+              (surrogateIndex * 2 + (shiftKey ? -x - 1 : x) + 5 * firstLast_positive.length) % firstLast_positive.length
+            ];
         }
       } else if (target.tabIndex > 0) {
-        // Creating a temporary `tempBoundaries` array with `target` in it,
+        // Creating a temporary `tempFirstLast_positive` array with `target` in it,
         // then using the same logic used for positive tab indexes inside of the trap.
-        const positiveTabIndexes = boundaries.slice(edges.length) as Focusable[];
+        const positiveTabIndexes = firstLast_positive.slice(topBottom.length) as Focusable[];
         positiveTabIndexes.push(target);
         positiveTabIndexes.sort((a, b) =>
           a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
         );
-        const tempBoundaries = boundaries.slice(0, edges.length).concat(positiveTabIndexes);
-        const index = tempBoundaries.findIndex((el) => el === target);
+        const tempFirstLast_positive = firstLast_positive.slice(0, topBottom.length).concat(positiveTabIndexes);
+        const index = tempFirstLast_positive.findIndex((el) => el === target);
         for (let x = 1; !destination; x++) {
           destination =
-            tempBoundaries[(index + (shiftKey ? -x : x) + 5 * tempBoundaries.length) % tempBoundaries.length];
+            tempFirstLast_positive[
+              (index + (shiftKey ? -x : x) + 5 * tempFirstLast_positive.length) % tempFirstLast_positive.length
+            ];
         }
       } else {
-        destination = edges[(surrogateIndex * 2 - Number(shiftKey) + edges.length) % edges.length];
+        destination = topBottom[(surrogateIndex * 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
       }
-    } else if (target.tabIndex === 0) {
-      const firstZero = boundaries[rootIndex * 2];
-      const lastZero = boundaries[rootIndex * 2 + 1];
+    }
+    // `target` belongs to the focus trap.
+    else if (target.tabIndex === 0) {
+      const firstZero = firstLast_positive[rootIndex * 2];
+      const lastZero = firstLast_positive[rootIndex * 2 + 1];
       if (
-        (shiftKey && (target === firstZero || areTwoRadiosInSameGroup(target, firstZero))) ||
-        (!shiftKey && (target === lastZero || areTwoRadiosInSameGroup(target, lastZero)))
+        (shiftKey && (target === firstZero || areTwoRadiosInTheSameGroup(target, firstZero))) ||
+        (!shiftKey && (target === lastZero || areTwoRadiosInTheSameGroup(target, lastZero)))
       ) {
         for (let x = 0; !destination; x += 2) {
           destination =
-            boundaries[(rootIndex * 2 + (shiftKey ? -x - 1 : x + 2) + 5 * boundaries.length) % boundaries.length];
+            firstLast_positive[
+              (rootIndex * 2 + (shiftKey ? -x - 1 : x + 2) + 5 * firstLast_positive.length) % firstLast_positive.length
+            ];
         }
       }
     } else if (target.tabIndex > 0) {
-      const index = boundaries.findIndex((el) => el === target);
+      const index = firstLast_positive.findIndex((el) => el === target);
       for (let x = 1; !destination; x++) {
-        destination = boundaries[(index + (shiftKey ? -x : x) + 5 * boundaries.length) % boundaries.length];
+        destination =
+          firstLast_positive[(index + (shiftKey ? -x : x) + 5 * firstLast_positive.length) % firstLast_positive.length];
       }
     } else {
-      const topTabbable = edges[rootIndex * 2];
-      const bottomTabbable = edges[rootIndex * 2 + 1];
+      const topTabbable = topBottom[rootIndex * 2];
+      const bottomTabbable = topBottom[rootIndex * 2 + 1];
       if (topTabbable.compareDocumentPosition(target) & 2) {
-        destination = edges[(rootIndex * 2 - Number(shiftKey) + edges.length) % edges.length];
+        destination = topBottom[(rootIndex * 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
       } else if (bottomTabbable.compareDocumentPosition(target) & 4) {
-        destination = edges[(rootIndex * 2 + 2 - Number(shiftKey) + edges.length) % edges.length];
+        destination = topBottom[(rootIndex * 2 + 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
       }
     }
 
     if (destination) {
       event.preventDefault();
-      if (isRadioInput(destination) && !destination.checked) {
-        getTheCheckedRadio(destination)?.focus();
-      } else destination.focus();
+      if (isRadioInput(destination) && !destination.checked) getTheCheckedRadio(destination)?.focus();
+      else destination.focus();
     }
   };
 
-  private preventOutsideClicksHandler = (event: MouseEvent | TouchEvent): void => {
+  private outsideClicksHandler = (event: MouseEvent | TouchEvent): void => {
     if (this.config.root.every((el) => !el.contains(event.target as Node))) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -225,7 +235,7 @@ class SingleTrap {
     } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
       const escape = this.config.escape;
       if (escape instanceof Function) return escape(event);
-      if (escape !== false) this.demolish();
+      if (escape !== false) this.DEMOLISH();
     }
   };
 
@@ -240,25 +250,25 @@ class SingleTrap {
       (document[actionMap[action]] as Function)('click', lock, true);
     } else if (lock !== false) {
       for (const event of ['mousedown', 'touchstart', 'click']) {
-        (document[actionMap[action]] as Function)(event, this.preventOutsideClicksHandler, true);
+        (document[actionMap[action]] as Function)(event, this.outsideClicksHandler, true);
       }
     }
 
     (document[actionMap[action]] as Function)('keydown', this.keyboardNavigationHandler, true);
   };
 
-  private giveInitialFocus = ({ initialFocus }: SingleTrapConfig): void => {
+  private giveInitialFocus = ({ initialFocus }: TrapConfig): void => {
     if (initialFocus instanceof HTMLElement || initialFocus instanceof SVGElement) return initialFocus.focus();
 
     if (initialFocus !== false) {
-      this.updateTabbables();
-      const { boundaries, edges } = this.tabbables;
+      this.updateKingpins();
+      const { firstLast_positive, topBottom } = this.kingpins;
       // Focus the first tabbable, being either the minimum positive tab index or the first zero tab index.
-      return boundaries[edges.length % boundaries.length]?.focus();
+      return firstLast_positive[topBottom.length % firstLast_positive.length]?.focus();
     }
   };
 
-  private getReturnFocus = ({ returnFocus }: SingleTrapConfig): Focusable | undefined => {
+  private getReturnFocus = ({ returnFocus }: TrapConfig): Focusable | undefined => {
     const activeElement = document.activeElement;
 
     if (returnFocus instanceof HTMLElement || returnFocus instanceof SVGElement) return returnFocus;
@@ -266,23 +276,24 @@ class SingleTrap {
     if (returnFocus !== false && (activeElement instanceof HTMLElement || activeElement instanceof SVGElement)) {
       return activeElement;
     }
-
-    return undefined;
   };
 
-  private resume = (isBuild?: boolean): void => {
+  private RESUME = (): void => {
     if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot resume inexistent trap.');
     }
     if (!this.mutationObserver) return;
     for (const el of this.config.root) this.mutationObserver.observe(el, mutationObserverInit);
-    this.isUpdateScheduled = true;
-    if (isBuild) this.giveInitialFocus(this.config);
+    // `RESUME` called indirectly, through `BUILD`. A trap update may be needed to give the initial focus.
+    if (this.isUpdateScheduled) this.giveInitialFocus(this.config);
+    // `RESUME` called directly. Just schedule an update. There is no need to update the trap right now.
+    else this.isUpdateScheduled = true;
     this.eventListeners('ADD');
   };
 
+  // 'BUILD' is declared but its value is never read.
   // @ts-ignore
-  private build = (config: SingleTrapConfig): void => {
+  private BUILD = (config: TrapConfig): void => {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.eventListeners('REMOVE');
@@ -295,36 +306,38 @@ class SingleTrap {
           : [config.root],
       returnFocus: this.getReturnFocus(config),
     };
-    this.tabbables = {} as Tabbables;
-    this.resume(true);
+    this.kingpins = {} as Kingpins;
+    this.isUpdateScheduled = true;
+    this.RESUME();
   };
 
-  private pause = (): void => {
+  private PAUSE = (): void => {
     if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot pause inexistent trap.');
     }
     if (!this.mutationObserver) return;
+    // Need to unschedule updates so that `RESUME` can know if it's called directly or through `BUILD`.
+    this.isUpdateScheduled = false;
     this.mutationObserver.disconnect();
     this.eventListeners('REMOVE');
   };
 
-  private demolish = (): void => {
+  private DEMOLISH = (): void => {
     if (process.env.NODE_ENV !== 'production') {
       if (!this.mutationObserver) throw new Error('Cannot demolish inexistent trap.');
     }
     if (!this.mutationObserver) return;
-    this.pause();
+    this.PAUSE();
     this.config.returnFocus?.focus();
-    this.tabbables = undefined as unknown as Tabbables;
+    this.kingpins = undefined as unknown as Kingpins;
     this.config = undefined as unknown as Config;
     this.mutationObserver = undefined;
   };
 
-  public controller = ({ action, config }: SingleTrapControllerArgs): void =>
-    (this[action.toLowerCase() as keyof SingleTrap] as Function)(config);
+  public controller = ({ action, config }: TrapArg): void => this[action](config!);
 }
 
-const singleTrap = new SingleTrap().controller;
+const singleFocusTrap = new SingleTrap().controller;
 
-export { singleTrap };
-export type { Focusable, SingleTrapConfig, SingleTrapControllerArgs };
+export { singleFocusTrap };
+export type { Focusable, TrapConfig, TrapArg };
