@@ -81,19 +81,26 @@ export function areConfigsEquivalent(x: ResolvedConfig, y: ResolvedConfig): bool
   for (let i = 0; i < x.roots.length; i++) if (x.roots[i] !== y.roots[i]) return false;
 
   if (x.initialFocus === y.initialFocus && x.returnFocus === y.returnFocus) {
-    if (x.lock === y.lock && x.escape === y.escape) return true;
-    if (
-      x.lock instanceof Function &&
-      y.lock instanceof Function &&
-      x.escape instanceof Function &&
-      y.escape instanceof Function
-    ) {
+    const evaluatePropEquivalence = (prop: keyof ResolvedConfig) => {
+      if (x[prop] === y[prop]) return 1;
+      if (x[prop] instanceof Function && y[prop] instanceof Function) return 3;
+      return 0;
+    };
+
+    // If ends up being zero or an odd number, the configs are definitely different.
+    let propsEquivalence = 0;
+    propsEquivalence += evaluatePropEquivalence('initialFocus');
+    propsEquivalence += evaluatePropEquivalence('returnFocus');
+
+    if (propsEquivalence === 2) return true;
+
+    // In this case the configs are considered different and a warning is logged in development.
+    if (propsEquivalence && !(propsEquivalence % 2)) {
       if (process.env.NODE_ENV !== 'production') {
         console.warn(
           "`use-simple-focus-trap` detected two focus trap configurations differing only in function references. Chances are you need to memoize the functions you pass to the hook's return value to avoid unwanted behaviours. More information can be found at: https://github.com/DaviDevMod/focus-trap/blob/main/packages/use-simple-focus-trap#note-expansion-2-warning"
         );
       }
-      return true;
     }
   }
   return false;
