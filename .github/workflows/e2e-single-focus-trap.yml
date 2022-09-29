@@ -126,6 +126,15 @@ jobs:
       - name: Upload codecov
         uses: codecov/codecov-action@v3
         with:
+          # The token is not required for public repos, but it makes the workflow
+          # less likely to randomly fail because of a limit in codecov CI capabilities.
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
+          # The secret token doesn't always save from false positives though,
+          # because GitHub action are supposedly buggy when handling secrets:
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
+          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
+          # https://github.com/orgs/community/discussions/25701
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: packages/single-focus-trap/coverage
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
