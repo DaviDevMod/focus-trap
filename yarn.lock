@@ -4250,6 +4250,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:0.1.13"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    single-focus-trap: "workspace:^"
     tailwindcss: "npm:3.1.8"
     tailwindcss-debug-screens: "npm:2.2.1"
     typescript: "npm:4.8.4"
