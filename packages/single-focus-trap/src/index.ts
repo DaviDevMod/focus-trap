@@ -3,6 +3,7 @@ import {
   areTwoRadiosInTheSameGroup,
   candidate,
   getConsistentTabIndex,
+  getDestination,
   getTheCheckedRadio,
   isActuallyFocusable,
   isMutationAffectingTabbability,
@@ -94,11 +95,11 @@ class SingleTrap {
 
     this.kingpins.firstLast_positive = this.kingpins.firstLast_positive.concat(positiveTabIndexes);
 
-    // WARNING: do not move the following assignment elsewhere, especially not before a `return false`.
-    // If the trap doesn't have tabbables, the update must remain scheduled; otherwise an infinite loop in `assistTabbing()`
-    // may occur when looping through an array of `null`. This problem culd be solved in different ways eg, setting
-    // a flag on `this`, or a limit of `2 * loopedArray.length` in the loops. However this is a quite remote scenario and
-    // the current solution of unscheduling updates only in the very last statement of `updateKingpins` is just fine.
+    // If the trap doesn't have tabbable elements, the update must remain scheduled; otherwise an infinite loop
+    // may occur in `getDestination()` (called by `assistTabbing()`) when looping through an array of `null`s.
+    // There is actually a safety net condition in `getDestination()` that prevents infinite loops, but still
+    // the correct logic is to unschedule updates only after assessing that the trap contains at least one
+    // tabbable element, doing it in the very last statement of `updateKingpins()` avoids any trouble.
     return !(this.isUpdateScheduled = false);
   };
 
@@ -138,7 +139,10 @@ class SingleTrap {
 
   private assistTabbing = (event: KeyboardEvent): void => {
     const { target, shiftKey } = event;
+    // Return early if `target` is not tabbable.
     if (!(target instanceof HTMLElement || target instanceof SVGElement)) return;
+    // If an update was scheduled, update the trap's kingpins;
+    // then return early if the trap doesn't contain at least one tabbable element.
     if (this.isUpdateScheduled && !this.updateKingpins()) return;
     const { roots, firstLast_positive, topBottom } = this.kingpins;
     let rootIndex = roots.findIndex((el) => el.contains(target as Node));
@@ -151,19 +155,12 @@ class SingleTrap {
     }
     let destination: Focusable | null = null;
 
-    // All the loops that follow are here just to reassing `destination` in case it got assigned one of
-    // the `null`s in `firstLast_positive`. They are required to keep proportionality between the arrays in `this.kingpins`.
-    // The loops can't be infinite ones unless the trap is empty, but in this case `assistTabbing()` returns early.
-
     // `target` doesn't belong to the focus trap.
     if (rootIndex === -1) {
       if (target.tabIndex === 0) {
-        for (let x = 0; !destination; x += 2) {
-          destination =
-            firstLast_positive[
-              (surrogateIndex * 2 + (shiftKey ? -x - 1 : x) + 5 * firstLast_positive.length) % firstLast_positive.length
-            ];
-        }
+        destination = getDestination(firstLast_positive, surrogateIndex * 2, (x) =>
+          shiftKey ? -x * 2 + 1 : x * 2 - 2
+        );
       } else if (target.tabIndex > 0) {
         // Creating a temporary `tempFirstLast_positive` array with `target` in it,
         // then using the same logic used for positive tab indexes inside of the trap.
@@ -173,15 +170,10 @@ class SingleTrap {
           a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
         );
         const tempFirstLast_positive = firstLast_positive.slice(0, topBottom.length).concat(positiveTabIndexes);
-        const index = tempFirstLast_positive.findIndex((el) => el === target);
-        for (let x = 1; !destination; x++) {
-          destination =
-            tempFirstLast_positive[
-              (index + (shiftKey ? -x : x) + 5 * tempFirstLast_positive.length) % tempFirstLast_positive.length
-            ];
-        }
+        const tempIndex = tempFirstLast_positive.findIndex((el) => el === target);
+        destination = getDestination(tempFirstLast_positive, tempIndex, (x) => (shiftKey ? -x : x));
       } else {
-        destination = topBottom[(surrogateIndex * 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
+        destination = getDestination(topBottom, surrogateIndex * 2, () => -Number(shiftKey));
       }
     }
     // `target` belongs to the focus trap.
@@ -192,26 +184,18 @@ class SingleTrap {
         (shiftKey && (target === firstZero || areTwoRadiosInTheSameGroup(target, firstZero))) ||
         (!shiftKey && (target === lastZero || areTwoRadiosInTheSameGroup(target, lastZero)))
       ) {
-        for (let x = 0; !destination; x += 2) {
-          destination =
-            firstLast_positive[
-              (rootIndex * 2 + (shiftKey ? -x - 1 : x + 2) + 5 * firstLast_positive.length) % firstLast_positive.length
-            ];
-        }
+        destination = getDestination(firstLast_positive, rootIndex * 2, (x) => (shiftKey ? -x * 2 + 1 : x * 2));
       }
     } else if (target.tabIndex > 0) {
       const index = firstLast_positive.findIndex((el) => el === target);
-      for (let x = 1; !destination; x++) {
-        destination =
-          firstLast_positive[(index + (shiftKey ? -x : x) + 5 * firstLast_positive.length) % firstLast_positive.length];
-      }
+      destination = getDestination(firstLast_positive, index, (x) => (shiftKey ? -x : x));
     } else {
       const topTabbable = topBottom[rootIndex * 2];
       const bottomTabbable = topBottom[rootIndex * 2 + 1];
       if (topTabbable.compareDocumentPosition(target) & 2) {
-        destination = topBottom[(rootIndex * 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
+        destination = getDestination(topBottom, rootIndex * 2, () => -Number(shiftKey));
       } else if (bottomTabbable.compareDocumentPosition(target) & 4) {
-        destination = topBottom[(rootIndex * 2 + 2 - Number(shiftKey) + topBottom.length) % topBottom.length];
+        destination = getDestination(topBottom, rootIndex * 2, () => 2 - Number(shiftKey));
       }
     }
 
@@ -291,8 +275,6 @@ class SingleTrap {
     this.eventListeners('ADD');
   };
 
-  // 'BUILD' is declared but its value is never read.
-  // @ts-ignore
   private BUILD = (config: TrapConfig): void => {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();

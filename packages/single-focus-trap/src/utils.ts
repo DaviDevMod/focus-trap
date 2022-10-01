@@ -79,6 +79,26 @@ export function isActuallyFocusable(candidate: HTMLElement | SVGElement) {
   return true;
 }
 
+// Helper function used in `assistTabbing()" just to declutter code duplication (sacrificing a tiny bit of performance).
+export const getDestination = (array: (Focusable | null)[], index: number, getOffset: (x: number) => number) => {
+  let destination: Focusable | null = null;
+  const len = array.length;
+
+  // The exit condition `x < len * 5` it's just an arbitrary safety net against infinite loops.
+  for (let x = 1; !destination && x < len * 5; x++) destination = array[(index + getOffset(x) + len * 5) % len];
+
+  if (!destination && process.env.NODE_ENV !== 'production') {
+    throw new Error(
+      `This is not supposed to happen. There's a logic error somewhere in single-focus-trap.
+      \`assistTabbing()\` must return early if the trap doesn't contain at least one tabbable elemnt;
+      and updates must be unscheduled only in the very last statement of \`updateKingpins()\``
+    );
+  }
+
+  // Although retunrning `null` is no trouble, `getDestination()` is supposed to return a `Focusable`.
+  return destination;
+};
+
 export const isRadioInput = (element: unknown): element is HTMLInputElement =>
   element instanceof HTMLInputElement && element.type === 'radio';
 
