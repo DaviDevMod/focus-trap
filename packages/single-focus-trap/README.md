@@ -1,14 +1,8 @@
 # single-focus-trap
 
-[![CI-packages](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![e2e-single-focus-trap](https://github.com/DaviDevMod/focus-trap/actions/workflows/e2e-single-focus-trap.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/e2e-single-focus-trap.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/single-focus-trap)](https://www.npmjs.com/package/single-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE) [![npm version](https://badgen.net/npm/v/single-focus-trap)](https://www.npmjs.com/package/single-focus-trap) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![CI-packages](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![e2e-single-focus-trap](https://github.com/DaviDevMod/focus-trap/actions/workflows/e2e-single-focus-trap.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/e2e-single-focus-trap.yml)
 
 A light and reactive focus trap, framework agnostic, written in TypeScript.
-
-It's called **single** because:
-
-- It can only hold the state of one focus trap at a time, meaning that when a new trap is built, any information related to a previous trap is lost, foreva.
-
-- The state of the trap is kept in the singleton instance of a class, so creating multiple traps (even from different files) won't create multiple traps; a brand new trap always replaces an older trap.
 
 ## Features
 
@@ -30,11 +24,7 @@ npm install single-focus-trap
 `import { singleFocusTrap } from 'single-focus-trap'` and call it with an object of type `TrapArgs`.
 
 ```ts
-type TrapArg =
-  | { action: 'BUILD'; config: TrapConfig }
-  | { action: 'DEMOLISH'; config?: never }
-  | { action: 'RESUME'; config?: never }
-  | { action: 'PAUSE'; config?: never };
+type Focusable = HTMLElement | SVGElement;
 
 interface TrapConfig {
   roots: HTMLElement[];
@@ -44,7 +34,11 @@ interface TrapConfig {
   escape?: boolean | Function;
 }
 
-type Focusable = HTMLElement | SVGElement;
+type TrapArg =
+  | { action: 'BUILD'; config: TrapConfig }
+  | { action: 'DEMOLISH'; config?: never }
+  | { action: 'RESUME'; config?: never }
+  | { action: 'PAUSE'; config?: never };
 ```
 
 Start a focus trap by providing the `"BUILD"` action along with a trap configuration object.
@@ -52,17 +46,17 @@ Start a focus trap by providing the `"BUILD"` action along with a trap configura
 You can then `"PAUSE"`, `"RESUME"` or `"DEMOLISH"` the trap by calling `singleFocusTrap` with the desired action.
 
 ```javascript
-import { singleTrap } from 'single-focus-trap';
+import { singleFocusTrap } from 'single-focus-trap';
 
 const myElement = document.getElementById('myElement');
 
 const config = { root: myElement };
 
 // Build trap
-singleTrap({ action: 'BUILD', config });
+singleFocusTrap({ action: 'BUILD', config });
 
 // Demolish trap
-singleTrap({ action: 'DEMOLISH' });
+singleFocusTrap({ action: 'DEMOLISH' });
 ```
 
 ## Default behaviour
@@ -135,7 +129,13 @@ Note that even though the MutationObserver API supports IE11, some tweak would b
 
   Note the the error handling available in development does NOT cover type checking, which could be a problem if you are using JavaScript rather than TypeScript.
 
-  If you want complement **single-focus-trap** with some type checking or anything, consider writing a small wrap around `single-focus-trap` enhancing it with the desired features (check [use-simple-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap) for an example, limited to React).
+  If you want complement **single-focus-trap** with some type checking or anything, consider writing a small wrap to enhance it with the desired features (check [use-simple-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap) for an example, limited to React).
+
+- It's called **single** because:
+
+  - It can only hold the state of one focus trap at a time, meaning that when a new trap is built, any information related to a previous trap is lost, foreva.
+
+  - The state of the trap is kept in the singleton instance of a class, so creating multiple traps (even from different files) won't create multiple traps; a brand new trap always replaces an older trap.
 
 ## Special thanks :blue_heart:
 
