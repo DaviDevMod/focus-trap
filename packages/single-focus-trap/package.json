@@ -19,6 +19,7 @@
   "scripts": {
     "build": "rimraf --no-glob ./dist && microbundle -f cjs,es --no-compress",
     "dev": "microbundle watch",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "instrument": "rimraf --no-glob ./instrumented && nyc instrument --compact true ./src ./instrumented",
     "src-to-instrumented": "replace-in-file \"/single-focus-trap/src/\" \"/single-focus-trap/instrumented/\" ../../apps/demo/tsconfig.json",
     "instrumented-to-src": "replace-in-file \"/single-focus-trap/instrumented/\" \"/single-focus-trap/src/\" ../../apps/demo/tsconfig.json",

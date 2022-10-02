@@ -10,6 +10,7 @@
     "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
     "g:changeset": "changeset",
     "g:release": "yarn g:build && changeset publish",
+    "g:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "postinstall": "is-ci || husky install",
     "check:deps": "yarn dlx npm-check-updates@latest --deep",
     "update:deps": "yarn dlx npm-check-updates@latest -u --deep",

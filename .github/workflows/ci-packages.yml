@@ -77,11 +77,11 @@ jobs:
         run: |
           yarn install --immutable
 
-      # # Typecheck packages that have changed + packages and apps that depends on them (--from & --since)
-      # # That allows to see if we're introducing "surface" regressions (just the types)
-      # - name: Typecheck
-      #   run: |
-      #     yarn workspaces foreach -tv --from '@your-org/*' --since=origin/main --recursive run typecheck
+      # Typecheck packages that have changed + packages and apps that depends on them (--from & --since)
+      # That allows to see if we're introducing "surface" regressions (just the types)
+      - name: Typecheck
+        run: |
+          yarn workspaces foreach -tv --from 'packages/*' --since=origin/main --recursive run typecheck
 
       # # Lint packages that have changed (--include & --since)
       # - name: Linter
