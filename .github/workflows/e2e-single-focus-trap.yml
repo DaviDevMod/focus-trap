@@ -103,7 +103,7 @@ jobs:
       # apps build are done already. Otherwise --from & --since
       - name: Run build for changed packages
         run: |
-          yarn workspaces foreach -tv --include 'packages/*' --since=origin/main run build
+          yarn workspaces foreach -tv --include '*-focus-trap' --since=origin/main run build
 
       - name: Set up instrumentation of single-focus-trap
         run: |

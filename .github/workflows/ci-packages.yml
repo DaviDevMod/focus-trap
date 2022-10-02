@@ -81,7 +81,7 @@ jobs:
       # That allows to see if we're introducing "surface" regressions (just the types)
       - name: Typecheck
         run: |
-          yarn workspaces foreach -tv --from 'packages/*' --since=origin/main --recursive run typecheck
+          yarn workspaces foreach -tv --from '*-focus-trap' --since=origin/main --recursive run typecheck
 
       # # Lint packages that have changed (--include & --since)
       # - name: Linter
@@ -99,4 +99,4 @@ jobs:
       # apps build are done already. Otherwise --from & --since
       - name: Run build for changed packages
         run: |
-          yarn workspaces foreach -tv --include 'packages/*' --since=origin/main run build
+          yarn workspaces foreach -tv --include '*-focus-trap' --since=origin/main run build
