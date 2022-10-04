@@ -29,6 +29,15 @@ context('Testing reactivity of the focus trap in regard to changes in the tab or
       // the logic that makes the trap react to changes would never kick in, because
       // an update was already scheduled when the trap was built and any mutation would be ignored.
       // So here we are, updating the trap before to mutate the tab index of `#modify-me`.
+      // TODO:
+      // actually since we are leaving `initialFocus` to its default, the trap DOES update when it's built
+      // because it needs to get the first tabbable element, which is used as default `initialFocus`.
+      // So why is this trap update required to see the reactivity logic kick in (and the coverage go up)?
+      // IDK, but probably has something to do with the fact that here we are changing the tab index of
+      // an element without going through React. We are changing the state of an application without
+      // giving React the possibility to notice that it's virtual DOM has changed and it may be that somehow
+      // this leads the mutationObserver to miss the change in tab index.
+      // **Refactor app and tests so that the UI is modified only through React**
       cy.realPress('Tab');
 
       cy.get('@modifyMe').invoke('attr', 'tabindex', '-1').should('have.attr', 'tabindex', '-1');
