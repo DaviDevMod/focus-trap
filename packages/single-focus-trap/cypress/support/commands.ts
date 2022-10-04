@@ -2,7 +2,7 @@
 
 // Totally depending on the elements in the Next.js demo app
 export const EXPECTED_ORDER = '0123456';
-// A minimum of `2` is required to get miningfull tests. Large values make the tests last longer.
+// A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
 export const DEFAULT_TEST_CYCLE_LENGTH = 2;
 
 // Used only by "../e2e/reactivity.cy.ts"

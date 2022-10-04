@@ -129,7 +129,7 @@ Note that even though the MutationObserver API supports IE11, some tweak would b
 
   Note the the error handling available in development does NOT cover type checking, which could be a problem if you are using JavaScript rather than TypeScript.
 
-  If you want complement **single-focus-trap** with some type checking or anything, consider writing a small wrap to enhance it with the desired features (check [use-simple-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap) for an example, limited to React).
+  If you want to complement **single-focus-trap** with some type checking or anything, consider writing a small wrap to enhance it with the desired features (check [use-simple-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/use-simple-focus-trap) for an example, limited to React).
 
 - It's called **single** because:
 
@@ -143,7 +143,7 @@ The logic for the treatement of edge cases, in matter of browser consistency reg
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
-The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and the hook aims to be as simple and lightweight as possible.
+The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and _single-focus-trap_ aims to be as simple and lightweight as possible.
 
 ## :earth_americas: Contributions
 
