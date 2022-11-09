@@ -23,6 +23,8 @@ type Direction = 'FORWARD' | 'BACKWARD';
 declare global {
   namespace Cypress {
     interface Chainable {
+      visitDemo: (path?: string) => void;
+
       buildTrap: (config?: TrapConfig) => void;
 
       openDropdownAndClickOptions: (dropdownButtonName: string, options: DropdownOptions) => void;
@@ -43,6 +45,12 @@ declare global {
     }
   }
 }
+
+Cypress.Commands.add('visitDemo', (path = '/') => {
+  cy.visit(path);
+  // Check "_app.tsx" in the demo app; https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
+  cy.window().should('have.property', 'appReady', true);
+});
 
 // Even though chaining a child command to `cy` throws an error during tests, TS doesn't forbid this usage.
 // Also the type annotation of the `subject` is completely ignored, hence it's purely documenting.

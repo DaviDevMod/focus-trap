@@ -2,8 +2,7 @@
 
 context('Testing how the focus cycles within the trap when the Tab key is pressed.', () => {
   before(() => {
-    cy.visit('/');
-    cy.window().should('have.property', 'appReady', true);
+    cy.visitDemo();
     cy.buildTrap();
   });
 
