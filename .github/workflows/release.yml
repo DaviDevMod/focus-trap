@@ -47,7 +47,7 @@ jobs:
       # @link https://github.com/changesets/action
       - name: Create release PR and changelog or publish
         id: changesets
-        uses: changesets/action@v1.3.0
+        uses: changesets/action@v1.4.1
         with:
           publish: yarn g:release
           cwd: ${{ github.workspace }}
