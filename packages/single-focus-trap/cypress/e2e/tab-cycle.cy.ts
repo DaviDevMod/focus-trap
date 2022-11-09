@@ -1,9 +1,15 @@
 /// <reference types="cypress" />
 
 context('Testing how the focus cycles within the trap when the Tab key is pressed.', () => {
-  before(() => cy.visit('/'));
+  before(() => {
+    cy.visit('/');
+    cy.window().should('have.property', 'appReady', true);
+    cy.buildTrap();
+  });
 
-  beforeEach(() => cy.get('button').as('possibleTabbables'));
+  beforeEach(() => {
+    cy.get('button[data-parent-id]').as('possibleTabbables');
+  });
 
   describe('The focus should cycle within the trap following a specific order, dictated by tab index values', () => {
     it('Should cycle forward', () => {

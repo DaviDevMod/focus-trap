@@ -4,15 +4,19 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { MenuItem } from './MenuItem';
 
 interface MenuProps {
+  label: string;
   // TS doesn't check whether `items` is an array of <MenuItem>. The annotation here is just documenting.
   items: React.ReactElement<typeof MenuItem>[];
 }
 
-export function Menu({ items }: MenuProps) {
+export function Menu({ label, items }: MenuProps) {
   return (
     <HeadlessUIMenu as="div" className="relative inline-block text-left">
-      <HeadlessUIMenu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-amber-400">
-        Action
+      <HeadlessUIMenu.Button
+        name={`Toggle ${label} Menu`}
+        className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-amber-400"
+      >
+        {label}
         <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100" aria-hidden="true" />
       </HeadlessUIMenu.Button>
       <Transition

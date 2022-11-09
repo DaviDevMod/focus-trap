@@ -12,11 +12,9 @@ export const TrapActionMenu = memo(function TrapActionMenu({ dispatchTrapControl
   const trapActionsMenuItems = useMemo(
     () =>
       Object.values(TrapActions).map((trapAction) => (
-        <MenuItem key={trapAction} handleClick={() => dispatchTrapControlsState({ trapAction })}>
-          {trapAction}
-        </MenuItem>
+        <MenuItem key={trapAction} label={trapAction} handleClick={() => dispatchTrapControlsState({ trapAction })} />
       )),
     [dispatchTrapControlsState]
   );
-  return <Menu items={trapActionsMenuItems} />;
+  return <Menu label="Action" items={trapActionsMenuItems} />;
 });

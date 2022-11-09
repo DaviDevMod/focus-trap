@@ -2,7 +2,7 @@
 
 import { EXPECTED_ORDER, NESTED_EXPECTED_ORDER } from '../support/commands';
 
-context('Testing reactivity of the focus trap in regard to changes in the tab order of its elements.', () => {
+context.skip('Testing reactivity of the focus trap in regard to changes in the tab order of its elements.', () => {
   // e.g.: new tabbable elements appearing in the trap, or former tabbable elements becoming untabbable.
 
   before(() => cy.visit('/'));

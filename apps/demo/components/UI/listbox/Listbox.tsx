@@ -27,6 +27,7 @@ export function Listbox<T extends string | string[]>({
       <h3>{label}</h3>
       <div className="relative mb-4">
         <HeadlessUIListbox.Button
+          name={`Toggle ${label} Listbox`}
           className={`${
             disabled ? 'bg-gray-200 text-neutral-400' : 'bg-blue-300'
           } relative h-9 w-full cursor-default rounded-lg pl-3 pr-10 text-left text-sm shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300`}

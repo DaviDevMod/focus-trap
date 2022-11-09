@@ -108,13 +108,14 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
 
   return (
     <form
+      name="Trap Controls"
       onSubmit={handleSubmit}
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
     >
       <TrapActionMenu dispatchTrapControlsState={dispatchTrapControlsState} />
 
       <TrapConfigListbox
-        configProp={'roots'}
+        configProp="roots"
         configValues={rootsAndInitialFocusConfigValues}
         skeletonRootId={trapElementsRootNodeState?.id}
         filterState={initialFocusFilterState}
@@ -125,7 +126,7 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
       />
 
       <TrapConfigListbox
-        configProp={'initialFocus'}
+        configProp="initialFocus"
         configValues={rootsAndInitialFocusConfigValues}
         skeletonRootId={trapElementsRootNodeState?.id}
         filterState={initialFocusFilterState}
@@ -136,22 +137,17 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
       />
 
       <TrapConfigListbox
-        configProp={'returnFocus'}
+        configProp="returnFocus"
         configValues={returnFocusConfigValues}
         trapElementsState={trapElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
         disabled={isTrapActionNotBUILD}
       />
 
-      <Switch
-        label={'lock'}
-        checked={trapConfig.lock}
-        handleChange={handleLockChange}
-        disabled={isTrapActionNotBUILD}
-      />
+      <Switch label="lock" checked={trapConfig.lock} handleChange={handleLockChange} disabled={isTrapActionNotBUILD} />
 
       <Switch
-        label={'escape'}
+        label="escape"
         checked={trapConfig.escape}
         handleChange={handleEscapeChange}
         disabled={isTrapActionNotBUILD}
