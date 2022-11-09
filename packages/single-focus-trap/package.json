@@ -37,7 +37,7 @@
     "concurrently": "7.4.0",
     "cypress": "10.9.0",
     "cypress-real-events": "1.7.1",
-    "eslint": "8.24.0",
+    "eslint": "8.27.0",
     "istanbul-lib-coverage": "3.2.0",
     "microbundle": "0.15.1",
     "nyc": "15.1.0",
