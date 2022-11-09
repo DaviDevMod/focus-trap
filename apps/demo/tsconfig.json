@@ -16,6 +16,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     "paths": {
       "single-focus-trap": ["../../../packages/single-focus-trap/src/index"],
       "use-simple-focus-trap": ["../../../packages/use-simple-focus-trap/src/index"]
