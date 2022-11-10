@@ -36,7 +36,7 @@
     "@types/node": "18.11.9",
     "concurrently": "7.5.0",
     "cypress": "11.0.0",
-    "cypress-real-events": "1.7.2",
+    "cypress-real-events": "1.7.4",
     "eslint": "8.27.0",
     "istanbul-lib-coverage": "3.2.0",
     "microbundle": "0.15.1",
