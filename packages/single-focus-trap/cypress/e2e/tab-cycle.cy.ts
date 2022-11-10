@@ -3,7 +3,7 @@
 context('Testing how the focus cycles within the trap when the Tab key is pressed.', () => {
   before(() => {
     cy.visitDemo();
-    cy.buildTrap();
+    cy.buildTrap({ roots: ['group 2', 'group 4'] });
   });
 
   beforeEach(() => {

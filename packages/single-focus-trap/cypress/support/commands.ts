@@ -1,13 +1,16 @@
 /// <reference types="cypress" />
 
 import { RequireExactlyOne } from 'type-fest';
-import { TrapConfig } from '../../src/types';
-import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
+
+interface TestTrapConfig {
+  roots: string[];
+  initialFocus?: string;
+  returnFocus?: string;
+  lock?: boolean;
+  escape?: boolean;
+}
 
 type DropdownOptions = RequireExactlyOne<{ optionButtonName: string; itemsText: string[] }>;
-
-// "cypress-real-events/commands/realPress" declares `KeyOrShortcut` locally, but it is not exported.
-type KeyOrShortcut = (keyof typeof keyCodeDefinitions)[];
 
 // Totally depending on the elements in the Next.js demo app
 export const EXPECTED_ORDER = '0123456';
@@ -25,11 +28,13 @@ declare global {
     interface Chainable {
       visitDemo: (path?: string) => void;
 
-      buildTrap: (config?: TrapConfig) => void;
-
       openDropdownAndClickOptions: (dropdownButtonName: string, options: DropdownOptions) => void;
 
+      toggleSwitch: (switchName: string, toggleTo: boolean) => void;
+
       submitForm: () => void;
+
+      buildTrap: (config: TestTrapConfig) => void;
 
       getNextTabbedDatasetOrder: (direction?: Direction) => Cypress.Chainable<string>;
 
@@ -52,24 +57,44 @@ Cypress.Commands.add('visitDemo', (path = '/') => {
   cy.window().should('have.property', 'appReady', true);
 });
 
-// Even though chaining a child command to `cy` throws an error during tests, TS doesn't forbid this usage.
-// Also the type annotation of the `subject` is completely ignored, hence it's purely documenting.
 Cypress.Commands.add(
   'openDropdownAndClickOptions',
-  { prevSubject: true },
-  (subject: JQuery<HTMLElement>, dropdownButtonName, { optionButtonName, itemsText }) => {
+  { prevSubject: ['element'] },
+  (subject, dropdownButtonName, { optionButtonName, itemsText }) => {
     cy.wrap(subject).find(`button[name="${dropdownButtonName}"]`).click();
 
     if (optionButtonName) cy.wrap(subject).find(`button[name="${optionButtonName}"]`).click();
-    else for (const itemText of itemsText) cy.wrap(subject).contains('li', itemText).click();
+    else {
+      for (const itemText of itemsText) cy.wrap(subject).contains('li', itemText).click();
+      cy.realPress('Escape'); // Close an eventual <Listbox multiple={true}>
+    }
   }
 );
 
-Cypress.Commands.add('submitForm', { prevSubject: true }, (subject: JQuery<HTMLElement>) => {
+Cypress.Commands.add(
+  'toggleSwitch',
+  { prevSubject: ['element'] },
+  (subject: JQuery<HTMLElement>, switchName, toggleTo) => {
+    cy.wrap(subject)
+      // Even though headlessui <Switch> is rendered as a <button>,
+      // its `name` prop is given to an hidden <input> element.
+      .find(`input[name="${switchName}"]`)
+      .then(({ 0: switchInput }) => {
+        if ((switchInput as HTMLInputElement).checked) {
+          if (!toggleTo) switchInput.click();
+        } else if (toggleTo) switchInput.click();
+      });
+  }
+);
+
+Cypress.Commands.add('submitForm', { prevSubject: ['element'] }, (subject: JQuery<HTMLElement>) => {
   cy.wrap(subject).find('button[type="submit"]').click();
 });
 
-Cypress.Commands.add('buildTrap', (config) => {
+// For some reason all the config props are missing `| undefined` even though only `roots` is required.
+// At least TS complains about wrong calls. But still the typing is broken inside the function.
+// I found no relevant issues and I have no intention to open one right now.
+Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, escape }) => {
   cy.get('form[name="Trap Controls"]').as('trapControls');
 
   cy.get('@trapControls').openDropdownAndClickOptions('Toggle Action Menu', {
@@ -77,8 +102,23 @@ Cypress.Commands.add('buildTrap', (config) => {
   });
 
   cy.get('@trapControls').openDropdownAndClickOptions('Toggle roots Listbox', {
-    itemsText: ['group 2', 'group 4'],
+    itemsText: roots,
   });
+
+  // By providing default values, we can forget about demolishing a trap before to build
+  // a different one. As long as `lock` was given `false` otherwise clicks wouldn't work.
+
+  cy.get('@trapControls').openDropdownAndClickOptions('Toggle initialFocus Listbox', {
+    itemsText: [initialFocus ?? 'true'],
+  });
+
+  cy.get('@trapControls').openDropdownAndClickOptions('Toggle returnFocus Listbox', {
+    itemsText: [returnFocus ?? 'true'],
+  });
+
+  cy.get('@trapControls').toggleSwitch('Toggle lock Switch', lock ?? true);
+
+  cy.get('@trapControls').toggleSwitch('Toggle escape Switch', escape ?? true);
 
   cy.get('@trapControls').submitForm();
 });
@@ -86,9 +126,7 @@ Cypress.Commands.add('buildTrap', (config) => {
 // Fire a `Tab` event and return the `dataset.order` of the element that received the focus.
 Cypress.Commands.add('getNextTabbedDatasetOrder', (direction = 'FORWARD') => {
   cy.focused().then(({ 0: origin }) => {
-    const keysPressed: KeyOrShortcut = direction === 'FORWARD' ? ['Tab'] : ['Shift', 'Tab'];
-
-    cy.realPress(keysPressed);
+    cy.realPress(direction === 'FORWARD' ? 'Tab' : ['Shift', 'Tab']);
 
     cy.focused().then(({ 0: destination }) => {
       // Check that elements outside the trap pass the focus to the right elements inside the trap.

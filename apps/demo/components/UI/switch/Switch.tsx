@@ -12,6 +12,7 @@ export function Switch({ label, checked, handleChange, disabled }: SwitchProps) 
     <HeadlessUISwitch.Group as="div" className="mt-3">
       <HeadlessUISwitch.Label className="p-3 align-top">{label}</HeadlessUISwitch.Label>
       <HeadlessUISwitch
+        name={`Toggle ${label} Switch`}
         checked={checked}
         onChange={(checked: boolean) => handleChange(checked, label)}
         disabled={disabled}
