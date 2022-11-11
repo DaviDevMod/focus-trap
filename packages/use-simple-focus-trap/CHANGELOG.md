@@ -1,5 +1,28 @@
 # use-simple-focus-trap
 
+## 0.0.5
+
+### Patch Changes
+
+- [`daabc6a`](https://github.com/DaviDevMod/focus-trap/commit/daabc6afc4248e324458dd6c741317cee421ab59) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Renamed types and removed some logic in **use-simple-focus-trap**.
+
+  Now the hook can't be called directly with a config.
+  A config can only be served to the hook's return value.
+
+- [`19afa7e`](https://github.com/DaviDevMod/focus-trap/commit/19afa7e4c84782a041715f0f79adb9f15f85fee3) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Renamed `root` to `roots` in the config of both **single-focus-trap** and **use-simple-focus-trap**.
+
+- [`15aa07a`](https://github.com/DaviDevMod/focus-trap/commit/15aa07a4bb0ea5258efba2a925ecb477d29cd7dc) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix bug in use-simple-focus-trap/src/utils.ts
+
+  The whole logic for the comparison of `lock` and `escape` properties, in `areConfigsEquivalent`, was broken.
+
+- [`56bbb60`](https://github.com/DaviDevMod/focus-trap/commit/56bbb6092ff0d69731b04d564131e65f747f35f5) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix bug in "use-simple-focus-trap/src/utils.ts"
+
+  The logic for the comparison of `lock` and `escape` properties, in areConfigsEquivalent was broken, again.
+  Will eventually write a unit test for this, but in the meantime couldn't leave it knowingly broken.
+
+- Updated dependencies [[`ccd397e`](https://github.com/DaviDevMod/focus-trap/commit/ccd397e28610cceaaf0c787fdcc354cf31e1a1a3), [`20b07d4`](https://github.com/DaviDevMod/focus-trap/commit/20b07d455724970757a66bd2e32b30dcff45013d), [`19afa7e`](https://github.com/DaviDevMod/focus-trap/commit/19afa7e4c84782a041715f0f79adb9f15f85fee3), [`51fb6c8`](https://github.com/DaviDevMod/focus-trap/commit/51fb6c8eb742c9349ad4d6468acaf2a611e29671)]:
+  - single-focus-trap@0.0.1
+
 ## 0.0.4
 
 ### Patch Changes
