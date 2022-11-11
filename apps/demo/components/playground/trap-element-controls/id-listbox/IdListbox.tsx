@@ -20,5 +20,5 @@ export function IdListbox({ id, options, setSelectedSkeletonButtonStateById }: I
 
   const handleChange = (selectedOption: string) => setSelectedSkeletonButtonStateById(selectedOption);
 
-  return <Listbox label={'ID'} value={id} handleChange={handleChange} options={listboxOptions} />;
+  return <Listbox label={'id'} value={id} handleChange={handleChange} options={listboxOptions} />;
 }

@@ -10,10 +10,10 @@ export function MenuItem({ label, handleClick }: MenuItemProps) {
   return (
     <Menu.Item>
       <button
-        name={`Select ${label} Action`}
         type="button"
         onClick={handleClick}
         className="ui-active:bg-violet-500 ui-active:text-white group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900"
+        data-cy={`Select ${label} Action`}
       >
         {label}
       </button>

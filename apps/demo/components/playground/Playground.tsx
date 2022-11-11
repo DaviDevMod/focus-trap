@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTrapElementsSkeleton } from '../../hooks/useTrapElementsSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
 import { TrapElements } from './trap-elements/TrapElements';
-import { TrapElementsControls } from './trap-elements-controls/TrapElementsControls';
+import { TrapElementControls } from './trap-element-controls/TrapElementControls';
 
 export interface SelectClickedElement {
   id: string;
@@ -59,7 +59,7 @@ export function Playground() {
             setControlsKeysState={setControlsKeysState}
             displayComponent={showTrapControlsState}
           />
-          <TrapElementsControls
+          <TrapElementControls
             key={controlsKeysState.trapElements}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonElementById={getSkeletonButtonElementById}
@@ -68,8 +68,11 @@ export function Playground() {
             setControlsKeysState={setControlsKeysState}
             displayComponent={!showTrapControlsState}
           />
-          <button onClick={() => setShowTrapControlsState((prevState) => !prevState)}>
-            {showTrapControlsState ? 'Configure the elements' : 'Configure the focus trap'}
+          <button
+            onClick={() => setShowTrapControlsState((prevState) => !prevState)}
+            data-cy={`Switch to ${showTrapControlsState ? 'Element' : 'Trap'} Controls`}
+          >
+            {showTrapControlsState ? 'Configure Elements' : 'Configure Trap'}
           </button>
         </section>
       </div>

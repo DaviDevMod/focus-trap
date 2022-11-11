@@ -25,7 +25,7 @@
     "instrumented-to-src": "replace-in-file \"/single-focus-trap/instrumented/\" \"/single-focus-trap/src/\" ../../apps/demo/tsconfig.json",
     "clean-codecov": "rimraf --no-glob ./coverage ./.nyc_output",
     "cy-open": "yarn clean-codecov && cypress open",
-    "cy-run": "yarn clean-codecov && cypress run --spec ./cypress/e2e/tab-cycle.cy.ts",
+    "cy-run": "yarn clean-codecov && cypress run",
     "report-codecov": "nyc report --compact",
     "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-test\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-codecov",
     "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-test\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-codecov"

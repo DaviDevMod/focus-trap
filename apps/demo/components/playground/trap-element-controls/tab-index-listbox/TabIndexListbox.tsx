@@ -1,6 +1,6 @@
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 
-import { UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction } from '../TrapElementsControls';
+import { UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction } from '../TrapElementControls';
 import { Listbox } from '../../../UI/listbox/Listbox';
 import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 

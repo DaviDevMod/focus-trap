@@ -108,9 +108,9 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
 
   return (
     <form
-      name="Trap Controls"
       onSubmit={handleSubmit}
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
+      data-cy="Trap Controls"
     >
       <TrapActionMenu dispatchTrapControlsState={dispatchTrapControlsState} />
 

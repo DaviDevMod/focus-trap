@@ -9,7 +9,7 @@ import { Switch } from '../../UI/switch/Switch';
 import { SubmitButton } from '../../UI/submit-button/SubmitButton';
 import { ResetButton } from '../../UI/reset-button/ResetButton';
 
-interface TrapElementsControlsProps {
+interface TrapElementControlsProps {
   skeletonButtonsIds: string[];
   getSkeletonButtonElementById: (id: string) => SkeletonButton | undefined;
   patchSkeletonButton: (patch: SkeletonButton) => void;
@@ -51,14 +51,14 @@ const unsubmittedSelectedSkeletonButtonPropertiesStateReducer = (
   return { ...state, ...action };
 };
 
-export function TrapElementsControls({
+export function TrapElementControls({
   skeletonButtonsIds,
   getSkeletonButtonElementById,
   patchSkeletonButton,
   setSelectClickedElementState,
   setControlsKeysState,
   displayComponent,
-}: TrapElementsControlsProps) {
+}: TrapElementControlsProps) {
   const [selectedSkeletonButtonState, setSelectedSkeletonButtonState] = useState<SkeletonButton>();
   const [unsubmittedSelectedSkeletonButtonPropertiesState, dispatchUnsubmittedSelectedSkeletonButtonPropertiesState] =
     useReducer(unsubmittedSelectedSkeletonButtonPropertiesStateReducer, initialUnsubmittedProperties);
@@ -125,6 +125,7 @@ export function TrapElementsControls({
     <form
       onSubmit={handleSubmit}
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
+      data-cy="Element Controls"
     >
       <IdListbox
         id={id}
@@ -137,9 +138,9 @@ export function TrapElementsControls({
         dispatchTabIndex={dispatchUnsubmittedSelectedSkeletonButtonPropertiesState}
       />
 
-      <Switch label={'disabled'} checked={disabled} handleChange={handleSwitchChange} disabled={!id} />
+      <Switch label="disabled" checked={disabled} handleChange={handleSwitchChange} disabled={!id} />
 
-      <Switch label={'display'} checked={display} handleChange={handleSwitchChange} disabled={!id} />
+      <Switch label="display" checked={display} handleChange={handleSwitchChange} disabled={!id} />
 
       <ResetButton disabled={!id} handleClick={handleReset} />
 
