@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-test": "rm -rf .next && next dev",
+    "dev-pick-up-new-test-instrumentation": "rm -rf .next && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
