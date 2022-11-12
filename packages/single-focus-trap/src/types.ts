@@ -26,9 +26,9 @@ export interface TrapConfig {
 }
 
 // The shape of the config used internally by the singleton instance of `SingleTrap`.
-// The `returnFocus` in `Config` is the one resolved to its default, while
+// The `returnFocus` in `Config` is the one possibly resolved to its default, while
 // the resolved `initialFocus` is never stored in `this.config`, just consumed straight away.
-export type Config = Omit<TrapConfig, 'roots' | 'initialFocus' | 'returnFocus'> & { roots: HTMLElement[] } & {
+export type Config = Omit<TrapConfig, 'initialFocus' | 'returnFocus'> & {
   returnFocus?: Focusable;
 };
 
