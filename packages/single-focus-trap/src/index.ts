@@ -25,7 +25,7 @@ class SingleTrap {
 
   // Finds `topBottom` and `firstLast_positive` within a list of elements and pushes them to the arrays in `this.kingpins`.
   // If there are no tabbable elements in the list, it returs `false` rather than performing the pushes, `true` otherwise.
-  private getKingpins = (list: NodeListOf<HTMLElement | SVGElement>): boolean => {
+  private getKingpins = (list: Focusable[]): boolean => {
     let firstZero: Focusable | null = null;
     let lastZero: Focusable | null = null;
     let topTabbable: Focusable | null = null;
@@ -71,8 +71,8 @@ class SingleTrap {
     this.kingpins.firstLast_positive = [];
     this.kingpins.topBottom = [];
 
-    const cnadidatesLists: NodeListOf<HTMLElement | SVGElement>[] = [];
-    for (const el of this.config.roots) cnadidatesLists.push(el.querySelectorAll<HTMLElement | SVGElement>(candidate));
+    const cnadidatesLists: Focusable[][] = [];
+    for (const el of this.config.roots) cnadidatesLists.push([el, ...el.querySelectorAll<Focusable>(candidate)]);
 
     for (let i = 0; i < cnadidatesLists.length; i++) {
       // Push a root to `this.kingpins.roots` only if it contains at least one tabbable element.
