@@ -10,11 +10,11 @@ context('Testing how the focus cycles within the trap when the Tab key is presse
 
   describe('The focus should cycle within the trap following a specific order, dictated by document order and tab index values', () => {
     it('Should cycle forward', () => {
-      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
+      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD', check: true });
     });
 
     it('Should cycle backward', () => {
-      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'BACKWARD' });
+      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'BACKWARD', check: true });
     });
   });
 });

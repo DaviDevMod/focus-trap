@@ -23,6 +23,7 @@ interface TabCycleConfig {
   direction?: Direction | 'EVERY';
   expectedOrder?: string;
   cycleLength?: number;
+  check?: boolean;
 }
 
 type DropdownOptions = RequireExactlyOne<{ optionButtonName: string; itemsText: string | string[] }>;
@@ -53,21 +54,23 @@ declare global {
 
       patchElement: (patch: ElementPatch) => void;
 
-      getNextTabbedDatasetOrder: (direction?: Direction) => Cypress.Chainable<string>;
+      getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
       getTabCycle: (
         from: JQuery<HTMLElement>,
-        direction?: Direction,
-        len?: number,
-        firstCall?: boolean,
-        cycle?: string
+        direction: Direction,
+        len: number,
+        check: boolean,
+        firstCall: boolean,
+        cycle: string
       ) => Cypress.Chainable<string>;
 
       assertTabCycle: (
         collection: JQuery<HTMLElement>,
-        direction?: Direction,
-        len?: number,
-        correctCycle?: string
+        direction: Direction,
+        len: number,
+        correctCycle: string,
+        check: boolean
       ) => void;
 
       verifyTabCycle: (config?: TabCycleConfig) => void;
@@ -84,8 +87,8 @@ Cypress.Commands.add('visitDemo', (path = '/') => {
 Cypress.Commands.add('switchControlsFormTo', (formName) => {
   cy.get('button[data-cy$=" Controls"]').as('switchControlsButton').should('have.length', 1);
 
-  cy.get<HTMLButtonElement>('@switchControlsButton').then(({ 0: switchControlsButton }) => {
-    if (switchControlsButton.dataset.cy.endsWith(formName)) switchControlsButton.click();
+  cy.get<HTMLButtonElement>('@switchControlsButton').then(($switchControlsButton) => {
+    if ($switchControlsButton.get(0).dataset.cy.endsWith(formName)) $switchControlsButton.get(0).click();
   });
 });
 
@@ -109,8 +112,8 @@ Cypress.Commands.add(
 Cypress.Commands.add('toggleSwitch', { prevSubject: ['element'] }, (form, switchName, toggleTo) => {
   cy.wrap(form)
     .find(`button[data-cy="${switchName}"]`)
-    .then(({ 0: switchButton }) => {
-      if (switchButton.dataset.headlessuiState.includes('checked') !== toggleTo) switchButton.click();
+    .then(($switchButton) => {
+      if ($switchButton.get(0).dataset.headlessuiState.includes('checked') !== toggleTo) $switchButton.get(0).click();
     });
 });
 
@@ -183,40 +186,46 @@ Cypress.Commands.add('patchElement', ({ id, tabIndex, disabled, display }) => {
 });
 
 // Fire a `Tab` event and return the `dataset.order` of the element that received the focus.
-Cypress.Commands.add('getNextTabbedDatasetOrder', (direction = 'FORWARD') => {
-  cy.focused().then(({ 0: origin }) => {
+Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
+  cy.focused().then(($origin) => {
     cy.realPress(direction === 'FORWARD' ? 'Tab' : ['Shift', 'Tab']);
 
-    cy.focused().then(({ 0: destination }) => {
-      // Check that elements outside the trap pass the focus to the right elements inside the trap.
-      if (!origin.dataset.order) {
-        expect(origin.dataset[direction.toLowerCase()]).to.equal(destination.dataset.order);
+    cy.focused().then(($destination) => {
+      if (!$destination.get(0).dataset.order) {
+        throw new Error("After a `Tab` key press, the focus landed on an element with no 'data-order' attribute.");
       }
 
-      // Reachable by commenting out `cy.builtTrap()` in tests. Should return `undefined`. Needs some investigation.
-      if (!destination.dataset.order) throw new Error('Somehow cypress would return `destinatioon`.');
+      // Check that elements outside the trap pass the focus to the right elements inside the trap.
+      // This check is used only in "tab-cycle.cy.ts". Making it available to traps with an arbitrary cnfiguration
+      // would require to modify the `data-forward` and `data-backward` attributes of every element in `@possibleTabbables`.
+      // All the effort has been made to ensure that "tab-cycle.cy.ts" checks any possible relevant scenario.**
+      // **Actually I already know from manual testing that there's a bug in single-focus-trap that can be exposed
+      // in the tests by modifying the basic setup tested by "tab-cycle.cy.ts". But that's for another commit.
+      if (check && !$origin.get(0).dataset.order) {
+        expect($origin.get(0).dataset[direction.toLowerCase()]).to.equal($destination.get(0).dataset.order);
+      }
 
-      return destination.dataset.order;
+      return $destination.get(0).dataset.order;
     });
   });
 });
 
 // Call `getNextTabbedDatasetOrder` multiple times and return a concatenation of the orders of the focused elements.
-Cypress.Commands.add('getTabCycle', (origin, direction = 'FORWARD', len = 2, firstCall = true, cycle = '') => {
+Cypress.Commands.add('getTabCycle', (origin, direction, len, check, firstCall, cycle) => {
   if (firstCall) {
     if (len < 2) throw new Error('Please provide a tab cycle length greater than 1.');
     if (!Number.isInteger(len)) throw new Error('Please provide an integer tab cycle length.');
     cy.wrap(origin).focus();
   }
-  cy.getNextTabbedDatasetOrder(direction).then((order) =>
-    len === 1 ? cycle + order : cy.getTabCycle(null, direction, len - 1, false, cycle + order)
+  cy.getNextTabbedDatasetOrder(direction, check).then((order) =>
+    len === 1 ? cycle + order : cy.getTabCycle(null, direction, len - 1, check, false, cycle + order)
   );
 });
 
 // Call `getTabCycle` and assert whether its returned tab cycle is a substring of `correctCycle`.
-Cypress.Commands.add('assertTabCycle', (collection, direction = 'FORWARD', len = 2, correctCycle = '') => {
+Cypress.Commands.add('assertTabCycle', (collection, direction, len, correctCycle, check) => {
   cy.wrap(collection).each((element) => {
-    cy.getTabCycle(element, direction, len).then((cycle) => {
+    cy.getTabCycle(element, direction, len, check, true, '').then((cycle) => {
       expect(cycle).to.have.length(len);
       expect(correctCycle).to.have.string(cycle);
     });
@@ -229,14 +238,24 @@ Cypress.Commands.add(
   { prevSubject: ['element'] },
   (
     collection,
-    { direction = 'EVERY', cycleLength = DEFAULT_TEST_CYCLE_LENGTH, expectedOrder = EXPECTED_ORDER_FROM_GROUPS_2_4 } = {
+    {
+      direction = 'EVERY',
+      cycleLength = DEFAULT_TEST_CYCLE_LENGTH,
+      expectedOrder = EXPECTED_ORDER_FROM_GROUPS_2_4,
+      check = false,
+    } = {
       direction: 'EVERY',
       cycleLength: DEFAULT_TEST_CYCLE_LENGTH,
       expectedOrder: EXPECTED_ORDER_FROM_GROUPS_2_4,
+      check: false,
     }
   ) => {
+    if (expectedOrder.length < 1) {
+      throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
+    }
+
     const correctCycle = {
-      FORWARD: expectedOrder.repeat(Math.ceil(cycleLength / expectedOrder.length) + 1),
+      FORWARD: expectedOrder.repeat(Math.ceil((cycleLength - 1) / expectedOrder.length) + 1),
       get BACKWARD() {
         return this.FORWARD.split('').reverse().join('');
       },
@@ -244,6 +263,6 @@ Cypress.Commands.add(
 
     const directions: Direction[] = direction === 'EVERY' ? ['FORWARD', 'BACKWARD'] : [direction];
 
-    for (const d of directions) cy.assertTabCycle(collection, d, cycleLength, correctCycle[d]);
+    for (const d of directions) cy.assertTabCycle(collection, d, cycleLength, correctCycle[d], check);
   }
 );
