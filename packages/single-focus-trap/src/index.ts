@@ -228,7 +228,7 @@ class SingleTrap {
     } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
       const escape = this.config.escape;
       if (escape instanceof Function) return escape(event);
-      if (escape !== false) this.DEMOLISH();
+      if (escape !== false) this.DEMOLISH(true);
     }
   };
 
@@ -305,21 +305,21 @@ class SingleTrap {
     this.kingpins = {} as Kingpins;
     // MUTATIONSHORTCOMING
     // this.isUpdateScheduled = true;
+    this.trapExistence = true;
     this.giveInitialFocus(this.config);
     this.RESUME();
-    this.trapExistence = true;
   };
 
-  private PAUSE = (): void => {
+  private PAUSE = (isEsc?: boolean): void => {
     // MUTATIONSHORTCOMING
     // if (process.env.NODE_ENV !== 'production') {
     //   if (!this.mutationObserver) throw new Error('Cannot pause inexistent trap.');
     // }
     // if (!this.mutationObserver) return;
     if (process.env.NODE_ENV !== 'production') {
-      if (!this.mutationObserver) throw new Error('Cannot pause inexistent trap.');
+      if (this.trapExistence && !isEsc) throw new Error('Cannot pause inexistent trap.');
     }
-    if (!this.mutationObserver) return;
+    if (this.trapExistence && !isEsc) return;
     // MUTATIONSHORTCOMING
     // // Need to unschedule updates so that `RESUME` can know if it's called directly or through `BUILD`.
     // this.isUpdateScheduled = false;
@@ -327,22 +327,24 @@ class SingleTrap {
     this.eventListeners('REMOVE');
   };
 
-  private DEMOLISH = (): void => {
+  private DEMOLISH = (isEsc?: boolean): void => {
     // MUTATIONSHORTCOMING
     // if (process.env.NODE_ENV !== 'production') {
     //   if (!this.mutationObserver) throw new Error('Cannot demolish inexistent trap.');
     // }
     // if (!this.mutationObserver) return;
     if (process.env.NODE_ENV !== 'production') {
-      if (!this.trapExistence) throw new Error('Cannot demolish inexistent trap.');
+      if (this.trapExistence && !isEsc) throw new Error('Cannot demolish inexistent trap.');
     }
-    if (!this.trapExistence) return;
-    this.PAUSE();
+    if (this.trapExistence && !isEsc) return;
+    this.PAUSE(isEsc);
     this.trapExistence = false;
     this.config.returnFocus?.focus();
   };
 
-  public controller = ({ action, config }: TrapArg): void => this[action](config!);
+  // A `config` can be passed only if `action === 'BUILD`.
+  // @ts-expect-error
+  public controller = ({ action, config }: TrapArg): void => this[action](config);
 }
 
 const singleFocusTrap = new SingleTrap().controller;
