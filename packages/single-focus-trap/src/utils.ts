@@ -107,4 +107,4 @@ export const areTwoRadiosInTheSameGroup = (a: unknown, b: unknown): boolean =>
   isRadioInput(a) && isRadioInput(b) && a.name === b.name;
 
 export const getTheCheckedRadio = (radio: HTMLInputElement): HTMLInputElement | null =>
-  document.querySelector('input[name=' + radio.name + ']:checked');
+  document.querySelector('input[type="radio"][name=' + radio.name + ']:checked');
