@@ -4,24 +4,25 @@ import { Focusable } from './types';
 export const candidate =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
-// Oprions for the `.observe()` method of the mutation observer.
-export const mutationObserverInit: MutationObserverInit = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['disabled', 'type', 'open', 'style', 'tabindex'],
-  attributeOldValue: true,
-};
-
-// MutationObserver has to watch the entire `style` to know if `visibility` or `display` mutates,
-// but scheduling a `refs` update for any kind of style change would indeed be inefficient.
-// Returns `false` for `style` mutations that do not affect tabbability and `true` otherwise.
-export const isMutationAffectingTabbability = (record: MutationRecord) =>
-  record.attributeName === 'style'
-    ? (record.target as any).style?.visibility === 'hidden' ||
-      /^(none|contents)$/.test((record.target as any).style?.display) ||
-      /visibility: hidden|display: (none|contents)/.test(record.oldValue || '')
-    : true;
+// MUTATIONSHORTCOMING
+// // Oprions for the `.observe()` method of the mutation observer.
+// export const mutationObserverInit: MutationObserverInit = {
+//   childList: true,
+//   subtree: true,
+//   attributes: true,
+//   attributeFilter: ['disabled', 'type', 'open', 'style', 'tabindex'],
+//   attributeOldValue: true,
+// };
+//
+// // MutationObserver has to watch the entire `style` to know if `visibility` or `display` mutates,
+// // but scheduling a `refs` update for any kind of style change would indeed be inefficient.
+// // Returns `false` for `style` mutations that do not affect tabbability and `true` otherwise.
+// export const isMutationAffectingTabbability = (record: MutationRecord) =>
+//   record.attributeName === 'style'
+//     ? (record.target as any).style?.visibility === 'hidden' ||
+//       /^(none|contents)$/.test((record.target as any).style?.display) ||
+//       /visibility: hidden|display: (none|contents)/.test(record.oldValue || '')
+//     : true;
 
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
