@@ -1,25 +1,10 @@
 import { Config, Focusable, TrapConfig, TrapArg, Kingpins } from './types';
-import {
-  areTwoRadiosInTheSameGroup,
-  candidate,
-  getConsistentTabIndex,
-  getDestination,
-  getTheCheckedRadio,
-  isActuallyFocusable,
-  // MUTATIONSHORTCOMING
-  // isMutationAffectingTabbability,
-  isRadioInput,
-  // MUTATIONSHORTCOMING
-  // mutationObserverInit,
-} from './utils';
+import { candidate, getConsistentTabIndex, getDestination, isActuallyFocusable } from './utils';
 
 class SingleTrap {
   private static singletonInstance?: SingleTrap;
   private config!: Config;
   private kingpins!: Kingpins;
-  private mutationObserver?: MutationObserver;
-  // MUTATIONSHORTCOMING
-  // private isUpdateScheduled!: boolean;
   private trapExistence!: boolean;
 
   constructor() {
@@ -99,59 +84,14 @@ class SingleTrap {
 
     this.kingpins.firstLast_positive = this.kingpins.firstLast_positive.concat(positiveTabIndexes);
 
-    // MUTATIONSHORTCOMING
-    // // If the trap doesn't have tabbable elements, the update must remain scheduled; otherwise an infinite loop
-    // // may occur in `getDestination()` (called by `assistTabbing()`) when looping through an array of `null`s.
-    // // There is actually a safety net condition in `getDestination()` that prevents infinite loops, but still
-    // // the correct logic is to unschedule updates only after assessing that the trap contains at least one
-    // // tabbable element, doing it in the very last statement of `updateKingpins()` avoids any trouble.
-    // return !(this.isUpdateScheduled = false);
     return true;
   };
-
-  // MUTATIONSHORTCOMING
-  // // Callback for MutationObserver's constructor. It just schedules a `kingpins` update when required.
-  // private mutationCallback: MutationCallback = (records) => {
-  //   if (this.isUpdateScheduled) return;
-  //   const rootIndex = this.kingpins.roots.findIndex((el) => el.contains(records[0].target));
-  //   const topTabbable = this.kingpins.topBottom[rootIndex * 2];
-  //   const bottomTabbable = this.kingpins.topBottom[rootIndex * 2 + 1];
-
-  //   let i = records.length;
-  //   while (i--) {
-  //     const record = records[i];
-
-  //     // If there are no positive tab indexes in the trap     (very likely)
-  //     // (or even just in the given root, but the chances are basically the same and checking the trap is easier)
-  //     // and the mutation doesn't concern tab indexes,        (very likely)
-  //     // it is possible to consider only mutations at
-  //     // the topBottom of the given root, or outside of them.     (quite rare)
-  //     // The same could be done if there are no zero tab indexes, but it would be counter productive.
-  //     if (
-  //       !this.kingpins.firstLast_positive[this.kingpins.firstLast_positive.length - 1]!.tabIndex &&
-  //       record.attributeName !== 'tabindex'
-  //     ) {
-  //       // If `record.target` precedes `topTabbable` or succeeds `bottomTabbable`,
-  //       // or it is one of them, or one of their ancestors.
-  //       if (
-  //         record.target === topTabbable ||
-  //         record.target === bottomTabbable ||
-  //         topTabbable.compareDocumentPosition(record.target) & 11 ||
-  //         bottomTabbable.compareDocumentPosition(record.target) & 13
-  //       ) {
-  //         if (isMutationAffectingTabbability(record)) return (this.isUpdateScheduled = true);
-  //       }
-  //     } else if (isMutationAffectingTabbability(record)) return (this.isUpdateScheduled = true);
-  //   }
-  // };
 
   private assistTabbing = (event: KeyboardEvent): void => {
     const { target, shiftKey } = event;
     // Return early if `target` is not tabbable.
     if (!(target instanceof HTMLElement || target instanceof SVGElement)) return;
-    // If an update was scheduled, update the trap's kingpins;
-    // then return early if the trap doesn't contain at least one tabbable element.
-    // if (this.isUpdateScheduled && !this.updateKingpins()) return;
+    // Update the trap and return early if it doesn't contain at least one tabbable element.
     if (!this.updateKingpins()) return;
     const { roots, firstLast_positive, topBottom } = this.kingpins;
     let rootIndex = roots.findIndex((el) => el.contains(target as Node));
@@ -189,10 +129,7 @@ class SingleTrap {
     else if (target.tabIndex === 0) {
       const firstZero = firstLast_positive[rootIndex * 2];
       const lastZero = firstLast_positive[rootIndex * 2 + 1];
-      if (
-        (shiftKey && (target === firstZero || areTwoRadiosInTheSameGroup(target, firstZero))) ||
-        (!shiftKey && (target === lastZero || areTwoRadiosInTheSameGroup(target, lastZero)))
-      ) {
+      if ((shiftKey && target === firstZero) || (!shiftKey && target === lastZero)) {
         destination = getDestination(firstLast_positive, rootIndex * 2, (x) => (shiftKey ? -x * 2 + 1 : x * 2));
       }
     } else if (target.tabIndex > 0) {
@@ -210,8 +147,7 @@ class SingleTrap {
 
     if (destination) {
       event.preventDefault();
-      if (isRadioInput(destination) && !destination.checked) getTheCheckedRadio(destination)?.focus();
-      else destination.focus();
+      destination.focus();
     }
   };
 
@@ -272,30 +208,14 @@ class SingleTrap {
   };
 
   private RESUME = (): void => {
-    // MUTATIONSHORTCOMING
-    // if (process.env.NODE_ENV !== 'production') {
-    //   if (!this.mutationObserver) throw new Error('Cannot resume inexistent trap.');
-    // }
-    // if (!this.mutationObserver) return;
     if (process.env.NODE_ENV !== 'production') {
       if (!this.trapExistence) throw new Error('Cannot resume inexistent trap.');
     }
     if (!this.trapExistence) return;
-    // MUTATIONSHORTCOMING (by the way buggy cause it's possible to RESUME directly while an update is scheduled)
-    // for (const el of this.config.roots) this.mutationObserver.observe(el, mutationObserverInit);
-    // // `RESUME` called indirectly, through `BUILD`. A trap update may be needed to give the initial focus.
-    // if (this.isUpdateScheduled) this.giveInitialFocus(this.config);
-    // // `RESUME` called directly. Just schedule an update. There is no need to update the trap right now.
-    // else this.isUpdateScheduled = true;
     this.eventListeners('ADD');
   };
 
   private BUILD = (config: TrapConfig): void => {
-    // MUTATIONSHORTCOMING
-    // if (this.mutationObserver) {
-    //   this.mutationObserver.disconnect();
-    //   this.eventListeners('REMOVE');
-    // } else this.mutationObserver = new MutationObserver(this.mutationCallback);
     if (this.trapExistence) this.eventListeners('REMOVE');
     this.config = {
       ...config,
@@ -303,36 +223,20 @@ class SingleTrap {
       returnFocus: this.getReturnFocus(config),
     };
     this.kingpins = {} as Kingpins;
-    // MUTATIONSHORTCOMING
-    // this.isUpdateScheduled = true;
     this.trapExistence = true;
     this.giveInitialFocus(this.config);
     this.RESUME();
   };
 
   private PAUSE = (isEsc?: boolean): void => {
-    // MUTATIONSHORTCOMING
-    // if (process.env.NODE_ENV !== 'production') {
-    //   if (!this.mutationObserver) throw new Error('Cannot pause inexistent trap.');
-    // }
-    // if (!this.mutationObserver) return;
     if (process.env.NODE_ENV !== 'production') {
       if (this.trapExistence && !isEsc) throw new Error('Cannot pause inexistent trap.');
     }
     if (this.trapExistence && !isEsc) return;
-    // MUTATIONSHORTCOMING
-    // // Need to unschedule updates so that `RESUME` can know if it's called directly or through `BUILD`.
-    // this.isUpdateScheduled = false;
-    // this.mutationObserver.disconnect();
     this.eventListeners('REMOVE');
   };
 
   private DEMOLISH = (isEsc?: boolean): void => {
-    // MUTATIONSHORTCOMING
-    // if (process.env.NODE_ENV !== 'production') {
-    //   if (!this.mutationObserver) throw new Error('Cannot demolish inexistent trap.');
-    // }
-    // if (!this.mutationObserver) return;
     if (process.env.NODE_ENV !== 'production') {
       if (this.trapExistence && !isEsc) throw new Error('Cannot demolish inexistent trap.');
     }

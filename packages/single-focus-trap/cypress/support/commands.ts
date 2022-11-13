@@ -30,8 +30,6 @@ type DropdownOptions = RequireExactlyOne<{ optionButtonName: string; itemsText: 
 
 export const EXPECTED_ORDER_FROM_GROUPS_2_4 = '0123456';
 
-export const EXPECTED_ORDER_FROM_F_G_H = '345';
-
 // A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
 export const DEFAULT_TEST_CYCLE_LENGTH = 2;
 

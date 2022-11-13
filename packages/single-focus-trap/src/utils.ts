@@ -4,26 +4,6 @@ import { Focusable } from './types';
 export const candidate =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
-// MUTATIONSHORTCOMING
-// // Oprions for the `.observe()` method of the mutation observer.
-// export const mutationObserverInit: MutationObserverInit = {
-//   childList: true,
-//   subtree: true,
-//   attributes: true,
-//   attributeFilter: ['disabled', 'type', 'open', 'style', 'tabindex'],
-//   attributeOldValue: true,
-// };
-//
-// // MutationObserver has to watch the entire `style` to know if `visibility` or `display` mutates,
-// // but scheduling a `refs` update for any kind of style change would indeed be inefficient.
-// // Returns `false` for `style` mutations that do not affect tabbability and `true` otherwise.
-// export const isMutationAffectingTabbability = (record: MutationRecord) =>
-//   record.attributeName === 'style'
-//     ? (record.target as any).style?.visibility === 'hidden' ||
-//       /^(none|contents)$/.test((record.target as any).style?.display) ||
-//       /visibility: hidden|display: (none|contents)/.test(record.oldValue || '')
-//     : true;
-
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
 // nodes. In these cases the `tabIndex` is assumed to be 0 if it's not explicitly set to a valid value.
@@ -38,10 +18,11 @@ export function isActuallyFocusable(candidate: HTMLElement | SVGElement) {
   if (
     // If the element has no layout boxes (eg, it has `display: "none"`);
     !candidate.getClientRects().length ||
-    // or is disabled or hidden;
+    // or is disabled or hidden or an uncheck radio button;
     (candidate as any).disabled ||
     getComputedStyle(candidate).visibility === 'hidden' ||
-    (candidate instanceof HTMLInputElement && candidate.type === 'hidden') ||
+    (candidate instanceof HTMLInputElement &&
+      (candidate.type === 'hidden' || (candidate.type === 'radio' && !candidate.checked))) ||
     // or a <details> with a <summary> (the summary gets the focus instead of the details);
     (candidate.tagName === 'DETAILS' &&
       Array.prototype.slice.apply(candidate.children).some((child) => child.tagName === 'SUMMARY'))
@@ -99,12 +80,3 @@ export const getDestination = (array: (Focusable | null)[], index: number, getOf
   // Although retunrning `null` is no trouble, `getDestination()` is supposed to return a `Focusable`.
   return destination;
 };
-
-export const isRadioInput = (element: unknown): element is HTMLInputElement =>
-  element instanceof HTMLInputElement && element.type === 'radio';
-
-export const areTwoRadiosInTheSameGroup = (a: unknown, b: unknown): boolean =>
-  isRadioInput(a) && isRadioInput(b) && a.name === b.name;
-
-export const getTheCheckedRadio = (radio: HTMLInputElement): HTMLInputElement | null =>
-  document.querySelector('input[type="radio"][name=' + radio.name + ']:checked');
