@@ -69,7 +69,7 @@ declare global {
         collection: JQuery<HTMLElement>,
         direction: Direction,
         len: number,
-        repeatedCycle: string,
+        repeatedOrder: string,
         check: boolean
       ) => void;
 
@@ -149,13 +149,13 @@ Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, esc
 
   if (initialFocus !== undefined) {
     cy.get('@trapControls').openDropdownAndChoose('Toggle initialFocus Listbox', {
-      itemsText: initialFocus ?? 'true',
+      itemsText: initialFocus,
     });
   }
 
   if (returnFocus !== undefined) {
     cy.get('@trapControls').openDropdownAndChoose('Toggle returnFocus Listbox', {
-      itemsText: returnFocus ?? 'true',
+      itemsText: returnFocus,
     });
   }
 
@@ -222,14 +222,16 @@ Cypress.Commands.add('getTabCycle', (origin, direction, len, check, firstCall, c
   );
 });
 
-// Call `getTabCycle` and assert whether its returned tab cycle is a substring of `repeatedCycle`.
-Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedCycle, check) => {
-  cy.wrap(collection).each((element) => {
-    cy.getTabCycle(element, direction, len, check, true, '').then((cycle) => {
-      expect(cycle).to.have.length(len);
-      expect(repeatedCycle).to.have.string(cycle);
+// Call `getTabCycle` and assert whether its returned tab cycle is a substring of `repeatedOrder`.
+Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedOrder, check) => {
+  cy.wrap(collection)
+    .then(($collection) => (check ? $collection : $collection.slice(0, 1)))
+    .each(($origin) => {
+      cy.getTabCycle($origin, direction, len, check, true, '').then((cycle) => {
+        expect(cycle).to.have.length(len);
+        expect(repeatedOrder).to.have.string(cycle);
+      });
     });
-  });
 });
 
 // Call `assertTabCycle` once or twice, with the `correctTabCycle`.
@@ -254,15 +256,17 @@ Cypress.Commands.add(
       throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
     }
 
-    const repeatedCycle = {
-      FORWARD: expectedOrder.repeat(Math.ceil((tabsPerCycle - 1) / expectedOrder.length) + 1),
+    const repeatedOrder = {
+      FORWARD: expectedOrder.repeat(check ? Math.ceil((tabsPerCycle - 1) / expectedOrder.length) + 1 : 2),
       get BACKWARD() {
         return this.FORWARD.split('').reverse().join('');
       },
     };
 
+    const cycleLength = check ? tabsPerCycle : expectedOrder.length;
+
     const directions: Direction[] = direction === 'EVERY' ? ['FORWARD', 'BACKWARD'] : [direction];
 
-    for (const d of directions) cy.assertTabCycle(collection, d, tabsPerCycle, repeatedCycle[d], check);
+    for (const d of directions) cy.assertTabCycle(collection, d, cycleLength, repeatedOrder[d], check);
   }
 );
