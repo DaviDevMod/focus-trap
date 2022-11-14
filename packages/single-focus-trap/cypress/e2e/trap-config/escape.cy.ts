@@ -18,27 +18,25 @@ context('Test the `escape` trap configuration option.', () => {
     // TODO: This is just a limitation of the demo app, again, I gotta do some practice with unit testing.
     it.skip('`escape` should be used as handler for "Esc" key presses, when passed as a function');
 
-    // TODO: Need to investigate why `cy.on('uncaught:exception')` won't work.
-    // https://docs.cypress.io/api/events/catalog-of-events#To-catch-a-single-uncaught-exception
-    it.skip('When `escape` is set to `true`, traps should break on "Esc" key press', () => {
+    it('When `escape` is set to `true`, traps should break on "Esc" key press', () => {
+      cy.on('fail', (error) => {
+        if (error.message.includes("the focus landed on an element with no 'data-order' attribute")) return;
+        throw error;
+      });
+
       cy.buildTrap({ roots: DEFAULT_ROOTS, escape: true });
 
-      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
+      // We could `verifyTabCycle()` before pressing 'Escape', but then there would be no way to know
+      // whether the test failed before or after pressing 'Escape'.
+      // In any case, other tests would fail if `buildTrap` doesn't work.
 
       cy.realPress('Escape');
-
-      cy.on('uncaught:exception', (err) => {
-        expect(err.message).to.include("the focus landed on an element with no 'data-order' attribute");
-        return false;
-      });
 
       cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
     });
 
     it('If `escape` is set to `false`, traps should not be influenced by "Esc" key presses .', () => {
       cy.buildTrap({ roots: DEFAULT_ROOTS, escape: false });
-
-      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
 
       cy.realPress('Escape');
 
