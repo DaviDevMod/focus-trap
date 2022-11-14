@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   // @ts-ignore
   if (global.window?.Cypress) {
     // @ts-ignore
-    global.window.appReady = true;
+    window.appReady = true;
   }
 
   return <Component {...pageProps} />;
