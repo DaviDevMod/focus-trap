@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { DEFAULT_ROOTS } from '../../support/commands';
+
 context('Test the `escape` trap configuration option.', () => {
   before(() => cy.visitDemo());
 
@@ -19,7 +21,7 @@ context('Test the `escape` trap configuration option.', () => {
     // TODO: Need to investigate why `cy.on('uncaught:exception')` won't work.
     // https://docs.cypress.io/api/events/catalog-of-events#To-catch-a-single-uncaught-exception
     it.skip('When `escape` is set to `true`, traps should break on "Esc" key press', () => {
-      cy.buildTrap({ roots: ['group 2', 'group 4'], escape: true });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, escape: true });
 
       cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
 
@@ -34,7 +36,7 @@ context('Test the `escape` trap configuration option.', () => {
     });
 
     it('If `escape` is set to `false`, traps should not be influenced by "Esc" key presses .', () => {
-      cy.buildTrap({ roots: ['group 2', 'group 4'], escape: false });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, escape: false });
 
       cy.get('@possibleTabbables').verifyTabCycle({ direction: 'FORWARD' });
 

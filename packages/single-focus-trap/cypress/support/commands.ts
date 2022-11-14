@@ -22,16 +22,18 @@ type Direction = 'FORWARD' | 'BACKWARD';
 interface TabCycleConfig {
   direction?: Direction | 'EVERY';
   expectedOrder?: string;
-  cycleLength?: number;
+  tabsPerCycle?: number;
   check?: boolean;
 }
 
 type DropdownOptions = RequireExactlyOne<{ optionButtonName: string; itemsText: string | string[] }>;
 
-export const EXPECTED_ORDER_FROM_GROUPS_2_4 = '0123456';
+export const DEFAULT_ROOTS = ['group 2', 'group 4'];
+
+const DEFAULT_EXPECTED_ORDER = '0123456';
 
 // A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
-export const DEFAULT_TEST_CYCLE_LENGTH = 2;
+const DEFAULT_TABS_PER_CYCLE = 2;
 
 declare global {
   namespace Cypress {
@@ -67,7 +69,7 @@ declare global {
         collection: JQuery<HTMLElement>,
         direction: Direction,
         len: number,
-        correctCycle: string,
+        repeatedCycle: string,
         check: boolean
       ) => void;
 
@@ -220,12 +222,12 @@ Cypress.Commands.add('getTabCycle', (origin, direction, len, check, firstCall, c
   );
 });
 
-// Call `getTabCycle` and assert whether its returned tab cycle is a substring of `correctCycle`.
-Cypress.Commands.add('assertTabCycle', (collection, direction, len, correctCycle, check) => {
+// Call `getTabCycle` and assert whether its returned tab cycle is a substring of `repeatedCycle`.
+Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedCycle, check) => {
   cy.wrap(collection).each((element) => {
     cy.getTabCycle(element, direction, len, check, true, '').then((cycle) => {
       expect(cycle).to.have.length(len);
-      expect(correctCycle).to.have.string(cycle);
+      expect(repeatedCycle).to.have.string(cycle);
     });
   });
 });
@@ -238,13 +240,13 @@ Cypress.Commands.add(
     collection,
     {
       direction = 'EVERY',
-      cycleLength = DEFAULT_TEST_CYCLE_LENGTH,
-      expectedOrder = EXPECTED_ORDER_FROM_GROUPS_2_4,
+      tabsPerCycle = DEFAULT_TABS_PER_CYCLE,
+      expectedOrder = DEFAULT_EXPECTED_ORDER,
       check = false,
     } = {
       direction: 'EVERY',
-      cycleLength: DEFAULT_TEST_CYCLE_LENGTH,
-      expectedOrder: EXPECTED_ORDER_FROM_GROUPS_2_4,
+      tabsPerCycle: DEFAULT_TABS_PER_CYCLE,
+      expectedOrder: DEFAULT_EXPECTED_ORDER,
       check: false,
     }
   ) => {
@@ -252,8 +254,8 @@ Cypress.Commands.add(
       throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
     }
 
-    const correctCycle = {
-      FORWARD: expectedOrder.repeat(Math.ceil((cycleLength - 1) / expectedOrder.length) + 1),
+    const repeatedCycle = {
+      FORWARD: expectedOrder.repeat(Math.ceil((tabsPerCycle - 1) / expectedOrder.length) + 1),
       get BACKWARD() {
         return this.FORWARD.split('').reverse().join('');
       },
@@ -261,6 +263,6 @@ Cypress.Commands.add(
 
     const directions: Direction[] = direction === 'EVERY' ? ['FORWARD', 'BACKWARD'] : [direction];
 
-    for (const d of directions) cy.assertTabCycle(collection, d, cycleLength, correctCycle[d], check);
+    for (const d of directions) cy.assertTabCycle(collection, d, tabsPerCycle, repeatedCycle[d], check);
   }
 );
