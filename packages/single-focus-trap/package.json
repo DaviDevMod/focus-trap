@@ -30,7 +30,7 @@
     "cy-run-headed": "yarn clean-codecov && cypress run --headed --browser chrome",
     "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-codecov",
     "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-codecov",
-    "e2e-run-headed": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run-headed\"; yarn instrumented-to-src && yarn report-codecov"
+    "e2e-run-h": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run-headed\"; yarn instrumented-to-src && yarn report-codecov"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.10.0",
