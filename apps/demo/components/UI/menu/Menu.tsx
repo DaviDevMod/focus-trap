@@ -28,7 +28,10 @@ export function Menu({ label, items }: MenuProps) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <HeadlessUIMenu.Items className="absolute z-10 mt-2 w-full origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <HeadlessUIMenu.Items
+          data-cy={`${label} Menu Items`}
+          className="absolute z-10 mt-2 w-full origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        >
           {items}
         </HeadlessUIMenu.Items>
       </Transition>
