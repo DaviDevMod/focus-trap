@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { DEFAULT_ROOTS } from '../../support/commands';
+
 context('Test the `initialFocus` trap configuration option.', () => {
   before(() => cy.visitDemo());
 
@@ -20,19 +22,19 @@ context('Test the `initialFocus` trap configuration option.', () => {
     it('When `initialfocus` is set to `true`, the initial focus should be given to the first tabbable in the trap.', () => {
       // The demo app will convert the string to actual boolean before feeding the config to
       // `use-simple-focus-trap` which in turn will feed the config to `single-focus-trap`.
-      cy.buildTrap({ roots: ['group 2'], initialFocus: 'true' });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, initialFocus: 'true' });
 
       cy.focused().invoke('attr', 'id').should('equal', 'E');
     });
 
     it('If `initialfocus` is set to `false`, no initial focus should be given.', () => {
-      cy.buildTrap({ roots: ['group 2'], initialFocus: 'false' });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, initialFocus: 'false' });
 
       cy.get('form[data-cy="Trap Controls"]').find('button[type="submit"]').should('be.focused');
     });
 
     it('The initial focus should be given to the element with the specified id', () => {
-      cy.buildTrap({ roots: ['group 2'], initialFocus: 'B' });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, initialFocus: 'B' });
 
       cy.focused().invoke('attr', 'id').should('equal', 'B');
     });

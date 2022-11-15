@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { DEFAULT_ROOTS } from '../../support/commands';
+
 context('Test the `lock` trap configuration option.', () => {
   before(() => cy.visitDemo());
 
@@ -20,7 +22,7 @@ context('Test the `lock` trap configuration option.', () => {
     it.skip('`lock` should be used as handler for clicks outside of the trap, when passed as a function');
 
     it('Clicks outside of the trap should be prevented when `lock` is set to `true`.', () => {
-      cy.buildTrap({ roots: ['group 2'], lock: true });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, lock: true });
 
       cy.get('@trapControls').find(`button[data-cy="Toggle Action Menu"]`).click();
 
@@ -28,7 +30,7 @@ context('Test the `lock` trap configuration option.', () => {
     });
 
     it('The focus trap should not interfere with clicks when `lock` is set to `true`.', () => {
-      cy.buildTrap({ roots: ['group 2'], lock: false });
+      cy.buildTrap({ roots: DEFAULT_ROOTS, lock: false });
 
       cy.get('@trapControls').find(`button[data-cy="Toggle Action Menu"]`).click();
 
