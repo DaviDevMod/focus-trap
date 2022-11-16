@@ -57,7 +57,7 @@ declare global {
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
       getTabCycle: (
-        from: JQuery<HTMLElement>,
+        $origin: JQuery<HTMLElement> | null,
         direction: Direction,
         len: number,
         check: boolean,
@@ -88,7 +88,7 @@ Cypress.Commands.add('switchControlsFormTo', (formName) => {
   cy.get('button[data-cy$=" Controls"]').as('switchControlsButton').should('have.length', 1);
 
   cy.get<HTMLButtonElement>('@switchControlsButton').then(($switchControlsButton) => {
-    if ($switchControlsButton.get(0).dataset.cy.endsWith(formName)) $switchControlsButton.get(0).click();
+    if ($switchControlsButton.get(0).dataset.cy?.endsWith(formName)) $switchControlsButton.get(0).click();
   });
 });
 
@@ -98,7 +98,7 @@ Cypress.Commands.add(
   (form, dropdownButtonName, { optionButtonName, itemsText }) => {
     cy.wrap(form).find(`button[data-cy="${dropdownButtonName}"]`).click();
 
-    if (optionButtonName) cy.wrap(form).find(`button[data-cy="${optionButtonName}"]`).click();
+    if (optionButtonName !== undefined) cy.wrap(form).find(`button[data-cy="${optionButtonName}"]`).click();
     else {
       if (typeof itemsText === 'string') cy.wrap(form).contains('li', itemsText).click();
       else {
@@ -113,7 +113,7 @@ Cypress.Commands.add('toggleSwitch', { prevSubject: ['element'] }, (form, switch
   cy.wrap(form)
     .find(`button[data-cy="${switchName}"]`)
     .then(($switchButton) => {
-      if ($switchButton.get(0).dataset.headlessuiState.includes('checked') !== toggleTo) $switchButton.get(0).click();
+      if ($switchButton.get(0).dataset.headlessuiState?.includes('checked') !== toggleTo) $switchButton.get(0).click();
     });
 });
 
@@ -125,9 +125,6 @@ Cypress.Commands.add('submitForm', { prevSubject: ['element'] }, (form) => {
   cy.wrap(form).find('button[type="submit"]').click();
 });
 
-// For some reason all the config props are missing `| undefined` even though only `roots` is required.
-// At least TS complains about wrong calls. But still the typing is broken inside the function.
-// I found no relevant issues and I have no intention to open one right now.
 Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, escape }) => {
   // Demolish an eventual previous trap.
   // TODO: if in the previous trap `(!escape && lock)` there is no way to override the previous trap.
@@ -166,7 +163,6 @@ Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, esc
   cy.get('@trapControls').submitForm();
 });
 
-// Same as with `buildTrap`: optional properties are missing `| undefined`.
 Cypress.Commands.add('patchElement', ({ id, tabIndex, disabled, display }) => {
   cy.switchControlsFormTo('Element Controls');
 
