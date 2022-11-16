@@ -255,14 +255,14 @@ Cypress.Commands.add(
       throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
     }
 
+    const cycleLength = check ? tabsPerCycle : expectedOrder.length;
+
     const repeatedOrder = {
-      FORWARD: expectedOrder.repeat(check ? Math.ceil((tabsPerCycle - 1) / expectedOrder.length) + 1 : 2),
+      FORWARD: expectedOrder.repeat(Math.ceil((cycleLength - 1) / expectedOrder.length) + 1),
       get BACKWARD() {
         return this.FORWARD.split('').reverse().join('');
       },
     };
-
-    const cycleLength = check ? tabsPerCycle : expectedOrder.length;
 
     const directions: Direction[] = direction === 'EVERY' ? ['FORWARD', 'BACKWARD'] : [direction];
 
