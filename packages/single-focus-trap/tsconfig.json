@@ -8,6 +8,5 @@
     "noEmit": false,
     "incremental": true
   },
-  "include": ["./src/*"],
-  "exclude": ["**/node_modules", "**/.*/", "dist"]
+  "include": ["./src/*"]
 }
