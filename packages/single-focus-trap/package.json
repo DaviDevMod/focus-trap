@@ -19,36 +19,13 @@
   "scripts": {
     "build": "rimraf --no-glob ./dist && microbundle -f cjs,es --no-compress",
     "dev": "microbundle watch",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
-    "instrument": "rimraf --no-glob ./instrumented && nyc instrument --compact true ./src ./instrumented",
-    "src-to-instrumented": "replace-in-file \"/single-focus-trap/src/\" \"/single-focus-trap/instrumented/\" ../../apps/demo/tsconfig.json",
-    "instrumented-to-src": "replace-in-file \"/single-focus-trap/instrumented/\" \"/single-focus-trap/src/\" ../../apps/demo/tsconfig.json",
-    "clean-codecov": "rimraf --no-glob ./coverage ./.nyc_output",
-    "report-codecov": "nyc report --compact",
-    "cy-open": "yarn clean-codecov && cypress open",
-    "cy-run": "yarn clean-codecov && cypress run",
-    "cy-run-headed": "yarn clean-codecov && cypress run --headed --browser chrome",
-    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-codecov",
-    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-codecov",
-    "e2e-run-h": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run-headed\"; yarn instrumented-to-src && yarn report-codecov"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.10.0",
-    "@istanbuljs/nyc-config-typescript": "1.0.2",
-    "@types/node": "18.11.9",
-    "concurrently": "7.5.0",
-    "cypress": "11.0.1",
-    "cypress-real-events": "1.7.4",
     "eslint": "8.27.0",
-    "istanbul-lib-coverage": "3.2.0",
     "microbundle": "0.15.1",
-    "nyc": "15.1.0",
     "prettier": "2.7.1",
-    "replace-in-file": "6.3.5",
     "rimraf": "3.0.2",
-    "source-map-support": "0.5.21",
-    "ts-node": "10.9.1",
-    "type-fest": "^3.2.0",
     "typescript": "4.8.4"
   },
   "keywords": [
