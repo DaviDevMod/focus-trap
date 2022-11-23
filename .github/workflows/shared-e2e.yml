@@ -138,6 +138,7 @@ jobs:
           # https://github.com/orgs/community/discussions/25701
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: shared/e2e/coverage/single-focus-trap
+          flags: single-focus-trap
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
 
@@ -154,5 +155,6 @@ jobs:
           # https://github.com/orgs/community/discussions/25701
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: shared/e2e/coverage/use-simple-focus-trap
+          flags: use-simple-focus-trap
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
