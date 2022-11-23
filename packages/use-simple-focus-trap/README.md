@@ -1,6 +1,6 @@
 # use-simple-focus-trap
 
-[![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?flag=use-simple-focus-trap)](https://codecov.io/gh/DaviDevMod/focus-trap)
 
 This React custom hook it's a tiny wrapper around [single-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap), that allows you to trap the focus within a group of HTML elements.
 
