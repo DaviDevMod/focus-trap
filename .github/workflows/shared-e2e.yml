@@ -49,31 +49,31 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      # # Why not using setup-node 2.2+ cache option (yet) ?
-      # # see https://github.com/belgattitude/nextjs-monorepo-example/pull/369
-      # - name: Get yarn cache directory path
-      #   id: yarn-cache-dir-path
-      #   run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      # Why not using setup-node 2.2+ cache option (yet) ?
+      # see https://github.com/belgattitude/nextjs-monorepo-example/pull/369
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
-      # - name: Restore yarn cache
-      #   uses: actions/cache@v3
-      #   id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-      #     restore-keys: |
-      #       yarn-cache-folder-
+      - name: Restore yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
 
-      # - name: Restore packages cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ${{ github.workspace }}/.cache
-      #       ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+      - name: Restore packages cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
 
-      #     key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Install Dependencies
         run: yarn install --immutable
@@ -106,7 +106,7 @@ jobs:
 
       - name: Prepare monorepo for tests
         run: |
-          yarn instrument && yarn src-to-instrumented && yarn clean-codecov
+          yarn instrument && yarn src-to-instrumented && yarn clean-coverage
         working-directory: shared/e2e
 
       - name: Cypress run
@@ -122,7 +122,7 @@ jobs:
 
       - name: Report codecov
         run: |
-          yarn report-codecoverage
+          yarn report-coverage
         working-directory: shared/e2e
 
       - name: Upload codecov
