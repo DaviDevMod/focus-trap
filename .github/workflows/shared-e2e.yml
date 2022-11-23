@@ -1,0 +1,142 @@
+name: shared-e2e
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - '{packages,apps}/**'
+      - '!{packages,apps}/**/README.md'
+      - '.yarnrc.yml'
+      - 'yarn.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/workflows/shared-e2e.yml'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - '{packages,apps}/**'
+      - '!{packages,apps}/**/README.md'
+      - '.yarnrc.yml'
+      - 'yarn.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/workflows/shared-e2e.yml'
+
+jobs:
+  e2e:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18]
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v3
+        with:
+          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          fetch-depth: 0
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Why not using setup-node 2.2+ cache option (yet) ?
+      # see https://github.com/belgattitude/nextjs-monorepo-example/pull/369
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Restore yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
+
+      - name: Restore packages cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+        env:
+          HUSKY: 0
+
+      # # Typecheck packages that have changed + packages and apps that depends on them (--from & --since)
+      # # That allows to see if we're introducing "surface" regressions (just the types)
+      # - name: Typecheck
+      #   run: |
+      #     yarn workspaces foreach -tv --from '@your-org/*' --since=origin/main --recursive run typecheck
+
+      # # Lint packages that have changed (--include & --since)
+      # - name: Linter
+      #   run: |
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run lint --cache
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run lint-styles
+
+      # # Test packages that have changed (--include & --since)
+      # - name: Unit tests changed packages
+      #   run: |
+      #     yarn workspaces foreach -tv --include '@your-org/*' --since=origin/main --recursive run test-unit --runInBand --colors
+      # # to debug cache issues: ls ${{ github.workspace }}/.cache
+
+      # Build packages that have changed (--include & --since), assuming that
+      # apps build are done already. Otherwise --from & --since
+      - name: Run build for changed packages
+        run: |
+          yarn workspaces foreach -tv --include '*-focus-trap' --since=origin/main run build
+
+      - name: Prepare monorepo for tests
+        run: |
+          yarn instrument && yarn src-to-instrumented && yarn clean-codecov
+        working-directory: shared/e2e
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          browser: chrome
+          headed: true
+          install: false
+          working-directory: shared/e2e
+          start: yarn workspace demo dev
+          # quote the url to be safe against YML parsing surprises
+          wait-on: 'http://localhost:3000'
+
+      - name: Report codecov
+        run: |
+          yarn report-codecoverage
+        working-directory: shared/e2e
+
+      - name: Upload codecov
+        uses: codecov/codecov-action@v3
+        with:
+          # The token is not required for public repos, but it makes the workflow
+          # less likely to randomly fail because of a limit in codecov CI capabilities.
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
+          # The secret token doesn't always save from false negatives though,
+          # because GitHub action are supposedly buggy when handling secrets:
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
+          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
+          # https://github.com/orgs/community/discussions/25701
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: shared/e2e/coverage
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
