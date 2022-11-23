@@ -1,6 +1,6 @@
 # single-focus-trap
 
-[![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE) [![npm version](https://badgen.net/npm/v/single-focus-trap)](https://www.npmjs.com/package/single-focus-trap) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?flag=single-focus-trap)](https://codecov.io/gh/DaviDevMod/focus-trap) [![CI-packages](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![shared-e2e](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml)
+[![CI-packages](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![shared-e2e](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?flag=single-focus-trap)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/single-focus-trap)](https://www.npmjs.com/package/single-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 A light and reactive focus trap, framework agnostic, written in TypeScript.
 
