@@ -120,12 +120,12 @@ jobs:
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:3000'
 
-      - name: Report codecov
+      - name: Report converage
         run: |
           yarn report-coverage
         working-directory: shared/e2e
 
-      - name: Upload codecov
+      - name: Upload coverage for single-focus-trap
         uses: codecov/codecov-action@v3
         with:
           # The token is not required for public repos, but it makes the workflow
@@ -137,6 +137,22 @@ jobs:
           # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
           # https://github.com/orgs/community/discussions/25701
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: shared/e2e/coverage
+          directory: shared/e2e/coverage/single-focus-trap
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+
+      - name: Upload coverage for use-simple-focus-trap
+        uses: codecov/codecov-action@v3
+        with:
+          # The token is not required for public repos, but it makes the workflow
+          # less likely to randomly fail because of a limit in codecov CI capabilities.
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
+          # The secret token doesn't always save from false negatives though,
+          # because GitHub action are supposedly buggy when handling secrets:
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
+          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
+          # https://github.com/orgs/community/discussions/25701
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: shared/e2e/coverage/use-simple-focus-trap
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
