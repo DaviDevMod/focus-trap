@@ -145,14 +145,6 @@ jobs:
       - name: Upload coverage for use-simple-focus-trap
         uses: codecov/codecov-action@v3
         with:
-          # The token is not required for public repos, but it makes the workflow
-          # less likely to randomly fail because of a limit in codecov CI capabilities.
-          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
-          # The secret token doesn't always save from false negatives though,
-          # because GitHub action are supposedly buggy when handling secrets:
-          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
-          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
-          # https://github.com/orgs/community/discussions/25701
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: shared/e2e/coverage/use-simple-focus-trap
           flags: use-simple-focus-trap
