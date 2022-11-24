@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "13.0.3",
+    "next": "13.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "single-focus-trap": "workspace:^",
@@ -22,16 +22,16 @@
     "@heroicons/react": "^2.0.13",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
-    "@types/react-dom": "18.0.8",
+    "@types/react-dom": "18.0.9",
     "autoprefixer": "10.4.13",
-    "eslint": "8.27.0",
-    "eslint-config-next": "13.0.3",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.5",
     "postcss": "8.4.19",
-    "prettier": "2.7.1",
+    "prettier": "2.8.0",
     "prettier-plugin-tailwindcss": "0.1.13",
     "tailwindcss": "3.2.4",
     "tailwindcss-debug-screens": "2.2.1",
     "type-fest": "^3.2.0",
-    "typescript": "4.8.4"
+    "typescript": "4.9.3"
   }
 }
