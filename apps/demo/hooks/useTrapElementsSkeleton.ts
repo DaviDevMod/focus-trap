@@ -64,6 +64,14 @@ const initialTrapElementsSkeletonState: SkeletonGroup = {
         { id: 'P', tabIndex: '-1', forward: 2, backward: 6, parentId: 'group 4', disabled: false, display: true },
       ],
     },
+    {
+      id: 'group 5',
+      children: [
+        { id: 'Q', tabIndex: '1', forward: 2, backward: 1, parentId: 'group 1', disabled: false, display: true },
+        { id: 'R', tabIndex: '0', forward: 0, backward: 6, parentId: 'group 1', disabled: false, display: true },
+        { id: 'S', tabIndex: '-1', forward: 2, backward: 6, parentId: 'group 1', disabled: false, display: true },
+      ],
+    },
   ],
 };
 
