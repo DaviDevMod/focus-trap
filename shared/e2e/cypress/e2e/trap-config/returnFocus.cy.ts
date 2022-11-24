@@ -6,15 +6,17 @@ context('Test the `returnFocus` trap configuration option.', () => {
   before(() => cy.visitDemo());
 
   describe('A return focus should always be given, unless `returnFocus` is set to `false`.', () => {
-    // TODO: The fact is that the demo app uses `single-focus-trap` through `use-simple-focus-trap`,
-    // which will `resolveConfig()` before calling `single-focus-trap` with default values already set.
-    // There are many ways to solve this, but I think I'll go for unit tests just to practice with them.
+    // TODO: Write unit tests.
+    // The following cases can't be tested through the current demo app, because in it `use-simple-focus-trap`
+    // is called with default values already set. Refactoring the demo would solve the problem only for
+    // `use-simple-focus-trap`, which would then call `single-focus-trap` with default values already set anyway.
     it.skip(
       'By default, the return focus should be given to what was the active element at the time the trap was built.'
     );
     it.skip(
       "When `returnfocus` is set to a string that doesn't match any `id` in the DOM, the return focus should be given to what was the active element at the time the trap was built."
     );
+    // This is not really necessary with TS.
     it.skip(
       'When `returnfocus` is set to an invalid value, the return focus should be given to what was the active element at the time the trap was built.'
     );

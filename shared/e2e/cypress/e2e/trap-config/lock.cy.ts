@@ -11,14 +11,15 @@ context('Test the `lock` trap configuration option.', () => {
   });
 
   describe('Clicks outside of the trap should be possible only when `lock` is set to the boolean `false`.', () => {
-    // TODO: The fact is that the demo app uses `single-focus-trap` through `use-simple-focus-trap`,
-    // which will `resolveConfig()` before calling `single-focus-trap` with default values already set.
-    // There are many ways to solve this, but I think I'll go for unit tests just to practice with them.
+    // TODO: Write unit tests.
+    // The following cases can't be tested through the current demo app, because in it `use-simple-focus-trap`
+    // is called with default values already set. Refactoring the demo would solve the problem only for
+    // `use-simple-focus-trap`, which would then call `single-focus-trap` with default values already set anyway.
     it.skip('Clicks outside of the trap should be prevented by default.');
-    // This is not strictly necessary cause TS would prevent it, but it's still good for JS and non-typesafe code.
+    // This is not really necessary with TS.
     it.skip('Clicks outside of the trap should be prevented when `lock` is set to an invalid value.');
 
-    // TODO: This is just a limitation of the demo app, again, I gotta do some practice with unit testing.
+    // TODO: This is just a limitation of the demo app, which may be refactored to test this case.
     it.skip('`lock` should be used as handler for clicks outside of the trap, when passed as a function');
 
     it('Clicks outside of the trap should be prevented when `lock` is set to `true`.', () => {

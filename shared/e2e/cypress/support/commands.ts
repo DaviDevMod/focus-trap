@@ -33,6 +33,7 @@ export const DEFAULT_ROOTS = ['group 2', 'group 4'];
 const DEFAULT_EXPECTED_ORDER = '0123456';
 
 // A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
+// BTW `verifyTabCycle` uses this value only if `check` is enabled. (see `getNextTabbedDatasetOrder`)
 const DEFAULT_TABS_PER_CYCLE = 2;
 
 declare global {
@@ -125,9 +126,6 @@ Cypress.Commands.add('submitForm', { prevSubject: ['element'] }, (form) => {
   cy.wrap(form).find('button[type="submit"]').click();
 });
 
-// For some reason all the config props are missing `| undefined` even though only `roots` is required.
-// At least TS complains about wrong calls. But still the typing is broken inside the function.
-// I found no relevant issues and I have no intention to open one right now.
 Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, escape }) => {
   // Demolish an eventual previous trap.
   // TODO: if in the previous trap `(!escape && lock)` there is no way to override the previous trap.
@@ -166,7 +164,6 @@ Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, esc
   cy.get('@trapControls').submitForm();
 });
 
-// Same as with `buildTrap`: optional properties are missing `| undefined`.
 Cypress.Commands.add('patchElement', ({ id, tabIndex, disabled, display }) => {
   cy.switchControlsFormTo('Element Controls');
 
