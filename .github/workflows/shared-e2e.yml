@@ -7,9 +7,9 @@ on:
       - main
     paths:
       - 'apps/**'
-      - 'apps/**/!(README.md)'
       - 'packages/**'
-      - 'packages/**/!(README.md)'
+      - 'shared/e2e/**'
+      - '!**/README.md'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
@@ -23,9 +23,9 @@ on:
       - reopened
     paths:
       - 'apps/**'
-      - 'apps/**/!(README.md)'
       - 'packages/**'
-      - 'packages/**/!(README.md)'
+      - 'shared/e2e/**'
+      - '!**/README.md'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
