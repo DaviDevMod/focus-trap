@@ -20,9 +20,9 @@
     "cy-open": "yarn clean-coverage && cypress open",
     "cy-run": "yarn clean-coverage && cypress run",
     "cy-run-headed": "yarn clean-coverage && cypress run --headed --browser chrome",
-    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-run-h": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-pick-up-new-test-instrumentation\" \"yarn cy-run-headed\"; yarn instrumented-to-src && yarn report-coverage"
+    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cy-open\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cy-run\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-run-h": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cy-run-headed\"; yarn instrumented-to-src && yarn report-coverage"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.10.0",

@@ -4328,6 +4328,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:0.1.13"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    rimraf: "npm:^3.0.2"
     single-focus-trap: "workspace:^"
     tailwindcss: "npm:3.2.4"
     tailwindcss-debug-screens: "npm:2.2.1"
