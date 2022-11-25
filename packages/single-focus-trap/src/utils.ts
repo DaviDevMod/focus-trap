@@ -70,13 +70,11 @@ export const getDestination = (array: (Focusable | null)[], index: number, getOf
   for (let x = 1; !destination && x < len * 5; x++) destination = array[(index + getOffset(x) + len * 5) % len];
 
   if (!destination && process.env.NODE_ENV !== 'production') {
-    throw new Error(
-      `This is not supposed to happen. There's a logic error somewhere in single-focus-trap.
-      \`assistTabbing()\` must return early if the trap doesn't contain at least one tabbable elemnt;
-      and updates must be unscheduled only in the very last statement of \`updateKingpins()\``
-    );
+    throw new Error("`assistTabbing()` must return early if the trap doesn't contain at least one tabbable elemnt.");
   }
 
-  // Although retunrning `null` is no trouble, `getDestination()` is supposed to return a `Focusable`.
+  // In theory, `destination` may be `null` in production (which doesn't cause any problems)
+  // but in practice `getDestination()` is granted to return a `Focusable`,
+  // at least as long as no one messes up with the logic in `assistTabbing()`.
   return destination;
 };
