@@ -6,8 +6,10 @@ on:
       - dev
       - main
     paths:
-      - '{packages,apps}/**'
-      - '!{packages,apps}/**/README.md'
+      - 'apps/**'
+      - 'apps/**/!(README.md)'
+      - 'packages/**'
+      - 'packages/**/!(README.md)'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
@@ -20,8 +22,10 @@ on:
       - synchronize
       - reopened
     paths:
-      - '{packages,apps}/**'
-      - '!{packages,apps}/**/README.md'
+      - 'apps/**'
+      - 'apps/**/!(README.md)'
+      - 'packages/**'
+      - 'packages/**/!(README.md)'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
