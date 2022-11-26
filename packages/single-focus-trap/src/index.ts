@@ -95,17 +95,13 @@ class SingleTrap {
     if (!this.updateKingpins()) return;
     const { roots, firstLast_positive, topBottom } = this.kingpins;
     let rootIndex = roots.findIndex((el) => el.contains(target as Node));
-    let surrogateIndex = -1;
-    if (rootIndex === -1) {
-      // Index of first root that follows target, found as the index of the first root that precedes target + 1
-      surrogateIndex =
-        (firstLast_positive.findIndex((el) => el && target.compareDocumentPosition(el) & 3) + 1) %
-        firstLast_positive.length;
-    }
     let destination: Focusable | null = null;
 
     // `target` doesn't belong to the focus trap.
     if (rootIndex === -1) {
+      let surrogateIndex = roots.findIndex((el) => target.compareDocumentPosition(el) & 5);
+      if (surrogateIndex === -1) surrogateIndex = roots.length;
+
       if (target.tabIndex === 0) {
         destination = getDestination(firstLast_positive, surrogateIndex * 2, (x) =>
           shiftKey ? -x * 2 + 1 : x * 2 - 2
