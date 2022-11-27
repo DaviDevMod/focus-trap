@@ -199,8 +199,6 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
       // the `data-forward` and `data-backward` attributes of every element in `@possibleTabbables`.
       // All the effort has been made to ensure that "tab-cycle.cy.ts" checks any possible relevant scenario.**
       // As a side note, skipping this check allows for a faster algorithm to verify the tab cycle.
-      // **Actually I already know from manual testing that there's a bug in single-focus-trap that can be exposed
-      // in the tests by modifying the basic setup tested by "tab-cycle.cy.ts". But that's for another commit.
       if (check && !$origin.get(0).dataset.order) {
         expect($origin.get(0).dataset[direction.toLowerCase()]).to.equal($destination.get(0).dataset.order);
       }
