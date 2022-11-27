@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// @ts-check
+
 const fs = require('fs');
 
 const packages = fs.readdirSync('../../packages');
