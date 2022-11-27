@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - 'packages/**'
+      - '!**/README.md'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
@@ -20,6 +21,7 @@ on:
       - reopened
     paths:
       - 'packages/**'
+      - '!**/README.md'
       - '.yarnrc.yml'
       - 'yarn.lock'
       - '.prettier*'
