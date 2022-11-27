@@ -50,7 +50,7 @@ import { singleFocusTrap } from 'single-focus-trap';
 
 const myElement = document.getElementById('myElement');
 
-const config = { roots: myElement };
+const config = { roots: [myElement] };
 
 // Build trap
 singleFocusTrap({ action: 'BUILD', config });
@@ -119,7 +119,7 @@ The are no dependencies and the library can run in any major browser.
 
 > **Note**
 > The code is actually tested only against Chromium-based browsers.
-> That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular [<kbd>Tab</kbd> key presses](https://github.com/cypress-io/cypress/issues/311)), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow to get native <kbd>Tab</kbd> key presses in Cypress, but only in presence of Chrome Devtools.
+> That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular [<kbd>Tab</kbd> key presses](https://github.com/cypress-io/cypress/issues/311)), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow to get native browser events in Cypress, but only in presence of Chrome Devtools.
 
 ## Nice to know
 
