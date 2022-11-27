@@ -1,6 +1,8 @@
-# use-simple-focus-trap
-
 [![CI-packages](https://github.com/DaviDevMod/use-simple-focus-trap/actions/workflows/ci-packages.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci-packages.yml) [![shared-e2e](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/shared-e2e.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?flag=use-simple-focus-trap)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/use-simple-focus-trap)](https://www.npmjs.com/package/use-simple-focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+
+:construction: This package is probably going to be refactored soon, from the ground up, once again :construction:
+
+<!-- # use-simple-focus-trap
 
 This React custom hook it's a tiny wrapper around [single-focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/single-focus-trap), that allows you to trap the focus within a group of HTML elements.
 
@@ -35,7 +37,7 @@ yarn add use-simple-focus-trap
 
 ## Usage
 
-Import the hook and call it with an HTML element, or the id of such element, or even an array of elements and ids.  
+Import the hook and call it with an HTML element, or the id of such element, or even an array of elements and ids.
 And that's it, the focus is trapped.
 
 The hook will stop trapping the focus as soon as it is unmounted or whenever the user presses the `Esc` key.
@@ -82,7 +84,7 @@ interface TrapConfig {
 type TrapParam = TrapRoot | TrapConfig;
 ```
 
-Basically, you can either call the hook with just a group of elements and use the default behaviour, or call it with a whole configuration object. Note that any element in the configuration can be provided as id.  
+Basically, you can either call the hook with just a group of elements and use the default behaviour, or call it with a whole configuration object. Note that any element in the configuration can be provided as id.
 Let's have a closer look at the configuration object.
 
 | Property     | Required | Type                             | Default value |
@@ -93,38 +95,38 @@ Let's have a closer look at the configuration object.
 | lock         | No       | `boolean \| Function`            |    `true`     |
 | escape       | No       | `boolean \| Function`            |    `true`     |
 
-- **root**  
-  It's the grop of elements within which the focus has to be trapped.  
+- **root**
+  It's the grop of elements within which the focus has to be trapped.
   If it's missing or invalid, no trap is built.
 
-- **initialFocus**  
-  By default, the first tabbable element in the trap receives the focus when a trap is built.  
-  You can switch off the default behaviour by giving `initialFocus` a value of `false`.  
+- **initialFocus**
+  By default, the first tabbable element in the trap receives the focus when a trap is built.
+  You can switch off the default behaviour by giving `initialFocus` a value of `false`.
   Alternatively, you can specify an element, or the id of an element, which will receive the initial focus.
 
-- **returnFocus**  
-  By default, once a trap is demolished, the focus is returned to what was the active element at the time the trap was built.  
-  You can switch off the default behaviour by giving `returnFocus` a value of `false`.  
+- **returnFocus**
+  By default, once a trap is demolished, the focus is returned to what was the active element at the time the trap was built.
+  You can switch off the default behaviour by giving `returnFocus` a value of `false`.
   Alternatively, you can specify an element, or the id of an element, which will receive the focus once the trap is demolished.
 
-- **lock**  
-  By default, clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[:placard:](#note-expansion-1)</sup>.  
-  If `lock` is set to `false`, clicks will behave as usual.  
-  If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap.  
+- **lock**
+  By default, clicks on elements that are not descendant of the `root` are prevented<sup id="note-reference-1">[:placard:](#note-expansion-1)</sup>.
+  If `lock` is set to `false`, clicks will behave as usual.
+  If `lock` is provided as a funciton, it will be used as an event handler for clicks outside of the trap.
   In this last case, preventing default behaviour and other handlers is up to you.
 
-  > <span id="note-expansion-1">[:placard:](#note-reference-1)</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented.  
+  > <span id="note-expansion-1">[:placard:](#note-reference-1)</span> Only `mousedown`, `touchstart`, `click` and the default behavior are prevented.
   > So, if you want, you can make an element outside of the trap clickable even when `lock` is true, for example, by listening for `mouseup` events.
 
-- **escape**  
-  By default, the trap is demolished Whenever the `Esc` key is pressed.  
-  If `escape` is set to `false`, the trap is kept running in such cases.  
-  If `escape` is provided as a function, it will be used as an event handler.  
+- **escape**
+  By default, the trap is demolished Whenever the `Esc` key is pressed.
+  If `escape` is set to `false`, the trap is kept running in such cases.
+  If `escape` is provided as a function, it will be used as an event handler.
   In this last case, demolishing the trap is up to you.
 
 ## Return value
 
-The return value is a funciton that can be used to push, build, demolish, pause and resume a trap.  
+The return value is a funciton that can be used to push, build, demolish, pause and resume a trap.
 This function receives a single parameter of type `TrapsControllerParam`.
 
 ```ts
@@ -140,8 +142,8 @@ export type TrapsControllerParam =
   | 'PAUSE';
 ```
 
-The hook automatically manages a stack of focus traps  
-Whenever a new trap is built, the current trap (if any) is paused.  
+The hook automatically manages a stack of focus traps
+Whenever a new trap is built, the current trap (if any) is paused.
 Whenever a trap is demolished, the previous trap (if any) is resumed.
 
 The difference between a `"BUILD"` and a `"PUSH"`is that the latter builds a trap on top of the current one (if any), while `"BUILD"` replaces the current trap with another one.
@@ -157,7 +159,7 @@ When `TrapsControllerParam` is provided as a `TrapParam`, the action defaults to
 
 > The hook's return value avoids building the same trap twice in a row. It does so by comparing the configuration objects received, but it only shallow-compares functions found in it.
 
-Note that a warning will be shown if you attempt to build a trap with a configuration object that differs only in the reference of a function from the configuration object of the trap that is currently on top of the stack.  
+Note that a warning will be shown if you attempt to build a trap with a configuration object that differs only in the reference of a function from the configuration object of the trap that is currently on top of the stack.
 So if you feel confortable in doing so, you can avoid memoizations until a warning shows up.
 
 </details>
@@ -176,4 +178,4 @@ The hook depends on [single-focus-trap](https://github.com/DaviDevMod/focus-trap
 
 ## :earth_americas: Contributions
 
-Any kind of contribution is more than welcome! :tada:
+Any kind of contribution is more than welcome! :tada: -->
