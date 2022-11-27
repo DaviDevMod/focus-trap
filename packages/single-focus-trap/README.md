@@ -43,14 +43,14 @@ type TrapArg =
 
 Start a focus trap by providing the `'BUILD'` action along with a trap configuration object.
 
-You can then `'PAUSE'`, `'RESUME'` or `'DEMOLISH'` the trap by calling `singleFocusTrap` with the desired action.
+You can then `'PAUSE'`, `'RESUME'` or `'DEMOLISH'` the trap by calling `singleFocusTrap` with the relevant `action`.
 
 ```javascript
 import { singleFocusTrap } from 'single-focus-trap';
 
 const myElement = document.getElementById('myElement');
 
-const config = { root: myElement };
+const config = { roots: myElement };
 
 // Build trap
 singleFocusTrap({ action: 'BUILD', config });
@@ -61,7 +61,7 @@ singleFocusTrap({ action: 'DEMOLISH' });
 
 ## Default behaviour
 
-By default, i.e. if the trap is built with a `config` that only has a `root` property, this is what happens:
+By default, i.e. if the trap is built with a `config` that only has a `roots` property, this is what happens:
 
 - Focus is given to the first tabbable element in the trap
 - The `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
@@ -75,13 +75,13 @@ A closer look at the configuration object needed to build a trap:
 
 | Property     | Required | Type                   | Default value |
 | ------------ | -------- | ---------------------- | :-----------: |
-| root         | Yes      | `HTMLElement[]`        |       -       |
+| roots        | Yes      | `HTMLElement[]`        |       -       |
 | initialFocus | No       | `boolean \| Focusable` |    `true`     |
 | returnFocus  | No       | `boolean \| Focusable` |    `true`     |
 | lock         | No       | `boolean \| Function`  |    `true`     |
 | escape       | No       | `boolean \| Function`  |    `true`     |
 
-- **root**  
+- **roots**  
    An array of elements within which the focus has to be trapped.  
    If it's missing or invalid, no trap is built.
 
@@ -96,7 +96,7 @@ A closer look at the configuration object needed to build a trap:
   Alternatively, you can specify the element which you want receive the focus after the trap is demolished.
 
 - **lock**  
-  By default, clicks on elements that are not descendant of the `root` are prevented.
+  By default, clicks on elements that are not contained in any of the `roots` elements are prevented.
   If `lock` is set to `false`, clicks will behave as usual.  
   If `lock` is provided as a funciton, it will be used as the trap's event handler for clicks outside of the trap.
 
@@ -142,7 +142,7 @@ This small library has been around for many years and, at the time of writing, c
 
 The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and _single-focus-trap_ aims to be as simple and lightweight as possible.
 
-Also much obliged to the [focus-trap](https://github.com/focus-trap) project in general, which has been a huge point of reference.
+Also much obliged to the whole [focus-trap](https://github.com/focus-trap) project in general, which has been a huge point of reference.
 
 ## :earth_americas: Contributions
 
