@@ -29,3 +29,9 @@ To achieve that, we actually test a copy of the source code of the packages to t
 [1]: The coverage results from the various packages are merged together in the summary, which becomes meaningless and can't be uploaded to codecov.
 
 [2]: Having this report in different formats or logged in the terminal is redundant, so the default `lcov` reporter used by `@cypress/code-coverage` is overridden in `package.json` with `"nyc": { "reporter": "json" }`.
+
+## e2e-run-h
+
+In headless mode, the fact that Cypress is quicker to act than React is to rerender, may lead to failing tests.
+After trying to fix the issue with [different approaches](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/) I decided to just run cypress in headed mode both locally and in CI.
+Prefer using `e2e-run-h` (where `h` stands for "headed") over `e2e-run`.
