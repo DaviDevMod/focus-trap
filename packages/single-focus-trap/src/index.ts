@@ -99,26 +99,26 @@ class SingleTrap {
 
     // `target` doesn't belong to the focus trap.
     if (rootIndex === -1) {
-      let surrogateIndex = roots.findIndex((el) => target.compareDocumentPosition(el) & 5);
-      if (surrogateIndex === -1) surrogateIndex = roots.length;
+      let surrogateRootIndex = roots.findIndex((el) => target.compareDocumentPosition(el) & 5);
+      if (surrogateRootIndex === -1) surrogateRootIndex = roots.length;
 
       if (target.tabIndex === 0) {
-        destination = getDestination(firstLast_positive, surrogateIndex * 2, (x) =>
+        destination = getDestination(firstLast_positive, surrogateRootIndex * 2, (x) =>
           shiftKey ? -x * 2 + 1 : x * 2 - 2
         );
       } else if (target.tabIndex > 0) {
-        // Creating a temporary `tempFirstLast_positive` array with `target` in it,
+        // Creating a temporary `surrogateFirstLast_positive` array with `target` in it,
         // then using the same logic used for positive tab indexes inside of the trap.
         const positiveTabIndexes = firstLast_positive.slice(topBottom.length) as Focusable[];
         positiveTabIndexes.push(target);
         positiveTabIndexes.sort((a, b) =>
           a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
         );
-        const tempFirstLast_positive = firstLast_positive.slice(0, topBottom.length).concat(positiveTabIndexes);
-        const tempIndex = tempFirstLast_positive.findIndex((el) => el === target);
-        destination = getDestination(tempFirstLast_positive, tempIndex, (x) => (shiftKey ? -x : x));
+        const surrogateFirstLast_positive = firstLast_positive.slice(0, topBottom.length).concat(positiveTabIndexes);
+        const index = surrogateFirstLast_positive.findIndex((el) => el === target);
+        destination = getDestination(surrogateFirstLast_positive, index, (x) => (shiftKey ? -x : x));
       } else {
-        destination = getDestination(topBottom, surrogateIndex * 2, () => -Number(shiftKey));
+        destination = getDestination(topBottom, surrogateRootIndex * 2, () => -Number(shiftKey));
       }
     }
     // `target` belongs to the focus trap.
