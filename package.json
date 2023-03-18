@@ -18,7 +18,7 @@
     "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 ."
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.7",
+    "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.25.2",
     "concurrently": "7.6.0",
     "cypress": "11.2.0",
