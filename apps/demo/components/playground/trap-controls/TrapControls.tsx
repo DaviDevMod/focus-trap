@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import { RequireExactlyOne } from 'type-fest';
-import { useSimpleFocusTrap } from 'use-simple-focus-trap';
+import { focusTrap } from 'focus-trap';
 
 import { ControlsKeysState } from '../Playground';
 import { getHTMLElementFlatSubTree, strToBoolOrItself } from '../../../utils/utils';
@@ -11,7 +11,7 @@ import { SubmitButton } from '../../UI/submit-button/SubmitButton';
 import { ResetButton } from '../../UI/reset-button/ResetButton';
 
 interface TrapControlsProps {
-  trapElementsRootNodeState: HTMLDivElement | undefined;
+  demoElementsRootNodeState: HTMLDivElement | undefined;
   setControlsKeysState: React.Dispatch<React.SetStateAction<ControlsKeysState>>;
   displayComponent?: boolean;
 }
@@ -63,18 +63,17 @@ const trapControlsStateReducer = (
   return { ...state, trapConfig: { ...state.trapConfig, ...action } };
 };
 
-export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, displayComponent }: TrapControlsProps) {
-  const [trapElementsState, setTrapElementsState] = useState<HTMLElement[]>([]);
+export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, displayComponent }: TrapControlsProps) {
+  const [demoElementsState, setDemoElementsState] = useState<HTMLElement[]>([]);
   const [trapControlsState, dispatchTrapControlsState] = useReducer(trapControlsStateReducer, initialControlsState);
   const [initialFocusFilterState, setInitialFocusFilterState] = useState(false);
-  const controller = useSimpleFocusTrap();
   const { trapAction, trapConfig } = trapControlsState;
 
   useEffect(() => {
-    // Filtering out nodes without an `id`, so it's trivial to add elements in `TrapElements.tsx` (just to improve the UX)
+    // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
     // without having them (and their whole branch) appear as options for <TrapConfigListbox> renedered in this component.
-    setTrapElementsState(getHTMLElementFlatSubTree(trapElementsRootNodeState, (el) => !!el.id));
-  }, [trapElementsRootNodeState]);
+    setDemoElementsState(getHTMLElementFlatSubTree(demoElementsRootNodeState, (el) => !!el.id));
+  }, [demoElementsRootNodeState]);
 
   const rootsAndInitialFocusConfigValues = useMemo(
     () => ({ roots: trapConfig.roots, initialFocus: trapConfig.initialFocus }),
@@ -95,15 +94,12 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
     event.preventDefault();
 
     if (trapAction === 'BUILD') {
-      controller({
-        action: trapAction,
-        config: {
-          ...trapConfig,
-          initialFocus: strToBoolOrItself(trapConfig.initialFocus),
-          returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-        },
+      focusTrap({
+        ...trapConfig,
+        initialFocus: strToBoolOrItself(trapConfig.initialFocus),
+        returnFocus: strToBoolOrItself(trapConfig.returnFocus),
       });
-    } else if (trapAction) controller(trapAction);
+    } else if (trapAction) focusTrap(trapAction);
   };
 
   return (
@@ -117,10 +113,10 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
       <TrapConfigListbox
         configProp="roots"
         configValues={rootsAndInitialFocusConfigValues}
-        skeletonRootId={trapElementsRootNodeState?.id}
+        skeletonRootId={demoElementsRootNodeState?.id}
         filterState={initialFocusFilterState}
         setFilterState={setInitialFocusFilterState}
-        trapElementsState={trapElementsState}
+        demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
         disabled={isTrapActionNotBUILD}
       />
@@ -128,10 +124,10 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
       <TrapConfigListbox
         configProp="initialFocus"
         configValues={rootsAndInitialFocusConfigValues}
-        skeletonRootId={trapElementsRootNodeState?.id}
+        skeletonRootId={demoElementsRootNodeState?.id}
         filterState={initialFocusFilterState}
         setFilterState={setInitialFocusFilterState}
-        trapElementsState={trapElementsState}
+        demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
         disabled={isTrapActionNotBUILD}
       />
@@ -139,7 +135,7 @@ export function TrapControls({ trapElementsRootNodeState, setControlsKeysState, 
       <TrapConfigListbox
         configProp="returnFocus"
         configValues={returnFocusConfigValues}
-        trapElementsState={trapElementsState}
+        demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
         disabled={isTrapActionNotBUILD}
       />

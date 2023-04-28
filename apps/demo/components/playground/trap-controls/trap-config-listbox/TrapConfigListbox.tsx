@@ -22,7 +22,7 @@ type TrapConfigListboxProps = (
       setFilterState?: never;
     }
 ) & {
-  trapElementsState: HTMLElement[];
+  demoElementsState: HTMLElement[];
   dispatchTrapControlsState: React.Dispatch<TrapControlsStateReducerAction>;
   disabled?: boolean;
 };
@@ -33,7 +33,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   skeletonRootId,
   filterState,
   setFilterState,
-  trapElementsState,
+  demoElementsState,
   dispatchTrapControlsState,
   disabled,
 }: TrapConfigListboxProps) {
@@ -43,7 +43,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   const { roots, initialFocus, returnFocus } = configValues;
 
   const getElementsIn = (selectedRoots: string[]) =>
-    trapElementsState.filter((el) => selectedRoots.some((root) => el.dataset.parentId === root || el.id === root));
+    demoElementsState.filter((el) => selectedRoots.some((root) => el.dataset.parentId === root || el.id === root));
 
   const resetInitialFocusIfNotIncludedIn = (selectedRoots: string[]) =>
     initialFocus !== 'true' &&
@@ -60,15 +60,14 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
     ...(configProp !== 'roots' ? ['true', 'false'] : []),
     ...(configProp === 'initialFocus' && filterState && skeletonRootId && !roots!.includes(skeletonRootId)
       ? getElementsIn(roots!)
-      : trapElementsState
+      : demoElementsState
     ) // Filtering out the grouping <div>s by relying on the fact that they have no `data-parent-id` attribute.
       .filter((el) => configProp === 'roots' || el.dataset.parentId)
       .map((el) => el.id),
   ];
 
   const handleListboxChange = (selectedOptions: string | string[]) => {
-    // TS struggles with dynamic keys: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/26635#issuecomment-399807238
-    // TS specs: https://github.com/microsoft/TypeScript/blob/main/doc/spec-ARCHIVED.md#413-property-access
+    // A Union type can't be used to access properties: https://github.com/microsoft/TypeScript/issues/10530
     dispatchTrapControlsState({ [configProp]: selectedOptions } as unknown as TrapControlsStateReducerAction);
 
     // If the filter in the initialFocus's <TrapConfigListbox> is active, then when the selected `roots` change,

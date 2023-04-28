@@ -1,6 +1,0 @@
-cypress/videos
-cypress/screenshots
-cypress/download
-coverage
-.nyc_output
-packages

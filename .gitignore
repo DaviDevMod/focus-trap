@@ -16,3 +16,14 @@ node_modules
 # security: atlassian/changeset
 **/.netrc
 **/.npmrc
+
+# vscode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# turborepo https://turbo.build/repo/docs/getting-started/existing-monorepo#edit-gitignore
+.turbo

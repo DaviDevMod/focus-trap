@@ -1,0 +1,115 @@
+name: ci
+on:
+  push:
+    branches: [dev, main]
+    paths:
+      - 'packages/**'
+      - 'apps/demo/**'
+      - '!**/README.md'
+      - 'package.json'
+      - '.yarnrc.yml'
+      - '*.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/**'
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'packages/**'
+      - 'apps/demo/**'
+      - '!**/README.md'
+      - 'package.json'
+      - '.yarnrc.yml'
+      - '*.lock'
+      - '.prettier*'
+      - 'tsconfig.base.json'
+      - '.github/**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
+          fetch-depth: 0
+
+      - name: ♻️ Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: ♻️ Restore packages cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+
+      # see https://github.com/vercel/next.js/pull/27362
+      - name: ♻️ Restore nextjs build demo from cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/apps/demo/.next/cache
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+
+          key: ${{ runner.os }}-demo-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('apps/demo/src/**.[jt]sx?', 'apps/demo/src/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-demo-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: 🕵️ Typecheck
+        run: yarn turbo typecheck
+
+      - name: 🔬 Linter
+        run: yarn turbo lint
+
+      - name: 🏗 Run build
+        run: yarn turbo build
+
+      - name: Prepare focus-trap for e2e tests
+        run: |
+          yarn instrument && yarn src-to-instrumented && yarn clean-coverage
+        working-directory: packages/focus-trap
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          browser: chrome
+          headed: true
+          install: false
+          working-directory: packages/focus-trap
+          start: yarn workspace demo dev
+          # quote the url to be safe against YML parsing surprises
+          wait-on: 'http://localhost:3000'
+
+      - name: Report converage
+        run: |
+          yarn report-coverage
+        working-directory: packages/focus-trap
+
+      - name: Upload coverage for focus-trap
+        uses: codecov/codecov-action@v3
+        with:
+          # The token is not required for public repos, but it makes the workflow
+          # less likely to randomly fail because of a limit in codecov CI capabilities.
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
+          # The secret token doesn't always save from false negatives though,
+          # because GitHub action are supposedly buggy when handling secrets:
+          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
+          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
+          # https://github.com/orgs/community/discussions/25701
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: shared/e2e/coverage/focus-trap
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)

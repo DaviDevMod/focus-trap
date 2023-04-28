@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { useTrapElementsSkeleton } from '../../hooks/useTrapElementsSkeleton';
+import { useDemoElementsSkeleton } from '../../hooks/useDemoElementsSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
-import { TrapElements } from './trap-elements/TrapElements';
-import { TrapElementControls } from './trap-element-controls/TrapElementControls';
+import { DemoElements } from './demo-elements/DemoElements';
+import { DemoElementControls } from './demo-element-controls/DemoElementControls';
 
 export interface SelectClickedElement {
   id: string;
@@ -12,7 +12,7 @@ export interface SelectClickedElement {
 
 export interface ControlsKeysState {
   trap: number;
-  trapElements: number;
+  demoElements: number;
 }
 
 const initialSelectClickedElement: SelectClickedElement = {
@@ -20,15 +20,15 @@ const initialSelectClickedElement: SelectClickedElement = {
   setSelectedSkeletonButtonStateById: () => {},
 };
 
-const initialControlsKeysState: ControlsKeysState = { trap: 100, trapElements: -100 };
+const initialControlsKeysState: ControlsKeysState = { trap: 100, demoElements: -100 };
 
 export function Playground() {
   const [selectClickedElementState, setSelectClickedElementState] = useState(initialSelectClickedElement);
   const [controlsKeysState, setControlsKeysState] = useState(initialControlsKeysState);
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
-  const [trapElementsRootNodeState, setTrapElementsRootNodeState] = useState<HTMLDivElement>();
-  const { trapElementsSkeletonState, skeletonButtonsIds, getSkeletonButtonElementById, patchSkeletonButton } =
-    useTrapElementsSkeleton();
+  const [demoElementsRootNodeState, setDemoElementsRootNodeState] = useState<HTMLDivElement>();
+  const { demoElementsSkeletonState, skeletonButtonsIds, getSkeletonButtonElementById, patchSkeletonButton } =
+    useDemoElementsSkeleton();
 
   // `setSelectedSkeletonButtonStateById` returns early if the `id` is still the same.
   useEffect(() => {
@@ -36,16 +36,16 @@ export function Playground() {
     if (id) setSelectedSkeletonButtonStateById(id);
   }, [selectClickedElementState]);
 
-  const trapElementsRootNodeCallbackRef = (rootNodeRef: HTMLDivElement) =>
-    rootNodeRef && setTrapElementsRootNodeState(rootNodeRef);
+  const demoElementsRootNodeCallbackRef = (rootNodeRef: HTMLDivElement) =>
+    rootNodeRef && setDemoElementsRootNodeState(rootNodeRef);
 
   return (
     <div className="flex">
       <div className="basis-[75vw]">
-        <TrapElements
-          trapElementsSkeletonState={trapElementsSkeletonState}
+        <DemoElements
+          demoElementsSkeletonState={demoElementsSkeletonState}
           setSelectClickedElementState={setSelectClickedElementState}
-          ref={trapElementsRootNodeCallbackRef}
+          ref={demoElementsRootNodeCallbackRef}
         />
       </div>
       <div className="border-grey-500 basis-[25vw] border-l-2 px-2 py-4">
@@ -55,12 +55,12 @@ export function Playground() {
               Also using `key` to reset the states at will.*/}
           <TrapControls
             key={controlsKeysState.trap}
-            trapElementsRootNodeState={trapElementsRootNodeState}
+            demoElementsRootNodeState={demoElementsRootNodeState}
             setControlsKeysState={setControlsKeysState}
             displayComponent={showTrapControlsState}
           />
-          <TrapElementControls
-            key={controlsKeysState.trapElements}
+          <DemoElementControls
+            key={controlsKeysState.demoElements}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonElementById={getSkeletonButtonElementById}
             patchSkeletonButton={patchSkeletonButton}

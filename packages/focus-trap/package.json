@@ -1,0 +1,66 @@
+{
+  "name": "@davidevmod/focus-trap",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": "https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap",
+  "type": "module",
+  "source": "./src/index.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.umd.js",
+    "default": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.umd.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "instrument": "nyc instrument ./src ./instrumented",
+    "src-to-instrumented": "replace 'packages/focus-trap/src/index' 'packages/focus-trap/instrumented/index' ../../apps/demo/tsconfig.json",
+    "instrumented-to-src": "replace 'packages/focus-trap/instrumented/index' 'packages/focus-trap/src/index' ../../apps/demo/tsconfig.json",
+    "clean-coverage": "rimraf --no-glob ./.nyc_output ./coverage",
+    "report-coverage": "nyc report -r text -r lcov",
+    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && yarn cypress open\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-run-headed": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run --headed --browser chrome\"; yarn instrumented-to-src && yarn report-coverage"
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "3.10.0",
+    "@istanbuljs/nyc-config-typescript": "1.0.2",
+    "@types/node": "18.11.18",
+    "concurrently": "7.6.0",
+    "cypress": "12.2.0",
+    "cypress-real-events": "1.7.6",
+    "eslint": "8.30.0",
+    "istanbul-lib-coverage": "3.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "2.8.1",
+    "replace": "^1.2.2",
+    "rimraf": "3.0.2",
+    "source-map-support": "0.5.21",
+    "true-myth": "^6.2.0",
+    "ts-node": "10.9.1",
+    "type-fest": "^3.5.0",
+    "typescript": "4.9.4",
+    "vite": "^4.1.0",
+    "vite-plugin-dts": "^2.1.0"
+  },
+  "keywords": [
+    "focus",
+    "trap",
+    "TypeScript",
+    "JavaScript"
+  ],
+  "author": {
+    "name": "Davide Modica",
+    "email": "davidevmod@gmail.com",
+    "url": "https://github.com/DaviDevMod"
+  }
+}

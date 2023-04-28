@@ -1,11 +1,10 @@
 {
-  "name": "focus-trap",
+  "name": "focus-trap-monorepo",
   "packageManager": "yarn@4.0.0-rc.31",
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "shared/*"
+    "packages/*"
   ],
   "scripts": {
     "g:build": "yarn workspaces foreach -p --topological-dev -v run build",
@@ -13,23 +12,25 @@
     "g:release": "yarn g:build && changeset publish",
     "g:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "postinstall": "is-ci || husky install",
-    "check:deps": "yarn dlx npm-check-updates@latest --deep",
-    "update:deps": "yarn dlx npm-check-updates@latest -u --deep",
+    "deps:check": "yarn dlx npm-check-updates@latest --deep",
+    "deps:update": "yarn dlx npm-check-updates@latest -u --deep",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 ."
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.7",
-    "@changesets/cli": "2.25.2",
+    "@changesets/changelog-github": "0.4.8",
+    "@changesets/cli": "2.26.0",
     "concurrently": "7.6.0",
-    "cypress": "11.2.0",
-    "eslint": "8.28.0",
+    "cypress": "12.2.0",
+    "eslint": "8.30.0",
     "husky": "8.0.2",
     "is-ci": "3.0.1",
-    "lint-staged": "13.0.3",
-    "prettier": "2.8.0",
+    "lint-staged": "13.1.0",
+    "prettier": "2.8.1",
     "rimraf": "3.0.2",
-    "type-fest": "^3.2.0",
-    "typescript": "4.9.3"
+    "true-myth": "^6.2.0",
+    "turbo": "^1.9.3",
+    "type-fest": "^3.5.0",
+    "typescript": "4.9.4"
   },
   "author": {
     "name": "Davide Modica",
