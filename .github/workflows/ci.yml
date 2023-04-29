@@ -110,6 +110,6 @@ jobs:
           # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
           # https://github.com/orgs/community/discussions/25701
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: shared/e2e/coverage/focus-trap
+          directory: packages/focus-trap/coverage
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
