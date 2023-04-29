@@ -86,7 +86,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
 
   const handleEscapeChange = () => dispatchTrapControlsState({ escape: !trapConfig.escape });
 
-  const isTrapActionNotBUILD = trapAction !== 'BUILD';
+  const TrapActionIsnotBuild = trapAction !== 'BUILD';
 
   const handleReset = () => setControlsKeysState((prevState) => ({ ...prevState, trap: prevState.trap + 1 }));
 
@@ -118,7 +118,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={isTrapActionNotBUILD}
+        disabled={TrapActionIsnotBuild}
       />
 
       <TrapConfigListbox
@@ -129,7 +129,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={isTrapActionNotBUILD}
+        disabled={TrapActionIsnotBuild}
       />
 
       <TrapConfigListbox
@@ -137,16 +137,16 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         configValues={returnFocusConfigValues}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={isTrapActionNotBUILD}
+        disabled={TrapActionIsnotBuild}
       />
 
-      <Switch label="lock" checked={trapConfig.lock} handleChange={handleLockChange} disabled={isTrapActionNotBUILD} />
+      <Switch label="lock" checked={trapConfig.lock} handleChange={handleLockChange} disabled={TrapActionIsnotBuild} />
 
       <Switch
         label="escape"
         checked={trapConfig.escape}
         handleChange={handleEscapeChange}
-        disabled={isTrapActionNotBUILD}
+        disabled={TrapActionIsnotBuild}
       />
 
       <ResetButton disabled={trapAction === undefined} handleClick={handleReset} />
