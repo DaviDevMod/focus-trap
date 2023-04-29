@@ -21,7 +21,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "focus-trap": ["../../../packages/focus-trap/src/index"]
+      "@davidevmod/focus-trap": ["../../../packages/focus-trap/src/index"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

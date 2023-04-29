@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import { RequireExactlyOne } from 'type-fest';
-import { focusTrap } from 'focus-trap';
+import { focusTrap } from '@davidevmod/focus-trap';
 
 import { ControlsKeysState } from '../Playground';
 import { getHTMLElementFlatSubTree, strToBoolOrItself } from '../../../utils/utils';
