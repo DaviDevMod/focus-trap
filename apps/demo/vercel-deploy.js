@@ -3,6 +3,11 @@
 /*
 End a commit message with the `DEEPLOY_FLAG`
 to trigger a deployment when the commit is pushed.
+
+NOTE:
+The below implementation will fail when overwriting previously pushed commits.
+However the `DEPLOY_FLAG` should be used only when pushing on the main branch
+and force-pushing on the main branch should be avoided.
 */
 
 const { spawnSync } = require('child_process');
