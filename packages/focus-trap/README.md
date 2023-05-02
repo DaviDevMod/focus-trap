@@ -23,6 +23,10 @@ yarn add @davidevmod/focus-trap
 
 `import { focusTrap } from '@davidevmod/focus-trap'` and call it with an argument of type `TrapArg`.
 
+<details open>
+<summary>Type of <code>TrapArg</code></summary>
+<br>
+
 ```ts
 type Focusable = HTMLElement | SVGElement;
 
@@ -41,9 +45,11 @@ type TrapAction = 'PAUSE' | 'RESUME' | 'DEMOLISH';
 type TrapArg = Roots | TrapConfig | TrapAction;
 ```
 
+</details>
+
 Here's an example:
 
-```javascript
+```ts
 import { focusTrap } from '@davidevmod/focus-trap';
 
 const myElement = document.getElementById('myID');
@@ -93,7 +99,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 | escape       | No       | `boolean \| Function`            |    `true`     |
 
 - **roots**  
-  Array of elements (and/or IDs) within which the focus has to be trapped.
+  The array of elements (and/or IDs) within which the focus has to be trapped.
 
 - **initialFocus**  
   The element receiving the focus as soon as the trap is built.  
@@ -108,7 +114,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 - **lock**  
   The behavior for clicks outside of the trap.  
   By default clicks on elements outside of the trap are prevented.  
-  You can provide the boolean `false` to switch off the default behaviour or alternatively your own hamdler for the click events in question.
+  You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the click events in question.
 
   > **Note**
   > Only `mousedown`, `touchstart`, `click` and the browser default behavior are prevented.  
@@ -117,7 +123,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 - **escape**  
   The behaviour for `Esc` key presses.  
   By default the trap is demolished Whenever the `Esc` key is pressed.  
-  You can provide the boolean `false` to switch off the default behaviour or alternatively your own hamdler for the keyboard events in question.
+  You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the keyboard events in question.
 
 ## Return value
 
@@ -138,7 +144,7 @@ The are no dependencies and the library can run in any major browser.
 > The codebase is tested only against Chromium-based browsers.
 > That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular <kbd>Tab</kbd> key presses), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow to get native browser events in Cypress, but only in presence of Chrome Devtools.
 
-## Special thanks :red_heart:
+## Special thanks :heart:
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tab indexes and tabbability, is took from [tabbable](https://github.com/focus-trap/tabbable).
 
