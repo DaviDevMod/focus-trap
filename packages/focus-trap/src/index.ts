@@ -2,11 +2,11 @@ import { throwInEnv } from './exceptions.js';
 import { Roots, TrapConfig } from './state.js';
 import { build, resume, demolish, pause } from './trap-actions.js';
 
-type LiteralTrapAction = 'RESUME' | 'DEMOLISH' | 'PAUSE';
+type TrapAction = 'RESUME' | 'DEMOLISH' | 'PAUSE';
 
-type TrapAction = Roots | TrapConfig | LiteralTrapAction;
+type TrapArg = Roots | TrapConfig | TrapAction;
 
-export const focusTrap = (arg: TrapAction) => {
+export const focusTrap = (arg: TrapArg) => {
   const result =
     typeof arg === 'string'
       ? arg === 'DEMOLISH'
@@ -19,4 +19,4 @@ export const focusTrap = (arg: TrapAction) => {
   if (result.isErr) throwInEnv(result.error);
 };
 
-export type { Roots, TrapConfig, LiteralTrapAction, TrapAction };
+export type { TrapArg, Roots, TrapConfig, TrapAction };
