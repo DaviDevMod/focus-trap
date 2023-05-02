@@ -1,6 +1,7 @@
-# focus-trap
+# @davidevmod/focus-trap
 
-[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/@davidevmod/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)  
+[![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://prettier.io/) [![eslint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
 
 Trap the focus within your DOM elements.
 
@@ -23,8 +24,8 @@ yarn add @davidevmod/focus-trap
 
 `import { focusTrap } from '@davidevmod/focus-trap'` and call it with an argument of type `TrapArg`.
 
-<details open>
-<summary>Type of <code>TrapArg</code></summary>
+<details>
+<summary><code>TrapArg</code> type:</summary>
 <br>
 
 ```ts
@@ -47,6 +48,8 @@ type TrapArg = Roots | TrapConfig | TrapAction;
 
 </details>
 
+<br>
+
 Here's an example:
 
 ```ts
@@ -56,13 +59,13 @@ const myElement = document.getElementById('myID');
 
 // You can build a trap in differt ways:
 
-focusTrap(['myID']);
-
-focustrap([myElement]);
+focustrap({ roots: [myElement] });
 
 focustrap({ roots: ['myID'] });
 
-focustrap({ roots: [myElement] });
+focustrap([myElement]);
+
+focusTrap(['myID']);
 
 // All of the above calls would build the very same trap.
 
@@ -88,7 +91,7 @@ By default, when building a trap by providing only `roots`, this is what happens
 
 ## TrapConfig
 
-You can tweak the behaviour of your trap by providing a `TrapConfig`:
+You can tweak the behaviour of your traps by providing a `TrapConfig`:
 
 | Property     | Required | Type                             | Default value |
 | ------------ | -------- | -------------------------------- | :-----------: |
