@@ -1,18 +1,17 @@
 # @davidevmod/focus-trap
 
-[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/@davidevmod/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)  
-[![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://prettier.io/) [![eslint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
+[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/@davidevmod/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 Trap the focus within your DOM elements.
 
 ## Features
 
 - Trap the focus within a group of DOM elements
-- Choose an element receiving the initial focus within your trap
+- Choose an element receiving the initial focus
 - Decide whether to prevent clicks on elements outside of the trap
 - Possibility to customise the behaviour of `Esc` key presses
-- Choose an element receiving the focus after a trap is left
-- Build, demolish, pause and resume a trap at any time
+- Choose an element receiving the focus after a trap is demolished
+- Build, demolish, pause and resume your focus trap at any time
 
 ## Installation
 
@@ -81,17 +80,17 @@ focusTrap('DEMOLISH');
 
 ## Default behaviour
 
-By default, when building a trap by providing only `roots`, this is what happens:
+By default, when building a focus trap by providing only `roots`, this is what happens:
 
-- The focus is given to the first tabbable element in the trap
-- `Tab` and `Shift+Tab` keys cycles through the trap's tabbable elements
-- Click events outside of the trap are prevented
+- The focus is given to the first tabbable element contained in the roots
+- `Tab` and `Shift+Tab` keys cycles through the roots' tabbable elements
+- Click events outside of the focus trap are prevented
 - Whenever the `Esc` key is pressed, the trap is demolished
 - Once the trap is demolished, focus is returned to what was the [activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
 
 ## TrapConfig
 
-You can tweak the behaviour of your traps by providing a `TrapConfig`:
+You can tweak the behaviour of your trap by providing a `TrapConfig`:
 
 | Property     | Required | Type                             | Default value |
 | ------------ | -------- | -------------------------------- | :-----------: |
@@ -145,7 +144,7 @@ The are no dependencies and the library can run in any major browser.
 
 > **Note**
 > The codebase is tested only against Chromium-based browsers.
-> That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular <kbd>Tab</kbd> key presses), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow to get native browser events in Cypress, but only in presence of Chrome Devtools.
+> That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular <kbd>Tab</kbd> key presses), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow for native browser events in Cypress, but only in the presence of Chrome Devtools.
 
 ## Special thanks :heart:
 
