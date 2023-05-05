@@ -61,10 +61,8 @@ declare global {
         from: JQuery<HTMLElement> | null,
         direction: Direction,
         len: number,
-        check: boolean,
-        firstCall: boolean,
-        cycle: string
-      ) => Cypress.Chainable<string>;
+        check: boolean
+      ) => Cypress.Chainable<string[]>;
 
       assertTabCycle: (
         collection: JQuery<HTMLElement>,
@@ -208,26 +206,28 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
   });
 });
 
-// Call `getNextTabbedDatasetOrder` multiple times and return a concatenation of the orders of the focused elements.
-Cypress.Commands.add('getTabCycle', (origin, direction, len, check, firstCall, cycle) => {
-  if (firstCall) {
-    if (len < 2) throw new Error('Please provide a tab cycle length greater than 1.');
-    if (!Number.isInteger(len)) throw new Error('Please provide an integer tab cycle length.');
-    cy.wrap(origin).focus();
-  }
-  cy.getNextTabbedDatasetOrder(direction, check).then((order) =>
-    len === 1 ? cycle + order : cy.getTabCycle(null, direction, len - 1, check, false, cycle + order)
+// Return an array filled with results from `getNextTabbedDatasetOrder`.
+Cypress.Commands.add('getTabCycle', (origin, direction, len, check) => {
+  if (len < 2) throw new Error('Please provide a tab cycle length greater than 1.');
+  if (!Number.isInteger(len)) throw new Error('Please provide an integer tab cycle length.');
+
+  const tabCycle: string[] = new Array(len);
+
+  cy.wrap(origin).focus();
+
+  cy.wrap(tabCycle).each((_, i) =>
+    cy.getNextTabbedDatasetOrder(direction, check).then((datasetOrder) => (tabCycle[i] = datasetOrder))
   );
 });
 
-// Call `getTabCycle` and assert whether its returned tab cycle is a substring of `repeatedOrder`.
+// Call `getTabCycle` and assert whether the tab cycle is a substring of `repeatedOrder`.
 Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedOrder, check) => {
   cy.wrap(collection)
     .then(($collection) => (check ? $collection : $collection.slice(0, 1)))
     .each(($origin) => {
-      cy.getTabCycle($origin, direction, len, check, true, '').then((cycle) => {
+      cy.getTabCycle($origin, direction, len, check).then((cycle) => {
         expect(cycle).to.have.length(len);
-        expect(repeatedOrder).to.have.string(cycle);
+        expect(repeatedOrder).to.have.string(cycle.join(''));
       });
     });
 });
