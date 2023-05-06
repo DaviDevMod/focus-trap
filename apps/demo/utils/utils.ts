@@ -5,18 +5,18 @@ export const getHTMLElementFlatSubTree = (
   root: HTMLElement | undefined,
   filter = (el: HTMLElement): boolean => true
 ) => {
-  const array: HTMLElement[] = [];
+  const flatSubTree: HTMLElement[] = [];
 
-  const pushElementSubTree = (el: HTMLElement) => {
-    array.push(el);
+  const recursivePushInSubTree = (el: HTMLElement) => {
+    flatSubTree.push(el);
     Array.from(el.children).forEach(
-      (child) => child instanceof HTMLElement && filter(child) && pushElementSubTree(child)
+      (child) => child instanceof HTMLElement && filter(child) && recursivePushInSubTree(child)
     );
   };
 
-  if (root) pushElementSubTree(root);
+  if (root) recursivePushInSubTree(root);
 
-  return array;
+  return flatSubTree;
 };
 
 export const strToBoolOrItself = (str: string) => (/^(true|false)$/.test(str) ? str === 'true' : str);
