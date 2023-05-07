@@ -1,7 +1,8 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
+'use client';
 
-function MyApp({ Component, pageProps }: AppProps) {
+import { Playground } from '../components/playground/Playground';
+
+export default function HomePage() {
   // https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
   // https://github.com/cypress-io/cypress/issues/3924#issuecomment-481430796
   // @ts-ignore
@@ -10,7 +11,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     window.appReady = true;
   }
 
-  return <Component {...pageProps} />;
+  return <Playground />;
 }
-
-export default MyApp;
