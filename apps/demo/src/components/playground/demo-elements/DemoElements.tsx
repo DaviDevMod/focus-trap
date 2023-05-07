@@ -21,7 +21,7 @@ export const DemoElements = forwardRef(function DemoElements(
       <span className="ml-3 text-indigo-700">. . .</span>
       <span className="mx-2 inline-block w-[30vw] border border-indigo-700 sm:w-[50vw]" />
       <span className="text-indigo-700">. . .</span>
-      <span className="absolute top-1.5 left-[16vw] rounded-lg bg-white bg-opacity-80 px-2 text-xs sm:left-16 sm:text-sm">
+      <span className="absolute left-[16vw] top-1.5 rounded-lg bg-white bg-opacity-80 px-2 text-xs sm:left-16 sm:text-sm">
         {rootId}
       </span>
       {rootChildren.map((group) => (
@@ -49,7 +49,7 @@ export const DemoElements = forwardRef(function DemoElements(
                   display ? 'inline-block' : 'hidden'
                 } relative m-[1.8vw] h-[10vw] w-[10vw] rounded border border-indigo-500 text-sm font-medium text-gray-500 transition hover:scale-110 hover:shadow-xl focus:scale-110 focus:text-indigo-600 focus:shadow-xl focus:outline-none focus:ring-1 sm:m-3 sm:h-16 sm:w-16`}
               >
-                <span className="absolute top-0 left-1 text-xs text-gray-500">{id}</span>
+                <span className="absolute left-1 top-0 text-xs text-gray-500">{id}</span>
                 {tabIndex}
               </button>
             )
