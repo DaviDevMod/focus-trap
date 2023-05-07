@@ -1,20 +1,19 @@
-// I just discovered the TreeWalker API: https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker
-// But it looks like an overkill. I'll stick with the simple recursion below and keep this comment
-// just in case the use case becomes complex enough to justify a TreWalker implementation.
+// The TreeWalker API (https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker)
+// looks like an overkill for the current usecase.
 export const getHTMLElementFlatSubTree = (
   root: HTMLElement | undefined,
   filter = (el: HTMLElement): boolean => true
 ) => {
   const flatSubTree: HTMLElement[] = [];
 
-  const recursivePushInSubTree = (el: HTMLElement) => {
+  const recursivelyPushInSubTree = (el: HTMLElement) => {
     flatSubTree.push(el);
     Array.from(el.children).forEach(
-      (child) => child instanceof HTMLElement && filter(child) && recursivePushInSubTree(child)
+      (child) => child instanceof HTMLElement && filter(child) && recursivelyPushInSubTree(child)
     );
   };
 
-  if (root) recursivePushInSubTree(root);
+  if (root) recursivelyPushInSubTree(root);
 
   return flatSubTree;
 };
