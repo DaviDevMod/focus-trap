@@ -154,17 +154,11 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
   return err('There are no tabbable elements in the focus trap.');
 };
 
-export const getDestination = (
+const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   roots: Focusable[],
   origin: Focusable,
   direction: Direction
-): Result<Focusable | Unit, string> => {
-  const originTabIndex = getConsistentTabIndex(origin);
-
-  if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, direction);
-
-  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, direction);
-
+): Result<Focusable, string> => {
   const positives = positiveTabbables(roots);
 
   let index = positives.findIndex((el) => el === origin);
@@ -186,4 +180,18 @@ export const getDestination = (
   if (nextFirstOrLastZero) return ok(nextFirstOrLastZero);
 
   return err('There are no tabbable elements in the focus trap.');
+};
+
+export const getDestination = (
+  roots: Focusable[],
+  origin: Focusable,
+  direction: Direction
+): Result<Focusable | Unit, string> => {
+  const originTabIndex = getConsistentTabIndex(origin);
+
+  if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, direction);
+
+  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, direction);
+
+  return nextPositiveOrVeryFirstOrVeryLastTabbable(roots, origin, direction);
 };
