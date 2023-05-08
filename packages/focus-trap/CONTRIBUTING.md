@@ -1,6 +1,6 @@
 ## Setup
 
-_@davidevmod/focus-trap_ lives in a monorepo that includes an interactive [demo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo) app used to e2e test the package.
+[@davidevmod/focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap) lives in a monorepo that includes an interactive [demo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo) app used to e2e test the package.
 
 To contribute to [the monorepo](https://github.com/DaviDevMod/focus-trap), make a fork and clone it to your local machine.
 
@@ -21,7 +21,7 @@ You can start a server on http://localhost:3000 with:
 yarn workspace demo dev
 ```
 
-Changes to both [@davidevmod/focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap) and the [demo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo) will be hot-reloaded.
+Changes to both _@davidevmod/focus-trap_ and the _demo_ will be hot-reloaded.
 
 ## Running tests
 
@@ -45,14 +45,14 @@ yarn workspace @davidevmod/focus-trap e2e-open
 
 This last option is especially useful when editing tests.  
 Changes to the [tests](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap/cypress) will be hot-reloaded.  
-However changes to _@davidevmod/focus-trap_ would not be reflected in the running server, because tests do not use its source code directly (an instrumentation step takes place, which allows for tracking code coverage).  
+However changes to _@davidevmod/focus-trap_ would not be reflected in the running server, because tests do not use its source code directly (an instrumentation step takes place, allowing for tracking code coverage).  
 To address the issue, another command is made available:
 
 ```bash
 yarn workspace @davidevmod/focus-trap e2e-open-edit
 ```
 
-Which provides hot-reload for both the tests and the package source code, with the shortcoming of being unable to provide coverage reports.
+Which comes with hot-reload for both the tests and the package source code, with the shortcoming of being unable to provide coverage reports.
 
 ## Contributing to _@davidevmod/focus-trap_
 
@@ -79,7 +79,7 @@ To get an overview of the package and how it works, read the the [README.md](htt
 
 - As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
 
-- Avoid force-pushing your changes, especially when updating your PR based on review feedback. Force-pushed changes are not easily viewable on GitHub, and not at all viewable if a force-push also rebases against main. TypeScript PRs are squash merged, so the specific commits on your PR branch do not matter, only the PR title itself. Don't worry about having a perfect commit history; instead focus on making your changes as easy to review and merge as possible.
+- Avoid force-pushing your changes, especially when updating your PR based on review feedback. Force-pushed changes are not easily viewable on GitHub, and not at all viewable if a force-push also rebases against main. PRs will be squash merged, so the specific commits on your PR branch do not matter, only the PR title itself. Don't worry about having a perfect commit history; instead focus on making your changes as easy to review and merge as possible.
 
 - When applicable, write new tests and/or update the [README.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/README.md).
 
@@ -87,8 +87,9 @@ To get an overview of the package and how it works, read the the [README.md](htt
 
 - Look for **Good First Issue** and **Help Wanted** [labeled issues](https://github.com/DaviDevMod/focus-trap/labels).
 
-- Review our documentation! We often aren't native english speakers, and our grammar might be a bit off. Any help we can get that makes our documentation more digestible is appreciated!
+- Review our documentation!  
+  We often aren't native english speakers, and our grammar might be a bit off. Any help we can get that makes our documentation more digestible is appreciated!
 
 #### Do you have questions?
 
-- Feel fre to open a new [Discussion](https://github.com/DaviDevMod/focus-trap/discussions/new/choose).
+- Open a new [Discussion](https://github.com/DaviDevMod/focus-trap/discussions/new/choose).
