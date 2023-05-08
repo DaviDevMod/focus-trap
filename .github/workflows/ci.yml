@@ -77,9 +77,9 @@ jobs:
       - name: 🏗 Run build
         run: yarn turbo build
 
-      - name: Prepare focus-trap for e2e tests
+      - name: Prepare repo for e2e tests
         run: |
-          yarn instrument && yarn src-to-instrumented && yarn clean-coverage
+          yarn instrument && yarn src-to-instrumented
         working-directory: packages/focus-trap
 
       - name: Cypress run
