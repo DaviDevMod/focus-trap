@@ -27,9 +27,10 @@
     "instrumented-to-src": "replace 'packages/focus-trap/instrumented/index' 'packages/focus-trap/src/index' ../../apps/demo/tsconfig.json",
     "clean-coverage": "rimraf --no-glob ./.nyc_output ./coverage",
     "report-coverage": "nyc report -r text -r lcov",
-    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && yarn cypress open\"; yarn instrumented-to-src && yarn report-coverage",
     "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-run-headed": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run --headed --browser chrome\"; yarn instrumented-to-src && yarn report-coverage"
+    "e2e-run-headed": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run --headed --browser chrome\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && yarn cypress open\"; yarn instrumented-to-src && yarn report-coverage",
+    "e2e-open-edit": "concurrently -k \"yarn workspace demo dev\" \"yarn cypress open\";"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.10.4",
