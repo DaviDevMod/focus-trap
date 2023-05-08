@@ -49,7 +49,7 @@ However changes to _@davidevmod/focus-trap_ would not be reflected in the runnin
 To address the issue, another command is made available:
 
 ```bash
-yarn workspace @davidevmod/focus-trap e2e-open-edit
+yarn workspace @davidevmod/focus-trap e2e-open-no-instrument
 ```
 
 Which comes with hot-reload for both the tests and the package source code, with the shortcoming of being unable to provide coverage reports.
