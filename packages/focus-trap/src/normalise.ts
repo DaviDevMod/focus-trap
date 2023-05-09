@@ -43,7 +43,7 @@ export const normaliseRoots = (roots: Roots): Result<Focusable[], string> => {
   return ok(dedupeRoots(resolvedRoots).filter(isNotNestedRoot).sort(sortRoots));
 };
 
-// This is the best time to get `document.activeElement` for the default `returnFocus`.
+// Get `document.activeElement` for the default `returnFocus`.
 const normaliseReturnFocus = (returnFocus: TrapConfig['returnFocus']) => {
   const resolvedReturnFocus = resolveId(returnFocus);
   return resolvedReturnFocus === true ? (document.activeElement as Focusable) : resolvedReturnFocus || null;

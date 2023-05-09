@@ -131,9 +131,11 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
     if (
       (alternativeDestinationRootIndex === 0 &&
         direction === 'FORWARD' &&
+        // `origin` follows the last `root` or it's the last root itself.
         (origin.compareDocumentPosition(roots[roots.length - 1]) & 2 || roots[roots.length - 1] === origin)) ||
       (alternativeDestinationRootIndex === roots.length - 1 &&
         direction === 'BACKWARD' &&
+        // `origin` precedes the first `root` or is contained in it (including the root itself).
         (origin.compareDocumentPosition(roots[0]) & 4 || roots[0].contains(origin)))
     ) {
       const positives = positiveTabbables(roots);
