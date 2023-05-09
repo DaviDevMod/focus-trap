@@ -29,11 +29,8 @@ const handleKeyPress = (event: KeyboardEvent): void => {
       event.preventDefault();
       destination.value.focus();
     }
-  } else if (
-    (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) &&
-    state.normalisedConfig?.escape !== false
-  ) {
-    demolish(true);
+  } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+    if (state.normalisedConfig?.escape) demolish(true);
   }
 };
 
@@ -43,11 +40,7 @@ export const eventListeners = (action: 'ADD' | 'REMOVE'): void => {
     REMOVE: 'removeEventListener' as keyof Document,
   };
 
-  (document[listenerActions[action]] as Function)(
-    'keydown',
-    state.normalisedConfig?.escape instanceof Function ? state.normalisedConfig.escape : handleKeyPress,
-    true
-  );
+  (document[listenerActions[action]] as Function)('keydown', handleKeyPress, true);
 
   if (state.normalisedConfig?.lock) {
     for (const event of ['mousedown', 'touchstart', 'click']) {

@@ -8,8 +8,8 @@ Trap the focus within your DOM elements.
 
 - Trap the focus within a group of DOM elements
 - Choose an element receiving the initial focus
-- Decide whether to prevent clicks on elements outside of the trap
-- Possibility to customise the behaviour of <kbd>Esc</kbd> key presses
+- Customise the behaviour of clicks on elements outside of the trap
+- Decide whether to demolish a trap after an <kbd>Esc</kbd> key press
 - Choose an element receiving the focus after a trap is demolished
 - Build, demolish, pause and resume your focus trap at any time
 
@@ -37,7 +37,7 @@ interface TrapConfig {
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
   lock?: boolean | Function;
-  escape?: boolean | Function;
+  escape?: boolean;
 }
 
 type TrapAction = 'PAUSE' | 'RESUME' | 'DEMOLISH';
@@ -98,7 +98,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 | initialFocus | No       | `boolean \| Focusable \| string` |    `true`     |
 | returnFocus  | No       | `boolean \| Focusable \| string` |    `true`     |
 | lock         | No       | `boolean \| Function`            |    `true`     |
-| escape       | No       | `boolean \| Function`            |    `true`     |
+| escape       | No       | `boolean`                        |    `true`     |
 
 - **roots**  
   The array of elements (and/or IDs) within which the focus has to be trapped.
@@ -125,7 +125,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 - **escape**  
   The behaviour for <kbd>Esc</kbd> key presses.  
   By default the trap is demolished Whenever the <kbd>Esc</kbd> key is pressed.  
-  You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the keyboard events in question.
+  You can provide the boolean `false` to switch off the default behaviour.
 
 ## TrapAction
 

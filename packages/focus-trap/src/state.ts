@@ -14,7 +14,7 @@ export interface TrapConfig {
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
   lock?: boolean | Function;
-  escape?: boolean | Function;
+  escape?: boolean;
 }
 
 // The shape of config used internally by the focus trap.
@@ -23,7 +23,7 @@ export interface NormalisedTrapConfig {
   initialFocus: boolean | Focusable;
   returnFocus: Focusable | null;
   lock: boolean | Function;
-  escape: boolean | Function;
+  escape: boolean;
 }
 
 interface State {
