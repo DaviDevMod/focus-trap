@@ -9,7 +9,7 @@ Trap the focus within your DOM elements.
 - Trap the focus within a group of DOM elements
 - Choose an element receiving the initial focus
 - Decide whether to prevent clicks on elements outside of the trap
-- Possibility to customise the behaviour of `Esc` key presses
+- Possibility to customise the behaviour of <kbd>Esc</kbd> key presses
 - Choose an element receiving the focus after a trap is demolished
 - Build, demolish, pause and resume your focus trap at any time
 
@@ -85,7 +85,7 @@ By default, when building a focus trap by providing only `roots`, this is what h
 - The focus is given to the first tabbable element contained in the roots
 - `Tab` and `Shift+Tab` keys cycles through the roots' tabbable elements
 - Click events outside of the focus trap are prevented
-- Whenever the `Esc` key is pressed, the trap is demolished
+- Whenever the <kbd>Esc</kbd> key is pressed, the trap is demolished
 - Once the trap is demolished, focus is returned to what was the [activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
 
 ## TrapConfig
@@ -123,8 +123,8 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
   > So, if you need to, you can make an element outside of the trap clickable even when `lock` is true, for example, by listening for `mouseup` events.
 
 - **escape**  
-  The behaviour for `Esc` key presses.  
-  By default the trap is demolished Whenever the `Esc` key is pressed.  
+  The behaviour for <kbd>Esc</kbd> key presses.  
+  By default the trap is demolished Whenever the <kbd>Esc</kbd> key is pressed.  
   You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the keyboard events in question.
 
 ## Return value
