@@ -127,6 +127,10 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
   By default the trap is demolished Whenever the <kbd>Esc</kbd> key is pressed.  
   You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the keyboard events in question.
 
+## TrapAction
+
+Calling `focus-trap` with either `PAUSE`, `RESUME` or `DEMOLISH` will either pause, resume or demolish a focus trap.
+
 ## Return value
 
 `undefined` :shrug:
