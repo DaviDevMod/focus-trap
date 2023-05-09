@@ -10,10 +10,10 @@ The library manages a global [state](https://github.com/DaviDevMod/focus-trap/bl
 
 When [focus-trap](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/index.ts) is called with a `TrapConfig` (or at least the `Roots`) a [build](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/trap-actions.ts) action is performed:
 
-- If there is a trap already running, it is demolished
-- The global state is updated
-- An eventual `initialFocus` is given
-- Event listeners are added to the DOM
+- Demolish an eventual focus trap that was already running
+- Update the global state
+- Give `initialFocus` when applicable
+- Add event listeners to the DOM
 
 ## The events
 
