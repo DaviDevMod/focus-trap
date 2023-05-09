@@ -129,7 +129,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 
 ## TrapAction
 
-Calling `focus-trap` with either `PAUSE`, `RESUME` or `DEMOLISH` will either pause, resume or demolish a focus trap.
+Calling `focus-trap` with `PAUSE`, `RESUME` or `DEMOLISH` will pause, resume or demolish your focus trap.
 
 ## Return value
 
