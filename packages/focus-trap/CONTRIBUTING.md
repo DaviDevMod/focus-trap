@@ -56,7 +56,7 @@ Which comes with hot-reload for both the tests and the package source code, with
 
 ## Contributing to _@davidevmod/focus-trap_
 
-To get an overview of the package and how it works, read the the [README.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/README.md) and check out the [how-it-works.md]()
+To get an overview of the package and how it works, read the the [README.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/README.md) and check out the [how-it-works.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/how-it-works.md)
 
 #### Did you find a bug or want to propose a feature?
 
