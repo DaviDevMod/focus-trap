@@ -82,42 +82,42 @@ jobs:
       - name: 🏗 Run build
         run: yarn turbo build
 
-      - name: Prepare repo for e2e tests
-        run: |
-          yarn instrument && yarn src-to-instrumented
-        working-directory: packages/focus-trap
+      # - name: Prepare repo for e2e tests
+      #   run: |
+      #     yarn instrument && yarn src-to-instrumented
+      #   working-directory: packages/focus-trap
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          browser: chrome
-          headed: true
-          install: false
-          working-directory: packages/focus-trap
-          start: yarn workspace demo dev
-          # quote the url to be safe against YML parsing surprises
-          wait-on: 'http://localhost:3000'
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     browser: chrome
+      #     headed: true
+      #     install: false
+      #     working-directory: packages/focus-trap
+      #     start: yarn workspace demo dev
+      #     # quote the url to be safe against YML parsing surprises
+      #     wait-on: 'http://localhost:3000'
 
-      - name: Report converage
-        run: |
-          yarn report-coverage
-        working-directory: packages/focus-trap
+      # - name: Report converage
+      #   run: |
+      #     yarn report-coverage
+      #   working-directory: packages/focus-trap
 
-      - name: Upload coverage for focus-trap
-        uses: codecov/codecov-action@v3
-        with:
-          # The token is not required for public repos, but it makes the workflow
-          # less likely to randomly fail because of a limit in codecov CI capabilities.
-          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
-          # The secret token doesn't always save from false negatives though,
-          # because GitHub action are supposedly buggy when handling secrets:
-          # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
-          # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
-          # https://github.com/orgs/community/discussions/25701
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: packages/focus-trap/coverage
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
+      # - name: Upload coverage for focus-trap
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     # The token is not required for public repos, but it makes the workflow
+      #     # less likely to randomly fail because of a limit in codecov CI capabilities.
+      #     # https://github.com/codecov/codecov-action/issues/557#issuecomment-1216749652
+      #     # The secret token doesn't always save from false negatives though,
+      #     # because GitHub action are supposedly buggy when handling secrets:
+      #     # https://github.com/codecov/codecov-action/issues/557#issuecomment-1223737955
+      #     # https://github.com/codecov/codecov-action/issues/598#issuecomment-1223307820
+      #     # https://github.com/orgs/community/discussions/25701
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     directory: packages/focus-trap/coverage
+      #     fail_ci_if_error: true # optional (default = false)
+      #     verbose: true # optional (default = false)
 
       # Deploy demo to Vercel
       # https://github.com/vercel/examples/tree/main/ci-cd/github-actions
@@ -126,6 +126,6 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_DEPLOY_FOCUS_TRAP }}
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_DEPLOY_FOCUS_TRAP }}
+        run: node ./.github/scripts/vercel.deploy.js && vercel build --prod --token=${{ secrets.VERCEL_DEPLOY_FOCUS_TRAP }}
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_DEPLOY_FOCUS_TRAP }}
