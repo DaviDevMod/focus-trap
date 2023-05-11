@@ -27,3 +27,6 @@ node_modules
 
 # turborepo https://turbo.build/repo/docs/getting-started/existing-monorepo#edit-gitignore
 .turbo
+
+# Build Output API: https://github.com/vercel/examples/tree/main/ci-cd/github-actions
+.vercel
