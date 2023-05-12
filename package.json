@@ -14,7 +14,8 @@
     "postinstall": "is-ci || husky install",
     "deps:check": "yarn dlx npm-check-updates@latest --deep",
     "deps:update": "yarn dlx npm-check-updates@latest -u --deep",
-    "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 ."
+    "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 .",
+    "update:repo": "yarn set version latest && yarn deps:update && yarn install && yarn dedupe"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.8",
