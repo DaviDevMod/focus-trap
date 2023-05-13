@@ -35,8 +35,9 @@ export function Playground() {
     if (id) setSelectedSkeletonButtonStateById(id);
   }, [selectClickedElementState]);
 
-  const demoElementsRootNodeCallbackRef = (rootNodeRef: HTMLDivElement) =>
+  const demoElementsRootNodeCallbackRef = (rootNodeRef: HTMLDivElement) => {
     rootNodeRef && setDemoElementsRootNodeState(rootNodeRef);
+  };
 
   return (
     <div className="flex">

@@ -23,7 +23,7 @@ export function Listbox<T extends string | string[]>({
   multiple,
 }: ListboxProps<T>) {
   return (
-    <HeadlessUIListbox disabled={disabled} value={value} onChange={handleChange} multiple={multiple}>
+    <HeadlessUIListbox disabled={!!disabled} value={value} onChange={handleChange} multiple={!!multiple}>
       <h3>{label}</h3>
       <div className="relative mb-4">
         <HeadlessUIListbox.Button
@@ -32,8 +32,7 @@ export function Listbox<T extends string | string[]>({
           } relative h-9 w-full cursor-default rounded-lg pl-3 pr-10 text-left text-sm shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300`}
           data-cy={`Toggle ${label} Listbox`}
         >
-          {/* Since `T extends string | string[]`, an empty string is used as nullish value
-              to conditionally pass a `displayValue`. Do not swap the `||` for a `??` */}
+          {/* We don't want an empty string as a `displayValue`. Do not swap the `||` for a `??`. */}
           <span className="block w-[16vw] truncate">{displayValue || value}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDoubleDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

@@ -71,7 +71,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
 
   useEffect(() => {
     // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
-    // without having them (and their whole branch) appear as options for <TrapConfigListbox> renedered in this component.
+    // without having them (and their whole subtree) appear as options for <TrapConfigListbox> renedered in this component.
     setDemoElementsState(getHTMLElementFlatSubTree(demoElementsRootNodeState, (el) => !!el.id));
   }, [demoElementsRootNodeState]);
 
@@ -82,7 +82,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
 
   const returnFocusConfigValues = useMemo(() => ({ returnFocus: trapConfig.returnFocus }), [trapConfig.returnFocus]);
 
-  const TrapActionIsnotBuild = trapAction !== 'BUILD';
+  const TrapActionIsNotBuild = trapAction !== 'BUILD';
   const handleSwitchChange = (checked: boolean, label: keyof Pick<DemoTrapConfig, 'lock' | 'escape'>) => {
     dispatchTrapControlsState({ [label]: checked } as TrapControlsStateReducerAction);
   };
@@ -117,7 +117,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsnotBuild}
+        disabled={TrapActionIsNotBuild}
       />
 
       <TrapConfigListbox
@@ -128,7 +128,7 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsnotBuild}
+        disabled={TrapActionIsNotBuild}
       />
 
       <TrapConfigListbox
@@ -136,21 +136,21 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         configValues={returnFocusConfigValues}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsnotBuild}
+        disabled={TrapActionIsNotBuild}
       />
 
       <Switch
         label="lock"
         checked={trapConfig.lock}
-        handleChange={handleswitchChange}
-        disabled={TrapActionIsnotBuild}
+        handleChange={handleSwitchChange}
+        disabled={TrapActionIsNotBuild}
       />
 
       <Switch
         label="escape"
         checked={trapConfig.escape}
         handleChange={handleSwitchChange}
-        disabled={TrapActionIsnotBuild}
+        disabled={TrapActionIsNotBuild}
       />
 
       <ResetButton disabled={trapAction === undefined} handleClick={handleReset} />

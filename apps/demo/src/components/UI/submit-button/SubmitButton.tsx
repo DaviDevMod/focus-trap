@@ -6,6 +6,7 @@ interface SubmitButtonProps {
 }
 
 export function SubmitButton({ disabled, label }: SubmitButtonProps) {
+  // Used to change the styles of the button at every `mouseOver`.
   const [styleCounterState, setStylecounterState] = useState(0);
 
   const handleMouseOver = () => setStylecounterState((prevState) => prevState + 1);

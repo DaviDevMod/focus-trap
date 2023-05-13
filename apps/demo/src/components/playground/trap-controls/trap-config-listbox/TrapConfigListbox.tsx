@@ -67,8 +67,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   ];
 
   const handleListboxChange = (selectedOptions: string | string[]) => {
-    // A Union type can't be used to access properties: https://github.com/microsoft/TypeScript/issues/10530
-    dispatchTrapControlsState({ [configProp]: selectedOptions } as unknown as TrapControlsStateReducerAction);
+    dispatchTrapControlsState({ [configProp]: selectedOptions } as TrapControlsStateReducerAction);
 
     // If the filter in the initialFocus's <TrapConfigListbox> is active, then when the selected `roots` change,
     // `controlsState.trapConfig.initialFocus` must be reset if its value is not included in the new selected roots.
