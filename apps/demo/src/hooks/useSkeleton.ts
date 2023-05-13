@@ -92,12 +92,9 @@ export function useSkeleton() {
 
   const mapFilterSkeleton = useCallback(
     <T>(map: (el: SkeletonElement) => T, filter = (el: SkeletonElement): boolean => true) => {
-      const mapped: T[] = [];
-      forSomeElementInSkeleton(
-        (el) => mapped.push(map(el)),
-        (el) => filter(el)
-      );
-      return mapped;
+      const mapFilter: T[] = [];
+      forSomeElementInSkeleton((el) => mapFilter.push(map(el)), filter);
+      return mapFilter;
     },
     [forSomeElementInSkeleton]
   );
@@ -141,14 +138,13 @@ export function useSkeleton() {
       parent.children[patchIndex] = patch;
 
       setSkeletonState(({ id, children }) => ({
-        id: id,
-        children: [
-          ...(children.splice(
+        id,
+        children:
+          children.splice(
             children.findIndex((el) => el.id === parent.id),
             1,
             parent
-          ) && children),
-        ],
+          ) && children,
       }));
     },
     [getSkeletonElementById]
