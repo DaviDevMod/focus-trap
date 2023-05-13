@@ -82,11 +82,10 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
 
   const returnFocusConfigValues = useMemo(() => ({ returnFocus: trapConfig.returnFocus }), [trapConfig.returnFocus]);
 
-  const handleLockChange = () => dispatchTrapControlsState({ lock: !trapConfig.lock });
-
-  const handleEscapeChange = () => dispatchTrapControlsState({ escape: !trapConfig.escape });
-
   const TrapActionIsnotBuild = trapAction !== 'BUILD';
+  const handleSwitchChange = (checked: boolean, label: keyof Pick<DemoTrapConfig, 'lock' | 'escape'>) => {
+    dispatchTrapControlsState({ [label]: checked } as TrapControlsStateReducerAction);
+  };
 
   const handleReset = () => setControlsKeysState((prevState) => ({ ...prevState, trap: prevState.trap + 1 }));
 
@@ -140,12 +139,17 @@ export function TrapControls({ demoElementsRootNodeState, setControlsKeysState, 
         disabled={TrapActionIsnotBuild}
       />
 
-      <Switch label="lock" checked={trapConfig.lock} handleChange={handleLockChange} disabled={TrapActionIsnotBuild} />
+      <Switch
+        label="lock"
+        checked={trapConfig.lock}
+        handleChange={handleswitchChange}
+        disabled={TrapActionIsnotBuild}
+      />
 
       <Switch
         label="escape"
         checked={trapConfig.escape}
-        handleChange={handleEscapeChange}
+        handleChange={handleSwitchChange}
         disabled={TrapActionIsnotBuild}
       />
 

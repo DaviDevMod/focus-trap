@@ -1,13 +1,13 @@
 import { Switch as HeadlessUISwitch } from '@headlessui/react';
 
-interface SwitchProps {
-  label: string;
+interface SwitchProps<T> {
+  label: T;
   checked: boolean;
-  handleChange: (checked: boolean, label?: string) => void;
+  handleChange: (checked: boolean, label: T) => void;
   disabled?: boolean;
 }
 
-export function Switch({ label, checked, handleChange, disabled }: SwitchProps) {
+export function Switch<T extends string>({ label, checked, handleChange, disabled }: SwitchProps<T>) {
   return (
     <HeadlessUISwitch.Group as="div" className="mt-3">
       <HeadlessUISwitch.Label className="p-3 align-top">{label}</HeadlessUISwitch.Label>

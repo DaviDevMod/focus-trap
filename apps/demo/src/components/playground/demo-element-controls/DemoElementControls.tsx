@@ -90,9 +90,10 @@ export function DemoElementControls({
     setSelectClickedElementState((prevState) => ({ ...prevState, setSelectedSkeletonButtonStateById }));
   }, [setSelectClickedElementState, setSelectedSkeletonButtonStateById]);
 
-  const handleSwitchChange = (checked: boolean, label?: string) => {
-    // A Union type can't be used to access properties: https://github.com/microsoft/TypeScript/issues/10530
-    dispatchUnsubmittedSelectedSkeletonButtonPropertiesState({ [label as 'display']: checked });
+  const handleSwitchChange = (checked: boolean, label: keyof Pick<UnsubmittedProperties, 'disabled' | 'display'>) => {
+    dispatchUnsubmittedSelectedSkeletonButtonPropertiesState({
+      [label]: checked,
+    } as UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction);
   };
 
   const handleReset = () => {
