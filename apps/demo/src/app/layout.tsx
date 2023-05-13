@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Focus Trap',
-  description: 'Get to know the best focus trap implementation on the web',
+  description: 'Get to know the best focus trap on the web',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
