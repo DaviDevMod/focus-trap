@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { useDemoElementsSkeleton } from '../../hooks/useDemoElementsSkeleton';
+import { useSkeleton } from '../../hooks/useSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
 import { DemoElementControls } from './demo-element-controls/DemoElementControls';
@@ -27,8 +27,7 @@ export function Playground() {
   const [controlsKeysState, setControlsKeysState] = useState(initialControlsKeysState);
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
   const [demoElementsRootNodeState, setDemoElementsRootNodeState] = useState<HTMLDivElement>();
-  const { demoElementsSkeletonState, skeletonButtonsIds, getSkeletonButtonElementById, patchSkeletonButton } =
-    useDemoElementsSkeleton();
+  const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
 
   // `setSelectedSkeletonButtonStateById` returns early if the `id` is still the same.
   useEffect(() => {
@@ -43,7 +42,7 @@ export function Playground() {
     <div className="flex">
       <div className="basis-[75vw]">
         <DemoElements
-          demoElementsSkeletonState={demoElementsSkeletonState}
+          skeletonState={skeletonState}
           setSelectClickedElementState={setSelectClickedElementState}
           ref={demoElementsRootNodeCallbackRef}
         />
@@ -62,7 +61,7 @@ export function Playground() {
           <DemoElementControls
             key={controlsKeysState.demoElements}
             skeletonButtonsIds={skeletonButtonsIds}
-            getSkeletonButtonElementById={getSkeletonButtonElementById}
+            getSkeletonButtonById={getSkeletonButtonById}
             patchSkeletonButton={patchSkeletonButton}
             setSelectClickedElementState={setSelectClickedElementState}
             setControlsKeysState={setControlsKeysState}

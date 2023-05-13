@@ -1,18 +1,18 @@
 import { forwardRef } from 'react';
 
-import { SkeletonButton, SkeletonGroup } from '../../../hooks/useDemoElementsSkeleton';
+import { SkeletonButton, SkeletonGroup } from '../../../hooks/useSkeleton';
 import { SelectClickedElement } from '../Playground';
 
 interface DemoElementsProps {
-  demoElementsSkeletonState: SkeletonGroup;
+  skeletonState: SkeletonGroup;
   setSelectClickedElementState: React.Dispatch<React.SetStateAction<SelectClickedElement>>;
 }
 
 export const DemoElements = forwardRef(function DemoElements(
-  { demoElementsSkeletonState, setSelectClickedElementState }: DemoElementsProps,
+  { skeletonState, setSelectClickedElementState }: DemoElementsProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
-  const { id: rootId, children: rootChildren } = demoElementsSkeletonState;
+  const { id: rootId, children: rootChildren } = skeletonState;
 
   // const handleButtonClick = (event) => "It's in the JSX for convinience"
 

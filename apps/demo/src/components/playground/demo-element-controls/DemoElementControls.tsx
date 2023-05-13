@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { RequireExactlyOne } from 'type-fest';
 
-import { SkeletonButton } from '../../../hooks/useDemoElementsSkeleton';
+import { SkeletonButton } from '../../../hooks/useSkeleton';
 import { ControlsKeysState, SelectClickedElement } from '../Playground';
 import { IdListbox } from './id-listbox/IdListbox';
 import { TabIndexListbox } from './tab-index-listbox/TabIndexListbox';
@@ -11,7 +11,7 @@ import { ResetButton } from '../../UI/reset-button/ResetButton';
 
 interface DemoElementControlsProps {
   skeletonButtonsIds: string[];
-  getSkeletonButtonElementById: (id: string) => SkeletonButton | undefined;
+  getSkeletonButtonById: (id: string) => SkeletonButton | undefined;
   patchSkeletonButton: (patch: SkeletonButton) => void;
   setSelectClickedElementState: React.Dispatch<React.SetStateAction<SelectClickedElement>>;
   setControlsKeysState: React.Dispatch<React.SetStateAction<ControlsKeysState>>;
@@ -47,7 +47,7 @@ const unsubmittedSelectedSkeletonButtonPropertiesStateReducer = (
 
 export function DemoElementControls({
   skeletonButtonsIds,
-  getSkeletonButtonElementById,
+  getSkeletonButtonById,
   patchSkeletonButton,
   setSelectClickedElementState,
   setControlsKeysState,
@@ -71,7 +71,7 @@ export function DemoElementControls({
     (id: string) => {
       if (id === selectedSkeletonButtonState?.id) return;
 
-      const newSkeletonButtonState = getSkeletonButtonElementById(id);
+      const newSkeletonButtonState = getSkeletonButtonById(id);
 
       if (!newSkeletonButtonState) {
         throw new Error(
@@ -83,7 +83,7 @@ export function DemoElementControls({
       dispatchUnsubmittedSelectedSkeletonButtonPropertiesState(newSkeletonButtonState);
       setSelectClickedElementState((prevState) => ({ ...prevState, id }));
     },
-    [selectedSkeletonButtonState?.id, getSkeletonButtonElementById, setSelectClickedElementState]
+    [selectedSkeletonButtonState?.id, getSkeletonButtonById, setSelectClickedElementState]
   );
 
   useEffect(() => {

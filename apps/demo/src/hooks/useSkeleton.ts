@@ -17,6 +17,7 @@ export type SkeletonButton = {
 
 export type SkeletonGroup = { id: string; children: SkeletonElement[] };
 
+// A `SkeletonElement` is either a `SkeletonButton` or a `SkeletonGroup`
 type SkeletonElement =
   | (SkeletonButton & { children?: never })
   | (SkeletonGroup & Partial<Record<Exclude<keyof SkeletonButton, 'id'>, never>>);
@@ -25,7 +26,7 @@ const isSkeletonButton = (el: SkeletonElement): el is SkeletonButton => !('child
 
 const isSkeletonGroup = (el: SkeletonElement): el is SkeletonGroup => 'children' in el;
 
-const initialDemoElementsSkeletonState: SkeletonGroup = {
+const initialSkeletonState: SkeletonGroup = {
   id: 'group 0',
   children: [
     {
@@ -75,8 +76,8 @@ const initialDemoElementsSkeletonState: SkeletonGroup = {
   ],
 };
 
-export function useDemoElementsSkeleton() {
-  const [demoElementsSkeletonState, setDemoElementsSkeletonState] = useState(initialDemoElementsSkeletonState);
+export function useSkeleton() {
+  const [skeletonState, setSkeletonState] = useState(initialSkeletonState);
 
   const forSomeElementInSkeleton = useCallback(
     (callback: (el: SkeletonElement) => void, filter = (el: SkeletonElement): boolean => true) => {
@@ -84,9 +85,9 @@ export function useDemoElementsSkeleton() {
         if (filter(el)) callback(el);
         if (isSkeletonGroup(el)) el.children.forEach((child) => recursivelyCallback(child));
       };
-      recursivelyCallback(demoElementsSkeletonState);
+      recursivelyCallback(skeletonState);
     },
-    [demoElementsSkeletonState]
+    [skeletonState]
   );
 
   const mapFilterSkeleton = useCallback(
@@ -116,7 +117,7 @@ export function useDemoElementsSkeleton() {
     [mapFilterSkeleton]
   );
 
-  const getSkeletonButtonElementById = useCallback(
+  const getSkeletonButtonById = useCallback(
     (id: string) => getSkeletonElementById(id, isSkeletonButton),
     [getSkeletonElementById]
   );
@@ -139,7 +140,7 @@ export function useDemoElementsSkeleton() {
 
       parent.children[patchIndex] = patch;
 
-      setDemoElementsSkeletonState(({ id, children }) => ({
+      setSkeletonState(({ id, children }) => ({
         id: id,
         children: [
           ...(children.splice(
@@ -154,8 +155,8 @@ export function useDemoElementsSkeleton() {
   );
 
   const statesAndMethods = useMemo(
-    () => ({ demoElementsSkeletonState, skeletonButtonsIds, getSkeletonButtonElementById, patchSkeletonButton }),
-    [demoElementsSkeletonState, skeletonButtonsIds, getSkeletonButtonElementById, patchSkeletonButton]
+    () => ({ skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton }),
+    [skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton]
   );
 
   return statesAndMethods;
