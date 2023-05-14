@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useReducer, useState } from 'react';
-import { RequireExactlyOne } from 'type-fest';
+import type { RequireExactlyOne } from 'type-fest';
+import { useReducer, useState } from 'react';
 
-import { SkeletonButton } from '../../../hooks/useSkeleton';
-import { ControlsKeysState, SelectClickedElement } from '../Playground';
+import type { SkeletonButton } from '../../../hooks/useSkeleton';
+import type { KeysState } from '../Playground';
 import { IdListbox } from './id-listbox/IdListbox';
 import { TabIndexListbox } from './tab-index-listbox/TabIndexListbox';
 import { Switch } from '../../UI/switch/Switch';
@@ -13,34 +13,38 @@ interface DemoElementControlsProps {
   skeletonButtonsIds: string[];
   getSkeletonButtonById: (id: string) => SkeletonButton | undefined;
   patchSkeletonButton: (patch: SkeletonButton) => void;
-  setSelectClickedElementState: React.Dispatch<React.SetStateAction<SelectClickedElement>>;
-  setControlsKeysState: React.Dispatch<React.SetStateAction<ControlsKeysState>>;
+  selectedButtonIdState: string;
+  setSelectedButtonIdState: React.Dispatch<React.SetStateAction<string>>;
+  dispatchKeys: React.Dispatch<keyof KeysState>;
   displayComponent?: boolean;
 }
 
-interface UnsubmittedProperties {
+interface UnsubmittedButtonPropsState {
   id: string;
   tabIndex: string;
   disabled: boolean;
   display: boolean;
 }
 
-// An action is either an `UnsubmittedProperties` or one of its properties except the `id`.
-export type UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction =
-  | UnsubmittedProperties
-  | RequireExactlyOne<Omit<UnsubmittedProperties, 'id'> & { id?: never }, Exclude<keyof UnsubmittedProperties, 'id'>>;
+// An action is either an `UnsubmittedButtonPropsState` or one of its properties except the `id`.
+export type UnsubmittedButtonPropsReducerAction =
+  | UnsubmittedButtonPropsState
+  | RequireExactlyOne<
+      Omit<UnsubmittedButtonPropsState, 'id'> & { id?: never },
+      Exclude<keyof UnsubmittedButtonPropsState, 'id'>
+    >;
 
-const initialUnsubmittedProperties: UnsubmittedProperties = {
+const initialUnsubmittedButtonPropsState: UnsubmittedButtonPropsState = {
   id: '',
   tabIndex: '',
   disabled: false,
   display: false,
 };
 
-const unsubmittedSelectedSkeletonButtonPropertiesStateReducer = (
-  state: UnsubmittedProperties,
-  action: UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction
-): UnsubmittedProperties => {
+const unsubmittedButtonPropsReducer = (
+  state: UnsubmittedButtonPropsState,
+  action: UnsubmittedButtonPropsReducerAction
+): UnsubmittedButtonPropsState => {
   if (action.id !== undefined) return { ...action };
   return { ...state, ...action };
 };
@@ -49,67 +53,57 @@ export function DemoElementControls({
   skeletonButtonsIds,
   getSkeletonButtonById,
   patchSkeletonButton,
-  setSelectClickedElementState,
-  setControlsKeysState,
+  selectedButtonIdState,
+  setSelectedButtonIdState,
+  dispatchKeys,
   displayComponent,
 }: DemoElementControlsProps) {
   const [selectedSkeletonButtonState, setSelectedSkeletonButtonState] = useState<SkeletonButton>();
-  const [unsubmittedSelectedSkeletonButtonPropertiesState, dispatchUnsubmittedSelectedSkeletonButtonPropertiesState] =
-    useReducer(unsubmittedSelectedSkeletonButtonPropertiesStateReducer, initialUnsubmittedProperties);
-  const { id, tabIndex, disabled, display } = unsubmittedSelectedSkeletonButtonPropertiesState;
-
-  // Resetting `selectClickedElementState.id` in the parent, whenever the `key` of the current component changes.
-  useEffect(() => {
-    setSelectClickedElementState((prevState) => ({ ...prevState, id }));
-    // It may look cleaner to add the deps here and remove `setSelectClickedElementState` from
-    // `setSelectedSkeletonButtonStateById`, but that would trigger an unnecessary render phase for the current
-    // component when its states updates trigger states updates in the parent, while in this way they are batched.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const setSelectedSkeletonButtonStateById = useCallback(
-    (id: string) => {
-      if (id === selectedSkeletonButtonState?.id) return;
-
-      const newSkeletonButtonState = getSkeletonButtonById(id);
-
-      if (!newSkeletonButtonState) {
-        throw new Error(
-          `Somehow the "${id}" id is selectable even though it doesn't belong to any button in the skeleton.`
-        );
-      }
-
-      setSelectedSkeletonButtonState(newSkeletonButtonState);
-      dispatchUnsubmittedSelectedSkeletonButtonPropertiesState(newSkeletonButtonState);
-      setSelectClickedElementState((prevState) => ({ ...prevState, id }));
-    },
-    [selectedSkeletonButtonState?.id, getSkeletonButtonById, setSelectClickedElementState]
+  const [unsubmittedButtonPropsState, dispatchUnsubmittedButtonProps] = useReducer(
+    unsubmittedButtonPropsReducer,
+    initialUnsubmittedButtonPropsState
   );
+  const { id, tabIndex, disabled, display } = unsubmittedButtonPropsState;
 
-  useEffect(() => {
-    setSelectClickedElementState((prevState) => ({ ...prevState, setSelectedSkeletonButtonStateById }));
-  }, [setSelectClickedElementState, setSelectedSkeletonButtonStateById]);
+  if (selectedButtonIdState !== id) {
+    const newSkeletonButtonState = getSkeletonButtonById(selectedButtonIdState);
 
-  const handleSwitchChange = (checked: boolean, label: keyof Pick<UnsubmittedProperties, 'disabled' | 'display'>) => {
-    dispatchUnsubmittedSelectedSkeletonButtonPropertiesState({
+    if (!newSkeletonButtonState) {
+      throw new Error(
+        `Somehow the "${id}" id is selectable even though it doesn't belong to any button in the skeleton.`
+      );
+    }
+
+    setSelectedSkeletonButtonState(newSkeletonButtonState);
+    dispatchUnsubmittedButtonProps(newSkeletonButtonState);
+  }
+
+  const handleSwitchChange = (
+    checked: boolean,
+    label: keyof Pick<UnsubmittedButtonPropsState, 'disabled' | 'display'>
+  ) => {
+    dispatchUnsubmittedButtonProps({
       [label]: checked,
-    } as UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction);
+    } as UnsubmittedButtonPropsReducerAction);
   };
 
   const handleReset = () => {
-    setControlsKeysState((prevState) => ({ ...prevState, demoElements: prevState.demoElements - 1 }));
+    // Reset current component states.
+    dispatchKeys('buttons');
+    // Reset `selectedButtonIdState` in the parent, because it's used to populate states in current component.
+    setSelectedButtonIdState('');
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!selectedSkeletonButtonState || !unsubmittedSelectedSkeletonButtonPropertiesState) {
+    if (!selectedSkeletonButtonState || !unsubmittedButtonPropsState) {
       throw new Error('Elements controls submission should be disabled if no `id` is selected.');
     }
 
     patchSkeletonButton({
       ...selectedSkeletonButtonState,
-      ...unsubmittedSelectedSkeletonButtonPropertiesState,
+      ...unsubmittedButtonPropsState,
     });
   };
 
@@ -119,16 +113,9 @@ export function DemoElementControls({
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
       data-cy="Element Controls"
     >
-      <IdListbox
-        id={id}
-        options={skeletonButtonsIds}
-        setSelectedSkeletonButtonStateById={setSelectedSkeletonButtonStateById}
-      />
+      <IdListbox id={id} options={skeletonButtonsIds} setSelectedButtonIdState={setSelectedButtonIdState} />
 
-      <TabIndexListbox
-        tabIndex={tabIndex}
-        dispatchTabIndex={dispatchUnsubmittedSelectedSkeletonButtonPropertiesState}
-      />
+      <TabIndexListbox tabIndex={tabIndex} dispatchTabIndex={dispatchUnsubmittedButtonProps} />
 
       <Switch label="disabled" checked={disabled} handleChange={handleSwitchChange} disabled={!id} />
 

@@ -1,42 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState, useReducer } from 'react';
 
 import { useSkeleton } from '../../hooks/useSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
 import { DemoElementControls } from './demo-element-controls/DemoElementControls';
 
-export interface SelectClickedElement {
-  id: string;
-  setSelectedSkeletonButtonStateById: (id: string) => void;
-}
-
-export interface ControlsKeysState {
+// Programatically change components `key` to reset their states.
+export interface KeysState {
   trap: number;
-  demoElements: number;
+  buttons: number;
 }
 
-const initialSelectClickedElement: SelectClickedElement = {
-  id: '',
-  setSelectedSkeletonButtonStateById: () => {},
+const keysReducer = (state: KeysState, action: keyof KeysState) => {
+  return { ...state, [action]: state[action] + (action === 'trap' ? 1 : -1) };
 };
 
-const initialControlsKeysState: ControlsKeysState = { trap: 100, demoElements: -100 };
+const initialKeysState = { trap: 100, buttons: -100 };
 
 export function Playground() {
-  const [selectClickedElementState, setSelectClickedElementState] = useState(initialSelectClickedElement);
-  const [controlsKeysState, setControlsKeysState] = useState(initialControlsKeysState);
+  const [keysState, dispatchKeys] = useReducer(keysReducer, initialKeysState);
+  const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
-  const [demoElementsRootNodeState, setDemoElementsRootNodeState] = useState<HTMLDivElement>();
+  const [demoElementsRootState, setDemoElementsRootState] = useState<HTMLDivElement>();
   const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
 
-  // `setSelectedSkeletonButtonStateById` returns early if the `id` is still the same.
-  useEffect(() => {
-    const { id, setSelectedSkeletonButtonStateById } = selectClickedElementState;
-    if (id) setSelectedSkeletonButtonStateById(id);
-  }, [selectClickedElementState]);
-
-  const demoElementsRootNodeCallbackRef = (rootNodeRef: HTMLDivElement) => {
-    rootNodeRef && setDemoElementsRootNodeState(rootNodeRef);
+  const demoElementsRootCallbackRef = (rootNodeRef: HTMLDivElement) => {
+    rootNodeRef && setDemoElementsRootState(rootNodeRef);
   };
 
   return (
@@ -44,8 +33,8 @@ export function Playground() {
       <div className="basis-[75vw]">
         <DemoElements
           skeletonState={skeletonState}
-          setSelectClickedElementState={setSelectClickedElementState}
-          ref={demoElementsRootNodeCallbackRef}
+          setSelectedButtonIdState={setSelectedButtonIdState}
+          ref={demoElementsRootCallbackRef}
         />
       </div>
       <div className="border-grey-500 basis-[25vw] border-l-2 px-2 py-4">
@@ -54,18 +43,19 @@ export function Playground() {
           {/* Toggling `displayComponent` rather than the mounting, to keep the states.
               Also using `key` to reset the states at will.*/}
           <TrapControls
-            key={controlsKeysState.trap}
-            demoElementsRootNodeState={demoElementsRootNodeState}
-            setControlsKeysState={setControlsKeysState}
+            key={keysState.trap}
+            demoElementsRootState={demoElementsRootState}
+            dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
           />
           <DemoElementControls
-            key={controlsKeysState.demoElements}
+            key={keysState.buttons}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonById={getSkeletonButtonById}
             patchSkeletonButton={patchSkeletonButton}
-            setSelectClickedElementState={setSelectClickedElementState}
-            setControlsKeysState={setControlsKeysState}
+            selectedButtonIdState={selectedButtonIdState}
+            setSelectedButtonIdState={setSelectedButtonIdState}
+            dispatchKeys={dispatchKeys}
             displayComponent={!showTrapControlsState}
           />
           <button

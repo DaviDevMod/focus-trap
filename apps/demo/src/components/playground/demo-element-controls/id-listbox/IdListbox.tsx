@@ -6,10 +6,10 @@ import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 interface IdListboxProps {
   id: string;
   options: string[];
-  setSelectedSkeletonButtonStateById: (id: string) => void;
+  setSelectedButtonIdState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function IdListbox({ id, options, setSelectedSkeletonButtonStateById }: IdListboxProps) {
+export function IdListbox({ id, options, setSelectedButtonIdState }: IdListboxProps) {
   const listboxOptions = (
     <HeadlessUIListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
       {options.map((option) => (
@@ -18,7 +18,7 @@ export function IdListbox({ id, options, setSelectedSkeletonButtonStateById }: I
     </HeadlessUIListbox.Options>
   );
 
-  const handleChange = (selectedOption: string) => setSelectedSkeletonButtonStateById(selectedOption);
+  const handleChange = (selectedId: string) => setSelectedButtonIdState(selectedId);
 
   return <Listbox label={'id'} value={id} handleChange={handleChange} options={listboxOptions} />;
 }

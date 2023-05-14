@@ -1,12 +1,12 @@
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 
-import { UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction } from '../DemoElementControls';
+import type { UnsubmittedButtonPropsReducerAction } from '../DemoElementControls';
 import { Listbox } from '../../../UI/listbox/Listbox';
 import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 
 interface TabIndexListboxProps {
   tabIndex: string;
-  dispatchTabIndex: (value: UnsubmittedSelectedSkeletonButtonPropertiesStateReducerAction) => void;
+  dispatchTabIndex: (value: UnsubmittedButtonPropsReducerAction) => void;
 }
 
 export function TabIndexListbox({ tabIndex, dispatchTabIndex }: TabIndexListboxProps) {

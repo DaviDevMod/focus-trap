@@ -1,15 +1,14 @@
 import { forwardRef } from 'react';
 
-import { SkeletonButton, SkeletonGroup } from '../../../hooks/useSkeleton';
-import { SelectClickedElement } from '../Playground';
+import type { SkeletonButton, SkeletonGroup } from '../../../hooks/useSkeleton';
 
 interface DemoElementsProps {
   skeletonState: SkeletonGroup;
-  setSelectClickedElementState: React.Dispatch<React.SetStateAction<SelectClickedElement>>;
+  setSelectedButtonIdState: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const DemoElements = forwardRef(function DemoElements(
-  { skeletonState, setSelectClickedElementState }: DemoElementsProps,
+  { skeletonState, setSelectedButtonIdState }: DemoElementsProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
   const { id: rootId, children: rootChildren } = skeletonState;
@@ -44,7 +43,7 @@ export const DemoElements = forwardRef(function DemoElements(
                 data-backward={backward}
                 data-parent-id={parentId}
                 disabled={disabled}
-                onClick={() => setSelectClickedElementState((prevState) => ({ ...prevState, id }))}
+                onClick={() => setSelectedButtonIdState(id)}
                 className={`${
                   display ? 'inline-block' : 'hidden'
                 } relative m-[1.8vw] h-[10vw] w-[10vw] rounded border border-indigo-500 text-sm font-medium text-gray-500 transition hover:scale-110 hover:shadow-xl focus:scale-110 focus:text-indigo-600 focus:shadow-xl focus:outline-none focus:ring-1 sm:m-3 sm:h-16 sm:w-16`}
