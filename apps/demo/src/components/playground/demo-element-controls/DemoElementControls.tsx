@@ -97,8 +97,8 @@ export function DemoElementControls({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!selectedSkeletonButtonState || !unsubmittedButtonPropsState) {
-      throw new Error('Elements controls submission should be disabled if no `id` is selected.');
+    if (!selectedSkeletonButtonState) {
+      throw new Error('Button patch submitted without any selected element.');
     }
 
     patchSkeletonButton({

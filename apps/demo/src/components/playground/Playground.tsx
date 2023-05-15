@@ -5,19 +5,19 @@ import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
 import { DemoElementControls } from './demo-element-controls/DemoElementControls';
 
-// Programatically change components `key` to reset their states.
 export interface KeysState {
   trap: number;
   buttons: number;
 }
 
-const keysReducer = (state: KeysState, action: keyof KeysState) => {
-  return { ...state, [action]: state[action] + (action === 'trap' ? 1 : -1) };
+const keysReducer = (state: KeysState, action: keyof KeysState): KeysState => {
+  return { ...state, [action]: state[action] + 1 };
 };
 
-const initialKeysState = { trap: 100, buttons: -100 };
+const initialKeysState = { trap: 0, buttons: 0 };
 
 export function Playground() {
+  // Change components `key` to reset their states.
   const [keysState, dispatchKeys] = useReducer(keysReducer, initialKeysState);
   const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
@@ -40,8 +40,8 @@ export function Playground() {
       <div className="border-grey-500 basis-[25vw] border-l-2 px-2 py-4">
         <section>
           <h2 className="text-center">{showTrapControlsState ? 'Trap Controls' : 'Element Controls'}</h2>
-          {/* Toggling `displayComponent` rather than the mounting, to keep the states.
-              Also using `key` to reset the states at will.*/}
+          {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
+              to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
             key={keysState.trap}
             demoElementsRootState={demoElementsRootState}
