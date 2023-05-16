@@ -1,4 +1,4 @@
-import { Focusable } from './state.js';
+import type { Focusable } from './state.js';
 
 // String used to query all the candidate focusable elements within the trap.
 export const candidateSelector =

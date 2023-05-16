@@ -1,7 +1,9 @@
-import { Result, err, ok } from 'true-myth/result';
-import { Unit } from 'true-myth/unit';
+import type { Unit } from 'true-myth/unit';
+import type { Result } from 'true-myth/result';
+import { ok, err } from 'true-myth/result';
 
-import { Focusable, TrapConfig, state, reducers } from './state.js';
+import type { Focusable, TrapConfig } from './state.js';
+import { state, reducers } from './state.js';
 import { eventListeners } from './events.js';
 import { positiveTabbables, firstOrLastZeroTabbable } from './destination.js';
 

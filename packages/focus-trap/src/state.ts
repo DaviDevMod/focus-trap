@@ -1,5 +1,6 @@
-import { Result, ok, err } from 'true-myth/result';
-import { Unit } from 'true-myth/unit';
+import type { Unit } from 'true-myth/unit';
+import type { Result } from 'true-myth/result';
+import { ok, err } from 'true-myth/result';
 
 import { normaliseConfigEscludingRoots, normaliseRoots } from './normalise.js';
 

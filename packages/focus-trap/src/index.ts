@@ -1,5 +1,5 @@
+import type { Roots, TrapConfig } from './state.js';
 import { throwInEnv } from './exceptions.js';
-import { Roots, TrapConfig } from './state.js';
 import { build, resume, demolish, pause } from './trap-actions.js';
 
 type TrapAction = 'RESUME' | 'DEMOLISH' | 'PAUSE';

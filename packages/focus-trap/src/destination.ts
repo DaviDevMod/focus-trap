@@ -1,7 +1,8 @@
-import { Result, err, ok } from 'true-myth/result';
-import { Unit } from 'true-myth/unit';
+import type { Unit } from 'true-myth/unit';
+import type { Result } from 'true-myth/result';
+import { err, ok } from 'true-myth/result';
 
-import { Focusable } from './state.js';
+import type { Focusable } from './state.js';
 import { candidateSelector, getConsistentTabIndex, isActuallyFocusable } from './tabbability.js';
 
 type Direction = 'FORWARD' | 'BACKWARD';

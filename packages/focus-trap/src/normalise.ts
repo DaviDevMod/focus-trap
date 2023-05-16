@@ -1,7 +1,7 @@
 import { Result, err, ok } from 'true-myth/result';
 
+import type { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state.js';
 import { warnInEnv } from './exceptions.js';
-import { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state.js';
 import { isFocusable } from './tabbability.js';
 
 const resolveId = <T>(arg: T) =>
