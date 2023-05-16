@@ -9,7 +9,7 @@ import { Switch } from '../../UI/switch/Switch';
 import { SubmitButton } from '../../UI/submit-button/SubmitButton';
 import { ResetButton } from '../../UI/reset-button/ResetButton';
 
-interface DemoElementControlsProps {
+interface DemoButtonControlsProps {
   skeletonButtonsIds: string[];
   getSkeletonButtonById: (id: string) => SkeletonButton | undefined;
   patchSkeletonButton: (patch: SkeletonButton) => void;
@@ -49,7 +49,7 @@ const unsubmittedButtonPropsReducer = (
   return { ...state, ...action };
 };
 
-export function DemoElementControls({
+export function DemoButtonControls({
   skeletonButtonsIds,
   getSkeletonButtonById,
   patchSkeletonButton,
@@ -57,7 +57,7 @@ export function DemoElementControls({
   setSelectedButtonIdState,
   dispatchKeys,
   displayComponent,
-}: DemoElementControlsProps) {
+}: DemoButtonControlsProps) {
   const [selectedSkeletonButtonState, setSelectedSkeletonButtonState] = useState<SkeletonButton>();
   const [unsubmittedButtonPropsState, dispatchUnsubmittedButtonProps] = useReducer(
     unsubmittedButtonPropsReducer,
@@ -111,7 +111,7 @@ export function DemoElementControls({
     <form
       onSubmit={handleSubmit}
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
-      data-cy="Element Controls"
+      data-cy="Button Controls"
     >
       <IdListbox id={id} options={skeletonButtonsIds} setSelectedButtonIdState={setSelectedButtonIdState} />
 

@@ -1,6 +1,6 @@
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 
-import type { UnsubmittedButtonPropsReducerAction } from '../DemoElementControls';
+import type { UnsubmittedButtonPropsReducerAction } from '../DemoButtonControls';
 import { Listbox } from '../../../UI/listbox/Listbox';
 import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 

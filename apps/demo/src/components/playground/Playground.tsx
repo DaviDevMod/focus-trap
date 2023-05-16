@@ -3,7 +3,7 @@ import { useState, useReducer } from 'react';
 import { useSkeleton } from '../../hooks/useSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
-import { DemoElementControls } from './demo-element-controls/DemoElementControls';
+import { DemoButtonControls } from './demo-button-controls/DemoButtonControls';
 
 export interface KeysState {
   trap: number;
@@ -39,7 +39,7 @@ export function Playground() {
       </div>
       <div className="border-grey-500 basis-[25vw] border-l-2 px-2 py-4">
         <section>
-          <h2 className="text-center">{showTrapControlsState ? 'Trap Controls' : 'Element Controls'}</h2>
+          <h2 className="text-center">{showTrapControlsState ? 'Trap Controls' : 'Button Controls'}</h2>
           {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
               to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
@@ -48,7 +48,7 @@ export function Playground() {
             dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
           />
-          <DemoElementControls
+          <DemoButtonControls
             key={keysState.buttons}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonById={getSkeletonButtonById}

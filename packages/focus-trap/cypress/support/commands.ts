@@ -41,7 +41,7 @@ declare global {
     interface Chainable {
       visitDemo: (path?: string) => void;
 
-      switchControlsFormTo: (formName: 'Trap Controls' | 'Element Controls') => void;
+      switchControlsFormTo: (formName: 'Trap Controls' | 'Button Controls') => void;
 
       openDropdownAndChoose: (dropdownButtonName: string, options: DropdownOptions) => void;
 
@@ -84,10 +84,10 @@ Cypress.Commands.add('visitDemo', (path = '/') => {
 });
 
 Cypress.Commands.add('switchControlsFormTo', (formName) => {
-  cy.get('button[data-cy$=" Controls"]').as('switchControlsButton').should('have.length', 1);
+  cy.get('button[data-cy$=" Controls"]').as('controlsSwitch').should('have.length', 1);
 
-  cy.get<HTMLButtonElement>('@switchControlsButton').then(($switchControlsButton) => {
-    if ($switchControlsButton.get(0).dataset.cy?.endsWith(formName)) $switchControlsButton.get(0).click();
+  cy.get<HTMLButtonElement>('@controlsSwitch').then(($controlsSwitch) => {
+    if ($controlsSwitch.get(0).dataset.cy?.endsWith(formName)) $controlsSwitch.get(0).click();
   });
 });
 
@@ -163,9 +163,9 @@ Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, esc
 });
 
 Cypress.Commands.add('patchElement', ({ id, tabIndex, disabled, display }) => {
-  cy.switchControlsFormTo('Element Controls');
+  cy.switchControlsFormTo('Button Controls');
 
-  cy.get('form[data-cy="Element Controls"]').as('demoElementControls');
+  cy.get('form[data-cy="Button Controls"]').as('demoElementControls');
 
   cy.get('@demoElementControls').openDropdownAndChoose('Toggle id Listbox', { itemsText: id });
 
