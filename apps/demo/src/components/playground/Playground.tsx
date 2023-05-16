@@ -6,15 +6,15 @@ import { DemoElements } from './demo-elements/DemoElements';
 import { DemoButtonControls } from './demo-button-controls/DemoButtonControls';
 
 export interface KeysState {
-  trap: number;
-  buttons: number;
+  TrapControls: number;
+  ButtonControls: number;
 }
 
 const keysReducer = (state: KeysState, action: keyof KeysState): KeysState => {
   return { ...state, [action]: state[action] + 1 };
 };
 
-const initialKeysState = { trap: 0, buttons: 0 };
+const initialKeysState = { TrapControls: 0, ButtonControls: 0 };
 
 export function Playground() {
   // Change components `key` to reset their states.
@@ -43,13 +43,13 @@ export function Playground() {
           {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
               to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
-            key={keysState.trap}
+            key={keysState.TrapControls}
             demoElementsRootState={demoElementsRootState}
             dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
           />
           <DemoButtonControls
-            key={keysState.buttons}
+            key={keysState.ButtonControls}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonById={getSkeletonButtonById}
             patchSkeletonButton={patchSkeletonButton}

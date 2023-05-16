@@ -2,7 +2,7 @@ import { memo, useCallback, useRef, useState } from 'react';
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 import { FunnelIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
-import type { DemoTrapConfig, TrapControlsStateReducerAction } from '../TrapControls';
+import type { DemoTrapConfig, TrapControlsReducerAction } from '../TrapControls';
 import { Listbox } from '../../../UI/listbox/Listbox';
 import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 
@@ -23,7 +23,7 @@ type TrapConfigListboxProps = (
     }
 ) & {
   demoElementsState: HTMLElement[];
-  dispatchTrapControlsState: React.Dispatch<TrapControlsStateReducerAction>;
+  dispatchTrapControlsState: React.Dispatch<TrapControlsReducerAction>;
   disabled?: boolean;
 };
 
@@ -67,7 +67,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   ];
 
   const handleListboxChange = (selectedOptions: string | string[]) => {
-    dispatchTrapControlsState({ [configProp]: selectedOptions } as TrapControlsStateReducerAction);
+    dispatchTrapControlsState({ [configProp]: selectedOptions } as TrapControlsReducerAction);
 
     // If the filter in the initialFocus's <TrapConfigListbox> is active, then when the selected `roots` change,
     // `controlsState.trapConfig.initialFocus` must be reset if its value is not included in the new selected roots.
@@ -86,11 +86,11 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
 
   // The filter button is not a <Listbox.Option>, so the arrow key navigation for the options
   // (managed by Headless UI) doesn't reach the button. That's just fine, cause the filter is
-  // not an essential feature and actually it can make the navigation harder for screen readers.
+  // not an essential feature and it would actually make the navigation harder from keyboard.
   // However since it's unreachable by keyboard, arrow-keying up in the listox options doesn't
   // scroll up completely, and its `sticky` position makes it overlap with the first option.
-  // So the fix here is to give the button a `relative` position as soon as the arrow-keyed
-  // option gets close enough to the filter button.
+  // So the fix here is to give the filter button a `relative` position
+  // as soon as the arrow-keyed option gets close enough to it.
   // TODO: consider the path of rendering the filter button outside of <Listbox.Options>,
   // getting rid of all this JS logic (but losing that good looking sticky position).
   const handleInitialFocusArrowKey = useCallback((event: React.KeyboardEvent<HTMLUListElement>) => {

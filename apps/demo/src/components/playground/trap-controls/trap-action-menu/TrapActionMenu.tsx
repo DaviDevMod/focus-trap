@@ -2,10 +2,11 @@ import { Fragment, memo } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-import { TrapActions, TrapControlsStateReducerAction } from '../TrapControls';
+import type { TrapControlsReducerAction } from '../TrapControls';
+import { TrapActions } from '../TrapControls';
 
 interface TrapActionMenuProps {
-  dispatchTrapControlsState: React.Dispatch<TrapControlsStateReducerAction>;
+  dispatchTrapControlsState: React.Dispatch<TrapControlsReducerAction>;
 }
 
 export const TrapActionMenu = memo(function TrapActionMenu({ dispatchTrapControlsState }: TrapActionMenuProps) {

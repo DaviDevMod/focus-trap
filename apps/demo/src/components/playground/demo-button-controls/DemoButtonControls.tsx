@@ -89,7 +89,7 @@ export function DemoButtonControls({
 
   const handleReset = () => {
     // Reset current component states.
-    dispatchKeys('buttons');
+    dispatchKeys('ButtonControls');
     // Reset `selectedButtonIdState` in the parent, because it's used to populate states in current component.
     setSelectedButtonIdState('');
   };
@@ -98,7 +98,7 @@ export function DemoButtonControls({
     event.preventDefault();
 
     if (!selectedSkeletonButtonState) {
-      throw new Error('Button patch submitted without any selected element.');
+      throw new Error('Button controls submitted without any selected element.');
     }
 
     patchSkeletonButton({

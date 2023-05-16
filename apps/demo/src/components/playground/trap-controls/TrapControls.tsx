@@ -41,21 +41,16 @@ interface TrapControlsState {
 }
 
 // A dispatchable action is an object with either a `trapAction` or one of the properties in `DemoTrapConfig`.
-// `TrapControlsStateReducerAction` is actually the union of object literals having a bunch of properties,
+// `TrapControlsReducerAction` is actually the union of object literals having a bunch of properties,
 // all but one set to an optional `never`: we then rely on the compiler option "exactOptionalPropertyTypes"
 // to ensure that the action can have only one property (and no additional properties set to `undefined`).
-export type TrapControlsStateReducerAction = RequireExactlyOne<
-  { trapAction: keyof typeof TrapActions } & DemoTrapConfig
->;
+export type TrapControlsReducerAction = RequireExactlyOne<{ trapAction: keyof typeof TrapActions } & DemoTrapConfig>;
 
 const initialControlsState: TrapControlsState = {
   trapConfig: { roots: [], initialFocus: 'true', returnFocus: 'true', lock: true, escape: true },
 };
 
-const trapControlsStateReducer = (
-  state: TrapControlsState,
-  action: TrapControlsStateReducerAction
-): TrapControlsState => {
+const trapControlsReducer = (state: TrapControlsState, action: TrapControlsReducerAction): TrapControlsState => {
   // For the moment not resetting `state.trapConfig` when navigating between actions, as it may be frustrating for the user.
   // TODO: Maybe keep this logic and add a reset button?
   if (action.trapAction) return { ...state, ...action };
@@ -65,9 +60,8 @@ const trapControlsStateReducer = (
 
 export function TrapControls({ demoElementsRootState, dispatchKeys, displayComponent }: TrapControlsProps) {
   const [demoElementsState, setDemoElementsState] = useState<HTMLElement[]>([]);
-  const [trapControlsState, dispatchTrapControlsState] = useReducer(trapControlsStateReducer, initialControlsState);
+  const [{ trapAction, trapConfig }, dispatchTrapControlsState] = useReducer(trapControlsReducer, initialControlsState);
   const [initialFocusFilterState, setInitialFocusFilterState] = useState(false);
-  const { trapAction, trapConfig } = trapControlsState;
 
   useEffect(() => {
     // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
@@ -84,10 +78,10 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
 
   const TrapActionIsNotBuild = trapAction !== 'BUILD';
   const handleSwitchChange = (checked: boolean, label: keyof Pick<DemoTrapConfig, 'lock' | 'escape'>) => {
-    dispatchTrapControlsState({ [label]: checked } as TrapControlsStateReducerAction);
+    dispatchTrapControlsState({ [label]: checked } as TrapControlsReducerAction);
   };
 
-  const handleReset = () => dispatchKeys('trap');
+  const handleReset = () => dispatchKeys('TrapControls');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

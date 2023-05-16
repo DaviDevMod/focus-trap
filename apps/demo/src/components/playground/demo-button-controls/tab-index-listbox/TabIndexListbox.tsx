@@ -6,7 +6,7 @@ import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 
 interface TabIndexListboxProps {
   tabIndex: string;
-  dispatchTabIndex: (value: UnsubmittedButtonPropsReducerAction) => void;
+  dispatchTabIndex: React.Dispatch<UnsubmittedButtonPropsReducerAction>;
 }
 
 export function TabIndexListbox({ tabIndex, dispatchTabIndex }: TabIndexListboxProps) {
