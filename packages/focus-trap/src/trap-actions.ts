@@ -57,11 +57,13 @@ export const resume = (): Result<Unit, string> => {
 
 export const demolish = (isEsc?: boolean): Result<Unit, string> => {
   if (state.isBuilt || isEsc) {
-    reducers.switchIsBuilt(false);
-
     state.normalisedConfig?.returnFocus?.focus();
 
-    return pause(isEsc);
+    if (pause(isEsc).isOk) {
+      reducers.switchIsBuilt(false);
+
+      return ok();
+    }
   }
 
   return err('Cannot demolish inexistent trap.');
