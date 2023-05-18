@@ -129,15 +129,12 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
   for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += direction === 'FORWARD' ? 1 : -1) {
     const alternativeDestinationRootIndex = modulo(i, roots.length);
 
+    const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'LAST' : 'FIRST');
+
     if (
-      (alternativeDestinationRootIndex === 0 &&
-        direction === 'FORWARD' &&
-        // `origin` follows the last `root` or it's the last root itself.
-        (origin.compareDocumentPosition(roots[roots.length - 1]) & 2 || roots[roots.length - 1] === origin)) ||
-      (alternativeDestinationRootIndex === roots.length - 1 &&
-        direction === 'BACKWARD' &&
-        // `origin` precedes the first `root` or is contained in it (including the root itself).
-        (origin.compareDocumentPosition(roots[0]) & 4 || roots[0].contains(origin)))
+      !firstOrLastZeroInTrap ||
+      origin === firstOrLastZeroInTrap ||
+      origin.compareDocumentPosition(firstOrLastZeroInTrap) & (direction === 'FORWARD' ? 2 : 4)
     ) {
       const positives = positiveTabbables(roots);
 
@@ -146,12 +143,12 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
       }
     }
 
-    const firstOrLastZero = firstOrLastZeroTabbableInRoot(
+    const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(
       roots[alternativeDestinationRootIndex],
       direction === 'FORWARD' ? 'FIRST' : 'LAST'
     );
 
-    if (firstOrLastZero) return ok(firstOrLastZero);
+    if (firstOrLastZeroInDestinationRoot) return ok(firstOrLastZeroInDestinationRoot);
   }
 
   return err('There are no tabbable elements in the focus trap.');
