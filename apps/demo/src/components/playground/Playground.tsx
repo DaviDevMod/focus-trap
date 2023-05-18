@@ -19,9 +19,10 @@ const initialKeysState = { TrapControls: 0, ButtonControls: 0 };
 export function Playground() {
   // Change components `key` to reset their states.
   const [keysState, dispatchKeys] = useReducer(keysReducer, initialKeysState);
-  const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
   const [demoElementsRootState, setDemoElementsRootState] = useState<HTMLDivElement>();
+  const [rootsToHighlightState, setRootsToHighlightState] = useState<string[]>([]);
+  const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
 
   const demoElementsRootCallbackRef = (rootNodeRef: HTMLDivElement) => {
@@ -35,6 +36,7 @@ export function Playground() {
           skeletonState={skeletonState}
           setSelectedButtonIdState={setSelectedButtonIdState}
           ref={demoElementsRootCallbackRef}
+          rootsToHighlightState={rootsToHighlightState}
         />
       </div>
       <div className="border-grey-500 basis-[25vw] border-l-2 px-2 py-4">
@@ -47,6 +49,7 @@ export function Playground() {
             demoElementsRootState={demoElementsRootState}
             dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
+            setRootsToHighlightState={setRootsToHighlightState}
           />
           <DemoButtonControls
             key={`ButtonControls${keysState.ButtonControls}`}

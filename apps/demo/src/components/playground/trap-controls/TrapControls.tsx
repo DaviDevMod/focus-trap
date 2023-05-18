@@ -14,6 +14,7 @@ interface TrapControlsProps {
   demoElementsRootState: HTMLDivElement | undefined;
   dispatchKeys: React.Dispatch<keyof KeysState>;
   displayComponent?: boolean;
+  setRootsToHighlightState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // Defined as a value rather than just a type so that we can loop through it to render the actions.
@@ -58,16 +59,22 @@ const trapControlsReducer = (state: TrapControlsState, action: TrapControlsReduc
   return { ...state, trapConfig: { ...state.trapConfig, ...action } };
 };
 
-export function TrapControls({ demoElementsRootState, dispatchKeys, displayComponent }: TrapControlsProps) {
+export function TrapControls({
+  demoElementsRootState,
+  dispatchKeys,
+  displayComponent,
+  setRootsToHighlightState,
+}: TrapControlsProps) {
   const [demoElementsState, setDemoElementsState] = useState<HTMLElement[]>([]);
   const [{ trapAction, trapConfig }, dispatchTrapControlsState] = useReducer(trapControlsReducer, initialControlsState);
   const [initialFocusFilterState, setInitialFocusFilterState] = useState(false);
+  const [lastTrapEscape, setLastTrapEscape] = useState(false);
 
-  useEffect(() => {
+  if (demoElementsRootState && demoElementsRootState !== demoElementsState[0]) {
     // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
     // without having them (and their whole subtree) appear as options for <TrapConfigListbox> renedered in this component.
     setDemoElementsState(getHTMLElementFlatSubTree(demoElementsRootState, (el) => !!el.id));
-  }, [demoElementsRootState]);
+  }
 
   const rootsAndInitialFocusConfigValues = useMemo(
     () => ({ roots: trapConfig.roots, initialFocus: trapConfig.initialFocus }),
@@ -85,16 +92,39 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
   const handleReset = () => dispatchKeys('TrapControls');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (!trapAction) return;
+
     event.preventDefault();
 
-    if (trapAction === 'BUILD') {
+    if (trapActionIsNotBuild) {
+      setRootsToHighlightState(trapAction === 'RESUME' ? trapConfig.roots : []);
+
+      focusTrap(trapAction);
+
+      return;
+    }
+
+    setRootsToHighlightState(trapConfig.roots);
+
+    setLastTrapEscape(
       focusTrap({
         ...trapConfig,
         initialFocus: strToBoolOrItself(trapConfig.initialFocus),
         returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-      });
-    } else if (trapAction) focusTrap(trapAction);
+      }).escape
+    );
   };
+
+  useEffect(() => {
+    const escHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+        if (lastTrapEscape) setRootsToHighlightState([]);
+      }
+    };
+
+    document.addEventListener('keydown', escHandler);
+    return () => document.removeEventListener('keydown', escHandler);
+  }, [lastTrapEscape, setRootsToHighlightState]);
 
   return (
     <form

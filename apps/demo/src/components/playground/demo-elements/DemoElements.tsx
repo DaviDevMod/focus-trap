@@ -5,15 +5,19 @@ import type { SkeletonButton, SkeletonGroup } from '../../../hooks/useSkeleton';
 interface DemoElementsProps {
   skeletonState: SkeletonGroup;
   setSelectedButtonIdState: React.Dispatch<React.SetStateAction<string>>;
+  rootsToHighlightState: string[];
 }
 
 export const DemoElements = forwardRef(function DemoElements(
-  { skeletonState, setSelectedButtonIdState }: DemoElementsProps,
+  { skeletonState, setSelectedButtonIdState, rootsToHighlightState }: DemoElementsProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
   const { id: rootId, children: rootChildren } = skeletonState;
 
-  // const handleButtonClick = (event) => "It's in the JSX for convinience"
+  const isAllToHighlight = rootsToHighlightState.includes(rootId);
+
+  const isToHighlight = (parentId: string, id: string) =>
+    isAllToHighlight || rootsToHighlightState.includes(parentId) || rootsToHighlightState.includes(id);
 
   return (
     <div id={rootId} ref={ref}>
@@ -27,9 +31,9 @@ export const DemoElements = forwardRef(function DemoElements(
         <div
           key={group.id}
           id={group.id}
-          className="relative mx-[2.5vw] my-[5vw] table border border-green-400 sm:my-8"
+          className={`relative mx-[2.5vw] my-[5vw] table border-2 border-green-400 sm:my-8 sm:border-4`}
         >
-          <span className="absolute -top-3 left-4 rounded-lg bg-white bg-opacity-80 px-2 text-xs sm:text-sm">
+          <span className="absolute -top-3 left-4 z-10 rounded-lg bg-white bg-opacity-80 px-2 text-xs sm:text-sm">
             {group.id}
           </span>
           {(group.children as SkeletonButton[]).map(
@@ -44,9 +48,9 @@ export const DemoElements = forwardRef(function DemoElements(
                 data-parent-id={parentId}
                 disabled={disabled}
                 onClick={() => setSelectedButtonIdState(id)}
-                className={`${
-                  display ? 'inline-block' : 'hidden'
-                } relative m-[1.8vw] h-[10vw] w-[10vw] rounded border border-indigo-500 text-sm font-medium text-gray-500 transition hover:scale-110 hover:shadow-xl focus:scale-110 focus:text-indigo-600 focus:shadow-xl focus:outline-none focus:ring-1 sm:m-3 sm:h-16 sm:w-16`}
+                className={`${display ? 'inline-block' : 'hidden'} ${
+                  isToHighlight(parentId, id) ? 'outline outline-4 outline-green-300 sm:outline-8' : 'outline-none'
+                } relative m-[1.8vw] h-[10vw] w-[10vw] rounded-md border-2 border-blue-700 bg-blue-100 text-sm font-medium text-gray-500 transition hover:scale-110 hover:shadow-xl focus:scale-110 focus:text-indigo-600 focus:shadow-xl focus:ring-1 sm:m-3 sm:h-16 sm:w-16`}
               >
                 <span className="absolute left-1 top-0 text-xs text-gray-500">{id}</span>
                 {tabIndex}
