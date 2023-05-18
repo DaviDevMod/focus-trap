@@ -68,9 +68,9 @@ const initialSkeletonState: SkeletonGroup = {
     {
       id: 'group 5',
       children: [
-        { id: 'Q', tabIndex: '1', forward: 2, backward: 1, parentId: 'group 1', disabled: false, display: true },
-        { id: 'R', tabIndex: '0', forward: 0, backward: 6, parentId: 'group 1', disabled: false, display: true },
-        { id: 'S', tabIndex: '-1', forward: 2, backward: 6, parentId: 'group 1', disabled: false, display: true },
+        { id: 'Q', tabIndex: '1', forward: 2, backward: 1, parentId: 'group 5', disabled: false, display: true },
+        { id: 'R', tabIndex: '0', forward: 0, backward: 6, parentId: 'group 5', disabled: false, display: true },
+        { id: 'S', tabIndex: '-1', forward: 2, backward: 6, parentId: 'group 5', disabled: false, display: true },
       ],
     },
   ],
