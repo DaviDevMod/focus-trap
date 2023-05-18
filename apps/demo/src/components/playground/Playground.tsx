@@ -43,13 +43,13 @@ export function Playground() {
           {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
               to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
-            key={keysState.TrapControls}
+            key={`TrapControls${keysState.TrapControls}`}
             demoElementsRootState={demoElementsRootState}
             dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
           />
           <DemoButtonControls
-            key={keysState.ButtonControls}
+            key={`ButtonControls${keysState.ButtonControls}`}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonById={getSkeletonButtonById}
             patchSkeletonButton={patchSkeletonButton}
