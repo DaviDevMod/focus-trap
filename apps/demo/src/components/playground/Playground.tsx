@@ -60,9 +60,9 @@ export function Playground() {
           />
           <button
             onClick={() => setShowTrapControlsState((prevState) => !prevState)}
-            data-cy={`Switch to ${showTrapControlsState ? 'Element' : 'Trap'} Controls`}
+            data-cy={`Switch to ${showTrapControlsState ? 'Button' : 'Trap'} Controls`}
           >
-            {showTrapControlsState ? 'Configure Elements' : 'Configure Trap'}
+            {showTrapControlsState ? 'Configure Buttons' : 'Configure Trap'}
           </button>
         </section>
       </div>
