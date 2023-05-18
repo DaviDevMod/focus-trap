@@ -31,28 +31,26 @@ To run all of the tests to completion:
 yarn workspace @davidevmod/focus-trap e2e-run-headed
 ```
 
-You may also run them headlessly (though they [may happen to fail](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)):
+<details>
+<summary>You may also run them headlessly.</summary>
+
+<br>
 
 ```bash
 yarn workspace @davidevmod/focus-trap e2e-run
 ```
 
-Or you if want to select a particular test and get a closer look at it:
+But be aware that they [may happen to fail](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/).
+
+</details>
+
+To have a closer look to a particular test:
 
 ```bash
 yarn workspace @davidevmod/focus-trap e2e-open
 ```
 
-This last option is especially useful when editing tests.  
-Changes to the [tests](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap/cypress) will be hot-reloaded.  
-However changes to _@davidevmod/focus-trap_ would not be reflected in the running server, because tests do not use its source code directly (an instrumentation step takes place, allowing for tracking code coverage).  
-To address the issue, another command is made available:
-
-```bash
-yarn workspace @davidevmod/focus-trap e2e-open-no-instrument
-```
-
-Which comes with hot-reload for both the tests and the package source code, with the shortcoming of being unable to provide coverage reports.
+Changes to the souce code of both the [tests](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap/cypress) and the [package](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap/src) will be hot-reloaded.
 
 ## Contributing to _@davidevmod/focus-trap_
 

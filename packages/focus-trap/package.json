@@ -22,15 +22,15 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "e2e-run": "concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cypress run\";",
+    "e2e-run-headed": "concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cypress run --headed --browser chrome\";",
+    "e2e-open": "concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cypress open\";",
     "instrument": "nyc instrument ./src ./instrumented",
     "src-to-instrumented": "replace 'packages/focus-trap/src/index' 'packages/focus-trap/instrumented/index' ../../apps/demo/tsconfig.json",
     "instrumented-to-src": "replace 'packages/focus-trap/instrumented/index' 'packages/focus-trap/src/index' ../../apps/demo/tsconfig.json",
     "clean-coverage": "rimraf --no-glob ./.nyc_output ./coverage",
     "report-coverage": "nyc report -r text -r lcov",
-    "e2e-run": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-run-headed": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run --headed --browser chrome\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-open": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && yarn cypress open\"; yarn instrumented-to-src && yarn report-coverage",
-    "e2e-open-no-instrument": "concurrently -k \"yarn workspace demo dev-uncached\" \"yarn cypress open\";"
+    "e2e-run-headed-codecov": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run --headed --browser chrome\"; yarn instrumented-to-src && yarn report-coverage"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.10.4",
