@@ -49,7 +49,7 @@ type TrapArg = Roots | TrapConfig | TrapAction;
 
 <br>
 
-Here's an example:
+Here is an example:
 
 ```ts
 import { focusTrap } from '@davidevmod/focus-trap';
@@ -133,7 +133,39 @@ They are pretty straightforward, calling `focusTrap` with `"PAUSE"`, `"RESUME"` 
 
 ## Return value
 
-`undefined` :shrug:
+An object being a shallow copy of the `NormalisedTrapConfig` used internally by the focus trap.  
+That is the provided `TrapConfig` with IDs resolved to actual elements and default values set.
+
+<details>
+<summary>Here is a comparison:</summary>
+
+<br>
+
+```ts
+type Focusable = HTMLElement | SVGElement;
+
+type Roots = (Focusable | string)[];
+
+// The shape of the config expected from you.
+interface TrapConfig {
+  roots: Roots;
+  initialFocus?: boolean | Focusable | string;
+  returnFocus?: boolean | Focusable | string;
+  lock?: boolean | Function;
+  escape?: boolean;
+}
+
+// The shape of the returned config.
+interface NormalisedTrapConfig {
+  roots: Focusable[];
+  initialFocus: boolean | Focusable;
+  returnFocus: Focusable | null;
+  lock: boolean | Function;
+  escape: boolean;
+}
+```
+
+</details>
 
 ## Error handling
 
