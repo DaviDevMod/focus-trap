@@ -78,7 +78,7 @@ jobs:
       - name: 🏗 Run build
         run: yarn turbo build
 
-      - name: Prepare repo for e2e tests
+      - name: Instrument @davidevmod/focus-trap
         run: |
           yarn instrument && yarn src-to-instrumented
         working-directory: packages/focus-trap
