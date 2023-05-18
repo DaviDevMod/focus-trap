@@ -9,7 +9,7 @@ export type Focusable = HTMLElement | SVGElement;
 
 export type Roots = (Focusable | string)[];
 
-// The shape of the config expected from the user of the trap.
+// The shape of the config expected from the consumer of the library.
 export interface TrapConfig {
   roots: Roots;
   initialFocus?: boolean | Focusable | string;
