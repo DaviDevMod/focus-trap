@@ -76,7 +76,8 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
 
   const returnFocusConfigValues = useMemo(() => ({ returnFocus: trapConfig.returnFocus }), [trapConfig.returnFocus]);
 
-  const TrapActionIsNotBuild = trapAction !== 'BUILD';
+  const trapActionIsNotBuild = trapAction !== 'BUILD';
+
   const handleSwitchChange = (checked: boolean, label: keyof Pick<DemoTrapConfig, 'lock' | 'escape'>) => {
     dispatchTrapControlsState({ [label]: checked } as TrapControlsReducerAction);
   };
@@ -111,7 +112,7 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsNotBuild}
+        disabled={trapActionIsNotBuild}
       />
 
       <TrapConfigListbox
@@ -122,7 +123,7 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
         setFilterState={setInitialFocusFilterState}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsNotBuild}
+        disabled={trapActionIsNotBuild}
       />
 
       <TrapConfigListbox
@@ -130,21 +131,21 @@ export function TrapControls({ demoElementsRootState, dispatchKeys, displayCompo
         configValues={returnFocusConfigValues}
         demoElementsState={demoElementsState}
         dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={TrapActionIsNotBuild}
+        disabled={trapActionIsNotBuild}
       />
 
       <Switch
         label="lock"
         checked={trapConfig.lock}
         handleChange={handleSwitchChange}
-        disabled={TrapActionIsNotBuild}
+        disabled={trapActionIsNotBuild}
       />
 
       <Switch
         label="escape"
         checked={trapConfig.escape}
         handleChange={handleSwitchChange}
-        disabled={TrapActionIsNotBuild}
+        disabled={trapActionIsNotBuild}
       />
 
       <ResetButton disabled={trapAction === undefined} handleClick={handleReset} />
