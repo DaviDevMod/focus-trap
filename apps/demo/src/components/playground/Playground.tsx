@@ -1,5 +1,6 @@
-import { useState, useReducer } from 'react';
+'use client';
 
+import { useState, useReducer } from 'react';
 import { useSkeleton } from '../../hooks/useSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
