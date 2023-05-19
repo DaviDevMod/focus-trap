@@ -126,10 +126,10 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
     if (direction === 'BACKWARD') destinationRootIndex--;
   }
 
+  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'LAST' : 'FIRST');
+
   for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += direction === 'FORWARD' ? 1 : -1) {
     const alternativeDestinationRootIndex = modulo(i, roots.length);
-
-    const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'LAST' : 'FIRST');
 
     if (
       !firstOrLastZeroInTrap ||
