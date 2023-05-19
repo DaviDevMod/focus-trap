@@ -5,7 +5,7 @@ import { DEFAULT_ROOTS } from '../support/commands';
 context('Test how the focus cycles within the trap when the Tab key is pressed.', () => {
   beforeEach(() => {
     cy.visitDemo();
-    cy.buildTrap({ roots: DEFAULT_ROOTS });
+    cy.buildTrap({ roots: DEFAULT_ROOTS, lock: false });
     cy.get('button[data-parent-id]').as('possibleTabbables');
   });
 
