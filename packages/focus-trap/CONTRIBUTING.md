@@ -28,21 +28,8 @@ Changes to both _@davidevmod/focus-trap_ and the _demo_ will be hot-reloaded.
 To run all of the tests to completion:
 
 ```bash
-yarn workspace @davidevmod/focus-trap e2e-run-headed
-```
-
-<details>
-<summary>You may also run them headlessly.</summary>
-
-<br>
-
-```bash
 yarn workspace @davidevmod/focus-trap e2e-run
 ```
-
-But be aware that they [may happen to fail](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/).
-
-</details>
 
 To have a closer look to a particular test:
 

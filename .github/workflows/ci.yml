@@ -86,8 +86,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          browser: chrome
-          headed: true
           install: false
           working-directory: packages/focus-trap
           start: yarn workspace demo dev
