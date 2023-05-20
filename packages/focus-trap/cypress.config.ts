@@ -9,7 +9,12 @@ export default defineConfig({
     // Setting an order to run the tests. The glob at the end ensures no test is left behind.
     // Note that Cypress doesn't guarantee that the order in the `specPattern` array will be
     // respected, but it currently is (and should this behaviour change, no harm is done).
-    specPattern: ['cypress/e2e/tab-cycle.cy.ts', 'cypress/e2e/**/**.cy.ts'],
+    specPattern: [
+      'cypress/e2e/tab-key-press.cy.ts',
+      'cypress/e2e/initialFocus.cy.ts',
+      'cypress/e2e/returnFocus.cy.ts',
+      'cypress/e2e/**/**.cy.ts',
+    ],
 
     setupNodeEvents(on, config) {
       // implement node event listeners here

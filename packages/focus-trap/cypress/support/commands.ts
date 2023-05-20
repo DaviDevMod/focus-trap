@@ -1,59 +1,50 @@
+/*
+The tabbing behavior is tested using two different algorithms:
+
+- If `check === true` (see `verifyTabCycle`),
+  for each element in the playground,
+  tests will press `Tab` `tabsPerCycle` times.
+
+- If `check === false`,
+  for one and only one element in the playground,
+  tests will press `Tab` `expectedOrder.length` times.
+
+When `check === false` tests only verify that the focus cycles within the trap.
+This is quite fast.
+
+When `check === true` tests also check that
+elements outside the trap pass the focus to the right elements inside the trap.
+This takes a while.
+
+The `check` for elements outside of the trap is enabled only in the 'tab-key-pres.cy.ts' spec.
+
+Note that enabling the `check` has no effect if `trapConfig.lock === true` (the default).
+*/
+
 /// <reference types="cypress" />
 
-import { RequireExactlyOne } from 'type-fest';
-
-interface TestTrapConfig {
-  roots: string[];
-  initialFocus?: string;
-  returnFocus?: string;
-  lock?: boolean;
-  escape?: boolean;
-}
-
-interface ElementPatch {
-  id: string;
-  tabIndex?: string;
-  disabled?: boolean;
-  display?: boolean;
-}
+import { TrapArg } from '../../src';
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
 interface TabCycleConfig {
-  direction?: Direction | 'EVERY';
+  direction?: Direction;
   expectedOrder?: string;
   tabsPerCycle?: number;
   check?: boolean;
 }
-
-type DropdownOptions = RequireExactlyOne<{ optionButtonName: string; itemsText: string | string[] }>;
 
 export const DEFAULT_ROOTS = ['group 2', 'group 4'];
 
 const DEFAULT_EXPECTED_ORDER = '0123456';
 
 // A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
-// BTW `verifyTabCycle` uses this value only if `check` is enabled. (see `getNextTabbedDatasetOrder`)
 const DEFAULT_TABS_PER_CYCLE = 2;
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      visitDemo: (path?: string) => void;
-
-      switchControlsFormTo: (formName: 'Trap Controls' | 'Button Controls') => void;
-
-      openDropdownAndChoose: (dropdownButtonName: string, options: DropdownOptions) => void;
-
-      toggleSwitch: (switchName: string, toggleTo: boolean) => void;
-
-      resetForm: () => void;
-
-      submitForm: () => void;
-
-      buildTrap: (config: TestTrapConfig) => void;
-
-      patchElement: (patch: ElementPatch) => void;
+      visitDemoAndBuildTrap: (trapArg: TrapArg) => void;
 
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
@@ -77,107 +68,10 @@ declare global {
   }
 }
 
-Cypress.Commands.add('visitDemo', (path = '/') => {
-  cy.visit(path);
-  // Check "_app.tsx" in the demo app; https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
+Cypress.Commands.add('visitDemoAndBuildTrap', (trapArg) => {
+  cy.visit(`/e2e?arg=${encodeURIComponent(JSON.stringify(trapArg))}`);
+  // https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
   cy.window().should('have.property', 'appReady', true);
-});
-
-Cypress.Commands.add('switchControlsFormTo', (formName) => {
-  cy.get('button[data-cy$=" Controls"]').as('controlsSwitch').should('have.length', 1);
-
-  cy.get<HTMLButtonElement>('@controlsSwitch').then(($controlsSwitch) => {
-    if ($controlsSwitch.get(0).dataset.cy?.endsWith(formName)) $controlsSwitch.get(0).click();
-  });
-});
-
-Cypress.Commands.add(
-  'openDropdownAndChoose',
-  { prevSubject: ['element'] },
-  (form, dropdownButtonName, { optionButtonName, itemsText }) => {
-    cy.wrap(form).find(`button[data-cy="${dropdownButtonName}"]`).click();
-
-    if (optionButtonName !== undefined) cy.wrap(form).find(`button[data-cy="${optionButtonName}"]`).click();
-    else {
-      if (typeof itemsText === 'string') cy.wrap(form).contains('li', itemsText).click();
-      else {
-        for (const itemText of itemsText) cy.wrap(form).contains('li', itemText).click();
-        cy.realPress('Escape'); // Close the <Listbox multiple={true}>
-      }
-    }
-  }
-);
-
-Cypress.Commands.add('toggleSwitch', { prevSubject: ['element'] }, (form, switchName, toggleTo) => {
-  cy.wrap(form)
-    .find(`button[data-cy="${switchName}"]`)
-    .then(($switchButton) => {
-      if ($switchButton.get(0).dataset.headlessuiState?.includes('checked') !== toggleTo) $switchButton.get(0).click();
-    });
-});
-
-Cypress.Commands.add('resetForm', { prevSubject: ['element'] }, (form) => {
-  cy.wrap(form).find('button[type="reset"]').click({ force: true });
-});
-
-Cypress.Commands.add('submitForm', { prevSubject: ['element'] }, (form) => {
-  cy.wrap(form).find('button[type="submit"]').click();
-});
-
-Cypress.Commands.add('buildTrap', ({ roots, initialFocus, returnFocus, lock, escape }) => {
-  // Demolish an eventual previous trap.
-  // TODO: if in the previous trap `(!escape && lock)` there is no way to override the previous trap.
-  cy.realPress('Escape');
-
-  cy.switchControlsFormTo('Trap Controls');
-
-  cy.get('form[data-cy="Trap Controls"]').as('trapControls');
-
-  cy.get('@trapControls').resetForm();
-
-  cy.get('@trapControls').openDropdownAndChoose('Toggle Action Menu', {
-    optionButtonName: 'Select BUILD Action',
-  });
-
-  cy.get('@trapControls').openDropdownAndChoose('Toggle roots Listbox', {
-    itemsText: roots,
-  });
-
-  if (initialFocus !== undefined) {
-    cy.get('@trapControls').openDropdownAndChoose('Toggle initialFocus Listbox', {
-      itemsText: initialFocus,
-    });
-  }
-
-  if (returnFocus !== undefined) {
-    cy.get('@trapControls').openDropdownAndChoose('Toggle returnFocus Listbox', {
-      itemsText: returnFocus,
-    });
-  }
-
-  if (lock !== undefined) cy.get('@trapControls').toggleSwitch('Toggle lock Switch', lock);
-
-  if (escape !== undefined) cy.get('@trapControls').toggleSwitch('Toggle escape Switch', escape);
-
-  cy.get('@trapControls').submitForm();
-});
-
-Cypress.Commands.add('patchElement', ({ id, tabIndex, disabled, display }) => {
-  cy.switchControlsFormTo('Button Controls');
-
-  cy.get('form[data-cy="Button Controls"]').as('demoElementControls');
-
-  cy.get('@demoElementControls').openDropdownAndChoose('Toggle id Listbox', { itemsText: id });
-
-  if (tabIndex !== undefined) {
-    cy.get('@demoElementControls').openDropdownAndChoose('Toggle tabindex Listbox', { itemsText: tabIndex });
-  }
-
-  if (disabled !== undefined) cy.get('@demoElementControls').toggleSwitch('Toggle disabled Switch', disabled);
-
-  if (display !== undefined) cy.get('@demoElementControls').toggleSwitch('Toggle display Switch', display);
-
-  cy.get('@demoElementControls').submitForm();
 });
 
 // Fire a `Tab` event and return the `dataset.order` of the element that received the focus.
@@ -195,8 +89,7 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
       // It is run exclusively by the tests in "tab-cycle.cy.ts".
       // Making it available to arbitrary traps would require some (non-trivial) logic to modify
       // the `data-forward` and `data-backward` attributes of every element in `@possibleTabbables`.
-      // All the effort has been made to ensure that "tab-cycle.cy.ts" checks any possible relevant scenario.**
-      // As a side note, skipping this check allows for a faster algorithm to verify the tab cycle.
+      // All the effort has been made to ensure that "tab-cycle.cy.ts" checks any possible relevant scenario.
       if (check && !$origin.get(0).dataset.order) {
         expect($origin.get(0).dataset[direction.toLowerCase()]).to.equal($destination.get(0).dataset.order);
       }
@@ -222,29 +115,27 @@ Cypress.Commands.add('getTabCycle', (origin, direction, len, check) => {
 
 // Call `getTabCycle` and assert whether the tab cycle is a substring of `repeatedOrder`.
 Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedOrder, check) => {
-  cy.wrap(collection)
-    .then(($collection) => (check ? $collection : $collection.slice(0, 1)))
-    .each(($origin) => {
-      cy.getTabCycle($origin, direction, len, check).then((cycle) => {
-        expect(cycle).to.have.length(len);
-        expect(repeatedOrder).to.have.string(cycle.join(''));
-      });
+  cy.wrap(collection).each(($origin) => {
+    cy.getTabCycle($origin, direction, len, check).then((cycle) => {
+      expect(cycle).to.have.length(len);
+      expect(repeatedOrder).to.have.string(cycle.join(''));
     });
+  });
 });
 
-// Call `assertTabCycle` once or twice, with the `correctTabCycle`.
+// Call `assertTabCycle` with the proper arguments, depending on the value of `check`.
 Cypress.Commands.add(
   'verifyTabCycle',
   { prevSubject: ['element'] },
   (
     collection,
     {
-      direction = 'EVERY',
+      direction = 'FORWARD',
       tabsPerCycle = DEFAULT_TABS_PER_CYCLE,
       expectedOrder = DEFAULT_EXPECTED_ORDER,
       check = false,
     } = {
-      direction: 'EVERY',
+      direction: 'FORWARD',
       tabsPerCycle: DEFAULT_TABS_PER_CYCLE,
       expectedOrder: DEFAULT_EXPECTED_ORDER,
       check: false,
@@ -254,8 +145,14 @@ Cypress.Commands.add(
       throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
     }
 
+    if (check && tabsPerCycle < 2) {
+      throw new Error('When `check` is `true`, `tabsPerCycle` must be at least `2` in order to get meaningful tests.');
+    }
+
     const cycleLength = check ? tabsPerCycle : expectedOrder.length;
 
+    // Is the expected sequence of tabbed `dataset-order` repeated the least amount of times needed to
+    // include any sequence of tabbed `dataset-order` that could show up during the tests.
     const repeatedOrder = {
       FORWARD: expectedOrder.repeat(Math.ceil((cycleLength - 1) / expectedOrder.length) + 1),
       get BACKWARD() {
@@ -263,8 +160,12 @@ Cypress.Commands.add(
       },
     };
 
-    const directions: Direction[] = direction === 'EVERY' ? ['FORWARD', 'BACKWARD'] : [direction];
-
-    for (const d of directions) cy.assertTabCycle(collection, d, cycleLength, repeatedOrder[d], check);
+    cy.assertTabCycle(
+      check ? collection : collection.slice(0, 1),
+      direction,
+      cycleLength,
+      repeatedOrder[direction],
+      check
+    );
   }
 );
