@@ -46,7 +46,10 @@ export const normaliseRoots = (roots: Roots): Result<Focusable[], string> => {
 // Get `document.activeElement` for the default `returnFocus`.
 const normaliseReturnFocus = (returnFocus: TrapConfig['returnFocus']) => {
   const resolvedReturnFocus = resolveId(returnFocus);
-  return resolvedReturnFocus === true ? (document.activeElement as Focusable) : resolvedReturnFocus || null;
+
+  return resolvedReturnFocus === true || resolvedReturnFocus == null
+    ? (document.activeElement as Focusable | null)
+    : resolvedReturnFocus || null;
 };
 
 // `roots` and `returnFocus` need to be normalised separately, because the former
