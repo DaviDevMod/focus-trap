@@ -62,10 +62,7 @@ export function Playground() {
             dispatchKeys={dispatchKeys}
             displayComponent={!showTrapControlsState}
           />
-          <button
-            onClick={() => setShowTrapControlsState((prevState) => !prevState)}
-            data-cy={`Switch to ${showTrapControlsState ? 'Button' : 'Trap'} Controls`}
-          >
+          <button onClick={() => setShowTrapControlsState((prevState) => !prevState)}>
             {showTrapControlsState ? 'Configure Buttons' : 'Configure Trap'}
           </button>
         </section>

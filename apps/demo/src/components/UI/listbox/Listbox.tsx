@@ -30,7 +30,6 @@ export function Listbox<T extends string | string[]>({
           className={`${
             disabled ? 'bg-gray-200 text-neutral-400' : 'bg-blue-300'
           } relative h-9 w-full cursor-default rounded-lg pl-3 pr-10 text-left text-sm shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300`}
-          data-cy={`Toggle ${label} Listbox`}
         >
           {/* We don't want an empty string as a `displayValue`. Do not swap the `||` for a `??`. */}
           <span className="block w-[16vw] truncate">{displayValue || value}</span>

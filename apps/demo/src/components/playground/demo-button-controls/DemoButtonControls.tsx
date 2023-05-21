@@ -111,7 +111,6 @@ export function DemoButtonControls({
     <form
       onSubmit={handleSubmit}
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
-      data-cy="Button Controls"
     >
       <IdListbox id={id} options={skeletonButtonsIds} setSelectedButtonIdState={setSelectedButtonIdState} />
 
