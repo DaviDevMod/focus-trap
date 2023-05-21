@@ -2,7 +2,7 @@
 
 The library manages a global [state](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/state.ts) containing:
 
-- An `isBuilt` boolean indicating whether there's a focus trap up and running
+- An `isBuilt` boolean indicating whether a focus trap has been built (and not demolished yet)
 - A `rawConfig`, which is the one provided by the user of the package
 - A `normalisedConfig` that is the one actually used by the library, it has default values set and IDs resolved to actual elements
 
