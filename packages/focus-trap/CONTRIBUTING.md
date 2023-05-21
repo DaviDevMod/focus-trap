@@ -52,7 +52,7 @@ To get an overview of the package and how it works, read the the [README.md](htt
 
 #### Did you write a patch that fixes a bug?
 
-- Create a pull request, also known as a PR, with the patch in question.
+- Create a pull request (PR) with the patch in question.
 
 - Ensure the PR description clearly describes the problem and solution.  
   Don't forget to [link PR to issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) if one exists.
@@ -67,6 +67,8 @@ To get an overview of the package and how it works, read the the [README.md](htt
 - Avoid force-pushing your changes, especially when updating your PR based on review feedback. Force-pushed changes are not easily viewable on GitHub, and not at all viewable if a force-push also rebases against main. PRs will be squash merged, so the specific commits on your PR branch do not matter, only the PR title itself. Don't worry about having a perfect commit history; instead focus on making your changes as easy to review and merge as possible.
 
 - When applicable, write new tests and/or update the [README.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/README.md).
+
+- If the changes you made affect the behaviour of the package in any way, create a changeset by running `yarn changeset` and following the instructions on your terminal.
 
 #### Need inspiration?
 
