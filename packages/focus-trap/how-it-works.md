@@ -44,8 +44,8 @@ The library intervenes only if `event.target`:
 Given that it is the case to intervene, the right destination for the focus after a <kbd>Tab</kbd> key press happens is found based on the `tabIndex` of `event.target`:
 
 - If `tabIndex < 0`, the destination is the `topOrBottomTabbable` following the `event.target`
-- if `tabIndex === 0`, the destination is the `firstOrLastTabbable` following the `event.target`, or the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order) after reaching the `firstZeroTabbable` of the first `root` while shift-tabbing or the `lastZeroTabbable` of the last `root` while tabbing forward
-- if `tabIndex > 0`, the destination is the next `positiveTabbable` in value (resolving ties by document order), or after reaching the first/last `positiveTabbable`, the `firstZeroTabbable` of the first `root` while tabbing forward or the `lastZeroTabbable` of the last `root` while shift-tabbing
+- if `tabIndex === 0`, the destination is the `firstOrLastTabbable` following the `event.target`, or the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order) after reaching the `firstOrLastZeroTabbable` of the whole trap (can be seen as the first/last `firstOrLastZeroTabbable` in document order among the `firstOrLastZeroTabbable` of all the roots)
+- if `tabIndex > 0`, the destination is the next `positiveTabbable` in value (resolving ties by document order), or after reaching the first/last `positiveTabbable`, the `firstOrLastZeroTabbable` of the whole trap
 
 ## Pause, resume, demolish
 
