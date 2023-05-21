@@ -548,22 +548,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.10.4":
-  version: 3.10.4
-  resolution: "@cypress/code-coverage@npm:3.10.4"
+"@cypress/code-coverage@npm:3.10.5":
+  version: 3.10.5
+  resolution: "@cypress/code-coverage@npm:3.10.5"
   dependencies:
-    "@cypress/webpack-preprocessor": "npm:^5.11.0"
-    chalk: "npm:4.1.2"
-    dayjs: "npm:1.10.7"
-    debug: "npm:4.3.4"
-    execa: "npm:4.1.0"
-    globby: "npm:11.0.4"
-    istanbul-lib-coverage: "npm:3.0.0"
-    js-yaml: "npm:4.1.0"
-    nyc: "npm:15.1.0"
+    "@cypress/webpack-preprocessor": ^5.11.0
+    chalk: 4.1.2
+    dayjs: 1.10.7
+    debug: 4.3.4
+    execa: 4.1.0
+    globby: 11.0.4
+    istanbul-lib-coverage: 3.0.0
+    js-yaml: 4.1.0
+    nyc: 15.1.0
   peerDependencies:
     cypress: "*"
-  checksum: a758f06770e880c40f100fc42509db27b677066cd8520c3eb350b0016d32ac9a3df80da899f750a58f45957eeb4057b6fff5fa8d88fac1c5e41829454862dac6
+  checksum: d8b34d039bf1cda51d8c99bbf0957d59323012d84fd77190a8d7ed7b38e7342b89d20615062c1d4c166f9782736e635decbd1d39f20e98aad5387a50194e6c89
   languageName: node
   linkType: hard
 
@@ -629,13 +629,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.10.4
+    "@cypress/code-coverage": 3.10.5
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.2.1
     concurrently: 8.0.1
     cypress: 12.12.0
     cypress-real-events: 1.8.1
-    eslint: 8.40.0
+    eslint: 8.41.0
     istanbul-lib-coverage: 3.2.0
     nyc: ^15.1.0
     prettier: 2.8.8
@@ -644,7 +644,7 @@ __metadata:
     source-map-support: 0.5.21
     true-myth: ^6.2.0
     ts-node: 10.9.1
-    type-fest: ^3.10.0
+    type-fest: ^3.11.0
     typescript: 5.0.4
     vite: ^4.3.8
     vite-plugin-dts: ^2.3.0
@@ -840,10 +840,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.40.0":
-  version: 8.40.0
-  resolution: "@eslint/js@npm:8.40.0"
-  checksum: e84936b8ebd1c8fd90e860182e95d1404006da4cbca722b14950b298aeeca102b080aa9b62c8e69f90824ec54e19f1ba79b239046223624d1414ee82e8e628ac
+"@eslint/js@npm:8.41.0":
+  version: 8.41.0
+  resolution: "@eslint/js@npm:8.41.0"
+  checksum: af013d70fe8d0429cdf5cd8b5dcc6fc384ed026c1eccb0cfe30f5849b968ab91645111373fd1b83282b38955b1bdfbe667c1a7dbda3b06cae753521223cad775
   languageName: node
   linkType: hard
 
@@ -2807,7 +2807,7 @@ __metadata:
     "@types/react": 18.2.6
     "@types/react-dom": 18.2.4
     autoprefixer: 10.4.14
-    eslint: 8.40.0
+    eslint: 8.41.0
     eslint-config-next: 13.4.3
     next: 13.4.3
     postcss: 8.4.23
@@ -2818,7 +2818,7 @@ __metadata:
     rimraf: ^5.0.1
     tailwindcss: 3.3.2
     tailwindcss-debug-screens: 2.2.1
-    type-fest: ^3.10.0
+    type-fest: ^3.11.0
     typescript: 5.0.4
   languageName: unknown
   linkType: soft
@@ -3309,14 +3309,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.40.0":
-  version: 8.40.0
-  resolution: "eslint@npm:8.40.0"
+"eslint@npm:8.41.0":
+  version: 8.41.0
+  resolution: "eslint@npm:8.41.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.4.0
     "@eslint/eslintrc": ^2.0.3
-    "@eslint/js": 8.40.0
+    "@eslint/js": 8.41.0
     "@humanwhocodes/config-array": ^0.11.8
     "@humanwhocodes/module-importer": ^1.0.1
     "@nodelib/fs.walk": ^1.2.8
@@ -3336,13 +3336,12 @@ __metadata:
     find-up: ^5.0.0
     glob-parent: ^6.0.2
     globals: ^13.19.0
-    grapheme-splitter: ^1.0.4
+    graphemer: ^1.4.0
     ignore: ^5.2.0
     import-fresh: ^3.0.0
     imurmurhash: ^0.1.4
     is-glob: ^4.0.0
     is-path-inside: ^3.0.3
-    js-sdsl: ^4.1.4
     js-yaml: ^4.1.0
     json-stable-stringify-without-jsonify: ^1.0.1
     levn: ^0.4.1
@@ -3355,7 +3354,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: b79eba37f52f517a420eec99a80ae9f284d2cbe73afc0d4d3d4d5ed1cce0b06f21badc0374bfb7ac239efd2d49a1fd7c6111d6c3d52888521f377ba33de77e61
+  checksum: 09979a6f8451dcc508a7005b6670845c8a518376280b3fd96657a406b8b6ef29d0e480d1ba11b4eb48da93d607e0c55c9b877676fe089d09973ec152354e23b2
   languageName: node
   linkType: hard
 
@@ -3679,7 +3678,7 @@ __metadata:
     "@changesets/cli": 2.26.1
     concurrently: 8.0.1
     cypress: 12.12.0
-    eslint: 8.40.0
+    eslint: 8.41.0
     husky: 8.0.3
     is-ci: 3.0.1
     lint-staged: 13.2.2
@@ -3687,7 +3686,7 @@ __metadata:
     rimraf: 5.0.1
     true-myth: ^6.2.0
     turbo: ^1.9.8
-    type-fest: ^3.10.0
+    type-fest: ^3.11.0
     typescript: 5.0.4
   languageName: unknown
   linkType: soft
@@ -4128,6 +4127,13 @@ __metadata:
   version: 1.0.4
   resolution: "grapheme-splitter@npm:1.0.4"
   checksum: 0c22ec54dee1b05cd480f78cf14f732cb5b108edc073572c4ec205df4cd63f30f8db8025afc5debc8835a8ddeacf648a1c7992fe3dcd6ad38f9a476d84906620
+  languageName: node
+  linkType: hard
+
+"graphemer@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "graphemer@npm:1.4.0"
+  checksum: bab8f0be9b568857c7bec9fda95a89f87b783546d02951c40c33f84d05bb7da3fd10f863a9beb901463669b6583173a8c8cc6d6b306ea2b9b9d5d3d943c3a673
   languageName: node
   linkType: hard
 
@@ -4805,13 +4811,6 @@ __metadata:
   version: 1.4.0
   resolution: "jju@npm:1.4.0"
   checksum: 3790481bd2b7827dd6336e6e3dc2dcc6d425679ba7ebde7b679f61dceb4457ea0cda330972494de608571f4973c6dfb5f70fab6f3c5037dbab19ac449a60424f
-  languageName: node
-  linkType: hard
-
-"js-sdsl@npm:^4.1.4":
-  version: 4.1.4
-  resolution: "js-sdsl@npm:4.1.4"
-  checksum: 1977cea4ab18e0e03e28bdf0371d8b443fad65ca0988e0faa216406faf6bb943714fe8f7cc7a5bfe5f35ba3d94ddae399f4d10200f547f2c3320688b0670d726
   languageName: node
   linkType: hard
 
@@ -7914,12 +7913,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.10.0":
-  version: 3.10.0
-  resolution: "type-fest@npm:3.10.0"
-  peerDependencies:
-    typescript: ">=4.7.0"
-  checksum: df3bd25809ea79ac7712da7c11648251118c23f65b226eba263797e42be60ba34085874ec492202b8ecf2e5a2273b27ddcbfe3be2c275dfcef3f0e2ee90ea179
+"type-fest@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "type-fest@npm:3.11.0"
+  checksum: ebd7968301674d8022cd180aa34a685bda5962ad3c98da7280456f97468c1b12984f6a79d4eb4652f10e1f0ab42f7016121fd762068fd6255d4d0ccc069c2566
   languageName: node
   linkType: hard
 
