@@ -56,7 +56,7 @@ import { focusTrap } from '@davidevmod/focus-trap';
 
 const myElement = document.getElementById('myID');
 
-// You can build a trap in differt ways:
+// You can build a focus trap in different ways:
 
 focustrap({ roots: [myElement] });
 
@@ -83,7 +83,7 @@ focusTrap('DEMOLISH');
 By default, when building a focus trap by providing only `roots`, this is what happens:
 
 - The focus is given to the first tabbable element contained in the roots
-- `Tab` and `Shift+Tab` keys cycles through the roots' tabbable elements
+- <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> keys cycle through the roots' tabbable elements
 - Click events outside of the focus trap are prevented
 - Whenever the <kbd>Esc</kbd> key is pressed, the trap is demolished
 - Once the trap is demolished, focus is returned to what was the [activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
