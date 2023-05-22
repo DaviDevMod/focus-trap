@@ -2,17 +2,17 @@
 
 The library manages a global [state](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/state.ts) containing:
 
-- An `isBuilt` boolean indicating whether a focus trap has been built (and not demolished yet)
 - A `rawConfig`, which is the one provided by the user of the package
 - A `normalisedConfig` that is the one actually used by the library, it has default values set and IDs resolved to actual elements
+- An `isBuilt` boolean indicating whether a focus trap has been built (and not demolished yet)
 
 ## The build
 
 When [focus-trap](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/index.ts) is called with a `TrapConfig` (or at least the `Roots`) a [build](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/trap-actions.ts) action is performed:
 
-- Demolish an eventual focus trap that was already running
+- Demolish any already built trap
 - Update the global state
-- Give `initialFocus` when applicable
+- Give the `initialFocus`
 - Add event listeners to the DOM
 
 ## The events
@@ -22,7 +22,9 @@ There are only two [event handlers](https://github.com/DaviDevMod/focus-trap/blo
 - One meant to handle click outside of the trap
 - The other handling <kbd>Tab</kbd> and <kbd>Esc</kbd> key presses
 
-When the <kbd>Tab</kbd> key is pressed, the `roots` of the `normalisedConfig` are updated (to account for any relevant DOM mutation) and based on the `event.target` and the updated `roots`, the right destination element is found and focused.
+The main fuctionality of the package lies in the handling of <kbd>Tab</kbd> key presses.
+
+On a <kbd>Tab</kbd> key press, the `roots` of the `normalisedConfig` are updated (to account for any relevant DOM mutation since the last key press) and the right destination element is found and focused.
 
 ## The destination
 
@@ -41,11 +43,11 @@ The library intervenes only if `event.target`:
 - Is a particular element at the edges of its `root`
 - Has a positive tab index.
 
-Given that it is the case to intervene, the right destination for the focus after a <kbd>Tab</kbd> key press happens is found based on the `tabIndex` of `event.target`:
+Given that it is the case to intervene, the right destination for the focus is found based on the `tabIndex` of `event.target` like so:
 
-- If `tabIndex < 0`, the destination is the `topOrBottomTabbable` following the `event.target`
-- if `tabIndex === 0`, the destination is the `firstOrLastTabbable` following the `event.target`, or the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order) after reaching the `firstOrLastZeroTabbable` of the whole trap (can be seen as the first/last `firstOrLastZeroTabbable` in document order among the `firstOrLastZeroTabbable` of all the roots)
-- if `tabIndex > 0`, the destination is the next `positiveTabbable` in value (resolving ties by document order), or after reaching the first/last `positiveTabbable`, the `firstOrLastZeroTabbable` of the whole trap
+- If `tabIndex < 0`, the destination is the `topOrBottomTabbable` following `event.target`
+- if `tabIndex === 0`, the destination is the `firstOrLastTabbable` following `event.target` or, after reaching the `firstOrLastZeroTabbable` of the whole trap, the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order)
+- if `tabIndex > 0`, the destination is the next `positiveTabbable` in value (resolving ties by document order) or, after reaching the first/last `positiveTabbable`, the `firstOrLastZeroTabbable` of the whole trap
 
 ## Pause, resume, demolish
 
