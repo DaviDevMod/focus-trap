@@ -11,8 +11,8 @@ export default defineConfig({
     // respected, but it currently is (and should this behaviour change, no harm is done).
     specPattern: [
       'cypress/e2e/tab-key-press.cy.ts',
-      'cypress/e2e/initialFocus.cy.ts',
-      'cypress/e2e/returnFocus.cy.ts',
+      'cypress/e2e/trap-config/initialFocus.cy.ts',
+      'cypress/e2e/trap-config/returnFocus.cy.ts',
       'cypress/e2e/**/**.cy.ts',
     ],
 
