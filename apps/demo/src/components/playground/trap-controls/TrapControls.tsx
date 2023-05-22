@@ -52,8 +52,6 @@ const initialControlsState: TrapControlsState = {
 };
 
 const trapControlsReducer = (state: TrapControlsState, action: TrapControlsReducerAction): TrapControlsState => {
-  // For the moment not resetting `state.trapConfig` when navigating between actions, as it may be frustrating for the user.
-  // TODO: Maybe keep this logic and add a reset button?
   if (action.trapAction) return { ...state, ...action };
 
   return { ...state, trapConfig: { ...state.trapConfig, ...action } };

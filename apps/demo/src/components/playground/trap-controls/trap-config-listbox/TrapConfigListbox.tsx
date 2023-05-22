@@ -77,6 +77,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   const handleFilterClick = () => {
     // `handleFilterClick` is in the DOM only if `configProp === 'initialFocus'`, in which case
     // both `setFilterState` and `configValues.roots` are required `TrapConfigListboxProps`.
+
     setFilterState!((prevState) => !prevState);
 
     // When activating the filter, `controlsState.trapConfig.initialFocus` must be reset
