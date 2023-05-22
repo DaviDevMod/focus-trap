@@ -64,9 +64,9 @@ declare global {
         len: number,
         repeatedOrder: string,
         check: boolean
-      ) => void;
+      ) => Cypress.Chainable<true>;
 
-      verifyTabCycle: (config?: TabCycleConfig) => void;
+      verifyTabCycle: (config?: TabCycleConfig) => Cypress.Chainable<true>;
     }
   }
 }
@@ -121,6 +121,7 @@ Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedOrde
     cy.getTabCycle($origin, direction, len, check).then((cycle) => {
       expect(cycle).to.have.length(len);
       expect(repeatedOrder).to.have.string(cycle.join(''));
+      return true;
     });
   });
 });
@@ -162,7 +163,7 @@ Cypress.Commands.add(
       },
     };
 
-    cy.assertTabCycle(
+    return cy.assertTabCycle(
       check ? collection : collection.slice(0, 1),
       direction,
       cycleLength,
