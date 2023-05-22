@@ -2,7 +2,7 @@
 
 import { DEFAULT_ROOTS } from '../support/commands';
 
-context('Test how the focus trap reacts to Tab key is presses in different scenarios.', () => {
+context('Test how the focus trap reacts to Tab key presses in different scenarios.', () => {
   beforeEach(() => {
     cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, lock: false });
     cy.get('button[data-parent-id]').as('possibleTabbables');

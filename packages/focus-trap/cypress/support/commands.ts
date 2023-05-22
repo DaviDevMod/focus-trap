@@ -35,6 +35,9 @@ interface TabCycleConfig {
 }
 
 export const DEFAULT_ROOTS = ['group 2', 'group 4'];
+export const ID_FIRST_TABBABLE_IN_DEFAULT_ROOTS = 'E';
+export const ERROR_STEPPING_OUT_OF_THE_TRAP =
+  "After a `Tab` key press, the focus landed on an element with no 'data-order' attribute.";
 
 const DEFAULT_EXPECTED_ORDER = '0123456';
 
@@ -81,15 +84,14 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
 
     cy.focused().then(($destination) => {
       if (!$destination.get(0).dataset.order) {
-        throw new Error("After a `Tab` key press, the focus landed on an element with no 'data-order' attribute.");
+        throw new Error(ERROR_STEPPING_OUT_OF_THE_TRAP);
       }
 
       // Check that elements outside the trap pass the focus to the right elements inside the trap.
-      // This check is possible only for a trap with `roots: DEFAULT_ROOTS` and no patched elements.
-      // It is run exclusively by the tests in "tab-cycle.cy.ts".
+      // This check is possible only for a trap with `DEFAULT_ROOTS` and no patched elements.
       // Making it available to arbitrary traps would require some (non-trivial) logic to modify
-      // the `data-forward` and `data-backward` attributes of every element in `@possibleTabbables`.
-      // All the effort has been made to ensure that "tab-cycle.cy.ts" checks any possible relevant scenario.
+      // the `data-forward` and `data-backward` attributes of every element in demo playground.
+      // All the effort has been made to ensure that the default setup covers all the relevant scenarios.
       if (check && !$origin.get(0).dataset.order) {
         expect($origin.get(0).dataset[direction.toLowerCase()]).to.equal($destination.get(0).dataset.order);
       }
