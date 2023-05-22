@@ -44,8 +44,7 @@ export const firstOrLastZeroTabbable = (roots: Focusable[], whichOne: FirstOrLas
   return firstOrLastZero as Focusable | null;
 };
 
-// Notice that normalised roots (consumed here) are already sorted by document order,
-// see `sortRoots` in TODO: finish this comment
+// Notice that the `roots` used internally are already sorted by document order in "normalise.ts".
 export const positiveTabbables = (roots: Focusable[]) => {
   return roots
     .map(candidatesInRoot)
