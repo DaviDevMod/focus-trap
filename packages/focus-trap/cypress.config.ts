@@ -10,7 +10,10 @@ export default defineConfig({
     // Note that Cypress doesn't guarantee that the order in the `specPattern` array will be
     // respected, but it currently is (and should this behaviour change, no harm is done).
     specPattern: [
-      'cypress/e2e/tab-key-press.cy.ts',
+      'cypress/e2e/trap-action/build.cy.ts',
+      'cypress/e2e/trap-action/demolish.cy.ts',
+      'cypress/e2e/trap-action/pause.cy.ts',
+      'cypress/e2e/trap-action/resume.cy.ts',
       'cypress/e2e/trap-config/initialFocus.cy.ts',
       'cypress/e2e/trap-config/returnFocus.cy.ts',
       'cypress/e2e/**/**.cy.ts',

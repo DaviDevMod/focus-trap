@@ -49,6 +49,8 @@ declare global {
     interface Chainable {
       visitDemoAndBuildTrap: (trapArg: TrapArg) => void;
 
+      actOnTrap: (action: 'PAUSE' | 'RESUME' | 'DEMOLISH') => void;
+
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
       getTabCycle: (
@@ -75,6 +77,10 @@ Cypress.Commands.add('visitDemoAndBuildTrap', (trapArg) => {
   cy.visit(`/e2e?arg=${encodeURIComponent(JSON.stringify(trapArg))}`);
   // https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
   cy.window().should('have.property', 'appReady', true);
+});
+
+Cypress.Commands.add('actOnTrap', (action) => {
+  cy.get('button').contains(action).click({ force: true });
 });
 
 // Fire a `Tab` event and return the `dataset.order` of the element that received the focus.

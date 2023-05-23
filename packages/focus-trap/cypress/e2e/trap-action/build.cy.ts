@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
-import { DEFAULT_ROOTS } from '../support/commands';
+import { DEFAULT_ROOTS } from '../../support/commands';
 
-context('Test how the focus trap reacts to Tab key presses in different scenarios.', () => {
+context('Test how the trap behaves after a "BUILD" action is performed.', () => {
   beforeEach(() => {
     cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, lock: false });
     cy.get('button[data-parent-id]').as('possibleTabbables');

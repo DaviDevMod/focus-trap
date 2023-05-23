@@ -37,11 +37,23 @@ export function E2ePlayground() {
   }, [searchParams]);
 
   return (
-    <DemoElements
-      skeletonState={skeletonState}
-      setSelectedButtonIdState={(s) => s}
-      ref={() => null}
-      rootsToHighlightState={[]}
-    />
+    <div>
+      <DemoElements
+        skeletonState={skeletonState}
+        setSelectedButtonIdState={(s) => s}
+        ref={() => null}
+        rootsToHighlightState={[]}
+      />
+      <button onClick={() => focusTrap('PAUSE')}>PAUSE</button>
+      <button onClick={() => focusTrap('RESUME')}>RESUME</button>
+      <button
+        onClick={() => {
+          console.log('PORCODDIO');
+          focusTrap('DEMOLISH');
+        }}
+      >
+        DEMOLISH
+      </button>
+    </div>
   );
 }
