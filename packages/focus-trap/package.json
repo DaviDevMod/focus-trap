@@ -33,9 +33,9 @@
     "e2e-run-codecov": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run\"; yarn instrumented-to-src && yarn report-coverage"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.10.5",
+    "@cypress/code-coverage": "3.10.6",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
-    "@types/node": "20.2.1",
+    "@types/node": "20.2.3",
     "concurrently": "8.0.1",
     "cypress": "12.12.0",
     "cypress-real-events": "1.8.1",
