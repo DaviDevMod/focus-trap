@@ -8,7 +8,6 @@ to prove whether `focusTrap` is returning the focus to `returnFocus`.
 
 /// <reference types="cypress" />
 
-import { Focusable } from '../../../src/state';
 import { DEFAULT_ROOTS } from '../../support/commands';
 
 context('Test the `returnFocus` trap configuration option.', () => {
