@@ -172,7 +172,7 @@ interface NormalisedTrapConfig {
 A focus trap is a huge gain in matter of accessibility, but it's not strictly necessary for an application to be functional.  
 That's why **this library chooses not to throw errors in production**.
 
-Also note that the error handling available in environments other than _production_ does not cover type checking, as the library takes advantage of being written in _TypeScript_.
+Also note that the error handling available in environments other than _production_ does not cover type checking, as the library takes advantage of being written in **TypeScript**.
 
 ## Dependencies & Browser Support
 
@@ -194,4 +194,5 @@ Also much obliged to the whole [focus-trap](https://github.com/focus-trap) proje
 
 ## :earth_americas: Contributions
 
-Any kind of contribution is more than welcome. Check the [CONTRIBUTING.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/CONTRIBUTING.md) to get started.
+Any kind of contribution is more than welcome.  
+Check the [CONTRIBUTING.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/CONTRIBUTING.md) to get started.
