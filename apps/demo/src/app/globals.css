@@ -3,14 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  /*body {
-    @apply bg-
+  body * {
+    @apply focus:outline-amber-400;
   }
-
-  div {
-    @apply m-2 p-2;
-  }
-  input[type='radio'] {
-    @apply my-2 mx-4;
-  } */
 }
