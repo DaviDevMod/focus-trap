@@ -18,8 +18,6 @@
     "incremental": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "paths": {
       "@davidevmod/focus-trap": ["../../../packages/focus-trap/src/index"]
     },
