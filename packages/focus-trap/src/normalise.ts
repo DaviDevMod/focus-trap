@@ -15,7 +15,7 @@ const isValidRoot = (root: unknown): root is Focusable => {
   return isValid;
 };
 
-const isNotNestedRoot = (root: Focusable, index: number, roots: Focusable[]) => {
+const isNotNestedRoot = (root: Focusable, _index: number, roots: Focusable[]) => {
   const isNotNested = roots.every((anotherRoot) => !anotherRoot.contains(root) || anotherRoot === root);
 
   if (!isNotNested) warnInEnv(`${root} is contained by another root.`);

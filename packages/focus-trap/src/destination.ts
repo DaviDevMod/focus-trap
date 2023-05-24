@@ -16,7 +16,7 @@ const candidatesInRoot = (root: Focusable) => [root, ...root.querySelectorAll<Fo
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
   whichOne: FirstOrLast = 'FIRST',
-  validateTabIndex = (tabIndex: number) => true
+  validateTabIndex = (_tabIndex: number) => true
 ) => {
   return (
     candidatesInRoot(root)[whichOne === 'FIRST' ? 'find' : 'findLast'](
