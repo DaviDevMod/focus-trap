@@ -33,14 +33,12 @@ const dedupeRoots = (roots: Focusable[]) => {
   return dedupedRoots;
 };
 
-const sortRoots = (a: Focusable, b: Focusable) => (a.compareDocumentPosition(b) & 4 ? -1 : 1);
-
 export const normaliseRoots = (roots: Roots): Result<Focusable[], string> => {
   const resolvedRoots = roots.map(resolveId).filter(isValidRoot);
 
   if (!resolvedRoots.length) return err('No valid root found.');
 
-  return ok(dedupeRoots(resolvedRoots).filter(isNotNestedRoot).sort(sortRoots));
+  return ok(dedupeRoots(resolvedRoots).filter(isNotNestedRoot));
 };
 
 // Get `document.activeElement` for the default `returnFocus`.

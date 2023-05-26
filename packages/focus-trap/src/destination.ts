@@ -13,6 +13,8 @@ const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) 
 
 const candidatesInRoot = (root: Focusable) => [root, ...root.querySelectorAll<Focusable>(candidateSelector)];
 
+const sortRoots = (a: Focusable, b: Focusable) => (a.compareDocumentPosition(b) & 4 ? -1 : 1);
+
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
   whichOne: FirstOrLast = 'FIRST',
@@ -180,17 +182,17 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   return err('There are no tabbable elements in the focus trap.');
 };
 
-// Notice that the `roots` used internally are already sorted by document order in "normalise.ts".
 export const getDestination = (
   roots: Focusable[],
   origin: Focusable,
   direction: Direction
 ): Result<Focusable | Unit, string> => {
   const originTabIndex = getConsistentTabIndex(origin);
+  const sortedRoots = roots.sort(sortRoots);
 
-  if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, direction);
+  if (originTabIndex < 0) return nextTopOrBottomTabbable(sortedRoots, origin, direction);
 
-  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, direction);
+  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(sortedRoots, origin, direction);
 
-  return nextPositiveOrVeryFirstOrVeryLastTabbable(roots, origin, direction);
+  return nextPositiveOrVeryFirstOrVeryLastTabbable(sortedRoots, origin, direction);
 };
