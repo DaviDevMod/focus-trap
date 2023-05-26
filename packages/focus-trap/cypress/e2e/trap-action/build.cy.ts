@@ -3,7 +3,7 @@
 import { DEFAULT_ROOTS } from '../../support/commands';
 
 context('Test how the trap behaves after a "BUILD" action is performed.', () => {
-  describe('A valid "BUILD" action is either a `trapConfig` or an array of `roots`.', () => {
+  describe('Both a `trapConfig` and an array of `roots` are valid "BUILD" actions.', () => {
     it('Should "BUILD" with a `trapConfig`.', () => {
       cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS });
 

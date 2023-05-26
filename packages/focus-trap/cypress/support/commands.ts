@@ -23,7 +23,7 @@ Note that enabling the `check` has no effect if `trapConfig.lock === true` (the 
 
 /// <reference types="cypress" />
 
-import { TrapArg } from '../../src';
+import { TrapArg, TrapAction } from '../../src';
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
@@ -49,7 +49,11 @@ declare global {
     interface Chainable {
       visitDemoAndBuildTrap: (trapArg: TrapArg) => void;
 
-      actOnTrap: (action: 'PAUSE' | 'RESUME' | 'DEMOLISH') => void;
+      actOnTrap: (action: TrapAction) => Cypress.Chainable<true>;
+
+      actionShouldThrow: (action: TrapAction) => void;
+
+      actionShouldSucceed: (action: TrapAction) => void;
 
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
@@ -80,7 +84,38 @@ Cypress.Commands.add('visitDemoAndBuildTrap', (trapArg) => {
 });
 
 Cypress.Commands.add('actOnTrap', (action) => {
-  cy.get('button').contains(action).click({ force: true });
+  cy.get('button')
+    .contains(action)
+    .click({ force: true })
+    .then(() => true);
+});
+
+Cypress.Commands.add('actionShouldSucceed', (action) => {
+  const trapShouldStopWorking = action === 'PAUSE' || action === 'DEMOLISH';
+
+  cy.on('fail', (error) => {
+    if (trapShouldStopWorking && error.message.includes(ERROR_STEPPING_OUT_OF_THE_TRAP)) return;
+    throw error;
+  });
+
+  cy.actOnTrap(action);
+
+  cy.get('button[data-parent-id]')
+    .verifyTabCycle()
+    .then((verified) => {
+      if (trapShouldStopWorking && verified) throw new Error('The focus should not be trapped anymore.');
+    });
+});
+
+Cypress.Commands.add('actionShouldThrow', (action) => {
+  cy.on('fail', (error) => {
+    if (error.message.includes(`Cannot "${action}" inexistent trap.`)) return;
+    throw error;
+  });
+
+  cy.actOnTrap(action).then((res) => {
+    if (res) throw new Error(`This "${action}" action should have thrown an error.`);
+  });
 });
 
 // Fire a `Tab` event and return the `dataset.order` of the element that received the focus.
