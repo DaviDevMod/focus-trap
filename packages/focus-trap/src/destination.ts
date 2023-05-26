@@ -174,9 +174,9 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
 
   if (nextPositive) return ok(nextPositive);
 
-  const nextFirstOrLastZero = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'FIRST' : 'LAST');
+  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'FIRST' : 'LAST');
 
-  if (nextFirstOrLastZero) return ok(nextFirstOrLastZero);
+  if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
   return err('There are no tabbable elements in the focus trap.');
 };
