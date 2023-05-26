@@ -80,7 +80,7 @@ export function useSkeleton() {
   const [skeletonState, setSkeletonState] = useState(initialSkeletonState);
 
   const forSomeElementInSkeleton = useCallback(
-    (callback: (el: SkeletonElement) => void, filter = (el: SkeletonElement): boolean => true) => {
+    (callback: (el: SkeletonElement) => void, filter = (_el: SkeletonElement): boolean => true) => {
       const recursivelyCallback = (el: SkeletonElement) => {
         if (filter(el)) callback(el);
         if (isSkeletonGroup(el)) el.children.forEach((child) => recursivelyCallback(child));
@@ -91,7 +91,7 @@ export function useSkeleton() {
   );
 
   const mapFilterSkeleton = useCallback(
-    <T>(map: (el: SkeletonElement) => T, filter = (el: SkeletonElement): boolean => true) => {
+    <T>(map: (el: SkeletonElement) => T, filter = (_el: SkeletonElement): boolean => true) => {
       const mapFilter: T[] = [];
       forSomeElementInSkeleton((el) => mapFilter.push(map(el)), filter);
       return mapFilter;

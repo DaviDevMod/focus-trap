@@ -11,8 +11,8 @@ interface TrapActionMenuProps {
 
 export const TrapActionMenu = memo(function TrapActionMenu({ dispatchTrapControlsState }: TrapActionMenuProps) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-amber-400">
+    <Menu as="div" className="relative my-2 inline-block text-left">
+      <Menu.Button className="ui-open:bg-blue-800 inline-flex w-full justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800">
         Action
         <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100" aria-hidden="true" />
       </Menu.Button>
@@ -31,7 +31,7 @@ export const TrapActionMenu = memo(function TrapActionMenu({ dispatchTrapControl
               <button
                 type="button"
                 onClick={() => dispatchTrapControlsState({ trapAction })}
-                className="ui-active:bg-violet-500 ui-active:text-white group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900"
+                className="ui-active:bg-blue-700 ui-active:text-white group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900"
               >
                 {trapAction}
               </button>

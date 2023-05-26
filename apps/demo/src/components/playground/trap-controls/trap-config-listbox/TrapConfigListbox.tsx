@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 import { FunnelIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
@@ -24,7 +24,6 @@ type TrapConfigListboxProps = (
 ) & {
   demoElementsState: HTMLElement[];
   dispatchTrapControlsState: React.Dispatch<TrapControlsReducerAction>;
-  disabled?: boolean;
 };
 
 export const TrapConfigListbox = memo(function TrapConfigListbox({
@@ -35,7 +34,6 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   setFilterState,
   demoElementsState,
   dispatchTrapControlsState,
-  disabled,
 }: TrapConfigListboxProps) {
   const [shouldInitialFocusFilterBeSticky, setShouldInitialFocusFilterBeSticky] = useState(true);
   const optionsRef = useRef<HTMLUListElement>(null);
@@ -51,9 +49,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
     selectedRoots &&
     skeletonRootId &&
     !selectedRoots.includes(skeletonRootId) &&
-    !getElementsIn(selectedRoots as string[])
-      .map((el) => el.id)
-      .includes(initialFocus!) &&
+    !getElementsIn(selectedRoots).some((el) => el.id === initialFocus) &&
     dispatchTrapControlsState({ initialFocus: 'true' });
 
   const options = [
@@ -94,7 +90,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   // as soon as the arrow-keyed option gets close enough to it.
   // TODO: consider the path of rendering the filter button outside of <Listbox.Options>,
   // getting rid of all this JS logic (but losing that good looking sticky position).
-  const handleInitialFocusArrowKey = useCallback((event: React.KeyboardEvent<HTMLUListElement>) => {
+  const handleInitialFocusArrowKey = (event: React.KeyboardEvent<HTMLUListElement>) => {
     if (event.key === 'ArrowUp') {
       const activeOption =
         optionsRef.current &&
@@ -110,7 +106,29 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
         setShouldInitialFocusFilterBeSticky(false);
       }
     } else if (event.key === 'ArrowDown') setShouldInitialFocusFilterBeSticky(true);
-  }, []);
+  };
+
+  const filterButton =
+    configProp === 'initialFocus' ? (
+      <button
+        ref={filterButtonRef}
+        type="button"
+        onClick={handleFilterClick}
+        className={`${shouldInitialFocusFilterBeSticky ? 'sticky top-0 z-10' : 'relative'} ${
+          filterState ? 'bg-amber-50' : 'bg-blue-50'
+        } flex w-full items-center justify-center whitespace-nowrap border-b-2 bg-opacity-[85%] px-2 py-3 text-base focus:outline-none`}
+      >
+        {filterState
+          ? [
+              <XMarkIcon key={'XMarkIcon'} className="mr-2 h-6 w-6 text-amber-500" aria-hidden="true" />,
+              'Remove filter',
+            ]
+          : [
+              <FunnelIcon key={'FunnelIcon'} className="mr-2 h-4 w-4 text-blue-600" aria-hidden="true" />,
+              'Filter by roots',
+            ]}
+      </button>
+    ) : null;
 
   const listboxOptions = (
     <HeadlessUIListbox.Options
@@ -118,26 +136,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
       onKeyDown={configProp === 'initialFocus' ? handleInitialFocusArrowKey : undefined}
       className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
     >
-      {configProp === 'initialFocus' && (
-        <button
-          ref={filterButtonRef}
-          type="button"
-          onClick={handleFilterClick}
-          className={`${shouldInitialFocusFilterBeSticky ? 'sticky top-0 z-10' : 'relative'} ${
-            filterState ? 'bg-red-50' : 'bg-violet-50'
-          } flex w-full items-center justify-center whitespace-nowrap  border-b-2 bg-opacity-[85%] px-2 py-3 text-base focus:outline-none`}
-        >
-          {filterState
-            ? [
-                <XMarkIcon key={'XMarkIcon'} className="mr-2 h-6 w-6 text-red-400" aria-hidden="true" />,
-                'Remove filter',
-              ]
-            : [
-                <FunnelIcon key={'FunnelIcon'} className="mr-2 h-4 w-4 text-violet-400" aria-hidden="true" />,
-                'Filter by roots',
-              ]}
-        </button>
-      )}
+      {filterButton}
       {options.map((option) => (
         <ListboxOption key={option} value={option} />
       ))}
@@ -150,9 +149,10 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
       value={(configProp === 'roots' ? roots : initialFocus ?? returnFocus)!}
       handleChange={handleListboxChange}
       options={listboxOptions}
-      displayValue={configProp === 'roots' ? options.filter((id) => roots!.includes(id)).join(', ') : ''}
+      displayValue={
+        configProp === 'roots' ? options.filter((id) => roots!.includes(id)).join(', ') : initialFocus ?? returnFocus
+      }
       multiple={configProp === 'roots'}
-      disabled={disabled ?? false}
     />
   );
 });

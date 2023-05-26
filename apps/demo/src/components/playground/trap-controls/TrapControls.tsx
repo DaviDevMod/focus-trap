@@ -1,5 +1,5 @@
 import type { RequireExactlyOne } from 'type-fest';
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { Fragment, useMemo, useReducer, useState } from 'react';
 import { focusTrap } from '@davidevmod/focus-trap';
 
 import type { KeysState } from '../Playground';
@@ -13,20 +13,19 @@ import { ResetButton } from '../../UI/reset-button/ResetButton';
 interface TrapControlsProps {
   demoElementsRootState: HTMLDivElement | undefined;
   dispatchKeys: React.Dispatch<keyof KeysState>;
-  displayComponent?: boolean;
+  displayComponent: boolean;
+  setLastTrapEscapeState: React.Dispatch<boolean>;
   setRootsToHighlightState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-// Defined as a value rather than just a type so that we can loop through it to render the actions.
 export enum TrapActions {
   BUILD = 'BUILD',
   DEMOLISH = 'DEMOLISH',
   RESUME = 'RESUME',
   PAUSE = 'PAUSE',
 }
-
-// Basically `TrapConfig` from `use-simple-focus-trap` but without elements nor optional properties.
-// Also the boolean values of `initialFocus` and `returnFocus` are being stored as strings and
+// Basically `TrapConfig` from '@davidevmod/focus-trap', but with types dictated by the inputs in the demo.
+// The boolean values of `initialFocus` and `returnFocus` are being stored as strings and
 // converted to actual booleans only once, right before to feed the config to `useSimpleFocusTrap`.
 export interface DemoTrapConfig {
   roots: string[];
@@ -37,7 +36,7 @@ export interface DemoTrapConfig {
 }
 
 interface TrapControlsState {
-  trapAction?: keyof typeof TrapActions;
+  trapAction: keyof typeof TrapActions;
   trapConfig: DemoTrapConfig;
 }
 
@@ -48,6 +47,7 @@ interface TrapControlsState {
 export type TrapControlsReducerAction = RequireExactlyOne<{ trapAction: keyof typeof TrapActions } & DemoTrapConfig>;
 
 const initialControlsState: TrapControlsState = {
+  trapAction: 'BUILD',
   trapConfig: { roots: [], initialFocus: 'true', returnFocus: 'true', lock: true, escape: true },
 };
 
@@ -61,12 +61,12 @@ export function TrapControls({
   demoElementsRootState,
   dispatchKeys,
   displayComponent,
+  setLastTrapEscapeState,
   setRootsToHighlightState,
 }: TrapControlsProps) {
   const [demoElementsState, setDemoElementsState] = useState<HTMLElement[]>([]);
   const [{ trapAction, trapConfig }, dispatchTrapControlsState] = useReducer(trapControlsReducer, initialControlsState);
   const [initialFocusFilterState, setInitialFocusFilterState] = useState(false);
-  const [lastTrapEscape, setLastTrapEscape] = useState(false);
 
   if (demoElementsRootState && demoElementsRootState !== demoElementsState[0]) {
     // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
@@ -81,8 +81,6 @@ export function TrapControls({
 
   const returnFocusConfigValues = useMemo(() => ({ returnFocus: trapConfig.returnFocus }), [trapConfig.returnFocus]);
 
-  const trapActionIsNotBuild = trapAction !== 'BUILD';
-
   const handleSwitchChange = (checked: boolean, label: keyof Pick<DemoTrapConfig, 'lock' | 'escape'>) => {
     dispatchTrapControlsState({ [label]: checked } as TrapControlsReducerAction);
   };
@@ -94,35 +92,20 @@ export function TrapControls({
 
     event.preventDefault();
 
-    if (trapActionIsNotBuild) {
-      setRootsToHighlightState(trapAction === 'RESUME' ? trapConfig.roots : []);
+    setRootsToHighlightState(trapAction === 'BUILD' || trapAction === 'RESUME' ? trapConfig.roots : []);
 
-      focusTrap(trapAction);
-
-      return;
-    }
-
-    setRootsToHighlightState(trapConfig.roots);
-
-    setLastTrapEscape(
-      focusTrap({
-        ...trapConfig,
-        initialFocus: strToBoolOrItself(trapConfig.initialFocus),
-        returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-      }).escape
-    );
+    trapAction === 'BUILD'
+      ? // Storing `escape` so that the trap can(not) be demolished with the `Esc` key
+        // even after the component states are reset (and the `trapConfig` ot the running trap is lost).
+        setLastTrapEscapeState(
+          focusTrap({
+            ...trapConfig,
+            initialFocus: strToBoolOrItself(trapConfig.initialFocus),
+            returnFocus: strToBoolOrItself(trapConfig.returnFocus),
+          }).escape
+        )
+      : focusTrap(trapAction);
   };
-
-  useEffect(() => {
-    const escHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-        if (lastTrapEscape) setRootsToHighlightState([]);
-      }
-    };
-
-    document.addEventListener('keydown', escHandler);
-    return () => document.removeEventListener('keydown', escHandler);
-  }, [lastTrapEscape, setRootsToHighlightState]);
 
   return (
     <form
@@ -130,52 +113,42 @@ export function TrapControls({
       className={`${displayComponent ? 'block' : 'hidden'} flex flex-col justify-between gap-y-3`}
     >
       <TrapActionMenu dispatchTrapControlsState={dispatchTrapControlsState} />
+      {trapAction === 'BUILD' && (
+        <Fragment>
+          <TrapConfigListbox
+            configProp="roots"
+            configValues={rootsAndInitialFocusConfigValues}
+            skeletonRootId={demoElementsRootState?.id}
+            filterState={initialFocusFilterState}
+            setFilterState={setInitialFocusFilterState}
+            demoElementsState={demoElementsState}
+            dispatchTrapControlsState={dispatchTrapControlsState}
+          />
 
-      <TrapConfigListbox
-        configProp="roots"
-        configValues={rootsAndInitialFocusConfigValues}
-        skeletonRootId={demoElementsRootState?.id}
-        filterState={initialFocusFilterState}
-        setFilterState={setInitialFocusFilterState}
-        demoElementsState={demoElementsState}
-        dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={trapActionIsNotBuild}
-      />
+          <TrapConfigListbox
+            configProp="initialFocus"
+            configValues={rootsAndInitialFocusConfigValues}
+            skeletonRootId={demoElementsRootState?.id}
+            filterState={initialFocusFilterState}
+            setFilterState={setInitialFocusFilterState}
+            demoElementsState={demoElementsState}
+            dispatchTrapControlsState={dispatchTrapControlsState}
+          />
 
-      <TrapConfigListbox
-        configProp="initialFocus"
-        configValues={rootsAndInitialFocusConfigValues}
-        skeletonRootId={demoElementsRootState?.id}
-        filterState={initialFocusFilterState}
-        setFilterState={setInitialFocusFilterState}
-        demoElementsState={demoElementsState}
-        dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={trapActionIsNotBuild}
-      />
+          <TrapConfigListbox
+            configProp="returnFocus"
+            configValues={returnFocusConfigValues}
+            demoElementsState={demoElementsState}
+            dispatchTrapControlsState={dispatchTrapControlsState}
+          />
 
-      <TrapConfigListbox
-        configProp="returnFocus"
-        configValues={returnFocusConfigValues}
-        demoElementsState={demoElementsState}
-        dispatchTrapControlsState={dispatchTrapControlsState}
-        disabled={trapActionIsNotBuild}
-      />
+          <Switch label="lock" checked={trapConfig.lock} handleChange={handleSwitchChange} />
 
-      <Switch
-        label="lock"
-        checked={trapConfig.lock}
-        handleChange={handleSwitchChange}
-        disabled={trapActionIsNotBuild}
-      />
+          <Switch label="escape" checked={trapConfig.escape} handleChange={handleSwitchChange} />
 
-      <Switch
-        label="escape"
-        checked={trapConfig.escape}
-        handleChange={handleSwitchChange}
-        disabled={trapActionIsNotBuild}
-      />
-
-      <ResetButton disabled={trapAction === undefined} handleClick={handleReset} />
+          <ResetButton disabled={trapAction === undefined} handleClick={handleReset} label="Reset Values" />
+        </Fragment>
+      )}
 
       <SubmitButton disabled={trapAction === undefined} label={trapAction} />
     </form>

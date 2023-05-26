@@ -2,7 +2,7 @@
 // looks like an overkill for the current usecase.
 export const getHTMLElementFlatSubTree = (
   root: HTMLElement | undefined,
-  filter = (el: HTMLElement): boolean => true
+  filter = (_el: HTMLElement): boolean => true
 ) => {
   const flatSubTree: HTMLElement[] = [];
 

@@ -9,7 +9,7 @@ export function ListboxOption({ value }: ListboxOptionProps) {
   return (
     <Listbox.Option
       value={value}
-      className="ui-active:bg-amber-100 ui-active:text-amber-900 relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"
+      className="ui-active:bg-blue-100 ui-active:text-blue-950 relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"
     >
       {({ selected }) => (
         <>
@@ -17,7 +17,7 @@ export function ListboxOption({ value }: ListboxOptionProps) {
             {value}
           </span>
           {selected ? (
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
               <CheckIcon className="h-5 w-5" aria-hidden="true" />
             </span>
           ) : null}

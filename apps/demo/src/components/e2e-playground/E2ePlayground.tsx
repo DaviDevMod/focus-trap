@@ -13,6 +13,7 @@ export function E2ePlayground() {
 
   // Using `useEffect` to call `focusTrap` only after `<DemoElements>` is rendered.
   useEffect(() => {
+    // Notify cypress that the app is ready to be tested.
     // https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
     // https://github.com/cypress-io/cypress/issues/3924#issuecomment-481430796
     // @ts-ignore
@@ -24,7 +25,7 @@ export function E2ePlayground() {
     // Getting the argument for `focusTrap` from `searchParams`.
     const arg = searchParams.get('arg');
 
-    if (!arg) throw new Error('Need to provide a "arg" URLSearchParam.');
+    if (!arg) throw new Error('Need to provide an "arg" URLSearchParam.');
 
     // Not going to `try/catch` nor try to make it typesafe. Let it throw.
     const trapArg = JSON.parse(decodeURIComponent(arg));
@@ -46,14 +47,7 @@ export function E2ePlayground() {
       />
       <button onClick={() => focusTrap('PAUSE')}>PAUSE</button>
       <button onClick={() => focusTrap('RESUME')}>RESUME</button>
-      <button
-        onClick={() => {
-          console.log('PORCODDIO');
-          focusTrap('DEMOLISH');
-        }}
-      >
-        DEMOLISH
-      </button>
+      <button onClick={() => focusTrap('DEMOLISH')}>DEMOLISH</button>
     </div>
   );
 }

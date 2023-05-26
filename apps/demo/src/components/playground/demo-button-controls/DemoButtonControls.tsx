@@ -120,7 +120,7 @@ export function DemoButtonControls({
 
       <Switch label="display" checked={display} handleChange={handleSwitchChange} disabled={!id} />
 
-      <ResetButton disabled={!id} handleClick={handleReset} />
+      <ResetButton disabled={!id} handleClick={handleReset} label="Reset Values" />
 
       <SubmitButton disabled={!id} />
     </form>

@@ -1,7 +1,7 @@
 interface ResetButtonProps {
   disabled: boolean;
   handleClick: React.MouseEventHandler<HTMLButtonElement>;
-  label?: string | undefined;
+  label?: string;
 }
 
 export function ResetButton({ disabled, handleClick, label }: ResetButtonProps) {
@@ -12,7 +12,7 @@ export function ResetButton({ disabled, handleClick, label }: ResetButtonProps) 
       onClick={handleClick}
       className={`${
         disabled ? 'text-neutral-400' : 'text-amber-600 hover:font-extrabold hover:text-red-500'
-      } w-[max-content] border-b border-current bg-transparent`}
+      } mx-auto my-1 w-[max-content] border-b border-current bg-transparent`}
     >
       {label ?? 'Reset'}
     </button>
