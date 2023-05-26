@@ -44,7 +44,6 @@ export const firstOrLastZeroTabbable = (roots: Focusable[], whichOne: FirstOrLas
   return firstOrLastZero as Focusable | null;
 };
 
-// Notice that the `roots` used internally are already sorted by document order in "normalise.ts".
 export const positiveTabbables = (roots: Focusable[]) => {
   return roots
     .map(candidatesInRoot)
@@ -181,6 +180,7 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   return err('There are no tabbable elements in the focus trap.');
 };
 
+// Notice that the `roots` used internally are already sorted by document order in "normalise.ts".
 export const getDestination = (
   roots: Focusable[],
   origin: Focusable,
