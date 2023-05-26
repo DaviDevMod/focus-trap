@@ -20,9 +20,9 @@ const getInitialFocus = (): Result<Focusable | Unit, string> => {
 
   if (positives.length) return ok(positives[0]);
 
-  const firstZero = firstOrLastZeroTabbable(state.normalisedConfig!.roots, 'FIRST');
+  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(state.normalisedConfig!.roots);
 
-  if (firstZero) return ok(firstZero);
+  if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
   return err('There are no tabbable elements in the focus trap.');
 };
@@ -52,7 +52,7 @@ export const resume = (): Result<Unit, string> => {
     return ok();
   }
 
-  return err('Cannot resume inexistent trap.');
+  return err('Cannot "RESUME" inexistent trap.');
 };
 
 export const demolish = (isEsc?: boolean): Result<Unit, string> => {
@@ -66,7 +66,7 @@ export const demolish = (isEsc?: boolean): Result<Unit, string> => {
     }
   }
 
-  return err('Cannot demolish inexistent trap.');
+  return err('Cannot "DEMOLISH" inexistent trap.');
 };
 
 export const pause = (isEsc?: boolean): Result<Unit, string> => {
@@ -76,5 +76,5 @@ export const pause = (isEsc?: boolean): Result<Unit, string> => {
     return ok();
   }
 
-  return err('Cannot pause inexistent trap.');
+  return err('Cannot "PAUSE" inexistent trap.');
 };
