@@ -2,7 +2,7 @@ import type { RequireExactlyOne } from 'type-fest';
 import { Fragment, useMemo, useReducer, useState } from 'react';
 import { focusTrap } from '@davidevmod/focus-trap';
 
-import type { KeysState } from '../Playground';
+import type { DemoTrapConfig, DemoTrapState } from '../Playground';
 import { getHTMLElementFlatSubTree, strToBoolOrItself } from '../../../utils/utils';
 import { TrapActionMenu } from './trap-action-menu/TrapActionMenu';
 import { TrapConfigListbox } from './trap-config-listbox/TrapConfigListbox';
@@ -12,9 +12,9 @@ import { ResetButton } from '../../UI/reset-button/ResetButton';
 
 interface TrapControlsProps {
   demoElementsRootState: HTMLDivElement | undefined;
-  dispatchKeys: React.Dispatch<keyof KeysState>;
   displayComponent: boolean;
-  setLastTrapEscapeState: React.Dispatch<boolean>;
+  lastDemoTrapState: DemoTrapState;
+  setLastDemoTrapState: React.Dispatch<React.SetStateAction<DemoTrapState>>;
   setRootsToHighlightState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
@@ -24,32 +24,21 @@ export enum TrapActions {
   RESUME = 'RESUME',
   PAUSE = 'PAUSE',
 }
-// Basically `TrapConfig` from '@davidevmod/focus-trap', but with types dictated by the inputs in the demo.
-// The boolean values of `initialFocus` and `returnFocus` are being stored as strings and
-// converted to actual booleans only once, right before to feed the config to `useSimpleFocusTrap`.
-export interface DemoTrapConfig {
-  roots: string[];
-  initialFocus: string;
-  returnFocus: string;
-  lock: boolean;
-  escape: boolean;
-}
 
 interface TrapControlsState {
   trapAction: keyof typeof TrapActions;
   trapConfig: DemoTrapConfig;
 }
 
-// A dispatchable action is an object with either a `trapAction` or one of the properties in `DemoTrapConfig`.
-// `TrapControlsReducerAction` is actually the union of object literals having a bunch of properties,
-// all but one set to an optional `never`: we then rely on the compiler option "exactOptionalPropertyTypes"
-// to ensure that the action can have only one property (and no additional properties set to `undefined`).
-export type TrapControlsReducerAction = RequireExactlyOne<{ trapAction: keyof typeof TrapActions } & DemoTrapConfig>;
-
-const initialControlsState: TrapControlsState = {
-  trapAction: 'BUILD',
-  trapConfig: { roots: [], initialFocus: 'true', returnFocus: 'true', lock: true, escape: true },
-};
+// A dispatchable action is either
+// - An object with only a `trapAction` property
+// - An object with only one of the properties in `DemoTrapConfig`
+// - A whole `DemoTrapConfig`
+// Relying on the compiler option "exactOptionalPropertyTypes" to ensure that (when applicable)
+// the action can have only one property (and no additional properties set to `undefined`).
+export type TrapControlsReducerAction =
+  | RequireExactlyOne<{ trapAction: keyof typeof TrapActions } & DemoTrapConfig>
+  | ({ trapAction?: never } & DemoTrapConfig);
 
 const trapControlsReducer = (state: TrapControlsState, action: TrapControlsReducerAction): TrapControlsState => {
   if (action.trapAction) return { ...state, ...action };
@@ -57,15 +46,31 @@ const trapControlsReducer = (state: TrapControlsState, action: TrapControlsReduc
   return { ...state, trapConfig: { ...state.trapConfig, ...action } };
 };
 
+const initialTrapConfig: DemoTrapConfig = {
+  roots: [],
+  initialFocus: 'true',
+  returnFocus: 'true',
+  lock: true,
+  escape: true,
+};
+
+const initialTrapControlsState: TrapControlsState = {
+  trapAction: 'BUILD',
+  trapConfig: initialTrapConfig,
+};
+
 export function TrapControls({
   demoElementsRootState,
-  dispatchKeys,
   displayComponent,
-  setLastTrapEscapeState,
+  lastDemoTrapState,
+  setLastDemoTrapState,
   setRootsToHighlightState,
 }: TrapControlsProps) {
   const [demoElementsState, setDemoElementsState] = useState<HTMLElement[]>([]);
-  const [{ trapAction, trapConfig }, dispatchTrapControlsState] = useReducer(trapControlsReducer, initialControlsState);
+  const [{ trapAction, trapConfig }, dispatchTrapControlsState] = useReducer(
+    trapControlsReducer,
+    initialTrapControlsState
+  );
   const [initialFocusFilterState, setInitialFocusFilterState] = useState(false);
 
   if (demoElementsRootState && demoElementsRootState !== demoElementsState[0]) {
@@ -85,26 +90,32 @@ export function TrapControls({
     dispatchTrapControlsState({ [label]: checked } as TrapControlsReducerAction);
   };
 
-  const handleReset = () => dispatchKeys('TrapControls');
+  const handleReset = () => dispatchTrapControlsState(initialTrapControlsState);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!trapAction) return;
 
     event.preventDefault();
 
-    setRootsToHighlightState(trapAction === 'BUILD' || trapAction === 'RESUME' ? trapConfig.roots : []);
+    if (trapAction === 'BUILD') {
+      setLastDemoTrapState({ isBuilt: true, trapConfig });
 
-    trapAction === 'BUILD'
-      ? // Storing `escape` so that the trap can(not) be demolished with the `Esc` key
-        // even after the component states are reset (and the `trapConfig` ot the running trap is lost).
-        setLastTrapEscapeState(
-          focusTrap({
-            ...trapConfig,
-            initialFocus: strToBoolOrItself(trapConfig.initialFocus),
-            returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-          }).escape
-        )
-      : focusTrap(trapAction);
+      setRootsToHighlightState(trapConfig.roots);
+
+      return focusTrap({
+        ...trapConfig,
+        initialFocus: strToBoolOrItself(trapConfig.initialFocus),
+        returnFocus: strToBoolOrItself(trapConfig.returnFocus),
+      });
+    }
+
+    if (trapAction === 'DEMOLISH') setLastDemoTrapState({ isBuilt: false, trapConfig: initialTrapConfig });
+
+    setRootsToHighlightState(
+      trapAction === 'RESUME' && lastDemoTrapState.isBuilt ? lastDemoTrapState.trapConfig.roots : []
+    );
+
+    focusTrap(trapAction);
   };
 
   return (

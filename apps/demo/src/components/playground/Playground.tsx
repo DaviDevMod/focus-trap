@@ -8,6 +8,35 @@ import { TrapControls } from './trap-controls/TrapControls';
 import { DemoElements } from './demo-elements/DemoElements';
 import { DemoButtonControls } from './demo-button-controls/DemoButtonControls';
 
+// Basically `TrapConfig` from '@davidevmod/focus-trap', but with types dictated by the inputs in the demo.
+// The boolean values of `initialFocus` and `returnFocus` are being stored as strings and
+// converted to actual booleans only once, right before to feed the config to `focusTrap`.
+export interface DemoTrapConfig {
+  roots: string[];
+  initialFocus: string;
+  returnFocus: string;
+  lock: boolean;
+  escape: boolean;
+}
+
+export interface DemoTrapState {
+  isBuilt: boolean;
+  trapConfig: DemoTrapConfig;
+}
+
+const initialTrapConfig: DemoTrapConfig = {
+  roots: [],
+  initialFocus: 'true',
+  returnFocus: 'true',
+  lock: true,
+  escape: true,
+};
+
+const initialDemoTrapState: DemoTrapState = {
+  isBuilt: false,
+  trapConfig: initialTrapConfig,
+};
+
 export interface KeysState {
   TrapControls: number;
   ButtonControls: number;
@@ -24,22 +53,24 @@ export function Playground() {
   const [keysState, dispatchKeys] = useReducer(keysReducer, initialKeysState);
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
   const [demoElementsRootState, setDemoElementsRootState] = useState<HTMLDivElement>();
-  const [lastTrapEscapeState, setLastTrapEscapeState] = useState(false);
+  const [lastDemoTrapState, setLastDemoTrapState] = useState(initialDemoTrapState);
   const [rootsToHighlightState, setRootsToHighlightState] = useState<string[]>([]);
   const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
 
-  // Update UI to reflect that the focus trap is demolished after an `Esc` key press.
   useEffect(() => {
     const escHandler = (event: KeyboardEvent) => {
       if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-        if (lastTrapEscapeState) setRootsToHighlightState([]);
+        if (lastDemoTrapState.trapConfig.escape) {
+          setLastDemoTrapState(initialDemoTrapState);
+          setRootsToHighlightState([]);
+        }
       }
     };
 
     document.addEventListener('keydown', escHandler);
     return () => document.removeEventListener('keydown', escHandler);
-  }, [lastTrapEscapeState]);
+  }, [lastDemoTrapState.trapConfig.escape]);
 
   const demoElementsRootCallbackRef = (rootNodeRef: HTMLDivElement) => {
     rootNodeRef && setDemoElementsRootState(rootNodeRef);
@@ -70,11 +101,10 @@ export function Playground() {
           {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
               to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
-            key={`TrapControls${keysState.TrapControls}`}
             demoElementsRootState={demoElementsRootState}
-            dispatchKeys={dispatchKeys}
             displayComponent={showTrapControlsState}
-            setLastTrapEscapeState={setLastTrapEscapeState}
+            lastDemoTrapState={lastDemoTrapState}
+            setLastDemoTrapState={setLastDemoTrapState}
             setRootsToHighlightState={setRootsToHighlightState}
           />
           <DemoButtonControls

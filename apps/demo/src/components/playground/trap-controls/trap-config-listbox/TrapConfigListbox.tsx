@@ -2,7 +2,8 @@ import { memo, useRef, useState } from 'react';
 import { Listbox as HeadlessUIListbox } from '@headlessui/react';
 import { FunnelIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
-import type { DemoTrapConfig, TrapControlsReducerAction } from '../TrapControls';
+import type { DemoTrapConfig } from 'components/playground/Playground';
+import type { TrapControlsReducerAction } from '../TrapControls';
 import { Listbox } from '../../../UI/listbox/Listbox';
 import { ListboxOption } from '../../../UI/listbox/ListboxOption';
 
