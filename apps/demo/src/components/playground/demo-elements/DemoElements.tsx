@@ -22,7 +22,7 @@ export const DemoElements = forwardRef(function DemoElements(
   return (
     <div id={rootId} ref={ref}>
       <span className="ml-3 text-blue-500">. . .</span>
-      <span className="mx-2 inline-block w-[30vw] border border-blue-500 sm:w-[50vw]" />
+      <span className="mx-2 inline-block w-[30vw] border border-blue-500 bg-blue-500 sm:w-[50vw]" />
       <span className="text-blue-500">. . .</span>
       <span className="absolute left-[16vw] top-1.5 rounded-lg bg-white bg-opacity-80 px-2 text-xs sm:left-16 sm:text-sm">
         {rootId}
