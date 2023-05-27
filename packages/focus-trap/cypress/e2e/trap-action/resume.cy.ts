@@ -7,7 +7,7 @@ context('Test how the trap behaves after a "RESUME" action is performed.', () =>
 
   describe('The focus trap should start to work again.', () => {
     it('Should trap the focus agian after "RESUME".', () => {
-      cy.actionShouldSucceed('PAUSE');
+      cy.actionShouldSucceed('RESUME');
     });
 
     it('Should Throw an error when trying to "RESUME" an inexistent trap.', () => {

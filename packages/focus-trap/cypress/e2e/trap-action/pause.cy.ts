@@ -7,7 +7,7 @@ context('Test how the trap behaves after a "PAUSE" action is performed.', () => 
 
   describe('The focus trap should chease to work.', () => {
     it('Should not trap the focus after "PAUSE".', () => {
-      cy.actionShouldSucceed('DEMOLISH');
+      cy.actionShouldSucceed('PAUSE');
     });
 
     it('Should Throw an error when trying to "PAUSE" an inexistent trap.', () => {
