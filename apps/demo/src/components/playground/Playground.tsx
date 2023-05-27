@@ -78,10 +78,10 @@ export function Playground() {
           <h2 className="my-4">
             <button
               onClick={() => setShowTrapControlsState((prevState) => !prevState)}
-              className="flex w-full items-center justify-between whitespace-nowrap rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2 hover:bg-gradient-to-l hover:font-medium hover:text-white"
+              className="flex w-full items-center justify-between whitespace-nowrap rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2 hover:bg-gradient-to-l hover:text-white"
             >
               <ArrowPathRoundedSquareIcon className="h-4 w-4 text-amber-950" aria-hidden="true" />
-              {showTrapControlsState ? 'Trap Controls' : 'Button Controls'}
+              <span className="px-2">{showTrapControlsState ? 'Trap Controls' : 'Button Controls'}</span>
               <ArrowPathRoundedSquareIcon className="h-4 w-4 text-amber-950" aria-hidden="true" />
             </button>
           </h2>
