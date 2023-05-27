@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid';
 
 import { useSkeleton } from '../../hooks/useSkeleton';
@@ -37,20 +37,7 @@ const initialDemoTrapState: DemoTrapState = {
   trapConfig: initialTrapConfig,
 };
 
-export interface KeysState {
-  TrapControls: number;
-  ButtonControls: number;
-}
-
-const keysReducer = (state: KeysState, action: keyof KeysState): KeysState => {
-  return { ...state, [action]: state[action] + 1 };
-};
-
-const initialKeysState = { TrapControls: 0, ButtonControls: 0 };
-
 export function Playground() {
-  // Change components `key` to reset their states.
-  const [keysState, dispatchKeys] = useReducer(keysReducer, initialKeysState);
   const [showTrapControlsState, setShowTrapControlsState] = useState(true);
   const [demoElementsRootState, setDemoElementsRootState] = useState<HTMLDivElement>();
   const [lastDemoTrapState, setLastDemoTrapState] = useState(initialDemoTrapState);
@@ -108,13 +95,11 @@ export function Playground() {
             setRootsToHighlightState={setRootsToHighlightState}
           />
           <DemoButtonControls
-            key={`ButtonControls${keysState.ButtonControls}`}
             skeletonButtonsIds={skeletonButtonsIds}
             getSkeletonButtonById={getSkeletonButtonById}
             patchSkeletonButton={patchSkeletonButton}
             selectedButtonIdState={selectedButtonIdState}
             setSelectedButtonIdState={setSelectedButtonIdState}
-            dispatchKeys={dispatchKeys}
             displayComponent={!showTrapControlsState}
           />
         </section>

@@ -2,7 +2,6 @@ import type { RequireExactlyOne } from 'type-fest';
 import { useReducer, useState } from 'react';
 
 import type { SkeletonButton } from '../../../hooks/useSkeleton';
-import type { KeysState } from '../Playground';
 import { IdListbox } from './id-listbox/IdListbox';
 import { TabIndexListbox } from './tab-index-listbox/TabIndexListbox';
 import { Switch } from '../../UI/switch/Switch';
@@ -15,7 +14,6 @@ interface DemoButtonControlsProps {
   patchSkeletonButton: (patch: SkeletonButton) => void;
   selectedButtonIdState: string;
   setSelectedButtonIdState: React.Dispatch<React.SetStateAction<string>>;
-  dispatchKeys: React.Dispatch<keyof KeysState>;
   displayComponent?: boolean;
 }
 
@@ -55,7 +53,6 @@ export function DemoButtonControls({
   patchSkeletonButton,
   selectedButtonIdState,
   setSelectedButtonIdState,
-  dispatchKeys,
   displayComponent,
 }: DemoButtonControlsProps) {
   const [selectedSkeletonButtonState, setSelectedSkeletonButtonState] = useState<SkeletonButton>();
@@ -89,8 +86,10 @@ export function DemoButtonControls({
 
   const handleReset = () => {
     // Reset current component states.
-    dispatchKeys('ButtonControls');
-    // Reset `selectedButtonIdState` in the parent, because it's used to populate states in current component.
+    setSelectedSkeletonButtonState(undefined);
+    dispatchUnsubmittedButtonProps(initialUnsubmittedButtonPropsState);
+    // Reset `selectedButtonIdState` in the parent, because
+    // it's used to populate states in current component at render time.
     setSelectedButtonIdState('');
   };
 
