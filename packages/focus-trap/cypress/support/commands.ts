@@ -16,7 +16,7 @@ When `check === true` tests also check that
 elements outside the trap pass the focus to the right elements inside the trap.
 This takes a while.
 
-The `check` for elements outside of the trap is enabled only in the 'tab-key-pres.cy.ts' spec.
+The `check` for elements outside of the trap is enabled only in the 'build.cy.ts' spec.
 
 Note that enabling the `check` has no effect if `trapConfig.lock === true` (the default).
 */
@@ -143,9 +143,6 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
 
 // Return an array filled with results from `getNextTabbedDatasetOrder`.
 Cypress.Commands.add('getTabCycle', (origin, direction, len, check) => {
-  if (len < 2) throw new Error('Please provide a tab cycle length greater than 1.');
-  if (!Number.isInteger(len)) throw new Error('Please provide an integer tab cycle length.');
-
   const tabCycle: string[] = new Array(len);
 
   cy.wrap(origin).focus();
