@@ -3,7 +3,7 @@ The tabbing behavior is tested using two different algorithms:
 
 - If `check === true` (see `verifyTabCycle`),
   for each element in the playground,
-  tests will press `Tab` `tabsPerCycle` times.
+  tests will press `Tab` two times.
 
 - If `check === false`,
   for one and only one element in the playground,
@@ -35,14 +35,13 @@ interface TabCycleConfig {
 }
 
 export const DEFAULT_ROOTS = ['group 2', 'group 4'];
+
 export const ID_FIRST_TABBABLE_IN_DEFAULT_ROOTS = 'E';
+
 export const ERROR_STEPPING_OUT_OF_THE_TRAP =
   "After a `Tab` key press, the focus landed on an element with no 'data-order' attribute.";
 
 const DEFAULT_EXPECTED_ORDER = '0123456';
-
-// A minimum of `2` is required to get meaningfull tests. Larger values make the tests last longer.
-const DEFAULT_TABS_PER_CYCLE = 2;
 
 declare global {
   namespace Cypress {
@@ -173,27 +172,15 @@ Cypress.Commands.add(
   { prevSubject: ['element'] },
   (
     collection,
-    {
-      direction = 'FORWARD',
-      tabsPerCycle = DEFAULT_TABS_PER_CYCLE,
-      expectedOrder = DEFAULT_EXPECTED_ORDER,
-      check = false,
-    } = {
+    { direction = 'FORWARD', expectedOrder = DEFAULT_EXPECTED_ORDER, check = false } = {
       direction: 'FORWARD',
-      tabsPerCycle: DEFAULT_TABS_PER_CYCLE,
       expectedOrder: DEFAULT_EXPECTED_ORDER,
       check: false,
     }
   ) => {
-    if (expectedOrder.length < 1) {
-      throw new Error("It's not possible to build an empty trap. Please provide a meaningful `expectedOrder`.");
-    }
+    if (expectedOrder.length < 1) throw new Error('There must be an `expectedOrder`.');
 
-    if (check && tabsPerCycle < 2) {
-      throw new Error('When `check` is `true`, `tabsPerCycle` must be at least `2` in order to get meaningful tests.');
-    }
-
-    const cycleLength = check ? tabsPerCycle : expectedOrder.length;
+    const cycleLength = check ? 2 : expectedOrder.length;
 
     // Is the expected sequence of tabbed `dataset-order` repeated the least amount of times needed to
     // include any sequence of tabbed `dataset-order` that could show up during the tests.
