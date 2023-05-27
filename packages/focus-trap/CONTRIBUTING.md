@@ -68,7 +68,7 @@ To get an overview of the package and how it works, read the the [README.md](htt
 
 - When applicable, write new tests and/or update the [README.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/README.md).
 
-- If the changes you made affect the behaviour of the package in any way, create a changeset by running `yarn changeset` and following the instructions on your terminal.
+- If the changes you made affect the behaviour of the package in any way, create a changeset by running `yarn g:changeset` and following the instructions on your terminal.
 
 #### Need inspiration?
 
