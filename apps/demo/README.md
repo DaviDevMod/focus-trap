@@ -8,9 +8,9 @@ The playground has a few elements within which you can trap the focus by buildin
 
 You can also modify properties of the button elements in the playground and see the focus trap aknowledge them in real time.
 
-There are a couple of things to look out for:
+There are a couple of things to watch out for:
 
-- If a trap has `lock` enabled (the default) you won't be able to interact with any element outside of the trap, though you may be able to break free of the trap by pressing the <kbd>Esc</kbd> key.
+- If a trap has `lock` enabled (the default) you won't be able to interact with any element outside of the trap, though you may break free of the trap by pressing the <kbd>Esc</kbd> key.
 
 - If a trap has `lock` enabled and `escape` disabled, the only way out is reloading the page.
 
