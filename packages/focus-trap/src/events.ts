@@ -11,25 +11,28 @@ const handleOutsideClick = (event: Event): void => {
 };
 
 const handleKeyPress = (event: KeyboardEvent): void => {
-  if (event.key === 'Tab' || event.keyCode === 9) {
-    const { target, shiftKey } = event;
-
-    if (!isFocusable(target)) return;
-
-    const rootsUpdate = reducers.updateRoots();
-
-    if (rootsUpdate.isErr) throw new Error(rootsUpdate.error);
-
-    const destination = getDestination(state.normalisedConfig!.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD');
-
-    if (destination.isErr) throw new Error(destination.error);
-
-    if ('focus' in destination.value) {
-      event.preventDefault();
-      destination.value.focus();
-    }
-  } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+  if (event.key === 'Escape' || event.key === 'Esc') {
     if (state.normalisedConfig?.escape) demolish();
+    return;
+  }
+
+  if (event.key !== 'Tab') return;
+
+  const { target, shiftKey } = event;
+
+  if (!isFocusable(target)) return;
+
+  const rootsUpdate = reducers.updateRoots();
+
+  if (rootsUpdate.isErr) throw new Error(rootsUpdate.error);
+
+  const destination = getDestination(state.normalisedConfig!.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD');
+
+  if (destination.isErr) throw new Error(destination.error);
+
+  if ('focus' in destination.value) {
+    event.preventDefault();
+    destination.value.focus();
   }
 };
 
