@@ -98,15 +98,20 @@ export function TrapControls({
     event.preventDefault();
 
     if (trapAction === 'BUILD') {
-      setLastDemoTrapState({ isBuilt: true, trapConfig });
+      const buildSucceded =
+        'roots' in
+        focusTrap({
+          ...trapConfig,
+          initialFocus: strToBoolOrItself(trapConfig.initialFocus),
+          returnFocus: strToBoolOrItself(trapConfig.returnFocus),
+        });
 
-      setRootsToHighlightState(trapConfig.roots);
+      if (buildSucceded) {
+        setLastDemoTrapState({ isBuilt: true, trapConfig });
+        setRootsToHighlightState(trapConfig.roots);
+      }
 
-      return focusTrap({
-        ...trapConfig,
-        initialFocus: strToBoolOrItself(trapConfig.initialFocus),
-        returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-      });
+      return;
     }
 
     if (trapAction === 'DEMOLISH') setLastDemoTrapState({ isBuilt: false, trapConfig: initialTrapConfig });
