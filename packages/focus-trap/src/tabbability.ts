@@ -9,14 +9,14 @@ export const isFocusable = (el: unknown): el is Focusable => el instanceof HTMLE
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
 // nodes. In these cases the `tabIndex` is assumed to be 0 if it's not explicitly set to a valid value.
-export const getConsistentTabIndex = (node: HTMLElement | SVGElement) =>
+export const getConsistentTabIndex = (node: Focusable) =>
   (/^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) || (node as any).isContentEditable) &&
   isNaN(parseInt(node.getAttribute('tabindex')!, 10))
     ? 0
     : node.tabIndex;
 
 // Function testing various edge cases. Returns `true` if `candidate` is actually focusable.
-export function isActuallyFocusable(candidate: HTMLElement | SVGElement) {
+export function isActuallyFocusable(candidate: Focusable) {
   if (
     // If the element has no layout boxes (eg, it has `display: "none"`);
     !candidate.getClientRects().length ||
