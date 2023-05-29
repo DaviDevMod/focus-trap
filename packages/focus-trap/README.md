@@ -133,29 +133,11 @@ They are pretty straightforward, calling `focusTrap` with `"PAUSE"`, `"RESUME"` 
 
 ## Return value
 
-An object being a shallow copy of the `NormalisedTrapConfig` used internally by the focus trap.  
-That is the provided `TrapConfig` with IDs resolved to actual elements and default values set.
-
-<details>
-<summary>Here is a comparison:</summary>
-
-<br>
+An object of type `TrapState`:
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
 
-type Roots = (Focusable | string)[];
-
-// The shape of the config expected from you.
-interface TrapConfig {
-  roots: Roots;
-  initialFocus?: boolean | Focusable | string;
-  returnFocus?: boolean | Focusable | string;
-  lock?: boolean | Function;
-  escape?: boolean;
-}
-
-// The shape of the returned config.
 interface NormalisedTrapConfig {
   roots: Focusable[];
   initialFocus: boolean | Focusable;
@@ -163,9 +145,19 @@ interface NormalisedTrapConfig {
   lock: boolean | Function;
   escape: boolean;
 }
+
+interface TrapState {
+  isBuilt: boolean;
+  config: NormalisedTrapConfig;
+}
 ```
 
-</details>
+Where `isBuilt` tells whether a trap has been built and not demolished yet, while `NormalisedTrapConfig` is a shallow copy of the config used internally by the library and basically is the provided `TrapConfig` with IDs resolved to actual elements and default values set.
+
+> **Note**  
+>  The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutaion (eg: elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
+
+This value is rarely useful, it may be used to eg: implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
 
 ## Dependencies & Browser Support
 
