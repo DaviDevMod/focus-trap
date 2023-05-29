@@ -82,7 +82,7 @@ focusTrap('DEMOLISH');
 
 By default, when building a focus trap by providing only `roots`, this is what happens:
 
-- The focus is given to the first tabbable element contained in the roots
+- The focus is given to the first tabbable element [contained](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) in the roots
 - <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> keys cycle through the roots' tabbable elements
 - Click events outside of the focus trap are prevented
 - Whenever the <kbd>Esc</kbd> key is pressed, the trap is demolished
@@ -118,7 +118,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
   By default clicks on elements outside of the trap are prevented.  
   You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the click events in question.
 
-  > **Note**
+  > **Note**  
   > Only `mousedown`, `touchstart`, `click` and the browser default behavior are prevented.  
   > So, if you need to, you can make an element outside of the trap clickable even when `lock` is true, for example, by listening for `mouseup` events.
 
@@ -171,7 +171,7 @@ interface NormalisedTrapConfig {
 
 The are no dependencies and the library can run in any major browser.
 
-> **Note**
+> **Note**  
 > The codebase is tested only against Chromium-based browsers.
 > That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular <kbd>Tab</kbd> key presses), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow for native browser events in Cypress, but only in the presence of Chrome Devtools.
 
