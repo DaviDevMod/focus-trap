@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 interface SubmitButtonProps {
-  disabled: boolean;
   label?: string;
+  disabled?: boolean;
 }
 
 export function SubmitButton({ disabled, label }: SubmitButtonProps) {

@@ -162,11 +162,11 @@ export function TrapControls({
 
           <Switch label="escape" checked={trapConfig.escape} handleChange={handleSwitchChange} />
 
-          <ResetButton disabled={trapAction === undefined} handleClick={handleReset} label="Reset Values" />
+          <ResetButton handleClick={handleReset} label="Reset Values" />
         </Fragment>
       )}
 
-      <SubmitButton disabled={trapAction === undefined} label={trapAction} />
+      <SubmitButton label={trapAction} />
     </form>
   );
 }

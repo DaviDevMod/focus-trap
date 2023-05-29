@@ -1,7 +1,7 @@
 interface ResetButtonProps {
-  disabled: boolean;
   handleClick: React.MouseEventHandler<HTMLButtonElement>;
   label?: string;
+  disabled?: boolean;
 }
 
 export function ResetButton({ disabled, handleClick, label }: ResetButtonProps) {
