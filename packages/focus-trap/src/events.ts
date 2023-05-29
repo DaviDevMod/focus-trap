@@ -1,4 +1,3 @@
-import { throwInEnv } from './exceptions.js';
 import { state, reducers } from './state.js';
 import { isFocusable } from './tabbability.js';
 import { getDestination } from './destination.js';
@@ -19,11 +18,11 @@ const handleKeyPress = (event: KeyboardEvent): void => {
 
     const rootsUpdate = reducers.updateRoots();
 
-    if (rootsUpdate.isErr) return throwInEnv(rootsUpdate.error);
+    if (rootsUpdate.isErr) throw new Error(rootsUpdate.error);
 
     const destination = getDestination(state.normalisedConfig!.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD');
 
-    if (destination.isErr) return throwInEnv(destination.error);
+    if (destination.isErr) throw new Error(destination.error);
 
     if ('focus' in destination.value) {
       event.preventDefault();

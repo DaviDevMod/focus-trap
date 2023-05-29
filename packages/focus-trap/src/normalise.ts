@@ -1,7 +1,6 @@
 import { Result, err, ok } from 'true-myth/result';
 
 import type { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state.js';
-import { warnInEnv } from './exceptions.js';
 import { isFocusable } from './tabbability.js';
 
 const resolveId = <T>(arg: T) =>
@@ -10,7 +9,7 @@ const resolveId = <T>(arg: T) =>
 const isValidRoot = (root: unknown): root is Focusable => {
   const isValid = isFocusable(root);
 
-  if (!isValid) warnInEnv(`${root} is not a valid root.`);
+  if (!isValid) console.warn(`${root} is not a valid root.`);
 
   return isValid;
 };
@@ -18,7 +17,7 @@ const isValidRoot = (root: unknown): root is Focusable => {
 const isNotNestedRoot = (root: Focusable, _index: number, roots: Focusable[]) => {
   const isNotNested = roots.every((anotherRoot) => !anotherRoot.contains(root) || anotherRoot === root);
 
-  if (!isNotNested) warnInEnv(`${root} is contained by another root.`);
+  if (!isNotNested) console.warn(`${root} is contained by another root.`);
 
   return isNotNested;
 };
@@ -27,7 +26,7 @@ const dedupeRoots = (roots: Focusable[]) => {
   const dedupedRoots = Array.from(new Set(roots));
 
   if (dedupedRoots.length !== roots.length) {
-    warnInEnv('Duplicate elements were found in the "roots" array. They have been deduplicated.');
+    console.warn('Duplicate elements were found in the "roots" array. They have been deduplicated.');
   }
 
   return dedupedRoots;

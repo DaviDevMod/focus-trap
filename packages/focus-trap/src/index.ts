@@ -1,5 +1,4 @@
 import type { Roots, TrapConfig, NormalisedTrapConfig } from './state.js';
-import { throwInEnv } from './exceptions.js';
 import { build, resume, demolish, pause } from './trap-actions.js';
 import { state } from './state.js';
 
@@ -17,7 +16,7 @@ export const focusTrap = (arg: TrapArg) => {
         : pause()
       : build(Array.isArray(arg) ? { roots: arg } : arg);
 
-  if (result.isErr) throwInEnv(result.error);
+  if (result.isErr) throw new Error(result.error);
 
   return { ...state.normalisedConfig } as NormalisedTrapConfig;
 };

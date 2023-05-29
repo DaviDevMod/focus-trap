@@ -167,13 +167,6 @@ interface NormalisedTrapConfig {
 
 </details>
 
-## Error handling
-
-A focus trap is a huge gain in matter of accessibility, but it's not strictly necessary for an application to be functional.  
-That's why **this library chooses not to throw errors in production**.
-
-Also note that the error handling available in environments other than _production_ does not cover type checking, as the library takes advantage of being written in **TypeScript**.
-
 ## Dependencies & Browser Support
 
 The are no dependencies and the library can run in any major browser.
