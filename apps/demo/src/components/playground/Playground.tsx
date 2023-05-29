@@ -49,7 +49,13 @@ export function Playground() {
     const escHandler = (event: KeyboardEvent) => {
       if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
         if (lastDemoTrapState.trapConfig.escape) {
+          // If a trap is in "PAUSE", the `Esc` key press is ignored and the trap is "RESUME"able.
+          // But here there is no whay to know if the trap is in "PAUSE",
+          // and we chose to throw away the state, losing the ability to highlight a "RESUME"d trap
+          // rather than risking to highlight an inexistent trap (after a failed "RESUME").
+          // TODO: fix this.
           setLastDemoTrapState(initialDemoTrapState);
+
           setRootsToHighlightState([]);
         }
       }
