@@ -90,7 +90,7 @@ export function TrapControls({
     dispatchTrapControlsState({ [label]: checked } as TrapControlsReducerAction);
   };
 
-  const handleReset = () => dispatchTrapControlsState(initialTrapControlsState);
+  const handleReset = () => dispatchTrapControlsState(initialTrapConfig);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!trapAction) return;
