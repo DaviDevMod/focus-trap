@@ -55,11 +55,11 @@ export const resume = (): Result<Unit, string> => {
   return err('Cannot "RESUME" inexistent trap.');
 };
 
-export const demolish = (isEsc?: boolean): Result<Unit, string> => {
-  if (state.isBuilt || isEsc) {
+export const demolish = (): Result<Unit, string> => {
+  if (state.isBuilt) {
     state.normalisedConfig?.returnFocus?.focus();
 
-    if (pause(isEsc).isOk) {
+    if (pause().isOk) {
       reducers.switchIsBuilt(false);
 
       return ok();
@@ -69,8 +69,8 @@ export const demolish = (isEsc?: boolean): Result<Unit, string> => {
   return err('Cannot "DEMOLISH" inexistent trap.');
 };
 
-export const pause = (isEsc?: boolean): Result<Unit, string> => {
-  if (state.isBuilt || isEsc) {
+export const pause = (): Result<Unit, string> => {
+  if (state.isBuilt) {
     eventListeners('REMOVE');
 
     return ok();

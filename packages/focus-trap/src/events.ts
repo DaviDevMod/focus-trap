@@ -29,7 +29,7 @@ const handleKeyPress = (event: KeyboardEvent): void => {
       destination.value.focus();
     }
   } else if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
-    if (state.normalisedConfig?.escape) demolish(true);
+    if (state.normalisedConfig?.escape) demolish();
   }
 };
 
