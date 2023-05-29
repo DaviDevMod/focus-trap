@@ -92,35 +92,33 @@ export function TrapControls({
 
   const handleReset = () => dispatchTrapControlsState(initialTrapConfig);
 
+  // TODO: Add error handling for the `focus-trap` calls.
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!trapAction) return;
 
     event.preventDefault();
 
     if (trapAction === 'BUILD') {
-      const buildSucceded =
-        'roots' in
-        focusTrap({
-          ...trapConfig,
-          initialFocus: strToBoolOrItself(trapConfig.initialFocus),
-          returnFocus: strToBoolOrItself(trapConfig.returnFocus),
-        });
+      focusTrap({
+        ...trapConfig,
+        initialFocus: strToBoolOrItself(trapConfig.initialFocus),
+        returnFocus: strToBoolOrItself(trapConfig.returnFocus),
+      });
 
-      if (buildSucceded) {
-        setLastDemoTrapState({ isBuilt: true, trapConfig });
-        setRootsToHighlightState(trapConfig.roots);
-      }
+      setLastDemoTrapState({ isBuilt: true, trapConfig });
+
+      setRootsToHighlightState(trapConfig.roots);
 
       return;
     }
+
+    focusTrap(trapAction);
 
     if (trapAction === 'DEMOLISH') setLastDemoTrapState({ isBuilt: false, trapConfig: initialTrapConfig });
 
     setRootsToHighlightState(
       trapAction === 'RESUME' && lastDemoTrapState.isBuilt ? lastDemoTrapState.trapConfig.roots : []
     );
-
-    focusTrap(trapAction);
   };
 
   return (
