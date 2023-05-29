@@ -7,7 +7,7 @@ interface ResetButtonProps {
 export function ResetButton({ disabled, handleClick, label }: ResetButtonProps) {
   return (
     <button
-      type="reset"
+      type="button"
       disabled={disabled}
       onClick={handleClick}
       className={`${
