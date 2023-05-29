@@ -4,7 +4,7 @@ This Next.js app is an interactive demo for the [@davidevmod/focus-trap](https:/
 
 You can visit the live demo at: https://focus-trap-demo.vercel.app
 
-The playground has a few elements within which you can trap the focus by building a focus trap through the inputs on the right.
+There is a playground with a few elements within which you can trap the focus by building a focus trap through the inputs on the right.
 
 You can also modify properties of the button elements in the playground and see the focus trap aknowledge them in real time.
 
@@ -19,7 +19,7 @@ An `Escape` button, always clickable, will be provided as an escape hatch eventu
 
 ## Run locally
 
-Clone [the monorepo](https://github.com/DaviDevMod/focus-trap) to your local machine, it uses [yarn berry](https://github.com/yarnpkg/berry) [workspaces](https://yarnpkg.com/features/workspaces) so to install the project's dependencies you will need to enable [corepack](https://yarnpkg.com/getting-started/install) first:
+Clone [the monorepo](https://github.com/DaviDevMod/focus-trap) to your local machine, it uses [yarn berry](https://github.com/yarnpkg/berry) [workspaces](https://yarnpkg.com/features/workspaces) so to install the project's dependencies you will need to [enable corepack](https://yarnpkg.com/getting-started/install) first:
 
 ```bash
 git clone https://github.com/DaviDevMod/focus-trap.git
