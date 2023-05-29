@@ -36,7 +36,7 @@ interface TrapConfig {
   roots: Roots;
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
-  lock?: boolean | Function;
+  lock?: boolean | ((event: KeyboardEvent) => void);
   escape?: boolean;
 }
 
@@ -92,13 +92,13 @@ By default, when building a focus trap by providing only `roots`, this is what h
 
 You can tweak the behaviour of your trap by providing a `TrapConfig`:
 
-| Property     | Required | Type                             | Default value |
-| ------------ | -------- | -------------------------------- | :-----------: |
-| roots        | Yes      | `(Focusable \| string)[]`        |       -       |
-| initialFocus | No       | `boolean \| Focusable \| string` |    `true`     |
-| returnFocus  | No       | `boolean \| Focusable \| string` |    `true`     |
-| lock         | No       | `boolean \| Function`            |    `true`     |
-| escape       | No       | `boolean`                        |    `true`     |
+| Property     | Required | Type                                          | Default value |
+| ------------ | -------- | --------------------------------------------- | :-----------: |
+| roots        | Yes      | `(Focusable \| string)[]`                     |       -       |
+| initialFocus | No       | `boolean \| Focusable \| string`              |    `true`     |
+| returnFocus  | No       | `boolean \| Focusable \| string`              |    `true`     |
+| lock         | No       | `boolean \| ((event: KeyboardEvent) => void)` |    `true`     |
+| escape       | No       | `boolean`                                     |    `true`     |
 
 - **roots**  
   The array of elements (and/or IDs) within which the focus has to be trapped.
@@ -142,7 +142,7 @@ interface NormalisedTrapConfig {
   roots: Focusable[];
   initialFocus: boolean | Focusable;
   returnFocus: Focusable | null;
-  lock: boolean | Function;
+  lock: boolean | ((event: KeyboardEvent) => void);
   escape: boolean;
 }
 

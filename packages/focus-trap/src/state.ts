@@ -14,7 +14,7 @@ export interface TrapConfig {
   roots: Roots;
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
-  lock?: boolean | Function;
+  lock?: boolean | ((event: KeyboardEvent) => void);
   escape?: boolean;
 }
 
@@ -23,7 +23,7 @@ export interface NormalisedTrapConfig {
   roots: Focusable[];
   initialFocus: boolean | Focusable;
   returnFocus: Focusable | null;
-  lock: boolean | Function;
+  lock: boolean | ((event: KeyboardEvent) => void);
   escape: boolean;
 }
 
