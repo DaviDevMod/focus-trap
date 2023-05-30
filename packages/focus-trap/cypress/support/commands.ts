@@ -1,22 +1,10 @@
 /*
-The tabbing behavior is tested using two different algorithms:
-
-- If `check === true` (see `verifyTabCycle`),
-  for each element in the playground,
-  tests will press `Tab` two times.
-
-- If `check === false`,
-  for one and only one element in the playground,
-  tests will press `Tab` `expectedOrder.length` times.
-
-When `check === false` tests only verify that the focus cycles within the trap.
-This is quite fast.
+Most of the times tests only verify that the focus cycles within the trap.
 
 When `check === true` tests also check that
 elements outside the trap pass the focus to the right elements inside the trap.
-This takes a while.
 
-The `check` for elements outside of the trap is enabled only in the 'build.cy.ts' spec.
+This takes a while and is done only in the 'build.cy.ts' spec.
 
 Note that enabling the `check` has no effect if `trapConfig.lock === true` (the default).
 */
@@ -56,20 +44,7 @@ declare global {
 
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
-      getTabCycle: (
-        from: JQuery<HTMLElement> | null,
-        direction: Direction,
-        len: number,
-        check: boolean
-      ) => Cypress.Chainable<string[]>;
-
-      assertTabCycle: (
-        collection: JQuery<HTMLElement>,
-        direction: Direction,
-        len: number,
-        repeatedOrder: string,
-        check: boolean
-      ) => Cypress.Chainable<true>;
+      getTabCycle: (from: JQuery<HTMLElement> | null, direction: Direction, len: number) => Cypress.Chainable<string[]>;
 
       verifyTabCycle: (config?: TabCycleConfig) => Cypress.Chainable<true>;
     }
@@ -141,29 +116,19 @@ Cypress.Commands.add('getNextTabbedDatasetOrder', (direction, check) => {
   });
 });
 
-// Return an array filled with results from `getNextTabbedDatasetOrder`.
-Cypress.Commands.add('getTabCycle', (origin, direction, len, check) => {
+// `Tab` multiple times and return an array filled with the `dataset-order` of the focused elements.
+Cypress.Commands.add('getTabCycle', (origin, direction, len) => {
   const tabCycle: string[] = new Array(len);
 
   cy.wrap(origin).focus();
 
   cy.wrap(tabCycle).each((_, i) =>
-    cy.getNextTabbedDatasetOrder(direction, check).then((datasetOrder) => (tabCycle[i] = datasetOrder))
+    cy.getNextTabbedDatasetOrder(direction, false).then((datasetOrder) => (tabCycle[i] = datasetOrder))
   );
 });
 
-// Call `getTabCycle` and assert whether the tab cycle is a substring of `repeatedOrder`.
-Cypress.Commands.add('assertTabCycle', (collection, direction, len, repeatedOrder, check) => {
-  cy.wrap(collection).each(($origin) => {
-    cy.getTabCycle($origin, direction, len, check).then((cycle) => {
-      expect(cycle).to.have.length(len);
-      expect(repeatedOrder).to.have.string(cycle.join(''));
-      return true;
-    });
-  });
-});
-
-// Call `assertTabCycle` with the proper arguments, depending on the value of `check`.
+// Assert whether the tab cycle returned by `getTabCycle` is a substring of `repeatedOrder`.
+// When needed, also `check` whether elements outside the trap pass the focus to the right elements inside the trap.
 Cypress.Commands.add(
   'verifyTabCycle',
   { prevSubject: ['element'] },
@@ -175,25 +140,30 @@ Cypress.Commands.add(
       check: false,
     }
   ) => {
-    if (expectedOrder.length < 1) throw new Error('There must be an `expectedOrder`.');
-
-    const cycleLength = check ? 2 : expectedOrder.length;
+    if (expectedOrder.length < 2) throw new Error('A meaningful `expectedOrder` must have at least two characters.');
 
     // Is the expected sequence of tabbed `dataset-order` repeated the least amount of times needed to
     // include any sequence of tabbed `dataset-order` that could show up during the tests.
     const repeatedOrder = {
-      FORWARD: expectedOrder.repeat(Math.ceil((cycleLength - 1) / expectedOrder.length) + 1),
-      get BACKWARD() {
-        return this.FORWARD.split('').reverse().join('');
-      },
+      FORWARD: expectedOrder.repeat(2),
+      BACKWARD: expectedOrder.split('').reverse().join('').repeat(2),
     };
 
-    return cy.assertTabCycle(
-      check ? collection : collection.slice(0, 1),
-      direction,
-      cycleLength,
-      repeatedOrder[direction],
-      check
-    );
+    if (check) {
+      cy.wrap(collection)
+        .each(($origin) => {
+          cy.wrap($origin).focus();
+          cy.getNextTabbedDatasetOrder(direction, true);
+        })
+        .then(() => true);
+    }
+
+    cy.wrap(collection.get(0)).then(($origin) => {
+      cy.getTabCycle($origin, direction, expectedOrder.length).then((cycle) => {
+        expect(cycle).to.have.length(expectedOrder.length);
+        expect(repeatedOrder[direction]).to.have.string(cycle.join(''));
+        return true;
+      });
+    });
   }
 );
