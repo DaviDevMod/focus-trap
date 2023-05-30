@@ -1,5 +1,12 @@
 # demo
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [[`bcb45df`](https://github.com/DaviDevMod/focus-trap/commit/bcb45dff1d507b67f7c4cd6dd8b3f44ebf311370), [`f70f79b`](https://github.com/DaviDevMod/focus-trap/commit/f70f79b9a14d7ea29759dd53b00eb15f06c38170), [`3eae44c`](https://github.com/DaviDevMod/focus-trap/commit/3eae44c906efa648864415619a2d9e2e4487804c)]:
+  - @davidevmod/focus-trap@2.0.0
+
 ## 0.1.4
 
 ### Patch Changes
