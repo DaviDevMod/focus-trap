@@ -168,7 +168,7 @@ The logic for the treatement of edge cases, in matter of browser consistency reg
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
-The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and _focus-trap_ aims to be as simple and lightweight as possible.
+The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and _@davidevmod/focus-trap_ aims to be as simple and lightweight as possible.
 
 Also much obliged to the whole [focus-trap](https://github.com/focus-trap) project in general, which has been a huge point of reference.
 
