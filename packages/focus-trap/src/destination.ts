@@ -15,13 +15,11 @@ const candidatesInRoot = (root: Focusable) => [root, ...root.querySelectorAll<Fo
 
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
-  whichOne: FirstOrLast = 'FIRST',
-  validateTabIndex = (_tabIndex: number) => true
+  whichOne: FirstOrLast,
+  validateTabIndex: (tabIndex: number) => boolean
 ) => {
-  return (
-    candidatesInRoot(root)[whichOne === 'FIRST' ? 'find' : 'findLast'](
-      (el) => validateTabIndex(getConsistentTabIndex(el)) && isActuallyFocusable(el)
-    ) ?? null // Casting `undefined` to `null` for consistency.
+  return candidatesInRoot(root)[whichOne === 'FIRST' ? 'find' : 'findLast'](
+    (el) => validateTabIndex(getConsistentTabIndex(el)) && isActuallyFocusable(el)
   );
 };
 
@@ -34,14 +32,13 @@ const firstOrLastZeroTabbableInRoot = (root: Focusable, whichOne: FirstOrLast = 
 };
 
 export const firstOrLastZeroTabbable = (roots: Focusable[], whichOne: FirstOrLast = 'FIRST') => {
-  let firstOrLastZero: Focusable | null = null;
+  let firstOrLastZero = undefined as Focusable | undefined;
 
   roots[whichOne === 'FIRST' ? 'find' : 'findLast'](
     (root) => (firstOrLastZero = firstOrLastZeroTabbableInRoot(root, whichOne))
   );
 
-  // TS doesn't take into account functions' side effects: https://github.com/microsoft/TypeScript/issues/9998
-  return firstOrLastZero as Focusable | null;
+  return firstOrLastZero;
 };
 
 export const positiveTabbables = (roots: Focusable[]) => {
