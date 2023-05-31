@@ -8,7 +8,7 @@ A tiny library to trap the focus within your DOM elements.
 
 - Trap the focus within a group of DOM elements
 - Choose an element receiving the initial focus
-- Customise the behaviour of clicks on elements outside of the trap
+- Prevent clicks on elements outside of the trap
 - Decide whether to demolish a trap after an <kbd>Esc</kbd> key press
 - Choose an element receiving the focus after a trap is demolished
 - Build, demolish, pause and resume your focus trap at any time
@@ -36,7 +36,7 @@ interface TrapConfig {
   roots: Roots;
   initialFocus?: boolean | Focusable | string;
   returnFocus?: boolean | Focusable | string;
-  lock?: boolean | ((event: KeyboardEvent) => void);
+  lock?: boolean;
   escape?: boolean;
 }
 
@@ -92,13 +92,13 @@ By default, when building a focus trap by providing only `roots`, this is what h
 
 You can tweak the behaviour of your trap by providing a `TrapConfig`:
 
-| Property     | Required | Type                                          | Default value |
-| ------------ | -------- | --------------------------------------------- | :-----------: |
-| roots        | Yes      | `(Focusable \| string)[]`                     |       -       |
-| initialFocus | No       | `boolean \| Focusable \| string`              |    `true`     |
-| returnFocus  | No       | `boolean \| Focusable \| string`              |    `true`     |
-| lock         | No       | `boolean \| ((event: KeyboardEvent) => void)` |    `true`     |
-| escape       | No       | `boolean`                                     |    `true`     |
+| Property     | Required | Type                             | Default value |
+| ------------ | -------- | -------------------------------- | :-----------: |
+| roots        | Yes      | `(Focusable \| string)[]`        |       -       |
+| initialFocus | No       | `boolean \| Focusable \| string` |    `true`     |
+| returnFocus  | No       | `boolean \| Focusable \| string` |    `true`     |
+| lock         | No       | `boolean`                        |    `true`     |
+| escape       | No       | `boolean`                        |    `true`     |
 
 - **roots**  
   The array of elements (and/or IDs) within which the focus has to be trapped.
@@ -116,7 +116,7 @@ You can tweak the behaviour of your trap by providing a `TrapConfig`:
 - **lock**  
   The behavior for clicks outside of the trap.  
   By default clicks on elements outside of the trap are prevented.  
-  You can provide the boolean `false` to switch off the default behaviour or alternatively your own handler for the click events in question.
+  You can provide the boolean `false` to switch off the default behaviour.
 
   > **Note**  
   > Only `mousedown`, `touchstart`, `click` and the browser default behavior are prevented.  
@@ -142,7 +142,7 @@ interface NormalisedTrapConfig {
   roots: Focusable[];
   initialFocus: boolean | Focusable;
   returnFocus: Focusable | null;
-  lock: boolean | ((event: KeyboardEvent) => void);
+  lock: boolean;
   escape: boolean;
 }
 ```

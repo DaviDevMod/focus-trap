@@ -46,11 +46,7 @@ export const eventListeners = (action: 'ADD' | 'REMOVE'): void => {
 
   if (state.normalisedConfig?.lock) {
     for (const event of ['mousedown', 'touchstart', 'click']) {
-      (document[listenerActions[action]] as Function)(
-        event,
-        state.normalisedConfig.lock === true ? handleOutsideClick : state.normalisedConfig.lock,
-        true
-      );
+      (document[listenerActions[action]] as Function)(event, handleOutsideClick, true);
     }
   }
 };

@@ -33,8 +33,5 @@ context('Test the `lock` trap configuration option.', () => {
 
       cy.get('@attemptFocus').should('be.focused');
     });
-
-    // I will write it eventually.
-    it.skip('`lock` should be used as handler for clicks outside of the trap, when passed as a function', () => {});
   });
 });
