@@ -74,8 +74,6 @@ focusTrap('DEMOLISH');
 
 </details>
 
-<br>
-
 ## Default behaviour
 
 By default, when building a focus trap by providing only `roots`, this is what happens:
@@ -146,9 +144,9 @@ interface NormalisedTrapConfig {
 ```
 
 > **Note**  
->  The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutaion (eg: elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
+>  The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutaion (eg, elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
 
-This value is rarely useful, it may be used to eg: implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
+This value is rarely useful, it may be used to eg, implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
 
 ## Dependencies & Browser Support
 
