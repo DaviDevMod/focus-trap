@@ -1,0 +1,8 @@
+ignore:
+  # The code in this file comes from tabbable: https://github.com/focus-trap/tabbable
+  # and has been thoroughly tested already in that library.
+  # The reason why it's not a dependency is that using its exported `isTabbable`
+  # would make the algorithm to find a destination less efficient
+  # (and also because its current unpacked size on npmjs.com
+  # is more than 10x that of @davidevmod/focus-trap: 398 kB vs 33.5 kB).
+  - 'packages/focus-trap/src/tabbability.ts'
