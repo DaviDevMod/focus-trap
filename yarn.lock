@@ -548,9 +548,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.10.6":
-  version: 3.10.6
-  resolution: "@cypress/code-coverage@npm:3.10.6"
+"@cypress/code-coverage@npm:3.10.7":
+  version: 3.10.7
+  resolution: "@cypress/code-coverage@npm:3.10.7"
   dependencies:
     "@cypress/webpack-preprocessor": ^5.11.0
     chalk: 4.1.2
@@ -563,7 +563,7 @@ __metadata:
     nyc: 15.1.0
   peerDependencies:
     cypress: "*"
-  checksum: 4c9b630acfa28b487ac5d5688d88225c1fb43641a1268d9a74300dfde3b7a3a08490a7478487990f513d5e77f451bb8bc0f4d9e9072115983fc8dba9c84ba2c4
+  checksum: a40bcbccdb9c89fd86ef5361c454d2c1545a39128b640d6df8f65a44dade20d83bf22506bf12579fef2a28496916f1be16f979564223a08f894f0e364f0b4c08
   languageName: node
   linkType: hard
 
@@ -629,7 +629,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.10.6
+    "@cypress/code-coverage": 3.10.7
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.2.5
     concurrently: 8.0.1
