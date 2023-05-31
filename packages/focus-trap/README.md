@@ -158,6 +158,12 @@ The are no dependencies and the library can run in any major browser.
 > The codebase is tested only against Chromium-based browsers.
 > That's because the e2e tests use [Cypress](https://www.cypress.io/), which [does not support native browser events](https://github.com/cypress-io/cypress/issues/311) (in particular <kbd>Tab</kbd> key presses), problem that is solved by using the [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events) plugin which does allow for native browser events in Cypress, but only in the presence of Chrome Devtools.
 
+## Demo
+
+There is a live demo in which you can play around with focus traps to appreciate the way they work: https://focus-trap-demo.vercel.app/
+
+And in [this repo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo) you can find the source code of the demo.
+
 ## Special thanks :heart:
 
 The logic for the treatement of edge cases, in matter of browser consistency regarding tab indexes and tabbability, is took from [tabbable](https://github.com/focus-trap/tabbable).
