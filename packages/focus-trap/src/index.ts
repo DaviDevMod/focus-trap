@@ -6,12 +6,7 @@ type TrapAction = 'RESUME' | 'DEMOLISH' | 'PAUSE';
 
 type TrapArg = Roots | TrapConfig | TrapAction;
 
-interface TrapState {
-  isBuilt: boolean;
-  config: NormalisedTrapConfig;
-}
-
-export const focusTrap = (arg: TrapArg): TrapState => {
+export const focusTrap = (arg: TrapArg): NormalisedTrapConfig => {
   const result =
     typeof arg === 'string'
       ? arg === 'DEMOLISH'
@@ -24,7 +19,7 @@ export const focusTrap = (arg: TrapArg): TrapState => {
   if (result.isErr) throw new Error(result.error);
 
   // If !state.normalisedConfig, result.isErr === true; and this line is unreachable.
-  return { isBuilt: state.isBuilt, config: { ...state.normalisedConfig! } };
+  return { ...state.normalisedConfig! };
 };
 
-export type { TrapArg, Roots, TrapConfig, TrapAction, TrapState, NormalisedTrapConfig };
+export type { TrapArg, Roots, TrapConfig, TrapAction, NormalisedTrapConfig };

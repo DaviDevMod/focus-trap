@@ -133,7 +133,7 @@ They are pretty straightforward, calling `focusTrap` with `"PAUSE"`, `"RESUME"` 
 
 ## Return value
 
-An object of type `TrapState`:
+A shollow copy of the `NormalisedTrapConfig` used internally by the library, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
@@ -145,14 +145,7 @@ interface NormalisedTrapConfig {
   lock: boolean | ((event: KeyboardEvent) => void);
   escape: boolean;
 }
-
-interface TrapState {
-  isBuilt: boolean;
-  config: NormalisedTrapConfig;
-}
 ```
-
-Where `isBuilt` tells whether a trap has been built and not demolished yet, while `NormalisedTrapConfig` is a shallow copy of the config used internally by the library and basically is the provided `TrapConfig` with IDs resolved to actual elements and default values set.
 
 > **Note**  
 >  The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutaion (eg: elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
