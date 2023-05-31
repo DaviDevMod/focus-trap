@@ -9,9 +9,9 @@ A tiny library to trap the focus within your DOM elements.
 - Trap the focus within a group of DOM elements
 - Choose an element receiving the initial focus
 - Prevent clicks on elements outside of the trap
-- Decide whether to demolish a trap after an <kbd>Esc</kbd> key press
-- Choose an element receiving the focus after a trap is demolished
-- Build, demolish, pause and resume your focus trap at any time
+- Demolish a trap after an <kbd>Esc</kbd> key press
+- Focus a given element once the trap is demolished
+- Build, demolish, pause and resume your focus trap
 
 ## Installation
 
@@ -21,11 +21,7 @@ yarn add @davidevmod/focus-trap
 
 ## Usage
 
-`import { focusTrap } from '@davidevmod/focus-trap'` and call it with an argument of type `TrapArg`.
-
-<details>
-<summary><code>TrapArg</code> type:</summary>
-<br>
+`import { focusTrap } from '@davidevmod/focus-trap';` and call it with an argument of type `TrapArg`:
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
@@ -45,11 +41,9 @@ type TrapAction = 'PAUSE' | 'RESUME' | 'DEMOLISH';
 type TrapArg = Roots | TrapConfig | TrapAction;
 ```
 
-</details>
-
+<details open>
+<summary>Here is an example:</summary>
 <br>
-
-Here is an example:
 
 ```ts
 import { focusTrap } from '@davidevmod/focus-trap';
@@ -77,6 +71,10 @@ focusTrap('RESUME');
 // Demolish the trap.
 focusTrap('DEMOLISH');
 ```
+
+</details>
+
+<br>
 
 ## Default behaviour
 
