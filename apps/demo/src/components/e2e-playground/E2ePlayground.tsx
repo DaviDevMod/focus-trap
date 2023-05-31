@@ -30,7 +30,10 @@ export function E2ePlayground() {
     // Not going to `try/catch` nor try to make it typesafe. Let it throw.
     const trapArg = JSON.parse(decodeURIComponent(arg));
 
-    focusTrap(trapArg);
+    const normalisedTrapConfig = focusTrap(trapArg);
+
+    // This log is used by the tests to confirm that duplicate roots have been deduplicated.
+    console.log(`roots.length: ${normalisedTrapConfig.roots.length}`);
 
     return () => {
       focusTrap('DEMOLISH');
