@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid';
+import { createFocusTrap } from '../../focus-trap';
 
 import { useSkeleton } from '../../hooks/useSkeleton';
 import { TrapControls } from './trap-controls/TrapControls';
@@ -44,6 +45,16 @@ export function Playground() {
   const [rootsToHighlightState, setRootsToHighlightState] = useState<string[]>([]);
   const [selectedButtonIdState, setSelectedButtonIdState] = useState('');
   const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
+
+  useEffect(() => {
+    const trap = createFocusTrap(['[id="group 2"]', '[id="group 4"]'], { allowOutsideClick: false });
+
+    trap.activate();
+
+    return () => {
+      trap.deactivate();
+    };
+  }, []);
 
   useEffect(() => {
     const escHandler = (event: KeyboardEvent) => {
