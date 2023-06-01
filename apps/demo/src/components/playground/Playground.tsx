@@ -47,7 +47,7 @@ export function Playground() {
   const { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton } = useSkeleton();
 
   useEffect(() => {
-    const trap = createFocusTrap(['[id="group 2"]', '[id="group 4"]'], { allowOutsideClick: false });
+    const trap = createFocusTrap(['[id="group 2"]', '[id="group 4"]'], { allowOutsideClick: true });
 
     trap.activate();
 
