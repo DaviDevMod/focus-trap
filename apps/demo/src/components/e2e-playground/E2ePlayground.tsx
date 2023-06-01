@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { focusTrap } from '@davidevmod/focus-trap';
+import { createFocusTrap } from '../../focus-trap';
 
 import { useSkeleton } from '../../hooks/useSkeleton';
 import { DemoElements } from '../playground/demo-elements/DemoElements';
@@ -30,13 +31,14 @@ export function E2ePlayground() {
     // Not going to `try/catch` nor try to make it typesafe. Let it throw.
     const trapArg = JSON.parse(decodeURIComponent(arg));
 
-    const normalisedTrapConfig = focusTrap(trapArg);
+    const { el, options } = trapArg;
 
-    // This log is used by the tests to confirm that duplicate roots have been deduplicated.
-    console.log(`roots.length: ${normalisedTrapConfig.roots.length}`);
+    const trap = createFocusTrap(el, options);
+
+    trap.activate();
 
     return () => {
-      focusTrap('DEMOLISH');
+      trap.deactivate();
     };
   }, [searchParams]);
 

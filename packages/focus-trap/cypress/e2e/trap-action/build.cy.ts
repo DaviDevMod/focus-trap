@@ -19,9 +19,9 @@ context('Test how the trap behaves after a "BUILD" action is performed.', () => 
 
   // `check: true` is a stricter but slower way to verify that the trap is doing its job,
   // checking that elements outside the trap pass the focus to the right elements inside the trap.
-  describe('The focus should cycle within the trap following a specific order, dictated by document order and tab index values.', () => {
+  describe.only('The focus should cycle within the trap following a specific order, dictated by document order and tab index values.', () => {
     beforeEach(() => {
-      cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, lock: false });
+      cy.visitDemoAndBuildTrap({ el: ['[id="group 2"]', '[id="group 4"]'], options: { allowOutsideClick: true } });
       cy.get('button[data-parent-id]').as('possibleTabbables');
     });
 

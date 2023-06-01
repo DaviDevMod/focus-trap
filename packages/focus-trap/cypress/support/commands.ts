@@ -34,7 +34,7 @@ const DEFAULT_EXPECTED_ORDER = '0123456';
 declare global {
   namespace Cypress {
     interface Chainable {
-      visitDemoAndBuildTrap: (trapArg: TrapArg) => void;
+      visitDemoAndBuildTrap: (trapArg: unknown) => void;
 
       actOnTrap: (action: TrapAction) => Cypress.Chainable<true>;
 
