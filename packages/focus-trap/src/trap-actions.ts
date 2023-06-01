@@ -24,6 +24,8 @@ const getInitialFocus = (): Result<Focusable | Unit, string> => {
 
   if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
+  // This line is unreachable because an error would have been thrown while normalising `roots`.
+  /* istanbul ignore next */
   return err('There are no tabbable elements in the focus trap.');
 };
 

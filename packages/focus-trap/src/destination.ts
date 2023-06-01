@@ -89,6 +89,8 @@ const nextTopOrBottomTabbable = (
     if (topOrBottom) return ok(topOrBottom);
   }
 
+  // This line is unreachable because an error would have been thrown while normalising `roots`.
+  /* istanbul ignore next */
   return err('There are no tabbable elements in the focus trap.');
 };
 
@@ -146,6 +148,8 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
     if (firstOrLastZeroInDestinationRoot) return ok(firstOrLastZeroInDestinationRoot);
   }
 
+  // This line is unreachable because an error would have been thrown while normalising `roots`.
+  /* istanbul ignore next */
   return err('There are no tabbable elements in the focus trap.');
 };
 
@@ -174,6 +178,8 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
 
   if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
+  // This line is unreachable because an error would have been thrown while normalising `roots`.
+  /* istanbul ignore next */
   return err('There are no tabbable elements in the focus trap.');
 };
 
