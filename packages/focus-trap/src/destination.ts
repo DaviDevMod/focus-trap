@@ -131,11 +131,9 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
       origin === firstOrLastZeroInTrap ||
       origin.compareDocumentPosition(firstOrLastZeroInTrap) & (direction === 'FORWARD' ? 2 : 4)
     ) {
-      const positives = positiveTabbables(roots);
+      const firstOrLastPositiveInTrap = positiveTabbables(roots).at(direction === 'FORWARD' ? 0 : -1);
 
-      if (positives.length) {
-        return ok(positives[direction === 'FORWARD' ? 0 : positives.length - 1]);
-      }
+      if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
     }
 
     const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(
