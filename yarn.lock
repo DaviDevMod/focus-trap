@@ -548,9 +548,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.10.6":
-  version: 3.10.6
-  resolution: "@cypress/code-coverage@npm:3.10.6"
+"@cypress/code-coverage@npm:3.10.7":
+  version: 3.10.7
+  resolution: "@cypress/code-coverage@npm:3.10.7"
   dependencies:
     "@cypress/webpack-preprocessor": ^5.11.0
     chalk: 4.1.2
@@ -563,7 +563,7 @@ __metadata:
     nyc: 15.1.0
   peerDependencies:
     cypress: "*"
-  checksum: 4c9b630acfa28b487ac5d5688d88225c1fb43641a1268d9a74300dfde3b7a3a08490a7478487990f513d5e77f451bb8bc0f4d9e9072115983fc8dba9c84ba2c4
+  checksum: a40bcbccdb9c89fd86ef5361c454d2c1545a39128b640d6df8f65a44dade20d83bf22506bf12579fef2a28496916f1be16f979564223a08f894f0e364f0b4c08
   languageName: node
   linkType: hard
 
@@ -629,10 +629,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.10.6
+    "@cypress/code-coverage": 3.10.7
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.2.5
-    concurrently: 8.0.1
+    concurrently: 8.1.0
     cypress: 12.13.0
     cypress-real-events: 1.8.1
     eslint: 8.41.0
@@ -644,8 +644,8 @@ __metadata:
     source-map-support: 0.5.21
     true-myth: ^6.2.0
     ts-node: 10.9.1
-    type-fest: ^3.11.0
-    typescript: 5.0.4
+    type-fest: ^3.11.1
+    typescript: 5.1.3
     vite: ^4.3.9
     vite-plugin-dts: ^2.3.0
   languageName: unknown
@@ -854,15 +854,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:^1.7.14":
-  version: 1.7.14
-  resolution: "@headlessui/react@npm:1.7.14"
+"@headlessui/react@npm:^1.7.15":
+  version: 1.7.15
+  resolution: "@headlessui/react@npm:1.7.15"
   dependencies:
-    client-only: "npm:^0.0.1"
+    client-only: ^0.0.1
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: 9122114d7a618877a8da2ada000422ce82e6af47195e414076fa5cf45687709479eb30b0df414eed52079be6e5904151bc92e4acfafbdde2592c608f015c490e
+  checksum: f2d11d58499ddf1362a40d84d92b7db932adaccc3596f44f1eead642258280f124497f2b329cee6e04801818bb2e66c42d752ee05f40f8b5239c2f692128e568
   languageName: node
   linkType: hard
 
@@ -1429,14 +1429,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.7":
-  version: 18.2.7
-  resolution: "@types/react@npm:18.2.7"
+"@types/react@npm:*, @types/react@npm:18.2.8":
+  version: 18.2.8
+  resolution: "@types/react@npm:18.2.8"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: caa5da4cf929766738ec789301dc6fb6624bd48dd317d851c4c9b84b1f47cd8ebe17fe01398cadaa0bc938cd4d502d67f4b9de9ff771dc132096bdc86228efba
+  checksum: 351fe2450d30bff2ceb6aa84788e948317555e5ea22cb44f6778e08c977aab1878a0119bd94bc3d1bec5f5af4a75ffaa2ce111df5cd9d4ce26bfd719e4d971c2
   languageName: node
   linkType: hard
 
@@ -2452,23 +2452,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:8.0.1":
-  version: 8.0.1
-  resolution: "concurrently@npm:8.0.1"
+"concurrently@npm:8.1.0":
+  version: 8.1.0
+  resolution: "concurrently@npm:8.1.0"
   dependencies:
-    chalk: "npm:^4.1.2"
-    date-fns: "npm:^2.29.3"
-    lodash: "npm:^4.17.21"
-    rxjs: "npm:^7.8.0"
-    shell-quote: "npm:^1.8.0"
-    spawn-command: "npm:0.0.2-1"
-    supports-color: "npm:^8.1.1"
-    tree-kill: "npm:^1.2.2"
-    yargs: "npm:^17.7.1"
+    chalk: ^4.1.2
+    date-fns: ^2.29.3
+    lodash: ^4.17.21
+    rxjs: ^7.8.0
+    shell-quote: ^1.8.0
+    spawn-command: 0.0.2-1
+    supports-color: ^8.1.1
+    tree-kill: ^1.2.2
+    yargs: ^17.7.1
   bin:
     conc: dist/bin/concurrently.js
     concurrently: dist/bin/concurrently.js
-  checksum: cce10ab1bbd7fd099300234637cdbc8e12622a5fe53f8dd31dcd9562d9803f25d3d0410bdb6fffd54e8f4e11b852366c03994bd319843cce70e449c8a8a69526
+  checksum: f767345c6e142c8de58114afc7ed0e58c58882b110cad28d34e251f7a9cf018212b24c316272ac4df5fe322d64434575f94dad77ea861e868c894fb24b8f36b9
   languageName: node
   linkType: hard
 
@@ -2800,11 +2800,11 @@ __metadata:
   resolution: "demo@workspace:apps/demo"
   dependencies:
     "@davidevmod/focus-trap": "workspace:^"
-    "@headlessui/react": ^1.7.14
+    "@headlessui/react": ^1.7.15
     "@headlessui/tailwindcss": ^0.1.3
     "@heroicons/react": ^2.0.18
     "@types/node": 20.2.5
-    "@types/react": 18.2.7
+    "@types/react": 18.2.8
     "@types/react-dom": 18.2.4
     autoprefixer: 10.4.14
     eslint: 8.41.0
@@ -2818,8 +2818,8 @@ __metadata:
     rimraf: ^5.0.1
     tailwindcss: 3.3.2
     tailwindcss-debug-screens: 2.2.1
-    type-fest: ^3.11.0
-    typescript: 5.0.4
+    type-fest: ^3.11.1
+    typescript: 5.1.3
   languageName: unknown
   linkType: soft
 
@@ -3676,7 +3676,7 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": 0.4.8
     "@changesets/cli": 2.26.1
-    concurrently: 8.0.1
+    concurrently: 8.1.0
     cypress: 12.13.0
     eslint: 8.41.0
     husky: 8.0.3
@@ -3685,9 +3685,9 @@ __metadata:
     prettier: 2.8.8
     rimraf: 5.0.1
     true-myth: ^6.2.0
-    turbo: ^1.9.9
-    type-fest: ^3.11.0
-    typescript: 5.0.4
+    turbo: ^1.10.1
+    type-fest: ^3.11.1
+    typescript: 5.1.3
   languageName: unknown
   linkType: soft
 
@@ -7788,58 +7788,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-darwin-64@npm:1.9.9"
+"turbo-darwin-64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-darwin-64@npm:1.10.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-darwin-arm64@npm:1.9.9"
+"turbo-darwin-arm64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-darwin-arm64@npm:1.10.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-linux-64@npm:1.9.9"
+"turbo-linux-64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-linux-64@npm:1.10.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-linux-arm64@npm:1.9.9"
+"turbo-linux-arm64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-linux-arm64@npm:1.10.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-windows-64@npm:1.9.9"
+"turbo-windows-64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-windows-64@npm:1.10.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:1.9.9":
-  version: 1.9.9
-  resolution: "turbo-windows-arm64@npm:1.9.9"
+"turbo-windows-arm64@npm:1.10.1":
+  version: 1.10.1
+  resolution: "turbo-windows-arm64@npm:1.10.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.9.9":
-  version: 1.9.9
-  resolution: "turbo@npm:1.9.9"
+"turbo@npm:^1.10.1":
+  version: 1.10.1
+  resolution: "turbo@npm:1.10.1"
   dependencies:
-    turbo-darwin-64: 1.9.9
-    turbo-darwin-arm64: 1.9.9
-    turbo-linux-64: 1.9.9
-    turbo-linux-arm64: 1.9.9
-    turbo-windows-64: 1.9.9
-    turbo-windows-arm64: 1.9.9
+    turbo-darwin-64: 1.10.1
+    turbo-darwin-arm64: 1.10.1
+    turbo-linux-64: 1.10.1
+    turbo-linux-arm64: 1.10.1
+    turbo-windows-64: 1.10.1
+    turbo-windows-arm64: 1.10.1
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -7855,7 +7855,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 155c82b0e18edb08e5a985d1a78179b16a87960b3827c9de0a27cfc2f98500966eea5f2692bff8bb9f5ce7b0d06b75df4b02fdbde97054917def9110d8fba46b
+  checksum: 3551c57be67e833583de549d74d5ec991e0f1e38047e25600b8acc085a1a8a4007992259a015eb9f2c0abd68156545800bd34e7b5ad337d1998b32461952d3fb
   languageName: node
   linkType: hard
 
@@ -7910,10 +7910,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.11.0":
-  version: 3.11.0
-  resolution: "type-fest@npm:3.11.0"
-  checksum: ebd7968301674d8022cd180aa34a685bda5962ad3c98da7280456f97468c1b12984f6a79d4eb4652f10e1f0ab42f7016121fd762068fd6255d4d0ccc069c2566
+"type-fest@npm:^3.11.1":
+  version: 3.11.1
+  resolution: "type-fest@npm:3.11.1"
+  checksum: 33be49e3b671c2ff3b5e320ef8c160c488205b08ab7631369116909a1baf2aebfcf45234c045e6902b8aa35730ac2bfd0655ea9e0fe3f8d26af9d99a16b07abd
   languageName: node
   linkType: hard
 
@@ -7926,13 +7926,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.0.4":
-  version: 5.0.4
-  resolution: "typescript@npm:5.0.4"
+"typescript@npm:5.1.3":
+  version: 5.1.3
+  resolution: "typescript@npm:5.1.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
+  checksum: d9d51862d98efa46534f2800a1071a613751b1585dc78884807d0c179bcd93d6e9d4012a508e276742f5f33c480adefc52ffcafaf9e0e00ab641a14cde9a31c7
   languageName: node
   linkType: hard
 
@@ -7946,13 +7946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.0.4#~builtin<compat/typescript>":
-  version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
+"typescript@patch:typescript@5.1.3#~builtin<compat/typescript>":
+  version: 5.1.3
+  resolution: "typescript@patch:typescript@npm%3A5.1.3#~builtin<compat/typescript>::version=5.1.3&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
+  checksum: 6f0a9dca6bf4ce9dcaf4e282aade55ef4c56ecb5fb98d0a4a5c0113398815aea66d871b5611e83353e5953a19ed9ef103cf5a76ac0f276d550d1e7cd5344f61e
   languageName: node
   linkType: hard
 
