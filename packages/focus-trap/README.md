@@ -16,7 +16,7 @@ A tiny library to trap the focus within your DOM elements.
 ## Installation
 
 ```bash
-yarn add @davidevmod/focus-trap
+npm install @davidevmod/focus-trap
 ```
 
 ## Usage
@@ -86,7 +86,7 @@ By default, when building a focus trap by providing only `roots`, this is what h
 
 ## TrapConfig
 
-You can tweak the behaviour of your trap by providing a `TrapConfig`:
+You can tweak the behaviour of your trap by providing a `TrapConfig` object:
 
 | Property     | Required | Type                             | Default value |
 | ------------ | -------- | -------------------------------- | :-----------: |
