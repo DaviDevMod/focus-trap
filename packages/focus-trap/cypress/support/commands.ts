@@ -36,17 +36,17 @@ declare global {
     interface Chainable {
       visitDemoAndBuildTrap: (trapArg: TrapArg) => void;
 
-      actOnTrap: (action: TrapAction) => Cypress.Chainable<true>;
-
-      actionShouldThrow: (action: TrapAction) => void;
+      actOnTrap: (action: TrapAction) => Cypress.Chainable<void>;
 
       actionShouldSucceed: (action: TrapAction) => void;
+
+      actionShouldThrow: (action: TrapAction) => void;
 
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
       getTabCycle: (from: JQuery<HTMLElement> | null, direction: Direction, len: number) => Cypress.Chainable<string[]>;
 
-      verifyTabCycle: (config?: TabCycleConfig) => Cypress.Chainable<true>;
+      verifyTabCycle: (config?: TabCycleConfig) => Cypress.Chainable<void>;
     }
   }
 }
@@ -81,8 +81,8 @@ Cypress.Commands.add('actionShouldSucceed', (action) => {
 
   cy.get('button[data-parent-id]')
     .verifyTabCycle()
-    .then((verified) => {
-      if (trapShouldStopWorking && verified) throw new Error('The focus should not be trapped anymore.');
+    .then(() => {
+      if (trapShouldStopWorking) throw new Error('The focus should not be trapped anymore.');
     });
 });
 
@@ -92,8 +92,8 @@ Cypress.Commands.add('actionShouldThrow', (action) => {
     throw error;
   });
 
-  cy.actOnTrap(action).then((res) => {
-    if (res) throw new Error(`This "${action}" action should have thrown an error.`);
+  cy.actOnTrap(action).then(() => {
+    throw new Error(`This "${action}" action should have thrown an error.`);
   });
 });
 
