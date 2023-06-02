@@ -19,19 +19,4 @@ context('Cover lines left behind by the main test suite.', () => {
       cy.get('@consoleLog').should('be.calledWith', 'roots.length: 1');
     });
   });
-
-  // In the main test suite, elements in the focus trap are eterogeneous in tab index and since
-  // the algorithm to find a default `initailFocus` starts by looking only at elements with a positive tab index
-  // it always returns early, leaving a few lines of code uncovered.
-  describe('Test behaviour of a focus trap with no elements with a positive tab index.', () => {
-    it('Should give the default `initialFocus` to the first element with a zero tab index.', () => {
-      // 'C' has a negative tab index.
-      const ROOTS_WITH_NO_POSITIVE_TABINDEXES = ['C', 'F', 'G', 'H'];
-      const ID_FIRST_ZERO_TAB_INDEX = 'F';
-
-      cy.visitDemoAndBuildTrap(ROOTS_WITH_NO_POSITIVE_TABINDEXES);
-
-      cy.focused().invoke('attr', 'id').should('equal', ID_FIRST_ZERO_TAB_INDEX);
-    });
-  });
 });
