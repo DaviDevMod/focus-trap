@@ -1,5 +1,15 @@
 # @davidevmod/focus-trap
 
+## 3.0.1
+
+### Patch Changes
+
+- [`4f90a03`](https://github.com/DaviDevMod/focus-trap/commit/4f90a031a6b3058e48ebfd83439cbb7df1699ead) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix handling of `Tab` from elements with a positive tab index.
+
+- [`0cfe93f`](https://github.com/DaviDevMod/focus-trap/commit/0cfe93f3bd32b547aa7b8b373e81242c366d7b1f) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix algorithm to find the next tabbable element with a positive tab index.
+
+  It was missing to check whether the element was actually focusable.
+
 ## 3.0.0
 
 ### Major Changes
