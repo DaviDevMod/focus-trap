@@ -1,6 +1,6 @@
 {
   "name": "@davidevmod/focus-trap",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "MIT",
   "repository": "https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap",
   "description": "Trap the focus within your DOM elements.",
