@@ -42,6 +42,8 @@ declare global {
 
       actionShouldThrow: (action: TrapAction) => void;
 
+      tabbingShouldThrowBecauseThereAreNoTabbables: (id: string) => void;
+
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
       getTabCycle: (from: JQuery<HTMLElement> | null, direction: Direction, len: number) => Cypress.Chainable<string[]>;
@@ -94,6 +96,21 @@ Cypress.Commands.add('actionShouldThrow', (action) => {
 
   cy.actOnTrap(action).then(() => {
     throw new Error(`This "${action}" action should have thrown an error.`);
+  });
+});
+
+Cypress.Commands.add('tabbingShouldThrowBecauseThereAreNoTabbables', (id) => {
+  cy.on('fail', (error) => {
+    if (error.message.includes('There are no tabbable elements in the focus trap.')) return;
+    throw error;
+  });
+
+  cy.get(`#${id}`).focus();
+
+  cy.realPress('Tab').then(() => {
+    throw new Error(
+      '`focusTrap` should throw when when trying to find a destination in a trap with no tabbable elements.'
+    );
   });
 });
 
