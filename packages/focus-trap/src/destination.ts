@@ -41,11 +41,34 @@ export const firstOrLastZeroTabbable = (roots: Focusable[], whichOne: FirstOrLas
   return firstOrLastZero;
 };
 
-export const positiveTabbables = (roots: Focusable[]) => {
+const positiveTabbables = (roots: Focusable[]) => {
   return roots
     .map(candidatesInRoot)
     .reduce((prev, curr) => prev.concat(curr.filter((el) => el.tabIndex > 0)), [])
     .sort((a, b) => a.tabIndex - b.tabIndex);
+};
+
+// Note: this function only searches in a given direction without wrapping around to check preceding elements.
+const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction: Direction = 'FORWARD') => {
+  const positives = positiveTabbables(roots);
+
+  let originIndex = undefined as number | undefined;
+
+  if (origin) {
+    originIndex = positives.findIndex((el) => el === origin);
+
+    if (originIndex === -1) {
+      positives.push(origin);
+      positives.sort((a, b) =>
+        a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
+      );
+      originIndex = positives.findIndex((el) => el === origin);
+    }
+  }
+
+  return direction === 'FORWARD'
+    ? positives.slice(originIndex == null ? originIndex : originIndex + 1).find((el) => isActuallyFocusable(el))
+    : positives.slice(0, originIndex).findLast((el) => isActuallyFocusable(el));
 };
 
 const nextTopOrBottomTabbable = (
@@ -131,7 +154,7 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
       origin === firstOrLastZeroInTrap ||
       origin.compareDocumentPosition(firstOrLastZeroInTrap) & (direction === 'FORWARD' ? 2 : 4)
     ) {
-      const firstOrLastPositiveInTrap = positiveTabbables(roots).at(direction === 'FORWARD' ? 0 : -1);
+      const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, direction);
 
       if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
     }
@@ -147,24 +170,12 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
   return err('There are no tabbable elements in the focus trap.');
 };
 
-const nextPositiveOrVeryFirstOrVeryLastTabbable = (
+export const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   roots: Focusable[],
-  origin: Focusable,
-  direction: Direction
+  origin?: Focusable,
+  direction: Direction = 'FORWARD'
 ): Result<Focusable, string> => {
-  const positives = positiveTabbables(roots);
-
-  let index = positives.findIndex((el) => el === origin);
-
-  if (index === -1) {
-    positives.push(origin);
-    positives.sort((a, b) =>
-      a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
-    );
-    index = positives.findIndex((el) => el === origin);
-  }
-
-  const nextPositive = positives[index + (direction === 'FORWARD' ? 1 : -1)] as Focusable | null;
+  const nextPositive = nextPositiveTabbable(roots, origin, direction);
 
   if (nextPositive) return ok(nextPositive);
 
@@ -172,9 +183,11 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
 
   if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
-  const firstOrLastPositiveInTrap = positives.at(direction === 'FORWARD' ? 0 : -1);
+  if (origin) {
+    const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, direction);
 
-  if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
+    if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
+  }
 
   return err('There are no tabbable elements in the focus trap.');
 };

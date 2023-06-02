@@ -5,7 +5,7 @@ import { ok, err } from 'true-myth/result';
 import type { Focusable, TrapConfig } from './state.js';
 import { state, reducers } from './state.js';
 import { eventListeners } from './events.js';
-import { positiveTabbables, firstOrLastZeroTabbable } from './destination.js';
+import { nextPositiveOrVeryFirstOrVeryLastTabbable } from './destination.js';
 
 const getInitialFocus = (): Result<Focusable | Unit, string> => {
   const initialFocus = state.normalisedConfig?.initialFocus;
@@ -16,15 +16,7 @@ const getInitialFocus = (): Result<Focusable | Unit, string> => {
 
   // As long as `getInitialFocus` is called after `setConfig` (and the eventual error is handled)
   // there is no need to `updateRoots` and `normalisedConfig` is granted to exists.
-  const positives = positiveTabbables(state.normalisedConfig!.roots);
-
-  if (positives.length) return ok(positives[0]);
-
-  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(state.normalisedConfig!.roots);
-
-  if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
-
-  return err('There are no tabbable elements in the focus trap.');
+  return nextPositiveOrVeryFirstOrVeryLastTabbable(state.normalisedConfig!.roots);
 };
 
 export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
