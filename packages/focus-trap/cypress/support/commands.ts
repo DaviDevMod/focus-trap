@@ -1,14 +1,3 @@
-/*
-Most of the times tests only verify that the focus cycles within the trap.
-
-When `check === true` tests also check that
-elements outside the trap pass the focus to the right elements inside the trap.
-
-This takes a while and is done only in the 'build.cy.ts' spec.
-
-Note that enabling the `check` has no effect if `trapConfig.lock === true` (the default).
-*/
-
 /// <reference types="cypress" />
 
 import { TrapArg, TrapAction } from '../../src';
@@ -42,7 +31,7 @@ declare global {
 
       actionShouldThrow: (action: TrapAction) => void;
 
-      tabbingShouldThrowBecauseThereAreNoTabbables: (id: string) => void;
+      tabbingShouldThrowBecauseThereAreNoTabbables: (originId: string) => void;
 
       getNextTabbedDatasetOrder: (direction: Direction, check: boolean) => Cypress.Chainable<string>;
 
@@ -99,13 +88,13 @@ Cypress.Commands.add('actionShouldThrow', (action) => {
   });
 });
 
-Cypress.Commands.add('tabbingShouldThrowBecauseThereAreNoTabbables', (id) => {
+Cypress.Commands.add('tabbingShouldThrowBecauseThereAreNoTabbables', (originId) => {
   cy.on('fail', (error) => {
     if (error.message.includes('There are no tabbable elements in the focus trap.')) return;
     throw error;
   });
 
-  cy.get(`#${id}`).focus();
+  cy.get(`#${originId}`).focus();
 
   cy.realPress('Tab').then(() => {
     throw new Error(
@@ -149,6 +138,16 @@ Cypress.Commands.add('getTabCycle', (origin, direction, len) => {
   );
 });
 
+/*
+Most of the times tests only verify that the focus cycles within the trap.
+
+When `check === true` tests also check that
+elements outside the trap pass the focus to the right elements inside the trap.
+
+This takes a while and is done only in the 'build.cy.ts' spec.
+
+Note that enabling the `check` has no effect if `trapConfig.lock === true` (the default).
+*/
 // Assert whether the tab cycle returned by `getTabCycle` is a substring of `repeatedOrder`.
 // When needed, also `check` whether elements outside the trap pass the focus to the right elements inside the trap.
 Cypress.Commands.add(
