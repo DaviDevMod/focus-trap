@@ -1,4 +1,4 @@
-## The state
+## The State
 
 The library manages a global [state](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/state.ts) containing:
 
@@ -6,7 +6,7 @@ The library manages a global [state](https://github.com/DaviDevMod/focus-trap/bl
 - A `normalisedConfig` that is the one actually used by the library, it has default values set and IDs resolved to actual elements
 - An `isBuilt` boolean indicating whether a focus trap has been built (and not demolished yet)
 
-## The build
+## The Build
 
 When [focus-trap](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/index.ts) is called with a `TrapConfig` (or at least the `Roots`) a [build](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/trap-actions.ts) action is performed:
 
@@ -15,7 +15,7 @@ When [focus-trap](https://github.com/DaviDevMod/focus-trap/blob/main/packages/fo
 - Give the `initialFocus`
 - Add event listeners to the DOM
 
-## The events
+## The Events
 
 There are only two [event handlers](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/events.ts):
 
@@ -26,7 +26,7 @@ The main fuctionality of the package lies in the handling of <kbd>Tab</kbd> key 
 
 On a <kbd>Tab</kbd> key press, the `roots` of the `normalisedConfig` are updated (to account for any relevant DOM mutation since the last key press) and the right destination element is found and focused.
 
-## The destination
+## The Destination
 
 There are three kinds of elements, based on tab index and document order, that need to be considered to find a [destination](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/destination.ts):
 
