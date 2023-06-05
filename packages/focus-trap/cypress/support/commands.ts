@@ -163,8 +163,6 @@ Cypress.Commands.add(
   ) => {
     if (expectedOrder.length < 2) throw new Error('A meaningful `expectedOrder` must have at least two characters.');
 
-    // Is the expected sequence of tabbed `dataset-order` repeated the least amount of times needed to
-    // include any sequence of tabbed `dataset-order` that could show up during the tests.
     const repeatedOrder = {
       FORWARD: expectedOrder.repeat(2),
       BACKWARD: expectedOrder.split('').reverse().join('').repeat(2),
