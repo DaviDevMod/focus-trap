@@ -160,7 +160,7 @@ The are no dependencies and the library can run in any major browser.
 
 There is a live demo in which you can play around with focus traps to appreciate the way they work: https://focus-trap-demo.vercel.app/
 
-You can find the source code in [this repo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo).
+The source code can be found in [this repo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo).
 
 ## Special thanks :heart:
 
