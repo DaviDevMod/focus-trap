@@ -1,5 +1,4 @@
-import { state, reducers } from './state.js';
-import { isFocusable } from './tabbability.js';
+import { state, reducers, Focusable } from './state.js';
 import { getDestination } from './destination.js';
 import { demolish } from './trap-actions.js';
 
@@ -20,13 +19,15 @@ const handleKeyPress = (event: KeyboardEvent): void => {
 
   const { target, shiftKey } = event;
 
-  if (!isFocusable(target)) return;
-
   const rootsUpdate = reducers.updateRoots();
 
   if (rootsUpdate.isErr) throw new Error(rootsUpdate.error);
 
-  const destination = getDestination(state.normalisedConfig!.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD');
+  const destination = getDestination(
+    state.normalisedConfig!.roots,
+    target as Focusable,
+    shiftKey ? 'BACKWARD' : 'FORWARD'
+  );
 
   if (destination.isErr) throw new Error(destination.error);
 
