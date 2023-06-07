@@ -4,6 +4,8 @@ import type { Focusable } from './state.js';
 export const candidateSelector =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
+export const isFocusable = (el: unknown): el is Focusable => el instanceof HTMLElement || el instanceof SVGElement;
+
 // <details>, <audio controls> e <video controls> get a default `tabIndex` of -1 in Chrome, yet they are
 // still part of the regular tab order. Also browsers do not return `tabIndex` correctly for `contentEditable`
 // nodes. In these cases the `tabIndex` is assumed to be 0 if it's not explicitly set to a valid value.

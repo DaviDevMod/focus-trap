@@ -1,12 +1,13 @@
 import { Result, err, ok } from 'true-myth/result';
 
 import type { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state.js';
+import { isFocusable } from './tabbability.js';
 
 const resolveId = <T>(arg: T) =>
   typeof arg === 'string' ? document.getElementById<Focusable>(arg) : (arg as Exclude<T, string>);
 
 const isValidRoot = (root: unknown): root is Focusable => {
-  const isValid = root instanceof HTMLElement || root instanceof SVGElement;
+  const isValid = isFocusable(root);
 
   if (!isValid) console.warn(`${root} is not a valid root.`);
 
