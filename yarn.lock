@@ -633,7 +633,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.2.5
     concurrently: 8.1.0
-    cypress: 12.13.0
+    cypress: 12.14.0
     cypress-real-events: 1.8.1
     eslint: 8.41.0
     istanbul-lib-coverage: 3.2.0
@@ -2596,9 +2596,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.13.0":
-  version: 12.13.0
-  resolution: "cypress@npm:12.13.0"
+"cypress@npm:12.14.0":
+  version: 12.14.0
+  resolution: "cypress@npm:12.14.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -2644,7 +2644,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 8e73c7033dadc15caf17b106cd88665107c8bbf3ba66fc266de1f14a2c1401edfa99c222f2ae6070e1ffb8123eb255fb559dc3e5e24460fadf8e05ce74afa41b
+  checksum: c98d33dc50f5e48a215f41e3a5139514816d2320e433d143a352a460f74941d3106a1f7485f61172f544cf125176c1225ac8edec31645d5a89cd394f72f93588
   languageName: node
   linkType: hard
 
@@ -3677,7 +3677,7 @@ __metadata:
     "@changesets/changelog-github": 0.4.8
     "@changesets/cli": 2.26.1
     concurrently: 8.1.0
-    cypress: 12.13.0
+    cypress: 12.14.0
     eslint: 8.41.0
     husky: 8.0.3
     is-ci: 3.0.1
