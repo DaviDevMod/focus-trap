@@ -1,8 +1,11 @@
 ignore:
   # The code in this file comes from tabbable: https://github.com/focus-trap/tabbable
   # and has been thoroughly tested already in that library.
-  # The reason why it's not a dependency is that using its exported `isTabbable`
-  # would make the algorithm to find a destination less efficient
-  # (and also because its current unpacked size on npmjs.com
-  # is more than 10x that of @davidevmod/focus-trap: 398 kB vs 33.5 kB).
+  # The reason why it's not a dependency is that using its exported:
+  #
+  # - `isTabbable` would still require to duplicate some of *tabbable* code
+  #   (namely: `candidateSelector` and `getConsistentTabIndex`)
+  #
+  # - `tabbable` would make findinding a destination way more inefficient
+  #   (ie: running `isTabbable` on every trapped element matching `candidateSelector`)
   - 'packages/focus-trap/src/tabbability.ts'
