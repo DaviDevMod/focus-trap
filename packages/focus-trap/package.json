@@ -6,6 +6,7 @@
   "description": "Trap the focus within your DOM elements.",
   "type": "module",
   "source": "./src/index.ts",
+  "sideEffects": false,
   "exports": {
     "types": "./dist/index.d.ts",
     "require": "./dist/index.umd.js",
