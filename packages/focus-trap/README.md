@@ -13,6 +13,21 @@ A tiny library to trap the focus within your DOM elements.
 - Focus a given element once the trap is demolished
 - Build, demolish, pause and resume your focus trap
 
+## Contents
+
+- [1. Installation](#installation)
+- [2. Usage](#usage)
+- [3. Defaul behaviour](#default-behaviour)
+- [4. API](#api)
+  - [TrapConfig](#trapconfig)
+  - [TrapAction](#trapaction)
+  - [Return value](#return-value)
+- [5. Dependencies](#dependencies)
+- [6. Browser support](#browser-support)
+- [7. Demo](#demo)
+- [8. Special thanks](#special-thanks-heart)
+- [9. Contributing](#earth_americas-contributing)
+
 ## Installation
 
 ```bash
