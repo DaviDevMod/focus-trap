@@ -41,7 +41,7 @@ pnpm add @davidevmod/focus-trap
 
 ## Usage
 
-`import { focusTrap } from '@davidevmod/focus-trap';` and call it with an argument of type [`TrapArg`](#api):
+`import { focusTrap } from '@davidevmod/focus-trap';` and call it with an argument of type [TrapArg](#api):
 
 ```ts
 import { focusTrap } from '@davidevmod/focus-trap';
