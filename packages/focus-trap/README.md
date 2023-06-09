@@ -166,7 +166,7 @@ This value is rarely useful, it may be used to eg, implement a [stack](<https://
 
 ## Dependencies
 
-The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate funcitons from exceptions (as side effects) by including them in the returned value.
+The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate funcitons from exceptions (as side effects) by including them in the return value.
 
 It makes the codebase more robust and self-explanatory.
 
