@@ -164,7 +164,7 @@ The source code can be found in [this repo](https://github.com/DaviDevMod/focus-
 
 ## Special thanks :heart:
 
-The logic for the treatement of edge cases, in matter of browser consistency regarding tab indexes and tabbability, is took from [tabbable](https://github.com/focus-trap/tabbable).
+The logic for the treatement of edge cases, in matter of browser consistency, regarding tab indexes and tabbability (found in [tabbability.ts](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/tabbability.ts)) is took from [tabbable](https://github.com/focus-trap/tabbable).
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 
