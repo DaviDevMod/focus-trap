@@ -148,9 +148,9 @@ interface NormalisedTrapConfig {
 
 This value is rarely useful, it may be used to eg, implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
 
-## Dependencies & Browser Support
+## Browser Support
 
-The are no dependencies and the library can run in any major browser.
+The library can run in any major browser.
 
 > **Note**  
 > The codebase is tested only against Chromium-based browsers.

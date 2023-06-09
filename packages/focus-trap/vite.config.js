@@ -12,6 +12,10 @@ export default defineConfig({
       // the proper extensions will be added
       fileName: 'index',
     },
+    rollupOptions: {
+      external: ['true-myth/result'],
+      output: { globals: { 'true-myth/result': 'result' } },
+    },
   },
   plugins: [dts()],
 });
