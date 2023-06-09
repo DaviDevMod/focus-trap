@@ -148,6 +148,12 @@ interface NormalisedTrapConfig {
 
 This value is rarely useful, it may be used to eg, implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
 
+## Dependencies
+
+The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate funcitons from exceptions (as side effects) by including them in the returned value.
+
+It makes the codebase more solid and self-explanatory.
+
 ## Browser Support
 
 The library can run in any major browser.
