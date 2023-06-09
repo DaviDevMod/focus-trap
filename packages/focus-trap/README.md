@@ -16,12 +16,56 @@ A tiny library to trap the focus within your DOM elements.
 ## Installation
 
 ```bash
-npm install @davidevmod/focus-trap
+# Install with
+npm add @davidevmod/focus-trap
+# or
+yarn add @davidevmod/focus-trap
+# or
+pnpm add @davidevmod/focus-trap
 ```
 
 ## Usage
 
-`import { focusTrap } from '@davidevmod/focus-trap';` and call it with an argument of type `TrapArg`:
+`import { focusTrap } from '@davidevmod/focus-trap';` and call it with an argument of type [`TrapArg`](#api):
+
+```ts
+import { focusTrap } from '@davidevmod/focus-trap';
+
+const myElement = document.getElementById('myID');
+
+// You can build a focus trap in different ways:
+
+focusTrap(['myID']);
+
+focustrap([myElement]);
+
+focustrap({ roots: ['myID'] });
+
+focustrap({ roots: [myElement] });
+
+// All of the above calls would build the very same trap.
+
+// Pause the trap.
+focusTrap('PAUSE');
+
+// Resume the trap.
+focusTrap('RESUME');
+
+// Demolish the trap.
+focusTrap('DEMOLISH');
+```
+
+## Default behaviour
+
+By default, when building a focus trap by providing only an array of `roots`, this is what happens:
+
+- The focus is given to the first tabbable element [contained](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) in the roots
+- <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> keys cycle through the roots' tabbable elements
+- Click events outside of the focus trap are prevented
+- Whenever the <kbd>Esc</kbd> key is pressed, the trap is demolished
+- Once the trap is demolished, focus is returned to what was the [activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
+
+## API
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
@@ -41,50 +85,7 @@ type TrapAction = 'PAUSE' | 'RESUME' | 'DEMOLISH';
 type TrapArg = Roots | TrapConfig | TrapAction;
 ```
 
-<details open>
-<summary>Here is an example:</summary>
-<br>
-
-```ts
-import { focusTrap } from '@davidevmod/focus-trap';
-
-const myElement = document.getElementById('myID');
-
-// You can build a focus trap in different ways:
-
-focustrap({ roots: [myElement] });
-
-focustrap({ roots: ['myID'] });
-
-focustrap([myElement]);
-
-focusTrap(['myID']);
-
-// All of the above calls would build the very same trap.
-
-// Pause the trap.
-focusTrap('PAUSE');
-
-// Resume the trap.
-focusTrap('RESUME');
-
-// Demolish the trap.
-focusTrap('DEMOLISH');
-```
-
-</details>
-
-## Default behaviour
-
-By default, when building a focus trap by providing only `roots`, this is what happens:
-
-- The focus is given to the first tabbable element [contained](https://developer.mozilla.org/en-US/docs/Web/API/Node/contains) in the roots
-- <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> keys cycle through the roots' tabbable elements
-- Click events outside of the focus trap are prevented
-- Whenever the <kbd>Esc</kbd> key is pressed, the trap is demolished
-- Once the trap is demolished, focus is returned to what was the [activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) at the time the trap was built
-
-## TrapConfig
+### TrapConfig
 
 You can tweak the behaviour of your trap by providing a `TrapConfig` object:
 
@@ -123,11 +124,11 @@ You can tweak the behaviour of your trap by providing a `TrapConfig` object:
   By default the trap is demolished Whenever the <kbd>Esc</kbd> key is pressed.  
   You can provide the boolean `false` to switch off the default behaviour.
 
-## TrapAction
+### TrapAction
 
-They are pretty straightforward, calling `focusTrap` with `"PAUSE"`, `"RESUME"` or `"DEMOLISH"` will pause, resume or demolish the focus trap.
+Calling `focusTrap` with `"PAUSE"`, `"RESUME"` or `"DEMOLISH"` will pause, resume or demolish the focus trap.
 
-## Return value
+### Return value
 
 A shollow copy of the `NormalisedTrapConfig` used internally by the library, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
 
@@ -178,7 +179,7 @@ The reason why _tabbable_ is not being used as a dependency is that it would be 
 
 Also much obliged to the whole [focus-trap](https://github.com/focus-trap) project in general, which has been a huge point of reference.
 
-## :earth_americas: Contributions
+## :earth_americas: Contributing
 
 Any kind of contribution is more than welcome.  
 Check the [CONTRIBUTING.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/CONTRIBUTING.md) to get started.
