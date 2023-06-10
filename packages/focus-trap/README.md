@@ -197,4 +197,4 @@ Also much obliged to the whole [focus-trap](https://github.com/focus-trap) proje
 ## :earth_americas: Contributing
 
 Any kind of contribution is more than welcome.  
-Check the [CONTRIBUTING.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/CONTRIBUTING.md) to get started.
+Check out the [CONTRIBUTING.md](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/CONTRIBUTING.md) to get started.
