@@ -164,7 +164,7 @@ export function TrapControls({
         </Fragment>
       )}
 
-      <SubmitButton label={trapAction} />
+      <SubmitButton label={trapAction} disabled={trapAction === 'BUILD' && !trapConfig.roots.length} />
     </form>
   );
 }
