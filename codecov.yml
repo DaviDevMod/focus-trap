@@ -4,8 +4,9 @@ ignore:
   # The reason why it's not a dependency is that using its exported:
   #
   # - `isTabbable` would still require to duplicate some of *tabbable* code
-  #   (namely: `candidateSelector` and `getConsistentTabIndex`)
+  #   (here called: `candidateSelector` and `getConsistentTabIndex`)
   #
-  # - `tabbable` would make findinding a destination way more inefficient
+  # - `tabbable` would make finding a destination way more inefficient
   #   (ie: running `isTabbable` on every trapped element matching `candidateSelector`)
+  #
   - 'packages/focus-trap/src/tabbability.ts'
