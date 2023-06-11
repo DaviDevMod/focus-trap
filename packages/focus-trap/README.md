@@ -1,6 +1,6 @@
 # @davidevmod/focus-trap
 
-[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/@davidevmod/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![minzipped size](https://badgen.net/bundlephobia/minzip/@davidevmod/focus-trap)](https://bundlephobia.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![ci](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml/badge.svg)](https://github.com/DaviDevMod/focus-trap/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/DaviDevMod/focus-trap/branch/main/graph/badge.svg?token=JFA6ajmqFg)](https://codecov.io/gh/DaviDevMod/focus-trap) [![npm version](https://badgen.net/npm/v/@davidevmod/focus-trap)](https://www.npmjs.com/package/@davidevmod/focus-trap) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
 
 A tiny and performant library to trap the focus within your DOM elements.
 
