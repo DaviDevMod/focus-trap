@@ -4,12 +4,6 @@ import { TrapArg, TrapAction } from '../../src';
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
-interface TabCycleConfig {
-  direction?: Direction;
-  expectedOrder?: string;
-  check?: boolean;
-}
-
 export const DEFAULT_ROOTS = ['group 2', 'group 4'];
 
 export const ID_FIRST_TABBABLE_IN_DEFAULT_ROOTS = 'E';
@@ -36,7 +30,7 @@ declare global {
 
       getTabCycle: (from: JQuery<HTMLElement> | null, direction: Direction, len: number) => Cypress.Chainable<string[]>;
 
-      verifyTabCycle: (config?: TabCycleConfig) => Cypress.Chainable<void>;
+      verifyTabCycle: (direction?: Direction, check?: boolean, expectedOrder?: string) => Cypress.Chainable<void>;
     }
   }
 }
@@ -147,14 +141,7 @@ Note that enabling the `check` has no effect if `trapConfig.lock === true` (the 
 Cypress.Commands.add(
   'verifyTabCycle',
   { prevSubject: ['element'] },
-  (
-    collection,
-    { direction = 'FORWARD', expectedOrder = DEFAULT_EXPECTED_ORDER, check = false } = {
-      direction: 'FORWARD',
-      expectedOrder: DEFAULT_EXPECTED_ORDER,
-      check: false,
-    }
-  ) => {
+  (collection, direction = 'FORWARD', check = false, expectedOrder = DEFAULT_EXPECTED_ORDER) => {
     if (expectedOrder.length < 2) throw new Error('A meaningful `expectedOrder` must have at least two characters.');
 
     const repeatedOrder = {

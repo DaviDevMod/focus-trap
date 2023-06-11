@@ -26,11 +26,11 @@ context('Test how the trap behaves after a "BUILD" action is performed.', () => 
     });
 
     it('Should cycle forward', () => {
-      cy.get('@possibleTabbables').verifyTabCycle({ check: true });
+      cy.get('@possibleTabbables').verifyTabCycle('FORWARD', true);
     });
 
     it('Should cycle backward', () => {
-      cy.get('@possibleTabbables').verifyTabCycle({ direction: 'BACKWARD', check: true });
+      cy.get('@possibleTabbables').verifyTabCycle('BACKWARD', true);
     });
   });
 });
