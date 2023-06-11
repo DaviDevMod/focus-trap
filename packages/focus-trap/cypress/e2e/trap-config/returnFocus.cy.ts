@@ -48,7 +48,8 @@ context('Test the `returnFocus` trap configuration option.', () => {
       cy.realPress('Tab');
 
       cy.focused()
-        .as('activeElement')
+        .then(($focused) => $focused)
+        .as('tabbedElement')
         .then(($activeElement) => {
           cy.get('@defaultInitialFocus').then(($defaultInitialFocus) => {
             expect($activeElement.get(0)).to.not.eq($defaultInitialFocus.get(0));
@@ -57,7 +58,7 @@ context('Test the `returnFocus` trap configuration option.', () => {
 
       cy.realPress('Escape');
 
-      cy.get('@activeElement').should('be.focused');
+      cy.get('@tabbedElement').should('be.focused');
     });
 
     it('The return focus should be given to the element with the specified id', () => {
