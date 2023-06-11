@@ -1,8 +1,6 @@
 /// <reference types="cypress" />
 
 context('Cover lines left behind by the main test suite.', () => {
-  // Need to tab away from elements with negative, zero and positive tab index
-  // because `focusTrap` uses a different logic for each of these cases.
   describe('Test how `focusTrap` handles looking for a destination in a trap with no tabbable elements.', () => {
     beforeEach(() => {
       const ID_UNTABBABLE_ELEMENT = 'C';
@@ -10,6 +8,9 @@ context('Cover lines left behind by the main test suite.', () => {
       // rather than when looking for a destination.
       cy.visitDemoAndBuildTrap({ roots: [ID_UNTABBABLE_ELEMENT], initialFocus: false });
     });
+
+    // Need to tab away from elements with negative, zero and positive tab index
+    // because `focusTrap` uses a different logic for each of these cases.
 
     it('Should throw an error when tabbing away from an element with negative tab index.', () => {
       const ID_NEGATIVE_TAB_INDEX = 'C';
