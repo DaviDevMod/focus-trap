@@ -42,7 +42,7 @@ context('Test the `returnFocus` trap configuration option.', () => {
       // TODO: I think it's a bug, I should probably open an issue.
       // Aliasing `.focused()` directly would make the alias follow `document.activeElement`.
       cy.focused()
-        .then(($focused) => cy.wrap($focused.get(0)))
+        .then(($focused) => $focused)
         .as('defaultInitialFocus');
 
       cy.realPress('Tab');
