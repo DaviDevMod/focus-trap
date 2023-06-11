@@ -7,7 +7,6 @@ type Direction = 'FORWARD' | 'BACKWARD';
 interface TabCycleConfig {
   direction?: Direction;
   expectedOrder?: string;
-  tabsPerCycle?: number;
   check?: boolean;
 }
 
