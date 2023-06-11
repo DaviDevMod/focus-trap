@@ -149,6 +149,7 @@ Cypress.Commands.add(
       BACKWARD: expectedOrder.split('').reverse().join('').repeat(2),
     };
 
+    // If this block doesn't throw, the trap works for elements outside of the trap.
     if (check) {
       cy.wrap(collection)
         .each(($origin) => {
@@ -158,6 +159,7 @@ Cypress.Commands.add(
         .then(() => true);
     }
 
+    // Verify that the focus never leaves the trap.
     cy.wrap(collection.get(0)).then(($origin) => {
       cy.getTabCycle($origin, direction, expectedOrder.length).then((cycle) => {
         expect(cycle).to.have.length(expectedOrder.length);
