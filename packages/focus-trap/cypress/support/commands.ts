@@ -43,12 +43,7 @@ declare global {
 }
 
 Cypress.Commands.add('visitDemoAndBuildTrap', (trapArg) => {
-  cy.visit(`/e2e?arg=${encodeURIComponent(JSON.stringify(trapArg))}`, {
-    onBeforeLoad(win) {
-      cy.stub(win.console, 'log').as('consoleLog');
-      cy.stub(win.console, 'warn').as('consoleWarn');
-    },
-  });
+  cy.visit(`/e2e?arg=${encodeURIComponent(JSON.stringify(trapArg))}`);
   // https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
   cy.window().should('have.property', 'appReady', true);
 });

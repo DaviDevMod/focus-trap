@@ -5,40 +5,22 @@ import type { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state
 const resolveId = <T>(arg: T) =>
   typeof arg === 'string' ? document.getElementById<Focusable>(arg) : (arg as Exclude<T, string>);
 
-const isValidRoot = (root: unknown): root is Focusable => {
-  const isValid = root instanceof HTMLElement || root instanceof SVGElement;
+const isFocusable = (el: unknown): el is Focusable => el instanceof HTMLElement || el instanceof SVGElement;
 
-  if (!isValid) console.warn(`${root} is not a valid root.`);
+const dedupeArray = <T>(array: T[]) => Array.from(new Set(array));
 
-  return isValid;
-};
-
-const isNotNestedRoot = (root: Focusable, _index: number, roots: Focusable[]) => {
-  const isNotNested = roots.every((anotherRoot) => !anotherRoot.contains(root) || anotherRoot === root);
-
-  if (!isNotNested) console.warn(`${root} is contained by another root.`);
-
-  return isNotNested;
-};
-
-const dedupeRoots = (roots: Focusable[]) => {
-  const dedupedRoots = Array.from(new Set(roots));
-
-  if (dedupedRoots.length !== roots.length) {
-    console.warn('Duplicate elements were found in the "roots" array. They have been deduplicated.');
-  }
-
-  return dedupedRoots;
+const outNestedElements = (el: Focusable, _index: number, elements: Focusable[]) => {
+  return elements.every((anotherEl) => !anotherEl.contains(el) || anotherEl === el);
 };
 
 const byDocumentOrder = (a: Focusable, b: Focusable) => (a.compareDocumentPosition(b) & 4 ? -1 : 1);
 
 export const normaliseRoots = (roots: Roots): Result<Focusable[], string> => {
-  const resolvedRoots = roots.map(resolveId).filter(isValidRoot);
+  const resolvedRoots = roots.map(resolveId).filter(isFocusable);
 
   if (!resolvedRoots.length) return err('No valid root found.');
 
-  return ok(dedupeRoots(resolvedRoots).filter(isNotNestedRoot).sort(byDocumentOrder));
+  return ok(dedupeArray(resolvedRoots).filter(outNestedElements).sort(byDocumentOrder));
 };
 
 // Get `document.activeElement` for the default `returnFocus`.
