@@ -102,7 +102,7 @@ type TrapArg = Roots | TrapConfig | TrapAction;
 
 ### TrapConfig
 
-You can tweak the behaviour of your trap by providing a `TrapConfig` object:
+You can tweak the behaviour of your trap by calling `focusTrap` with a `TrapConfig` object:
 
 | Property     | Required | Type                             | Default value |
 | ------------ | -------- | -------------------------------- | :-----------: |
