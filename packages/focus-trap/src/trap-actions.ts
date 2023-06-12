@@ -26,13 +26,13 @@ export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
 
   if (config.isErr) return err(config.error);
 
-  reducers.switchIsBuilt(true);
-
   const initialFocus = getInitialFocus();
 
   if (initialFocus.isErr) return err(initialFocus.error);
 
   if ('focus' in initialFocus.value) initialFocus.value.focus();
+
+  reducers.switchIsBuilt(true);
 
   return resume();
 };
