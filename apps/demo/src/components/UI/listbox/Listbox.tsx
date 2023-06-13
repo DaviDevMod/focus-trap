@@ -24,9 +24,10 @@ export function Listbox<T extends string | string[]>({
 }: ListboxProps<T>) {
   return (
     <HeadlessUIListbox disabled={!!disabled} value={value} onChange={handleChange} multiple={!!multiple}>
-      <h3 className="-mb-2 ml-1 font-medium">{label}</h3>
+      <HeadlessUIListbox.Label className={'-mb-2 ml-1 font-medium'}>{label}</HeadlessUIListbox.Label>
       <div className="relative mb-2">
         <HeadlessUIListbox.Button
+          name={label}
           className={`${
             disabled ? 'bg-gray-200 text-neutral-400' : 'bg-blue-100 hover:bg-blue-200'
           } ui-open:bg-blue-200 relative h-9 w-full cursor-default rounded-lg pl-3 pr-10 text-left text-sm shadow-md`}
