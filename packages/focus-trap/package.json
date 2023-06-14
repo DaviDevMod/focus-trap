@@ -9,12 +9,12 @@
   "sideEffects": false,
   "exports": {
     "types": "./dist/index.d.ts",
-    "require": "./dist/index.umd.js",
+    "require": "./dist/index.umd.cjs",
     "default": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "unpkg": "./dist/index.umd.js",
+  "unpkg": "./dist/index.umd.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
