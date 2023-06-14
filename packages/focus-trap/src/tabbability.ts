@@ -1,3 +1,8 @@
+/*
+The code in this file is took from the `tabbable` library.
+https://github.com/focus-trap/tabbable/blob/master/src/index.js
+*/
+
 import type { Focusable } from './state.js';
 
 // String used to query all the candidate focusable elements within the trap.
