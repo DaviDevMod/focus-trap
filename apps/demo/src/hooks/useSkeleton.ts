@@ -101,14 +101,14 @@ export function useSkeleton() {
 
   const skeletonButtonsIds = useMemo(() => mapFilterSkeleton((el) => el.id, isSkeletonButton), [mapFilterSkeleton]);
 
-  // Relying on "noUncheckedIndexedAccess" to have the return type inferred with a `| undefined`.
+  // Relying on "noUncheckedIndexedAccess" to have the return type inferred with an `| undefined`.
   const getSkeletonElementById = useCallback(
     <T extends SkeletonElement>(id: string, narrowT?: (el: SkeletonElement) => el is T) => {
       const found = mapFilterSkeleton(
         (el) => el as T,
         (el) => el.id === id && (!narrowT || narrowT(el))
       );
-      if (found.length > 1) throw new Error('Two elements in the skeleton have the same `id`.' + found);
+      if (found.length > 1) throw new Error('Two or more elements in the skeleton have the same `id`.\n' + found);
       return found[0];
     },
     [mapFilterSkeleton]
