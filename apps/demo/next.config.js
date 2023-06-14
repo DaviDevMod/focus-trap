@@ -6,8 +6,8 @@ const nextConfig = {
   swcMinify: true,
   experimental: { esmExternals: true, externalDir: true, appDir: true },
   typescript: {
-    // The demo has "exactOptionalPropertyTypes" and "noUncheckedIndexedAccess" enabled.
-    // https://github.com/microsoft/TypeScript/issues/41883
+    // The demo has "exactOptionalPropertyTypes" and "noUncheckedIndexedAccess" enabled,
+    // while @davidevmod/focus-trap doesn not. https://github.com/microsoft/TypeScript/issues/41883
     ignoreBuildErrors: true,
   },
   // To resolve paths in packages using `"moduleResolution": "NodeNext"`.
