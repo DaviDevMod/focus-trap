@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 
 export type SkeletonButton = {
   id: string;
@@ -79,81 +79,67 @@ const initialSkeletonState: SkeletonGroup = {
 export function useSkeleton() {
   const [skeletonState, setSkeletonState] = useState(initialSkeletonState);
 
-  const forSomeElementInSkeleton = useCallback(
-    (callback: (el: SkeletonElement) => void, filter = (_el: SkeletonElement): boolean => true) => {
-      const recursivelyCallback = (el: SkeletonElement) => {
-        if (filter(el)) callback(el);
-        if (isSkeletonGroup(el)) el.children.forEach((child) => recursivelyCallback(child));
-      };
-      recursivelyCallback(skeletonState);
-    },
-    [skeletonState]
-  );
+  const forSomeElementInSkeleton = (
+    callback: (el: SkeletonElement) => void,
+    filter = (_el: SkeletonElement): boolean => true
+  ) => {
+    const recursivelyCallback = (el: SkeletonElement) => {
+      if (filter(el)) callback(el);
+      if (isSkeletonGroup(el)) el.children.forEach((child) => recursivelyCallback(child));
+    };
+    recursivelyCallback(skeletonState);
+  };
 
-  const mapFilterSkeleton = useCallback(
-    <T>(map: (el: SkeletonElement) => T, filter = (_el: SkeletonElement): boolean => true) => {
-      const mapFilter: T[] = [];
-      forSomeElementInSkeleton((el) => mapFilter.push(map(el)), filter);
-      return mapFilter;
-    },
-    [forSomeElementInSkeleton]
-  );
+  const mapFilterSkeleton = <T>(map: (el: SkeletonElement) => T, filter = (_el: SkeletonElement): boolean => true) => {
+    const mapFilter: T[] = [];
+    forSomeElementInSkeleton((el) => mapFilter.push(map(el)), filter);
+    return mapFilter;
+  };
 
-  const skeletonButtonsIds = useMemo(() => mapFilterSkeleton((el) => el.id, isSkeletonButton), [mapFilterSkeleton]);
+  const skeletonButtonsIds = mapFilterSkeleton((el) => el.id, isSkeletonButton);
 
   // Relying on "noUncheckedIndexedAccess" to have the return type inferred with an `| undefined`.
-  const getSkeletonElementById = useCallback(
-    <T extends SkeletonElement>(id: string, narrowT?: (el: SkeletonElement) => el is T) => {
-      const found = mapFilterSkeleton(
-        (el) => el as T,
-        (el) => el.id === id && (!narrowT || narrowT(el))
-      );
-      if (found.length > 1) throw new Error('Two or more elements in the skeleton have the same `id`.\n' + found);
-      return found[0];
-    },
-    [mapFilterSkeleton]
-  );
+  const getSkeletonElementById = <T extends SkeletonElement>(
+    id: string,
+    narrowT?: (el: SkeletonElement) => el is T
+  ) => {
+    const found = mapFilterSkeleton(
+      (el) => el as T,
+      (el) => el.id === id && (!narrowT || narrowT(el))
+    );
+    if (found.length > 1) throw new Error('Two or more elements in the skeleton have the same `id`.\n' + found);
+    return found[0];
+  };
 
-  const getSkeletonButtonById = useCallback(
-    (id: string) => getSkeletonElementById(id, isSkeletonButton),
-    [getSkeletonElementById]
-  );
+  const getSkeletonButtonById = (id: string) => getSkeletonElementById(id, isSkeletonButton);
 
-  const patchSkeletonButton = useCallback(
-    (patch: SkeletonButton) => {
-      const id = patch.id;
+  const patchSkeletonButton = (patch: SkeletonButton) => {
+    const id = patch.id;
 
-      const toPatch = getSkeletonElementById(id, isSkeletonButton);
+    const toPatch = getSkeletonElementById(id, isSkeletonButton);
 
-      if (!toPatch) throw new Error('The skeleton has no buttons with an id of: ' + id);
+    if (!toPatch) throw new Error('The skeleton has no buttons with an id of: ' + id);
 
-      const parent = getSkeletonElementById(toPatch.parentId, isSkeletonGroup);
+    const parent = getSkeletonElementById(toPatch.parentId, isSkeletonGroup);
 
-      if (!parent) throw new Error('The skeleton has a button with an incorrect parentId: ' + toPatch);
+    if (!parent) throw new Error('The skeleton has a button with an incorrect parentId: ' + toPatch);
 
-      const patchIndex = parent.children.findIndex((el) => el.id === id);
+    const patchIndex = parent.children.findIndex((el) => el.id === id);
 
-      if (patchIndex === -1) throw new Error(`The kinship between ${toPatch} and ${parent} is faulty.`);
+    if (patchIndex === -1) throw new Error(`The kinship between ${toPatch} and ${parent} is faulty.`);
 
-      parent.children[patchIndex] = patch;
+    parent.children[patchIndex] = patch;
 
-      setSkeletonState(({ id, children }) => ({
-        id,
-        children:
-          children.splice(
-            children.findIndex((el) => el.id === parent.id),
-            1,
-            parent
-          ) && children,
-      }));
-    },
-    [getSkeletonElementById]
-  );
+    setSkeletonState(({ id, children }) => ({
+      id,
+      children:
+        children.splice(
+          children.findIndex((el) => el.id === parent.id),
+          1,
+          parent
+        ) && children,
+    }));
+  };
 
-  const statesAndMethods = useMemo(
-    () => ({ skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton }),
-    [skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton]
-  );
-
-  return statesAndMethods;
+  return { skeletonState, skeletonButtonsIds, getSkeletonButtonById, patchSkeletonButton };
 }
