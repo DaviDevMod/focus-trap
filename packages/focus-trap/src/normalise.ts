@@ -5,7 +5,7 @@ import type { Focusable, Roots, TrapConfig, NormalisedTrapConfig } from './state
 const resolveId = <T>(arg: T) =>
   typeof arg === 'string' ? document.getElementById<Focusable>(arg) : (arg as Exclude<T, string>);
 
-const isFocusable = (el: unknown): el is Focusable => el instanceof HTMLElement || el instanceof SVGElement;
+export const isFocusable = (el: unknown): el is Focusable => el instanceof HTMLElement || el instanceof SVGElement;
 
 const dedupeArray = <T>(array: T[]) => Array.from(new Set(array));
 

@@ -5,6 +5,7 @@ import { ok, err } from 'true-myth/result';
 import type { Focusable, TrapConfig } from './state.js';
 import { state, reducers } from './state.js';
 import { eventListeners } from './events.js';
+import { isFocusable } from './normalise.js';
 import { nextPositiveOrVeryFirstOrVeryLastTabbable } from './destination.js';
 
 const getInitialFocus = (): Result<Focusable | Unit, string> => {
@@ -12,7 +13,7 @@ const getInitialFocus = (): Result<Focusable | Unit, string> => {
 
   if (initialFocus === false) return ok();
 
-  if (initialFocus instanceof Element) return ok(initialFocus);
+  if (isFocusable(initialFocus)) return ok(initialFocus);
 
   // As long as `getInitialFocus` is called after `setConfig` (and the eventual error is handled)
   // there is no need to `updateRoots` and `normalisedConfig` is granted to exists.
