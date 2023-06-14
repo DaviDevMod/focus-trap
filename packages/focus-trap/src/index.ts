@@ -18,7 +18,7 @@ export const focusTrap = (arg: TrapArg): NormalisedTrapConfig => {
 
   if (result.isErr) throw new Error(result.error);
 
-  // If !state.normalisedConfig, result.isErr === true; and this line is unreachable.
+  // There must be a config, otherwise an error would have been thrown.
   return { ...state.normalisedConfig! };
 };
 
