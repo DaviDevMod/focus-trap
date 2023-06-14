@@ -2,18 +2,15 @@ import { state, reducers, Focusable } from './state.js';
 import { getDestination } from './destination.js';
 import { demolish } from './trap-actions.js';
 
-const handleOutsideClick = (event: Event): void => {
+const handleOutsideClick = (event: Event) => {
   if (state.normalisedConfig?.roots?.every((root) => !root.contains(event.target as Node))) {
     event.preventDefault();
     event.stopImmediatePropagation();
   }
 };
 
-const handleKeyPress = (event: KeyboardEvent): void => {
-  if (event.key === 'Escape' || event.key === 'Esc') {
-    if (state.normalisedConfig?.escape) demolish();
-    return;
-  }
+const handleKeyPress = (event: KeyboardEvent) => {
+  if ((event.key === 'Escape' || event.key === 'Esc') && state.normalisedConfig?.escape) demolish();
 
   if (event.key !== 'Tab') return;
 
