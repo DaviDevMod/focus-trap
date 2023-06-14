@@ -91,8 +91,6 @@ export function Playground() {
               <ArrowPathRoundedSquareIcon className="h-4 w-4 text-amber-950" aria-hidden="true" />
             </button>
           </h2>
-          {/* Toggling `display: none` through `displayComponent` rather than mounting/unmounting,
-              to keep the states. Also using `key` to reset the states when needed.*/}
           <TrapControls
             demoElementsRootState={demoElementsRootState}
             displayComponent={showTrapControlsState}

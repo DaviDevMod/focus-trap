@@ -92,7 +92,7 @@ export function TrapControls({
 
   const handleReset = () => dispatchTrapControlsState(initialTrapConfig);
 
-  // TODO: Add error handling for the `focus-trap` calls.
+  // TODO: deliver `focus-trap` errors to the UI.
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!trapAction) return;
 
