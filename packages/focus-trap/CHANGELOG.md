@@ -1,5 +1,15 @@
 # @davidevmod/focus-trap
 
+## 4.0.1
+
+### Patch Changes
+
+- [`173b47b`](https://github.com/DaviDevMod/focus-trap/commit/173b47b885c68075a6726f410f2b8ad4fdda4caa) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Fix name UMD module in package.json
+
+- [`3f01c26`](https://github.com/DaviDevMod/focus-trap/commit/3f01c2626d169a4d96191aa25012a07c12645370) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Switch `isBuilt` to `true` only after getting `initialFocus`
+
+  If `getInitialFocus` fails, no trap is built.
+
 ## 4.0.0
 
 ### Major Changes
