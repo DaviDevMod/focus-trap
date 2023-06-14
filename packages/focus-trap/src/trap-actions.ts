@@ -39,11 +39,7 @@ export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
 };
 
 export const resume = (): Result<Unit, string> => {
-  if (state.isBuilt) {
-    eventListeners('ADD');
-
-    return ok();
-  }
+  if (state.isBuilt) return eventListeners('ADD');
 
   return err('Cannot "RESUME" inexistent trap.');
 };
@@ -52,22 +48,14 @@ export const demolish = (): Result<Unit, string> => {
   if (state.isBuilt) {
     state.normalisedConfig?.returnFocus?.focus();
 
-    if (pause().isOk) {
-      reducers.switchIsBuilt(false);
-
-      return ok();
-    }
+    if (pause().isOk) return reducers.switchIsBuilt(false);
   }
 
   return err('Cannot "DEMOLISH" inexistent trap.');
 };
 
 export const pause = (): Result<Unit, string> => {
-  if (state.isBuilt) {
-    eventListeners('REMOVE');
-
-    return ok();
-  }
+  if (state.isBuilt) return eventListeners('REMOVE');
 
   return err('Cannot "PAUSE" inexistent trap.');
 };

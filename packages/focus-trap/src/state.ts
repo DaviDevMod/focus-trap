@@ -34,7 +34,7 @@ interface State {
 }
 
 interface Reducers {
-  switchIsBuilt(to: boolean): void;
+  switchIsBuilt(to: boolean): Result<Unit, never>;
   setConfig(rawConfig: TrapConfig): Result<Unit, string>;
   updateRoots(): Result<Unit, string>;
 }
@@ -44,6 +44,8 @@ export const state: State = { isBuilt: false };
 export const reducers: Reducers = {
   switchIsBuilt(to) {
     state.isBuilt = to;
+
+    return ok();
   },
 
   setConfig(rawConfig) {

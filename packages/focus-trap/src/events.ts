@@ -1,3 +1,7 @@
+import type { Unit } from 'true-myth';
+import type { Result } from 'true-myth/result';
+import { ok } from 'true-myth/result';
+
 import { state, reducers, Focusable } from './state.js';
 import { getDestination } from './destination.js';
 import { demolish } from './trap-actions.js';
@@ -34,7 +38,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
   }
 };
 
-export const eventListeners = (action: 'ADD' | 'REMOVE'): void => {
+export const eventListeners = (action: 'ADD' | 'REMOVE'): Result<Unit, never> => {
   const listenerActions = {
     ADD: 'addEventListener' as keyof Document,
     REMOVE: 'removeEventListener' as keyof Document,
@@ -47,4 +51,6 @@ export const eventListeners = (action: 'ADD' | 'REMOVE'): void => {
       (document[listenerActions[action]] as Function)(event, handleOutsideClick, true);
     }
   }
+
+  return ok();
 };
