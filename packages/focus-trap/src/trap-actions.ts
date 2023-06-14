@@ -15,17 +15,17 @@ const getInitialFocus = (): Result<Focusable | Unit, string> => {
 
   if (isFocusable(initialFocus)) return ok(initialFocus);
 
-  // As long as `getInitialFocus` is called after `setConfig` (and the eventual error is handled)
-  // there is no need to `updateRoots` and `normalisedConfig` is granted to exists.
+  // As long as `getInitialFocus` is called right after a successful `setConfig`
+  // `normalisedConfig` is granted to exists.
   return nextPositiveOrVeryFirstOrVeryLastTabbable(state.normalisedConfig!.roots);
 };
 
 export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
   if (state.isBuilt) eventListeners('REMOVE');
 
-  const config = reducers.setConfig(rawConfig);
+  const setConfig = reducers.setConfig(rawConfig);
 
-  if (config.isErr) return err(config.error);
+  if (setConfig.isErr) return err(setConfig.error);
 
   const initialFocus = getInitialFocus();
 
