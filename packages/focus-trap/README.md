@@ -17,7 +17,7 @@ A tiny and performant library to trap the focus within your DOM elements.
 
 - [1. Installation](#installation)
 - [2. Usage](#usage)
-- [3. Defaul behaviour](#default-behaviour)
+- [3. Default behaviour](#default-behaviour)
 - [4. API](#api)
   - [TrapConfig](#trapconfig)
   - [TrapAction](#trapaction)
@@ -52,11 +52,11 @@ const myElement = document.getElementById('myID');
 
 focusTrap(['myID']);
 
-focustrap([myElement]);
+focusTrap([myElement]);
 
-focustrap({ roots: ['myID'] });
+focusTrap({ roots: ['myID'] });
 
-focustrap({ roots: [myElement] });
+focusTrap({ roots: [myElement] });
 
 // All of the above calls would build the very same trap.
 
@@ -145,7 +145,7 @@ Calling `focusTrap` with `"PAUSE"`, `"RESUME"` or `"DEMOLISH"` will pause, resum
 
 ### Return value
 
-A shollow copy of the `NormalisedTrapConfig` used internally by the library, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
+A shallow copy of the `NormalisedTrapConfig` used internally by the library, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
@@ -160,13 +160,13 @@ interface NormalisedTrapConfig {
 ```
 
 > **Note**  
-> The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutaion (eg, elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
+> The normalised `roots` are updated at every <kbd>Tab</kbd> key press to account for any relevant mutation (eg, elements attached to or detached from the DOM) so they only represent a snapshot of an ever changing array of elements.
 
 This value is rarely useful, it may be used to eg, implement a [stack](<https://en.wikipedia.org/wiki/Stack_(abstract_data_type)>) of focus traps.
 
 ## Dependencies
 
-The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate funcitons from exceptions (as side effects) by including them in the return value.
+The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate functions from exceptions (as side effects) by including them in the return value.
 
 It makes the codebase more robust and self-explanatory.
 
@@ -186,7 +186,7 @@ The source code can be found in [this repo](https://github.com/DaviDevMod/focus-
 
 ## Special thanks :heart:
 
-The logic for the treatement of edge cases, in matter of browser consistency, regarding tab indexes and tabbability (found in [tabbability.ts](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/tabbability.ts)) is took from [tabbable](https://github.com/focus-trap/tabbable).
+The logic for the treatment of edge cases, in matter of browser consistency, regarding tab indexes and tabbability (found in [tabbability.ts](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/tabbability.ts)) is took from [tabbable](https://github.com/focus-trap/tabbable).
 
 This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
 

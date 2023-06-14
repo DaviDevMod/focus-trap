@@ -22,7 +22,7 @@ There are only two [event handlers](https://github.com/DaviDevMod/focus-trap/blo
 - One meant to handle click outside of the trap
 - The other handling <kbd>Tab</kbd> and <kbd>Esc</kbd> key presses
 
-The main fuctionality of the package lies in the handling of <kbd>Tab</kbd> key presses.
+The main functionality of the package lies in the handling of <kbd>Tab</kbd> key presses.
 
 On a <kbd>Tab</kbd> key press, the `roots` of the `normalisedConfig` are updated (to account for any relevant DOM mutation since the last key press) and the right destination element is found and focused.
 

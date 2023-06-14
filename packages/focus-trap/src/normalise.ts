@@ -34,7 +34,7 @@ const normaliseReturnFocus = (returnFocus: TrapConfig['returnFocus']) => {
 
 // `roots` and `returnFocus` need to be normalised separately, because the former
 // may need to be normalised multiple times while the latter necessarily only once.
-export const normaliseConfigEscludingRoots = (trapConfig: TrapConfig): Omit<NormalisedTrapConfig, 'roots'> => ({
+export const normaliseConfigExcludingRoots = (trapConfig: TrapConfig): Omit<NormalisedTrapConfig, 'roots'> => ({
   initialFocus: resolveId(trapConfig.initialFocus) ?? true,
   returnFocus: normaliseReturnFocus(trapConfig.returnFocus),
   lock: trapConfig.lock ?? true,

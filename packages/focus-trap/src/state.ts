@@ -2,7 +2,7 @@ import type { Unit } from 'true-myth/unit';
 import type { Result } from 'true-myth/result';
 import { ok, err } from 'true-myth/result';
 
-import { normaliseConfigEscludingRoots, normaliseRoots } from './normalise.js';
+import { normaliseConfigExcludingRoots, normaliseRoots } from './normalise.js';
 
 // An element has to be either an HTMLElement or an SVGElement to receive focus.
 export type Focusable = HTMLElement | SVGElement;
@@ -51,7 +51,7 @@ export const reducers: Reducers = {
 
     const normalisedRoots = normaliseRoots(rawConfig.roots);
 
-    state.normalisedConfig = { roots: normalisedRoots.unwrapOr([]), ...normaliseConfigEscludingRoots(rawConfig) };
+    state.normalisedConfig = { roots: normalisedRoots.unwrapOr([]), ...normaliseConfigExcludingRoots(rawConfig) };
 
     return normalisedRoots.and(ok());
   },
