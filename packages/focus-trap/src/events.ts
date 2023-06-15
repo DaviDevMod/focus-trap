@@ -3,8 +3,9 @@ import type { Result } from 'true-myth/result';
 import { ok } from 'true-myth/result';
 
 import { state, reducers, Focusable } from './state.js';
-import { getDestination } from './destination.js';
 import { demolish } from './trap-actions.js';
+import { isFocusable } from './normalise.js';
+import { getDestination, getInitialFocus } from './destination.js';
 
 const handleOutsideClick = (event: Event) => {
   if (state.normalisedConfig?.roots?.every((root) => !root.contains(event.target as Node))) {
@@ -24,11 +25,12 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
   if (rootsUpdate.isErr) throw new Error(rootsUpdate.error);
 
-  const destination = getDestination(
-    state.normalisedConfig!.roots,
-    target as Focusable,
-    shiftKey ? 'BACKWARD' : 'FORWARD'
-  );
+  // There must be a config, otherwise an error would have been thrown.
+  const config = state.normalisedConfig!;
+
+  const destination = isFocusable(target)
+    ? getDestination(config.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD')
+    : getInitialFocus(config);
 
   if (destination.isErr) throw new Error(destination.error);
 
