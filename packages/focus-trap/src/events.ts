@@ -2,7 +2,7 @@ import type { Unit } from 'true-myth';
 import type { Result } from 'true-myth/result';
 import { ok } from 'true-myth/result';
 
-import { state, reducers, Focusable } from './state.js';
+import { state, reducers } from './state.js';
 import { demolish } from './trap-actions.js';
 import { isFocusable } from './normalise.js';
 import { getDestination, getInitialFocus } from './destination.js';
