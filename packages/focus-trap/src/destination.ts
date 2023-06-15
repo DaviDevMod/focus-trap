@@ -123,7 +123,6 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
 ): Result<Focusable | Unit, string> => {
   const originRootIndex = roots.findIndex((root) => root.contains(origin));
 
-  // Root from which to start searching for a destination.
   let destinationRootIndex = originRootIndex;
 
   if (originRootIndex >= 0) {
@@ -136,20 +135,16 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
       return ok();
     }
   } else {
-    // If `origin` doesn't belong to the trap, start the search from the first root that follows it.
     destinationRootIndex = roots.findIndex((root) => origin.compareDocumentPosition(root) & 4);
 
     if (destinationRootIndex === -1) destinationRootIndex = roots.length;
 
-    // If tabbing 'BACKWARD' start the search from the preceding root.
     if (direction === 'BACKWARD') destinationRootIndex--;
   }
 
   const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'LAST' : 'FIRST');
 
   for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += direction === 'FORWARD' ? 1 : -1) {
-    const alternativeDestinationRootIndex = modulo(i, roots.length);
-
     if (
       !firstOrLastZeroInTrap ||
       origin === firstOrLastZeroInTrap ||
@@ -161,7 +156,7 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
     }
 
     const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(
-      roots[alternativeDestinationRootIndex],
+      roots[modulo(i, roots.length)],
       direction === 'FORWARD' ? 'FIRST' : 'LAST'
     );
 
@@ -213,7 +208,5 @@ export const getInitialFocus = ({ roots, initialFocus }: NormalisedTrapConfig): 
 
   if (isFocusable(initialFocus)) return ok(initialFocus);
 
-  // As long as `getInitialFocus` is called right after a successful `setConfig`
-  // `normalisedConfig` is granted to exists.
   return nextPositiveOrVeryFirstOrVeryLastTabbable(roots);
 };
