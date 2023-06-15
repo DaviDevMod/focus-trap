@@ -4,7 +4,6 @@ import { ok, err } from 'true-myth/result';
 
 import { normaliseConfigExcludingRoots, normaliseRoots } from './normalise.js';
 
-// An element has to be either an HTMLElement or an SVGElement to receive focus.
 export type Focusable = HTMLElement | SVGElement;
 
 export type Roots = (Focusable | string)[];
