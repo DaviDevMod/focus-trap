@@ -2,7 +2,8 @@ import type { Unit } from 'true-myth/unit';
 import type { Result } from 'true-myth/result';
 import { err, ok } from 'true-myth/result';
 
-import type { Focusable } from './state.js';
+import type { Focusable, NormalisedTrapConfig } from './state.js';
+import { isFocusable } from './normalise.js';
 import { candidateSelector, getConsistentTabIndex, isActuallyFocusable } from './tabbability.js';
 
 type Direction = 'FORWARD' | 'BACKWARD';
@@ -170,7 +171,7 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
   return err('There are no tabbable elements in the focus trap.');
 };
 
-export const nextPositiveOrVeryFirstOrVeryLastTabbable = (
+const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   roots: Focusable[],
   origin?: Focusable,
   direction: Direction = 'FORWARD'
@@ -205,4 +206,14 @@ export const getDestination = (
   if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, direction);
 
   return nextPositiveOrVeryFirstOrVeryLastTabbable(roots, origin, direction);
+};
+
+export const getInitialFocus = ({ roots, initialFocus }: NormalisedTrapConfig): Result<Focusable | Unit, string> => {
+  if (initialFocus === false) return ok();
+
+  if (isFocusable(initialFocus)) return ok(initialFocus);
+
+  // As long as `getInitialFocus` is called right after a successful `setConfig`
+  // `normalisedConfig` is granted to exists.
+  return nextPositiveOrVeryFirstOrVeryLastTabbable(roots);
 };

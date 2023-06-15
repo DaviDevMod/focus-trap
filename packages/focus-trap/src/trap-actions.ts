@@ -1,24 +1,11 @@
 import type { Unit } from 'true-myth/unit';
 import type { Result } from 'true-myth/result';
-import { ok, err } from 'true-myth/result';
+import { err } from 'true-myth/result';
 
-import type { Focusable, TrapConfig } from './state.js';
+import type { TrapConfig } from './state.js';
 import { state, reducers } from './state.js';
 import { eventListeners } from './events.js';
-import { isFocusable } from './normalise.js';
-import { nextPositiveOrVeryFirstOrVeryLastTabbable } from './destination.js';
-
-const getInitialFocus = (): Result<Focusable | Unit, string> => {
-  const initialFocus = state.normalisedConfig?.initialFocus;
-
-  if (initialFocus === false) return ok();
-
-  if (isFocusable(initialFocus)) return ok(initialFocus);
-
-  // As long as `getInitialFocus` is called right after a successful `setConfig`
-  // `normalisedConfig` is granted to exists.
-  return nextPositiveOrVeryFirstOrVeryLastTabbable(state.normalisedConfig!.roots);
-};
+import { getInitialFocus } from './destination.js';
 
 export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
   if (state.isBuilt) eventListeners('REMOVE');
@@ -27,7 +14,8 @@ export const build = (rawConfig: TrapConfig): Result<Unit, string> => {
 
   if (setConfig.isErr) return err(setConfig.error);
 
-  const initialFocus = getInitialFocus();
+  // There must be a config, otherwise an error would have been thrown.
+  const initialFocus = getInitialFocus(state.normalisedConfig!);
 
   if (initialFocus.isErr) return err(initialFocus.error);
 
