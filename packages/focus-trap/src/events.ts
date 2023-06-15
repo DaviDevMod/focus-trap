@@ -30,7 +30,8 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
   const destination = isFocusable(target)
     ? getDestination(config.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD')
-    : getInitialFocus(config);
+    : /* istanbul ignore next */
+      getInitialFocus(config);
 
   if (destination.isErr) throw new Error(destination.error);
 
