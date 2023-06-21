@@ -39,17 +39,12 @@ context('Test the `returnFocus` trap configuration option.', () => {
     it('If `returnfocus` is set to `false`, no return focus should be given.', () => {
       cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, returnFocus: false });
 
-      // TODO: I think it's a bug, I should probably open an issue.
-      // Aliasing `.focused()` directly would make the alias follow `document.activeElement`.
-      cy.focused()
-        .then(($focused) => $focused)
-        .as('defaultInitialFocus');
+      cy.focused().as('defaultInitialFocus', { type: 'static' });
 
       cy.realPress('Tab');
 
       cy.focused()
-        .then(($focused) => $focused)
-        .as('tabbedElement')
+        .as('tabbedElement', { type: 'static' })
         .then(($activeElement) => {
           cy.get('@defaultInitialFocus').then(($defaultInitialFocus) => {
             expect($activeElement.get(0)).to.not.eq($defaultInitialFocus.get(0));
