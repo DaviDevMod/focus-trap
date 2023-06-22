@@ -45,6 +45,6 @@ The library intervenes only if `event.target`:
 
 Given that it is the case to intervene, the right destination for the focus is found based on the `tabIndex` of `event.target` like so:
 
-- If `tabIndex < 0`, the destination is the `topOrBottomTabbable` following `event.target`
-- if `tabIndex === 0`, the destination is the `firstOrLastTabbable` following `event.target` or, after reaching the `firstOrLastZeroTabbable` of the whole trap, the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order)
+- If `tabIndex < 0`, the destination is the next `topOrBottomTabbable`
+- if `tabIndex === 0`, the destination is the next `firstOrLastTabbable` or, after reaching the `firstOrLastZeroTabbable` of the whole trap, the `positiveTabbable` with the lowest/greatest tab index (resolving ties by document order)
 - if `tabIndex > 0`, the destination is the next `positiveTabbable` in value (resolving ties by document order) or, after reaching the first/last `positiveTabbable`, the `firstOrLastZeroTabbable` of the whole trap
