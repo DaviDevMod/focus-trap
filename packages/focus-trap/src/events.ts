@@ -28,6 +28,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
   // There must be a config, otherwise an error would have been thrown.
   const config = state.normalisedConfig!;
 
+  // Discussion https://github.com/DaviDevMod/focus-trap/issues/148
   const destination = isFocusable(target)
     ? getDestination(config.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD')
     : /* istanbul ignore next */
