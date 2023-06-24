@@ -53,25 +53,17 @@ const positiveTabbables = (roots: Focusable[]) => {
 const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction: Direction = 'FORWARD') => {
   const positives = positiveTabbables(roots);
 
-  if (!positives.length) return;
-
   let originIndex = undefined as number | undefined;
 
   if (origin) {
     originIndex = positives.findIndex((el) => el === origin);
 
     if (originIndex === -1) {
-      originIndex =
-        // Non-null assertion due to early return `if (!positives.length)`.
-        positives.at(-1)!.tabIndex < origin.tabIndex
-          ? positives.length
-          : positives.findIndex(
-              (el) =>
-                (el.tabIndex === origin.tabIndex && origin.compareDocumentPosition(el) & 4) ||
-                el.tabIndex > origin.tabIndex
-            );
-
-      positives.splice(originIndex, 0, origin);
+      positives.push(origin);
+      positives.sort((a, b) =>
+        a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
+      );
+      originIndex = positives.indexOf(origin);
     }
   }
 
