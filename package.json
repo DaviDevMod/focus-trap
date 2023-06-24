@@ -21,7 +21,7 @@
     "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.26.1",
     "concurrently": "8.2.0",
-    "cypress": "12.14.0",
+    "cypress": "12.15.0",
     "eslint": "8.43.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
@@ -29,7 +29,7 @@
     "prettier": "2.8.8",
     "rimraf": "5.0.1",
     "true-myth": "^6.2.0",
-    "turbo": "^1.10.3",
+    "turbo": "^1.10.6",
     "type-fest": "^3.12.0",
     "typescript": "5.1.3"
   },
