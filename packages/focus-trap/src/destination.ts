@@ -63,7 +63,7 @@ const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction:
       positives.sort((a, b) =>
         a.tabIndex === b.tabIndex ? (a.compareDocumentPosition(b) & 4 ? -1 : 1) : a.tabIndex - b.tabIndex
       );
-      originIndex = positives.findIndex((el) => el === origin);
+      originIndex = positives.indexOf(origin);
     }
   }
 
