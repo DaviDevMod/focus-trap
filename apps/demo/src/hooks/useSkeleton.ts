@@ -133,7 +133,7 @@ export function useSkeleton() {
     setSkeletonState(({ id, children }) => ({
       id,
       children:
-        children.splice(
+        children.slice().splice(
           children.findIndex((el) => el.id === parent.id),
           1,
           parent
