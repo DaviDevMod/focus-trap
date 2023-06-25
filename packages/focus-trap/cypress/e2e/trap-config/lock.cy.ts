@@ -24,7 +24,7 @@ context('Test the `lock` trap configuration option.', () => {
       cy.get('@attemptFocus').should('not.be.focused');
     });
 
-    it('The focus trap should not interfere with clicks when `lock` is set to `true`.', () => {
+    it('The focus trap should not interfere with clicks when `lock` is set to `false`.', () => {
       const ID_TO_CLICK = 'A';
 
       cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, lock: false });
