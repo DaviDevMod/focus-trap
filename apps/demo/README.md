@@ -2,11 +2,11 @@
 
 This Next.js app is an interactive demo for the [@davidevmod/focus-trap](https://github.com/DaviDevMod/focus-trap/tree/main/packages/focus-trap) package.
 
-You can visit the live demo at: https://focus-trap-demo.vercel.app
+At the moment it's just a sketchy playground used to e2e test the package, you can visit it at: https://focus-trap-demo.vercel.app
 
-There is a playground with a few elements within which you can trap the focus by building a focus trap through the inputs on the right.
+There are a few HTML elements within which you can trap the focus by building a focus trap through the inputs on the right.
 
-You can also modify properties of the button elements in the playground and see the focus trap aknowledge them in real time.
+You can also modify properties of the button elements and see the focus trap acknowledge them in real time.
 
 There are a couple of things to watch out for:
 
