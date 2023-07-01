@@ -4,7 +4,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: { esmExternals: true, externalDir: true, appDir: true },
+  experimental: { esmExternals: true, externalDir: true },
   typescript: {
     // The demo has "exactOptionalPropertyTypes" and "noUncheckedIndexedAccess" enabled,
     // while @davidevmod/focus-trap doesn not. https://github.com/microsoft/TypeScript/issues/41883
