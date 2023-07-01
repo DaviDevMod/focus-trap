@@ -25,8 +25,7 @@ A tiny and performant library to trap the focus within your DOM elements.
 - [5. Dependencies](#dependencies)
 - [6. Browser support](#browser-support)
 - [7. Demo](#demo)
-- [8. Special thanks](#special-thanks-heart)
-- [9. Contributing](#earth_americas-contributing)
+- [8. Contributing](#earth_americas-contributing)
 
 ## Installation
 
@@ -166,9 +165,10 @@ This value is rarely useful, it may be used to eg, implement a [stack](<https://
 
 ## Dependencies
 
-The only dependency is [true-myth](https://github.com/true-myth/true-myth), used simply to liberate functions from exceptions (as side effects) by including them in the return value.
+The library depends on [tabbable](https://github.com/focus-trap/tabbable) to determine whether a given element is tabbable.
 
-It makes the codebase more robust and self-explanatory.
+The only other dependency is [true-myth](https://github.com/true-myth/true-myth), used to liberate functions from exceptions (as side effects) by including them in the return value.
+It makes the codebase more robust and predictable.
 
 ## Browser Support
 
@@ -183,16 +183,6 @@ The library can run in any major browser.
 There is a live demo in which you can play around with focus traps to appreciate the way they work: https://focus-trap-demo.vercel.app/
 
 The source code can be found in [this repo](https://github.com/DaviDevMod/focus-trap/tree/main/apps/demo).
-
-## Special thanks :heart:
-
-The logic for the treatment of edge cases, in matter of browser consistency, regarding tab indexes and tabbability (found in [tabbability.ts](https://github.com/DaviDevMod/focus-trap/blob/main/packages/focus-trap/src/tabbability.ts)) is took from [tabbable](https://github.com/focus-trap/tabbable).
-
-This small library has been around for many years and, at the time of writing, can boast 180 dependant packages and one million weekly downloads while having zero open issues :scream: which makes feel safe about the reliability of the edge case logic.
-
-The reason why _tabbable_ is not being used as a dependency is that it would be an overkill and _@davidevmod/focus-trap_ aims to be as simple and lightweight as possible.
-
-Also much obliged to the whole [focus-trap](https://github.com/focus-trap) project in general, which has been a huge point of reference.
 
 ## :earth_americas: Contributing
 

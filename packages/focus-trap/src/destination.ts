@@ -1,18 +1,21 @@
 import type { Unit } from 'true-myth/unit';
 import type { Result } from 'true-myth/result';
 import { err, ok } from 'true-myth/result';
+import { isTabbable, getTabIndex } from 'tabbable';
 
 import type { Focusable, NormalisedTrapConfig } from './state.js';
 import { isFocusable } from './normalise.js';
-import { candidateSelector, getConsistentTabIndex, isActuallyFocusable } from './tabbability.js';
 
 type Direction = 'FORWARD' | 'BACKWARD';
 
 type FirstOrLast = 'FIRST' | 'LAST';
 
-const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) % modulo;
+const candidateSelector =
+  'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
 const candidatesInRoot = (root: Focusable) => [root, ...root.querySelectorAll<Focusable>(candidateSelector)];
+
+const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) % modulo;
 
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
@@ -20,7 +23,7 @@ const firstOrLastGenericTabbableInRoot = (
   validateTabIndex: (tabIndex: number) => boolean
 ) => {
   return candidatesInRoot(root)[whichOne === 'FIRST' ? 'find' : 'findLast'](
-    (el) => validateTabIndex(getConsistentTabIndex(el)) && isActuallyFocusable(el)
+    (el) => validateTabIndex(getTabIndex(el)) && isTabbable(el)
   );
 };
 
@@ -68,8 +71,8 @@ const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction:
   }
 
   return direction === 'FORWARD'
-    ? positives.slice(originIndex == null ? originIndex : originIndex + 1).find((el) => isActuallyFocusable(el))
-    : positives.slice(0, originIndex).findLast((el) => isActuallyFocusable(el));
+    ? positives.slice(originIndex == null ? originIndex : originIndex + 1).find((el) => isTabbable(el))
+    : positives.slice(0, originIndex).findLast((el) => isTabbable(el));
 };
 
 const nextTopOrBottomTabbable = (
@@ -194,7 +197,7 @@ export const getDestination = (
   origin: Focusable,
   direction: Direction
 ): Result<Focusable | Unit, string> => {
-  const originTabIndex = getConsistentTabIndex(origin);
+  const originTabIndex = getTabIndex(origin);
 
   if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, direction);
 

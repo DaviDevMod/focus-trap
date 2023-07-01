@@ -35,6 +35,7 @@
     "e2e-run-codecov": "yarn instrument && yarn src-to-instrumented && concurrently -k \"yarn workspace demo dev-uncached\" \"yarn clean-coverage && cypress run\"; yarn instrumented-to-src && yarn report-coverage"
   },
   "dependencies": {
+    "tabbable": "^6.2.0",
     "true-myth": "^6.2.0"
   },
   "devDependencies": {
