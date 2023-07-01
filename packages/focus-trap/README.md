@@ -126,12 +126,12 @@ You can tweak the behaviour of your trap by calling `focusTrap` with a `TrapConf
   You can provide your designated element (or ID) or the boolean `false` to switch off the default behaviour.
 
 - **lock**  
-  The behavior for clicks outside of the trap.  
+  The behaviour for clicks outside of the trap.  
   By default clicks on elements outside of the trap are prevented.  
   You can provide the boolean `false` to switch off the default behaviour.
 
   > **Note**  
-  > Only `mousedown`, `touchstart`, `click` and the browser default behavior are prevented.  
+  > Only `mousedown`, `touchstart`, `click` and the browser default behaviour are prevented.  
   > So, if you need to, you can make an element outside of the trap clickable even when `lock` is true, for example, by listening for `mouseup` events.
 
 - **escape**  
