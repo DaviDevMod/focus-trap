@@ -85,7 +85,7 @@ export const TrapConfigListbox = memo(function TrapConfigListbox({
   // The filter button is not a <Listbox.Option>, so the arrow key navigation for the options
   // (managed by Headless UI) doesn't reach the button. That's just fine, cause the filter is
   // not an essential feature and it would actually make the navigation harder from keyboard.
-  // However since it's unreachable by keyboard, arrow-keying up in the listox options doesn't
+  // However since it's unreachable by keyboard, arrow-keying up in the listbox options doesn't
   // scroll up completely, and its `sticky` position makes it overlap with the first option.
   // So the fix here is to give the filter button a `relative` position
   // as soon as the arrow-keyed option gets close enough to it.

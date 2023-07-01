@@ -75,7 +75,7 @@ export function TrapControls({
 
   if (demoElementsRootState && demoElementsRootState !== demoElementsState[0]) {
     // Filtering out nodes without an `id`, so it's trivial to add elements in `DemoElements.tsx` (just to improve the UX)
-    // without having them (and their whole subtree) appear as options for <TrapConfigListbox> renedered in this component.
+    // without having them (and their whole subtree) appear as options for <TrapConfigListbox> rendered in this component.
     setDemoElementsState(getHTMLElementFlatSubTree(demoElementsRootState, (el) => !!el.id));
   }
 

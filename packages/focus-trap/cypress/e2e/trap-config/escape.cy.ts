@@ -24,7 +24,7 @@ context('Test the `escape` trap configuration option.', () => {
       cy.get('@possibleTabbables')
         .verifyTabCycle()
         .then(() => {
-          throw new Error('The focus should not be trapped anymore.');
+          throw new Error('The focus should not be trapped any more.');
         });
     });
 
@@ -43,7 +43,7 @@ context('Test the `escape` trap configuration option.', () => {
       cy.get('@possibleTabbables')
         .verifyTabCycle()
         .then(() => {
-          throw new Error('The focus should not be trapped anymore.');
+          throw new Error('The focus should not be trapped any more.');
         });
     });
 

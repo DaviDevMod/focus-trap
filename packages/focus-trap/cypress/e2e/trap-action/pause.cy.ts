@@ -5,7 +5,7 @@ import { DEFAULT_ROOTS } from '../../support/commands';
 context('Test how the trap behaves after a "PAUSE" action is performed.', () => {
   beforeEach(() => cy.visitDemoAndBuildTrap({ roots: DEFAULT_ROOTS, lock: false }));
 
-  describe('The focus trap should chease to work.', () => {
+  describe('The focus trap should cease to work.', () => {
     it('Should not trap the focus after "PAUSE".', () => {
       cy.actionShouldSucceed('PAUSE');
     });

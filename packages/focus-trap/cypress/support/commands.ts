@@ -61,7 +61,7 @@ Cypress.Commands.add('actionShouldSucceed', (action) => {
   cy.get('button[data-parent-id]')
     .verifyTabCycle()
     .then(() => {
-      if (trapShouldStopWorking) throw new Error('The focus should not be trapped anymore.');
+      if (trapShouldStopWorking) throw new Error('The focus should not be trapped any more.');
     });
 });
 

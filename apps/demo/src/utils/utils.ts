@@ -1,5 +1,5 @@
 // The TreeWalker API (https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker)
-// looks like an overkill for the current usecase.
+// looks like an overkill for the current use case.
 export const getHTMLElementFlatSubTree = (
   root: HTMLElement | undefined,
   filter = (_el: HTMLElement): boolean => true
