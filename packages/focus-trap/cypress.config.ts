@@ -9,6 +9,7 @@ export default defineConfig({
     // Setting an order to run the tests. The glob at the end ensures no test is left behind.
     // Note that Cypress doesn't guarantee that the order in the `specPattern` array will be
     // respected, but it currently is (and should this behaviour change, no harm is done).
+    // Related issue: https://github.com/cypress-io/cypress/issues/390
     specPattern: [
       'cypress/e2e/trap-action/build.cy.ts',
       'cypress/e2e/trap-action/demolish.cy.ts',
