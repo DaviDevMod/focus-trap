@@ -13,8 +13,8 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['true-myth/result'],
-      output: { globals: { 'true-myth/result': 'result' } },
+      external: ['tabbable', 'true-myth/result'],
+      output: { globals: { tabbable: 'tabbable', 'true-myth/result': 'result' } },
     },
   },
   plugins: [dts()],
