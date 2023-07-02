@@ -144,7 +144,7 @@ Calling `focusTrap` with `"PAUSE"`, `"RESUME"` or `"DEMOLISH"` will pause, resum
 
 ### Return value
 
-A shallow copy of the `NormalisedTrapConfig` used internally by the library, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
+[`focusTrap`](#usage) returns a shallow copy of the `NormalisedTrapConfig` used internally, which is the provided `TrapConfig` with IDs resolved to actual elements and default values set:
 
 ```ts
 type Focusable = HTMLElement | SVGElement;
