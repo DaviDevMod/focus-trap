@@ -548,13 +548,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.10.7":
-  version: 3.10.7
-  resolution: "@cypress/code-coverage@npm:3.10.7"
+"@cypress/code-coverage@npm:3.10.8":
+  version: 3.10.8
+  resolution: "@cypress/code-coverage@npm:3.10.8"
   dependencies:
     "@cypress/webpack-preprocessor": ^5.11.0
     chalk: 4.1.2
-    dayjs: 1.10.7
+    dayjs: 1.11.8
     debug: 4.3.4
     execa: 4.1.0
     globby: 11.0.4
@@ -563,7 +563,7 @@ __metadata:
     nyc: 15.1.0
   peerDependencies:
     cypress: "*"
-  checksum: a40bcbccdb9c89fd86ef5361c454d2c1545a39128b640d6df8f65a44dade20d83bf22506bf12579fef2a28496916f1be16f979564223a08f894f0e364f0b4c08
+  checksum: 1b8949bc5ad32d7d05760280997e3b08d28606ce3f1e9091f56160a0705520f69e88bce0eb62befc86c8c2fc5bc115c56918827b18786ede7f704a68912cb854
   languageName: node
   linkType: hard
 
@@ -629,7 +629,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.10.7
+    "@cypress/code-coverage": 3.10.8
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.3.2
     concurrently: 8.2.0
@@ -2681,17 +2681,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.10.7":
-  version: 1.10.7
-  resolution: "dayjs@npm:1.10.7"
-  checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
-  languageName: node
-  linkType: hard
-
-"dayjs@npm:^1.10.4":
-  version: 1.11.5
-  resolution: "dayjs@npm:1.11.5"
-  checksum: e3bbaa7b4883b31be4bf75a181f1447fbb19800c29b332852125aab96baeff3ac232dcba8b88c4ea17d3b636c99dac5fb9d1af4bb6ae26615698bbc4a852dffb
+"dayjs@npm:1.11.8, dayjs@npm:^1.10.4":
+  version: 1.11.8
+  resolution: "dayjs@npm:1.11.8"
+  checksum: 4fe04b6df98ba6e5f89b49d80bba603cbf01e21a1b4a24ecb163c94c0ba5324a32ac234a139cee654f89d5277a2bcebca5347e6676c28a0a6d1a90f1d34a42b8
   languageName: node
   linkType: hard
 
