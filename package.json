@@ -31,7 +31,7 @@
     "true-myth": "^6.2.0",
     "turbo": "^1.10.6",
     "type-fest": "^3.12.0",
-    "typescript": "5.1.5"
+    "typescript": "5.1.6"
   },
   "author": {
     "name": "Davide Modica",
