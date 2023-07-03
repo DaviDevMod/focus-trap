@@ -36,6 +36,7 @@
       // All dev deps
       matchDepTypes: ['devDependencies'],
       rangeStrategy: 'auto',
+      automerge: true,
     },
   ],
 }
