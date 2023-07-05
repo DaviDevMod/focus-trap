@@ -8,13 +8,13 @@ type TrapArg = Roots | TrapConfig | TrapAction;
 
 export const focusTrap = (arg: TrapArg): NormalisedTrapConfig => {
   const result =
-    typeof arg === 'string'
-      ? arg === 'DEMOLISH'
-        ? demolish()
-        : arg === 'RESUME'
-        ? resume()
-        : pause()
-      : build(Array.isArray(arg) ? { roots: arg } : arg);
+    typeof arg !== 'string'
+      ? build(Array.isArray(arg) ? { roots: arg } : arg)
+      : arg === 'DEMOLISH'
+      ? demolish()
+      : arg === 'PAUSE'
+      ? pause()
+      : resume();
 
   if (result.isErr) throw new Error(result.error);
 
