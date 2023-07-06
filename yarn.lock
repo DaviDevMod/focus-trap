@@ -2897,7 +2897,7 @@ __metadata:
     eslint: 8.44.0
     eslint-config-next: 13.4.8
     next: 13.4.8
-    postcss: 8.4.24
+    postcss: 8.4.25
     prettier: 3.0.0
     prettier-plugin-tailwindcss: 0.3.0
     react: 18.2.0
@@ -6436,18 +6436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.24":
-  version: 8.4.24
-  resolution: "postcss@npm:8.4.24"
-  dependencies:
-    nanoid: ^3.3.6
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.23, postcss@npm:^8.4.24":
+"postcss@npm:8.4.25, postcss@npm:^8.4.23, postcss@npm:^8.4.24":
   version: 8.4.25
   resolution: "postcss@npm:8.4.25"
   dependencies:
