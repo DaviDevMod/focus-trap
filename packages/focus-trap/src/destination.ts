@@ -20,7 +20,7 @@ const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) 
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
   firstOrLast: FirstOrLast,
-  tabIndexFilter: (tabIndex: number) => boolean
+  tabIndexFilter = (_tabIndex: number) => true
 ) => {
   return candidatesInRoot(root)[firstOrLast === 'FIRST' ? 'find' : 'findLast'](
     (el) => tabIndexFilter(getTabIndex(el)) && isTabbable(el)
@@ -28,7 +28,7 @@ const firstOrLastGenericTabbableInRoot = (
 };
 
 const topOrBottomTabbableInRoot = (root: Focusable, topOrBottom: 'TOP' | 'BOTTOM' = 'TOP') => {
-  return firstOrLastGenericTabbableInRoot(root, topOrBottom === 'TOP' ? 'FIRST' : 'LAST', (tabIndex) => tabIndex >= 0);
+  return firstOrLastGenericTabbableInRoot(root, topOrBottom === 'TOP' ? 'FIRST' : 'LAST');
 };
 
 const firstOrLastZeroTabbableInRoot = (root: Focusable, firstOrLast: FirstOrLast = 'FIRST') => {
