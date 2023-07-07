@@ -19,27 +19,27 @@ const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) 
 
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
-  whichOne: FirstOrLast,
-  validateTabIndex: (tabIndex: number) => boolean
+  firstOrLast: FirstOrLast,
+  tabIndexFilter: (tabIndex: number) => boolean
 ) => {
-  return candidatesInRoot(root)[whichOne === 'FIRST' ? 'find' : 'findLast'](
-    (el) => validateTabIndex(getTabIndex(el)) && isTabbable(el)
+  return candidatesInRoot(root)[firstOrLast === 'FIRST' ? 'find' : 'findLast'](
+    (el) => tabIndexFilter(getTabIndex(el)) && isTabbable(el)
   );
 };
 
-const topOrBottomTabbableInRoot = (root: Focusable, whichOne: 'TOP' | 'BOTTOM' = 'TOP') => {
-  return firstOrLastGenericTabbableInRoot(root, whichOne === 'TOP' ? 'FIRST' : 'LAST', (tabIndex) => tabIndex >= 0);
+const topOrBottomTabbableInRoot = (root: Focusable, topOrBottom: 'TOP' | 'BOTTOM' = 'TOP') => {
+  return firstOrLastGenericTabbableInRoot(root, topOrBottom === 'TOP' ? 'FIRST' : 'LAST', (tabIndex) => tabIndex >= 0);
 };
 
-const firstOrLastZeroTabbableInRoot = (root: Focusable, whichOne: FirstOrLast = 'FIRST') => {
-  return firstOrLastGenericTabbableInRoot(root, whichOne, (tabIndex) => tabIndex === 0);
+const firstOrLastZeroTabbableInRoot = (root: Focusable, firstOrLast: FirstOrLast = 'FIRST') => {
+  return firstOrLastGenericTabbableInRoot(root, firstOrLast, (tabIndex) => tabIndex === 0);
 };
 
-export const firstOrLastZeroTabbable = (roots: Focusable[], whichOne: FirstOrLast = 'FIRST') => {
+export const firstOrLastZeroTabbable = (roots: Focusable[], firstOrLast: FirstOrLast = 'FIRST') => {
   let firstOrLastZero = undefined as Focusable | undefined;
 
-  roots[whichOne === 'FIRST' ? 'find' : 'findLast'](
-    (root) => (firstOrLastZero = firstOrLastZeroTabbableInRoot(root, whichOne))
+  roots[firstOrLast === 'FIRST' ? 'find' : 'findLast'](
+    (root) => (firstOrLastZero = firstOrLastZeroTabbableInRoot(root, firstOrLast))
   );
 
   return firstOrLastZero;
@@ -59,7 +59,7 @@ const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction:
   let originIndex = undefined as number | undefined;
 
   if (origin) {
-    originIndex = positives.findIndex((el) => el === origin);
+    originIndex = positives.indexOf(origin);
 
     if (originIndex === -1) {
       positives.push(origin);
