@@ -30,7 +30,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
   // Discussion https://github.com/DaviDevMod/focus-trap/issues/148
   const destination = isFocusable(target)
-    ? getDestination(config.roots, target, shiftKey ? 'BACKWARD' : 'FORWARD')
+    ? getDestination(config.roots, target, !shiftKey)
     : /* istanbul ignore next */
       getInitialFocus(config);
 

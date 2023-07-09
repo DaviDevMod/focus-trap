@@ -6,10 +6,6 @@ import { isTabbable, getTabIndex } from 'tabbable';
 import type { Focusable, NormalisedTrapConfig } from './state.js';
 import { isFocusable } from './normalise.js';
 
-type Direction = 'FORWARD' | 'BACKWARD';
-
-type FirstOrLast = 'FIRST' | 'LAST';
-
 const candidateSelector =
   'a[href], button, input, select, textarea, [tabindex], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), details>summary:first-of-type, details';
 
@@ -19,28 +15,26 @@ const modulo = (number: number, modulo: number) => ((number % modulo) + modulo) 
 
 const firstOrLastGenericTabbableInRoot = (
   root: Focusable,
-  firstOrLast: FirstOrLast,
+  isFirst: boolean,
   tabIndexFilter = (_tabIndex: number) => true
 ) => {
-  return candidatesInRoot(root)[firstOrLast === 'FIRST' ? 'find' : 'findLast'](
+  return candidatesInRoot(root)[isFirst ? 'find' : 'findLast'](
     (el) => tabIndexFilter(getTabIndex(el)) && isTabbable(el)
   );
 };
 
-const topOrBottomTabbableInRoot = (root: Focusable, topOrBottom: 'TOP' | 'BOTTOM' = 'TOP') => {
-  return firstOrLastGenericTabbableInRoot(root, topOrBottom === 'TOP' ? 'FIRST' : 'LAST');
+const topOrBottomTabbableInRoot = (root: Focusable, isTop = true) => {
+  return firstOrLastGenericTabbableInRoot(root, isTop);
 };
 
-const firstOrLastZeroTabbableInRoot = (root: Focusable, firstOrLast: FirstOrLast = 'FIRST') => {
-  return firstOrLastGenericTabbableInRoot(root, firstOrLast, (tabIndex) => tabIndex === 0);
+const firstOrLastZeroTabbableInRoot = (root: Focusable, isFirst = true) => {
+  return firstOrLastGenericTabbableInRoot(root, isFirst, (tabIndex) => tabIndex === 0);
 };
 
-export const firstOrLastZeroTabbable = (roots: Focusable[], firstOrLast: FirstOrLast = 'FIRST') => {
+export const firstOrLastZeroTabbable = (roots: Focusable[], isFirst = true) => {
   let firstOrLastZero = undefined as Focusable | undefined;
 
-  roots[firstOrLast === 'FIRST' ? 'find' : 'findLast'](
-    (root) => (firstOrLastZero = firstOrLastZeroTabbableInRoot(root, firstOrLast))
-  );
+  roots[isFirst ? 'find' : 'findLast']((root) => (firstOrLastZero = firstOrLastZeroTabbableInRoot(root, isFirst)));
 
   return firstOrLastZero;
 };
@@ -53,7 +47,7 @@ const positiveTabbables = (roots: Focusable[]) => {
 };
 
 // Note: this function only searches in a given direction without wrapping around to check preceding elements.
-const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction: Direction = 'FORWARD') => {
+const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, isForward = true) => {
   const positives = positiveTabbables(roots);
 
   let originIndex = undefined as number | undefined;
@@ -70,7 +64,7 @@ const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction:
     }
   }
 
-  return direction === 'FORWARD'
+  return isForward
     ? positives.slice(originIndex == null ? originIndex : originIndex + 1).find((el) => isTabbable(el))
     : positives.slice(0, originIndex).findLast((el) => isTabbable(el));
 };
@@ -78,42 +72,39 @@ const nextPositiveTabbable = (roots: Focusable[], origin?: Focusable, direction:
 const nextTopOrBottomTabbable = (
   roots: Focusable[],
   origin: Focusable,
-  direction: Direction
+  isForward: boolean
 ): Result<Focusable | Unit, string> => {
   const originRootIndex = roots.findIndex((root) => root.contains(origin));
 
-  // Root from which to start searching for a destination.
-  let destinationRootIndex = originRootIndex;
+  // Index of the root in which to search for the next top/bottom tabbable element.
+  let topOrBottomRootIndex = originRootIndex;
 
   // If `origin` belongs to the trap.
   if (originRootIndex >= 0) {
     // Note that since looking for top/bottom tabbables makes sense only if `origin` has a negative tab index
     // (and therefore is untabbable), `origin` can't itself be a top nor a bottom tabbable.
 
-    const bottom = topOrBottomTabbableInRoot(roots[originRootIndex], 'BOTTOM');
+    const bottom = topOrBottomTabbableInRoot(roots[originRootIndex], false);
 
     // If the root containing `origin` doesn't have any tabbable elements,
     // or if `origin` follows `bottom`, start the search from the succeeding root;
-    if (!bottom || bottom.compareDocumentPosition(origin) & 4) destinationRootIndex++;
+    if (!bottom || bottom.compareDocumentPosition(origin) & 4) topOrBottomRootIndex++;
     // else if `origin` is in between `top` and `bottom`, leave the focus handling up to the browser.
     else if (topOrBottomTabbableInRoot(roots[originRootIndex])!.compareDocumentPosition(origin) & 4) return ok();
   } else {
     // If `origin` doesn't belong to the trap, start the search from the first root that follows it.
-    destinationRootIndex = roots.findIndex((root) => origin.compareDocumentPosition(root) & 4);
+    topOrBottomRootIndex = roots.findIndex((root) => origin.compareDocumentPosition(root) & 4);
 
-    if (destinationRootIndex === -1) destinationRootIndex = roots.length;
+    if (topOrBottomRootIndex === -1) topOrBottomRootIndex = roots.length;
   }
 
   // In any case, if tabbing 'BACKWARD' start the search from the preceding root.
-  if (direction === 'BACKWARD') destinationRootIndex--;
+  if (!isForward) topOrBottomRootIndex--;
 
-  for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += direction === 'FORWARD' ? 1 : -1) {
-    const topOrBottom = topOrBottomTabbableInRoot(
-      roots[modulo(i, roots.length)],
-      direction === 'FORWARD' ? 'TOP' : 'BOTTOM'
-    );
+  for (; Math.abs(topOrBottomRootIndex) < 2 * roots.length; topOrBottomRootIndex += isForward ? 1 : -1) {
+    const destination = topOrBottomTabbableInRoot(roots[modulo(topOrBottomRootIndex, roots.length)], isForward);
 
-    if (topOrBottom) return ok(topOrBottom);
+    if (destination) return ok(destination);
   }
 
   return err('There are no tabbable elements in the focus trap.');
@@ -122,15 +113,15 @@ const nextTopOrBottomTabbable = (
 const nextFirstOrLastZeroOrPositiveTabbable = (
   roots: Focusable[],
   origin: Focusable,
-  direction: Direction
+  isForward: boolean
 ): Result<Focusable | Unit, string> => {
   const originRootIndex = roots.findIndex((root) => root.contains(origin));
 
   let destinationRootIndex = originRootIndex;
 
   if (originRootIndex >= 0) {
-    if (direction === 'FORWARD') {
-      if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex], 'LAST')) destinationRootIndex++;
+    if (isForward) {
+      if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex], false)) destinationRootIndex++;
       else return ok();
     } else if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex])) {
       destinationRootIndex--;
@@ -142,26 +133,25 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
 
     if (destinationRootIndex === -1) destinationRootIndex = roots.length;
 
-    if (direction === 'BACKWARD') destinationRootIndex--;
+    if (!isForward) destinationRootIndex--;
   }
 
-  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'LAST' : 'FIRST');
+  // Need to consider "last" when tabbing "forward" and vice versa.
+  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, !isForward);
 
-  for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += direction === 'FORWARD' ? 1 : -1) {
-    if (
-      !firstOrLastZeroInTrap ||
-      origin === firstOrLastZeroInTrap ||
-      origin.compareDocumentPosition(firstOrLastZeroInTrap) & (direction === 'FORWARD' ? 2 : 4)
-    ) {
-      const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, direction);
+  const meetingPositives =
+    !firstOrLastZeroInTrap ||
+    origin === firstOrLastZeroInTrap ||
+    origin.compareDocumentPosition(firstOrLastZeroInTrap) & (isForward ? 2 : 4);
+
+  for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += isForward ? 1 : -1) {
+    if (meetingPositives) {
+      const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, isForward);
 
       if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
     }
 
-    const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(
-      roots[modulo(i, roots.length)],
-      direction === 'FORWARD' ? 'FIRST' : 'LAST'
-    );
+    const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(roots[modulo(i, roots.length)], isForward);
 
     if (firstOrLastZeroInDestinationRoot) return ok(firstOrLastZeroInDestinationRoot);
   }
@@ -172,18 +162,18 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
 const nextPositiveOrVeryFirstOrVeryLastTabbable = (
   roots: Focusable[],
   origin?: Focusable,
-  direction: Direction = 'FORWARD'
+  isForward = true
 ): Result<Focusable, string> => {
-  const nextPositive = nextPositiveTabbable(roots, origin, direction);
+  const nextPositive = nextPositiveTabbable(roots, origin, isForward);
 
   if (nextPositive) return ok(nextPositive);
 
-  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, direction === 'FORWARD' ? 'FIRST' : 'LAST');
+  const firstOrLastZeroInTrap = firstOrLastZeroTabbable(roots, isForward);
 
   if (firstOrLastZeroInTrap) return ok(firstOrLastZeroInTrap);
 
   if (origin) {
-    const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, direction);
+    const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, isForward);
 
     if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
   }
@@ -195,15 +185,15 @@ const nextPositiveOrVeryFirstOrVeryLastTabbable = (
 export const getDestination = (
   roots: Focusable[],
   origin: Focusable,
-  direction: Direction
+  isForward: boolean
 ): Result<Focusable | Unit, string> => {
   const originTabIndex = getTabIndex(origin);
 
-  if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, direction);
+  if (originTabIndex < 0) return nextTopOrBottomTabbable(roots, origin, isForward);
 
-  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, direction);
+  if (originTabIndex === 0) return nextFirstOrLastZeroOrPositiveTabbable(roots, origin, isForward);
 
-  return nextPositiveOrVeryFirstOrVeryLastTabbable(roots, origin, direction);
+  return nextPositiveOrVeryFirstOrVeryLastTabbable(roots, origin, isForward);
 };
 
 export const getInitialFocus = ({ roots, initialFocus }: NormalisedTrapConfig): Result<Focusable | Unit, string> => {
