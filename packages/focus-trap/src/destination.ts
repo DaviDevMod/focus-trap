@@ -117,23 +117,23 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
 ): Result<Focusable | Unit, string> => {
   const originRootIndex = roots.findIndex((root) => root.contains(origin));
 
-  let destinationRootIndex = originRootIndex;
+  let firstOrLastRootIndex = originRootIndex;
 
   if (originRootIndex >= 0) {
     if (isForward) {
-      if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex], false)) destinationRootIndex++;
+      if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex], false)) firstOrLastRootIndex++;
       else return ok();
     } else if (origin === firstOrLastZeroTabbableInRoot(roots[originRootIndex])) {
-      destinationRootIndex--;
+      firstOrLastRootIndex--;
     } else {
       return ok();
     }
   } else {
-    destinationRootIndex = roots.findIndex((root) => origin.compareDocumentPosition(root) & 4);
+    firstOrLastRootIndex = roots.findIndex((root) => origin.compareDocumentPosition(root) & 4);
 
-    if (destinationRootIndex === -1) destinationRootIndex = roots.length;
+    if (firstOrLastRootIndex === -1) firstOrLastRootIndex = roots.length;
 
-    if (!isForward) destinationRootIndex--;
+    if (!isForward) firstOrLastRootIndex--;
   }
 
   // Need to consider "last" when tabbing "forward" and vice versa.
@@ -144,16 +144,16 @@ const nextFirstOrLastZeroOrPositiveTabbable = (
     origin === firstOrLastZeroInTrap ||
     origin.compareDocumentPosition(firstOrLastZeroInTrap) & (isForward ? 2 : 4);
 
-  for (let i = destinationRootIndex; Math.abs(i) < 2 * roots.length; i += isForward ? 1 : -1) {
+  for (let i = firstOrLastRootIndex; Math.abs(i) < 2 * roots.length; i += isForward ? 1 : -1) {
     if (meetingPositives) {
-      const firstOrLastPositiveInTrap = nextPositiveTabbable(roots, undefined, isForward);
+      const destination = nextPositiveTabbable(roots, undefined, isForward);
 
-      if (firstOrLastPositiveInTrap) return ok(firstOrLastPositiveInTrap);
+      if (destination) return ok(destination);
     }
 
-    const firstOrLastZeroInDestinationRoot = firstOrLastZeroTabbableInRoot(roots[modulo(i, roots.length)], isForward);
+    const destination = firstOrLastZeroTabbableInRoot(roots[modulo(i, roots.length)], isForward);
 
-    if (firstOrLastZeroInDestinationRoot) return ok(firstOrLastZeroInDestinationRoot);
+    if (destination) return ok(destination);
   }
 
   return err('There are no tabbable elements in the focus trap.');
