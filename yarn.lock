@@ -1258,7 +1258,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:3.59.4, @rushstack/node-core-library@npm:^3.59.4":
+"@rushstack/node-core-library@npm:3.59.4":
   version: 3.59.4
   resolution: "@rushstack/node-core-library@npm:3.59.4"
   dependencies:
@@ -6941,7 +6941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:*, rollup@npm:^3.25.2":
+"rollup@npm:^3.25.2":
   version: 3.26.2
   resolution: "rollup@npm:3.26.2"
   dependencies:
@@ -8185,30 +8185,26 @@ __metadata:
   linkType: hard
 
 "vite-plugin-dts@npm:^3.0.3":
-  version: 3.2.0
-  resolution: "vite-plugin-dts@npm:3.2.0"
+  version: 3.3.0
+  resolution: "vite-plugin-dts@npm:3.3.0"
   dependencies:
     "@microsoft/api-extractor": ^7.36.0
     "@rollup/pluginutils": ^5.0.2
-    "@rushstack/node-core-library": ^3.59.4
     "@vue/language-core": ^1.8.1
     debug: ^4.3.4
     kolorist: ^1.8.0
-    rollup: "*"
-    vite: "*"
     vue-tsc: ^1.8.1
   peerDependencies:
     typescript: "*"
-  dependenciesMeta:
-    rollup:
-      optional: true
+    vite: "*"
+  peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 4c1bd0d0792112202d589c28b16e7543c276747142eb49dfd6e34f8ff16f6cb0b81be79f8e0554c71e8a4ed785ef2df148e25fa8a4fe4e6aa62808baeb1fda41
+  checksum: 4edb8687022df371d1a309828456967cd038badb25f382e1387c25deb99fc7eaf907b90ab7b674c428f2e4916a4788e6e7a9a64515a7ee0691f13a28613b09ac
   languageName: node
   linkType: hard
 
-"vite@npm:*, vite@npm:^4.3.9":
+"vite@npm:^4.3.9":
   version: 4.4.4
   resolution: "vite@npm:4.4.4"
   dependencies:
