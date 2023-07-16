@@ -652,7 +652,7 @@ __metadata:
     tabbable: ^6.2.0
     true-myth: ^6.2.0
     ts-node: 10.9.1
-    type-fest: ^3.12.0
+    type-fest: ^4.0.0
     typescript: 5.1.6
     vite: ^4.3.9
     vite-plugin-dts: ^3.0.3
@@ -2905,7 +2905,7 @@ __metadata:
     rimraf: ^5.0.1
     tailwindcss: 3.3.3
     tailwindcss-debug-screens: 2.2.1
-    type-fest: ^3.12.0
+    type-fest: ^4.0.0
     typescript: 5.1.6
   languageName: unknown
   linkType: soft
@@ -3771,7 +3771,7 @@ __metadata:
     rimraf: 5.0.1
     true-myth: ^6.2.0
     turbo: ^1.10.7
-    type-fest: ^3.12.0
+    type-fest: ^4.0.0
     typescript: 5.1.6
   languageName: unknown
   linkType: soft
@@ -8003,10 +8003,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.12.0":
-  version: 3.13.1
-  resolution: "type-fest@npm:3.13.1"
-  checksum: c06b0901d54391dc46de3802375f5579868949d71f93b425ce564e19a428a0d411ae8d8cb0e300d330071d86152c3ea86e744c3f2860a42a79585b6ec2fdae8e
+"type-fest@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "type-fest@npm:4.0.0"
+  checksum: 716f32ac341b1cf35bf08cc5cc6a11822436333966d3f4d94758112f45829efa3efb643ebc74a53e514e68a1bddab144d0153d654e072b41ba9bd98bcf841d75
   languageName: node
   linkType: hard
 
