@@ -43,7 +43,7 @@
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@types/node": "20.4.5",
     "concurrently": "8.2.0",
-    "cypress": "12.17.2",
+    "cypress": "12.17.3",
     "cypress-real-events": "1.9.1",
     "eslint": "8.46.0",
     "istanbul-lib-coverage": "3.2.0",
