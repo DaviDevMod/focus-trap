@@ -641,7 +641,7 @@ __metadata:
     "@types/node": 20.4.6
     concurrently: 8.2.0
     cypress: 12.17.3
-    cypress-real-events: 1.9.1
+    cypress-real-events: 1.10.0
     eslint: 8.46.0
     istanbul-lib-coverage: 3.2.0
     nyc: ^15.1.0
@@ -2672,14 +2672,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:1.9.1":
-  version: 1.9.1
-  resolution: "cypress-real-events@npm:1.9.1"
+"cypress-real-events@npm:1.10.0":
+  version: 1.10.0
+  resolution: "cypress-real-events@npm:1.10.0"
   dependencies:
     prettier: ^3.0.0
   peerDependencies:
     cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x
-  checksum: 24d73fce163d3c738bacf8f06755aefbdb1d8d8d13b23afabb0c9de3d0a2d8f5a85da43e5fd0febcc96f08fb0fa527aa3028297b6b65149259c81810ee3ae433
+  checksum: 917cf0458f0073452462bd1468ea3e9d77382c0c7991555314cec9e1e39a82668f8185e6fbbd4e0303576ddf3cbe410fcdb1dec8237f68e1ef18d05e41d7d537
   languageName: node
   linkType: hard
 
