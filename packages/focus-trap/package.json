@@ -48,7 +48,7 @@
     "eslint": "8.46.0",
     "istanbul-lib-coverage": "3.2.0",
     "nyc": "^15.1.0",
-    "prettier": "3.0.0",
+    "prettier": "3.0.1",
     "replace": "^1.2.2",
     "rimraf": "5.0.1",
     "source-map-support": "0.5.21",
