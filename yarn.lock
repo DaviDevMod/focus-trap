@@ -632,7 +632,7 @@ __metadata:
     cypress: 13.3.3
     cypress-real-events: 1.10.3
     eslint: 8.52.0
-    istanbul-lib-coverage: 3.2.0
+    istanbul-lib-coverage: 3.2.2
     nyc: ^15.1.0
     prettier: 3.0.3
     replace: ^1.2.2
@@ -4802,10 +4802,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"istanbul-lib-coverage@npm:3.2.0, istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "istanbul-lib-coverage@npm:3.2.0"
-  checksum: a2a545033b9d56da04a8571ed05c8120bf10e9bce01cf8633a3a2b0d1d83dff4ac4fe78d6d5673c27fc29b7f21a41d75f83a36be09f82a61c367b56aa73c1ff9
+"istanbul-lib-coverage@npm:3.2.2, istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.0":
+  version: 3.2.2
+  resolution: "istanbul-lib-coverage@npm:3.2.2"
+  checksum: 2367407a8d13982d8f7a859a35e7f8dd5d8f75aae4bb5484ede3a9ea1b426dc245aff28b976a2af48ee759fdd9be374ce2bd2669b644f31e76c5f46a2e29a831
   languageName: node
   linkType: hard
 

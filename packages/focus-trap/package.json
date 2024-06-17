@@ -46,7 +46,7 @@
     "cypress": "13.3.3",
     "cypress-real-events": "1.10.3",
     "eslint": "8.52.0",
-    "istanbul-lib-coverage": "3.2.0",
+    "istanbul-lib-coverage": "3.2.2",
     "nyc": "^15.1.0",
     "prettier": "3.0.3",
     "replace": "^1.2.2",
