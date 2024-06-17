@@ -546,17 +546,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.3":
-  version: 3.12.3
-  resolution: "@cypress/code-coverage@npm:3.12.3"
+"@cypress/code-coverage@npm:3.12.39":
+  version: 3.12.39
+  resolution: "@cypress/code-coverage@npm:3.12.39"
   dependencies:
     "@cypress/webpack-preprocessor": ^6.0.0
     chalk: 4.1.2
-    dayjs: 1.11.9
+    dayjs: 1.11.10
     debug: 4.3.4
     execa: 4.1.0
-    globby: 11.0.4
-    istanbul-lib-coverage: 3.0.0
+    globby: 11.1.0
+    istanbul-lib-coverage: ^3.0.0
     js-yaml: 4.1.0
     nyc: 15.1.0
   peerDependencies:
@@ -565,7 +565,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: ed8654248c8538219e5afcb61d5b8dd8832e37037986c755245974ce5937447e5d3831f9d05aacc34c7f98b1b366532ea3f71e5d84278eced8767f831873fa9b
+  checksum: 535475f7430fbe1c3d2a63c82713707a9359ab5b3757103e84f159ac796cdb7f729df2baa16aeabbfd7dfec00ea1007ae86658de3f60c0445361b7d66a3b8463
   languageName: node
   linkType: hard
 
@@ -625,7 +625,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.12.3
+    "@cypress/code-coverage": 3.12.39
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.8.9
     concurrently: 8.2.2
@@ -2773,10 +2773,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.9, dayjs@npm:^1.10.4":
-  version: 1.11.9
-  resolution: "dayjs@npm:1.11.9"
-  checksum: a4844d83dc87f921348bb9b1b93af851c51e6f71fa259604809cfe1b49d1230e6b0212dab44d1cb01994c096ad3a77ea1cf18fa55154da6efcc9d3610526ac38
+"dayjs@npm:1.11.10, dayjs@npm:^1.10.4":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
   languageName: node
   linkType: hard
 
@@ -3625,7 +3625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.1.1, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0":
   version: 3.3.1
   resolution: "fast-glob@npm:3.3.1"
   dependencies:
@@ -4158,21 +4158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:11.0.4":
-  version: 11.0.4
-  resolution: "globby@npm:11.0.4"
-  dependencies:
-    array-union: "npm:^2.1.0"
-    dir-glob: "npm:^3.0.1"
-    fast-glob: "npm:^3.1.1"
-    ignore: "npm:^5.1.4"
-    merge2: "npm:^1.3.0"
-    slash: "npm:^3.0.0"
-  checksum: d3e02d5e459e02ffa578b45f040381c33e3c0538ed99b958f0809230c423337999867d7b0dbf752ce93c46157d3bbf154d3fff988a93ccaeb627df8e1841775b
-  languageName: node
-  linkType: hard
-
-"globby@npm:^11.0.0, globby@npm:^11.1.0":
+"globby@npm:11.1.0, globby@npm:^11.0.0, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
   dependencies:
@@ -4432,7 +4418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.1.4, ignore@npm:^5.2.0":
+"ignore@npm:^5.2.0":
   version: 5.2.1
   resolution: "ignore@npm:5.2.1"
   checksum: 7251d00cba49fe88c4f3565fadeb4aa726ba38294a9a79ffed542edc47bafd989d4b2ccf65700c5b1b26a1e91dfc7218fb23017937c79216025d5caeec0ee9d5
@@ -4793,13 +4779,6 @@ __metadata:
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
   checksum: 1eb2fe63a729f7bdd8a559ab552c69055f4f48eb5c2f03724430587c6f450783c8f1cd936c1c952d0a927925180fcc892ebd5b174236cf1065d4bd5bdb37e963
-  languageName: node
-  linkType: hard
-
-"istanbul-lib-coverage@npm:3.0.0":
-  version: 3.0.0
-  resolution: "istanbul-lib-coverage@npm:3.0.0"
-  checksum: ea57c2428858cc5d1e04c0e28b362950bbf6415e8ba1235cdd6f4c8dc3c57cb950db8b4e8a4f7e33abc240aa1eb816dba0d7285bdb8b70bda22bb2082492dbfc
   languageName: node
   linkType: hard
 
