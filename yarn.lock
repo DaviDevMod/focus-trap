@@ -865,11 +865,11 @@ __metadata:
   linkType: hard
 
 "@headlessui/tailwindcss@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@headlessui/tailwindcss@npm:0.2.0"
+  version: 0.2.1
+  resolution: "@headlessui/tailwindcss@npm:0.2.1"
   peerDependencies:
     tailwindcss: ^3.0
-  checksum: a75799102729d74c080ec3d604fd4d9dea86eda08424062a7f6d6870033f372cd389898147662b5eb1a039fb4e19a1132f52d9da7b5c1c6077b28ed98bf9e8f1
+  checksum: 5cc9b30af4348dd133ce7fe6b7bdae9bec681796480cbd91cc8d20cd8a0841169ac741ec04ded4235c520199d79775ab439489d869b2785cc58a94002193a6f0
   languageName: node
   linkType: hard
 
