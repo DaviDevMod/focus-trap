@@ -28,7 +28,7 @@
     "lint-staged": "15.0.2",
     "prettier": "3.0.3",
     "rimraf": "5.0.7",
-    "true-myth": "^6.2.0",
+    "true-myth": "^7.0.0",
     "turbo": "^1.10.7",
     "type-fest": "^4.0.0",
     "typescript": "5.2.2"
