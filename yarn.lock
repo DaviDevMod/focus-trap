@@ -646,7 +646,7 @@ __metadata:
     rimraf: 5.0.7
     source-map-support: 0.5.21
     tabbable: ^6.2.0
-    true-myth: ^6.2.0
+    true-myth: ^7.0.0
     ts-node: 10.9.2
     type-fest: ^4.0.0
     typescript: 5.2.2
@@ -3805,7 +3805,7 @@ __metadata:
     lint-staged: 15.0.2
     prettier: 3.0.3
     rimraf: 5.0.7
-    true-myth: ^6.2.0
+    true-myth: ^7.0.0
     turbo: ^1.10.7
     type-fest: ^4.0.0
     typescript: 5.2.2
@@ -7759,10 +7759,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"true-myth@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "true-myth@npm:6.2.0"
-  checksum: 9ce12fdd21818017b7bf8c87112905a1870f97a7569a1f7cc8404a3ac8547993d4ceade790c4ceb887f60ca56d0a53cdf33de0502a76ada81c443c88422b76fa
+"true-myth@npm:^7.0.0":
+  version: 7.3.0
+  resolution: "true-myth@npm:7.3.0"
+  checksum: 8068bc6f665165924b647e668346c5cb61a0e9ff4f5862f766aa9b89931987e5953cf93948c468f39be706ebbd1013fe758319c4441f116dba94a7cc062901a8
   languageName: node
   linkType: hard
 
