@@ -52,7 +52,7 @@
     "replace": "^1.2.2",
     "rimraf": "5.0.7",
     "source-map-support": "0.5.21",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "type-fest": "^4.0.0",
     "typescript": "5.2.2",
     "vite": "^4.3.9",
