@@ -642,7 +642,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.8.9
     concurrently: 8.2.2
-    cypress: 13.3.3
+    cypress: 13.11.0
     cypress-real-events: 1.10.3
     eslint: 8.52.0
     istanbul-lib-coverage: 3.2.2
@@ -1424,13 +1424,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.17.5":
-  version: 18.17.15
-  resolution: "@types/node@npm:18.17.15"
-  checksum: eed11d4398ccdb999a4c65658ee75de621a4ad57aece48ed2fb8803b1e2711fadf58d8aefbdb0a447d69cf3cba602ca32fe0fc92077575950a796e1dc13baa0f
-  languageName: node
-  linkType: hard
-
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -2166,7 +2159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.6.0":
+"buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -2712,19 +2705,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.3.3":
-  version: 13.3.3
-  resolution: "cypress@npm:13.3.3"
+"cypress@npm:13.11.0":
+  version: 13.11.0
+  resolution: "cypress@npm:13.11.0"
   dependencies:
     "@cypress/request": ^3.0.0
     "@cypress/xvfb": ^1.2.4
-    "@types/node": ^18.17.5
     "@types/sinonjs__fake-timers": 8.1.1
     "@types/sizzle": ^2.3.2
     arch: ^2.2.0
     blob-util: ^2.0.2
     bluebird: ^3.7.2
-    buffer: ^5.6.0
+    buffer: ^5.7.1
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
@@ -2742,7 +2734,7 @@ __metadata:
     figures: ^3.2.0
     fs-extra: ^9.1.0
     getos: ^3.2.1
-    is-ci: ^3.0.0
+    is-ci: ^3.0.1
     is-installed-globally: ~0.4.0
     lazy-ass: ^1.6.0
     listr2: ^3.8.3
@@ -2761,7 +2753,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 9b0a229060b4a0785c09a18d104e2af80a18dc5fd59d9b357272c9a12ef5c5cec8ff89265756576d704858466c091b29b0fce7fe217038de30e39e2e4e876687
+  checksum: 67f61152b03955a3649d1ddcfb940271614e47d02c2e9f6f08e85158199c2d22a805ab8fcbccb985f8e1ef628b099b24487e8aebde181ed82abf039890abc6fc
   languageName: node
   linkType: hard
 
@@ -3795,7 +3787,7 @@ __metadata:
     "@changesets/changelog-github": 0.5.0
     "@changesets/cli": 2.27.5
     concurrently: 8.2.2
-    cypress: 13.3.3
+    cypress: 13.11.0
     eslint: 8.52.0
     husky: 8.0.3
     is-ci: 3.0.1
@@ -4571,7 +4563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-ci@npm:3.0.1, is-ci@npm:^3.0.0":
+"is-ci@npm:3.0.1, is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
