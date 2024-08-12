@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "tabbable": "^6.2.0",
-    "true-myth": "^6.2.0"
+    "true-myth": "^8.0.0"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.45",
