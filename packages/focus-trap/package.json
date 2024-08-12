@@ -45,7 +45,7 @@
     "concurrently": "8.2.2",
     "cypress": "13.13.2",
     "cypress-real-events": "1.13.0",
-    "eslint": "8.57.0",
+    "eslint": "9.9.0",
     "istanbul-lib-coverage": "3.2.2",
     "nyc": "^15.1.0",
     "prettier": "3.3.3",
