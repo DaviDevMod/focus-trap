@@ -41,7 +41,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "3.13.6",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
-    "@types/node": "20.14.15",
+    "@types/node": "20.17.6",
     "concurrently": "8.2.2",
     "cypress": "13.13.2",
     "cypress-real-events": "1.13.0",
