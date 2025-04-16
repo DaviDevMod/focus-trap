@@ -18,7 +18,7 @@
     "update:repo": "yarn set version latest && yarn deps:update && yarn install && yarn dedupe --strategy highest"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.5.0",
+    "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.27.9",
     "concurrently": "8.2.2",
     "cypress": "13.15.2",
