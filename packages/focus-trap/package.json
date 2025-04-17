@@ -39,7 +39,7 @@
     "true-myth": "^6.2.0"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.13.6",
+    "@cypress/code-coverage": "3.14.0",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@types/node": "20.17.30",
     "concurrently": "8.2.2",
