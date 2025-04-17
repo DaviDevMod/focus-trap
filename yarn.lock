@@ -597,7 +597,7 @@ __metadata:
     eslint: 9.24.0
     istanbul-lib-coverage: 3.2.2
     nyc: ^17.0.0
-    prettier: 3.3.3
+    prettier: 3.5.3
     replace: ^1.2.2
     rimraf: 6.0.1
     source-map-support: 0.5.21
@@ -2985,7 +2985,7 @@ __metadata:
     eslint-config-next: 13.4.8
     next: 13.4.8
     postcss: 8.5.3
-    prettier: 3.3.3
+    prettier: 3.5.3
     prettier-plugin-tailwindcss: 0.6.11
     react: 18.2.0
     react-dom: 18.2.0
@@ -3867,7 +3867,7 @@ __metadata:
     husky: 9.1.7
     is-ci: 3.0.1
     lint-staged: 15.5.1
-    prettier: 3.3.3
+    prettier: 3.5.3
     rimraf: 6.0.1
     true-myth: ^6.2.0
     turbo: ^1.10.7
@@ -6593,12 +6593,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.3":
-  version: 3.3.3
-  resolution: "prettier@npm:3.3.3"
+"prettier@npm:3.5.3":
+  version: 3.5.3
+  resolution: "prettier@npm:3.5.3"
   bin:
     prettier: bin/prettier.cjs
-  checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
+  checksum: 61e97bb8e71a95d8f9c71f1fd5229c9aaa9d1e184dedb12399f76aa802fb6fdc8954ecac9df25a7f82ee7311cf8ddbd06baf5507388fc98e5b44036cc6a88a1b
   languageName: node
   linkType: hard
 
