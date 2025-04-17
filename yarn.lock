@@ -901,17 +901,18 @@ __metadata:
   linkType: hard
 
 "@headlessui/react@npm:^2.0.0":
-  version: 2.2.1
-  resolution: "@headlessui/react@npm:2.2.1"
+  version: 2.2.2
+  resolution: "@headlessui/react@npm:2.2.2"
   dependencies:
     "@floating-ui/react": ^0.26.16
     "@react-aria/focus": ^3.17.1
     "@react-aria/interactions": ^3.21.3
-    "@tanstack/react-virtual": ^3.11.1
+    "@tanstack/react-virtual": ^3.13.6
+    use-sync-external-store: ^1.5.0
   peerDependencies:
     react: ^18 || ^19 || ^19.0.0-rc
     react-dom: ^18 || ^19 || ^19.0.0-rc
-  checksum: 78129cb54465bcdc09fe7f0f09bbf7b85581d28ad04116795970582314eda455e8e8e5c2b06a764555adfd2c2385d15f6f96935716b911b427855f6a471be826
+  checksum: 64826349a032b970c1072c3da9001217a81a96410d83cdbab3c2fa1b5a414ba73cf3d1e35e9e9d5aa4a2e50e8d0837b1133ce59389c14150d3f42f423e6fd3ff
   languageName: node
   linkType: hard
 
@@ -1466,7 +1467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:^3.11.1":
+"@tanstack/react-virtual@npm:^3.13.6":
   version: 3.13.6
   resolution: "@tanstack/react-virtual@npm:3.13.6"
   dependencies:
@@ -8069,6 +8070,15 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "use-sync-external-store@npm:1.5.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 5e639c9273200adb6985b512c96a3a02c458bc8ca1a72e91da9cdc6426144fc6538dca434b0f99b28fb1baabc82e1c383ba7900b25ccdcb43758fb058dc66c34
   languageName: node
   linkType: hard
 
