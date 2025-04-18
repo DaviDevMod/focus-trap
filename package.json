@@ -1,6 +1,6 @@
 {
   "name": "focus-trap-monorepo",
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.8.7",
   "private": true,
   "workspaces": [
     "apps/*",
