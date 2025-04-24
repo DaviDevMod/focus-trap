@@ -100,7 +100,7 @@ jobs:
         working-directory: packages/focus-trap
 
       - name: Upload coverage for focus-trap
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           # The token is not required for public repos, but it makes the workflow
           # less likely to randomly fail because of a limit in codecov CI capabilities.
