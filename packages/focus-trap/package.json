@@ -42,7 +42,7 @@
     "@cypress/code-coverage": "3.14.6",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@types/node": "20.19.12",
-    "concurrently": "9.2.0",
+    "concurrently": "9.2.1",
     "cypress": "14.5.4",
     "cypress-real-events": "1.14.0",
     "eslint": "9.33.0",
