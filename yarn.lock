@@ -238,9 +238,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/apply-release-plan@npm:^7.0.12":
-  version: 7.0.12
-  resolution: "@changesets/apply-release-plan@npm:7.0.12"
+"@changesets/apply-release-plan@npm:^7.0.13":
+  version: 7.0.13
+  resolution: "@changesets/apply-release-plan@npm:7.0.13"
   dependencies:
     "@changesets/config": ^3.1.1
     "@changesets/get-version-range-type": ^0.4.0
@@ -255,7 +255,7 @@ __metadata:
     prettier: ^2.7.1
     resolve-from: ^5.0.0
     semver: ^7.5.3
-  checksum: 4f5ea17eb62edb8d5a05c834759a26a6d88f9d33165429c062991348ed9fc0a35c4287e226a942cea4957ebcad6ced81bff5e78bb1431f9485c7b230750233a6
+  checksum: 444bfe20753f0c1fb5dcbd85ec1e126111919030243d09b85254ab4de5f648808f0eaf6d231e67e75535cb83ecf07942dcc1fa2fca0f61b7aad3228bbcf4164d
   languageName: node
   linkType: hard
 
@@ -293,11 +293,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/cli@npm:2.29.6":
-  version: 2.29.6
-  resolution: "@changesets/cli@npm:2.29.6"
+"@changesets/cli@npm:2.29.7":
+  version: 2.29.7
+  resolution: "@changesets/cli@npm:2.29.7"
   dependencies:
-    "@changesets/apply-release-plan": ^7.0.12
+    "@changesets/apply-release-plan": ^7.0.13
     "@changesets/assemble-release-plan": ^6.0.9
     "@changesets/changelog-git": ^0.2.1
     "@changesets/config": ^3.1.1
@@ -327,7 +327,7 @@ __metadata:
     term-size: ^2.1.0
   bin:
     changeset: bin.js
-  checksum: 5fdf2b3744b6126b2f551b9707494fff107a208c6b8ee8c555a8667e8bf36e396dbad53f67e2d7a4339c5a07d04b6a23000823240c187af6334b71f763d04e87
+  checksum: a7ab7e05768f7d0948a391e7598003ad1876d511a4c820d6dda7767a4479db2146f19c402a1d55170dde7625cdd77dabd83323100909c882c530992a66e9c2d5
   languageName: node
   linkType: hard
 
@@ -3908,7 +3908,7 @@ __metadata:
   resolution: "focus-trap-monorepo@workspace:."
   dependencies:
     "@changesets/changelog-github": 0.5.1
-    "@changesets/cli": 2.29.6
+    "@changesets/cli": 2.29.7
     concurrently: 9.2.1
     cypress: 14.5.4
     eslint: 9.34.0
