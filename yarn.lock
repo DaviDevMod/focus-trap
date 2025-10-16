@@ -3017,7 +3017,7 @@ __metadata:
     next: 13.4.8
     postcss: 8.5.6
     prettier: 3.6.2
-    prettier-plugin-tailwindcss: 0.6.14
+    prettier-plugin-tailwindcss: 0.7.0
     react: 18.2.0
     react-dom: 18.2.0
     rimraf: ^6.0.0
@@ -6608,9 +6608,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:0.6.14":
-  version: 0.6.14
-  resolution: "prettier-plugin-tailwindcss@npm:0.6.14"
+"prettier-plugin-tailwindcss@npm:0.7.0":
+  version: 0.7.0
+  resolution: "prettier-plugin-tailwindcss@npm:0.7.0"
   peerDependencies:
     "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-hermes": "*"
@@ -6622,14 +6622,12 @@ __metadata:
     prettier: ^3.0
     prettier-plugin-astro: "*"
     prettier-plugin-css-order: "*"
-    prettier-plugin-import-sort: "*"
     prettier-plugin-jsdoc: "*"
     prettier-plugin-marko: "*"
     prettier-plugin-multiline-arrays: "*"
     prettier-plugin-organize-attributes: "*"
     prettier-plugin-organize-imports: "*"
     prettier-plugin-sort-imports: "*"
-    prettier-plugin-style-order: "*"
     prettier-plugin-svelte: "*"
   peerDependenciesMeta:
     "@ianvs/prettier-plugin-sort-imports":
@@ -6650,8 +6648,6 @@ __metadata:
       optional: true
     prettier-plugin-css-order:
       optional: true
-    prettier-plugin-import-sort:
-      optional: true
     prettier-plugin-jsdoc:
       optional: true
     prettier-plugin-marko:
@@ -6664,11 +6660,9 @@ __metadata:
       optional: true
     prettier-plugin-sort-imports:
       optional: true
-    prettier-plugin-style-order:
-      optional: true
     prettier-plugin-svelte:
       optional: true
-  checksum: 2196fbebe8a4192fa142aa4ff3d72e6b0c88b79bfce70e3416e67b22a4cbc2c9cf403f0fcc4b3e97a349ff82efa3b0c49547d5fe4ad9ade624fe506e02b51661
+  checksum: 21356685217cf9b661a57fec5f3989357afb4717b05b990f5c5041fb9ee4dcfde78e288e0cc888b11f97c0b652e24e66c68d5e122f1e7e413f84d67cdf8bf8b2
   languageName: node
   linkType: hard
 
