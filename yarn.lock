@@ -502,26 +502,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.14.6":
-  version: 3.14.6
-  resolution: "@cypress/code-coverage@npm:3.14.6"
+"@cypress/code-coverage@npm:3.14.7":
+  version: 3.14.7
+  resolution: "@cypress/code-coverage@npm:3.14.7"
   dependencies:
     "@cypress/webpack-preprocessor": ^6.0.0
     chalk: 4.1.2
     dayjs: 1.11.13
     debug: 4.4.0
     execa: 4.1.0
-    globby: 11.1.0
     istanbul-lib-coverage: ^3.0.0
     js-yaml: 4.1.0
     nyc: 15.1.0
+    tinyglobby: ^0.2.14
   peerDependencies:
     "@babel/core": ^7.0.1
     "@babel/preset-env": ^7.0.0
     babel-loader: ^8.3 || ^9 || ^10
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 8f46684a1f4035a4005479fb257203709f76ec24020861a9504e0603f653d1000783a336101357bb8f24324cffea33a04a2257ede31d12f82cb5e75d45794d6b
+  checksum: a30abe18a37276c61f669eda9aad531e58b20cea1a293768771a04945ca4d589911039adf5824c98d591571cf72748eff812e8c8edfd7003500a903d8df0fd7e
   languageName: node
   linkType: hard
 
@@ -581,7 +581,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@davidevmod/focus-trap@workspace:packages/focus-trap"
   dependencies:
-    "@cypress/code-coverage": 3.14.6
+    "@cypress/code-coverage": 3.14.7
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.19.13
     concurrently: 9.2.1
@@ -3819,6 +3819,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fdir@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "fdir@npm:6.5.0"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: bd537daa9d3cd53887eed35efa0eab2dbb1ca408790e10e024120e7a36c6e9ae2b33710cb8381e35def01bc9c1d7eaba746f886338413e68ff6ebaee07b9a6e8
+  languageName: node
+  linkType: hard
+
 "figures@npm:^3.2.0":
   version: 3.2.0
   resolution: "figures@npm:3.2.0"
@@ -4324,7 +4336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:11.1.0, globby@npm:^11.0.0, globby@npm:^11.1.0":
+"globby@npm:^11.0.0, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
   dependencies:
@@ -6444,6 +6456,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 6817fb74eb745a71445debe1029768de55fd59a42b75606f478ee1d0dc1aa6e78b711d041a7c9d5550e042642029b7f373dc1a43b224c4b7f12d23436735dba0
+  languageName: node
+  linkType: hard
+
 "pidtree@npm:^0.6.0":
   version: 0.6.0
   resolution: "pidtree@npm:0.6.0"
@@ -7750,6 +7769,16 @@ __metadata:
     globalyzer: "npm:0.1.0"
     globrex: "npm:^0.1.2"
   checksum: aea5801eb6663ddf77ebb74900b8f8bd9dfcfc9b6a1cc8018cb7421590c00bf446109ff45e4b64a98e6c95ddb1255a337a5d488fb6311930e2a95334151ec9c6
+  languageName: node
+  linkType: hard
+
+"tinyglobby@npm:^0.2.14":
+  version: 0.2.15
+  resolution: "tinyglobby@npm:0.2.15"
+  dependencies:
+    fdir: ^6.5.0
+    picomatch: ^4.0.3
+  checksum: 0e33b8babff966c6ab86e9b825a350a6a98a63700fa0bb7ae6cf36a7770a508892383adc272f7f9d17aaf46a9d622b455e775b9949a3f951eaaf5dfb26331d44
   languageName: node
   linkType: hard
 
