@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/yarn-nm-install
 
       - name: ♻️ Restore packages cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/.cache
@@ -58,7 +58,7 @@ jobs:
 
       # see https://github.com/vercel/next.js/pull/27362
       - name: ♻️ Restore nextjs build demo from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/apps/demo/.next/cache
