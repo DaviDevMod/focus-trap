@@ -585,7 +585,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@types/node": 20.19.25
     concurrently: 9.2.1
-    cypress: 15.5.0
+    cypress: 15.7.0
     cypress-real-events: 1.15.0
     eslint: 9.38.0
     istanbul-lib-coverage: 3.2.2
@@ -2810,9 +2810,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:15.5.0":
-  version: 15.5.0
-  resolution: "cypress@npm:15.5.0"
+"cypress@npm:15.7.0":
+  version: 15.7.0
+  resolution: "cypress@npm:15.7.0"
   dependencies:
     "@cypress/request": ^3.0.9
     "@cypress/xvfb": ^1.2.4
@@ -2850,7 +2850,6 @@ __metadata:
     process: ^0.11.10
     proxy-from-env: 1.0.0
     request-progress: ^3.0.0
-    semver: ^7.7.1
     supports-color: ^8.1.1
     systeminformation: 5.27.7
     tmp: ~0.2.4
@@ -2859,7 +2858,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 1754c4a37661809a66786d5b0378bbc6f9e422eecfd3f88a192db369a0a8d45944aae5ea8a6f0ed73554635c6820498ab34304ab08869964694dec9842e8cb44
+  checksum: 611f950dce56e270ada35e5957d9a6f8d4ba91d3653b0f099126c481f9e3fdebb1ffed493241d30e908570ba8661f873e5dd487ef2af94ab837a017503e53c7b
   languageName: node
   linkType: hard
 
@@ -3901,7 +3900,7 @@ __metadata:
     "@changesets/changelog-github": 0.5.1
     "@changesets/cli": 2.29.7
     concurrently: 9.2.1
-    cypress: 15.5.0
+    cypress: 15.7.0
     eslint: 9.38.0
     husky: 9.1.7
     is-ci: 4.1.0
@@ -7028,7 +7027,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.7.1":
+"semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.3, semver@npm:^7.5.4":
   version: 7.7.1
   resolution: "semver@npm:7.7.1"
   bin:
