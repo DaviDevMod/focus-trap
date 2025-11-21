@@ -27,7 +27,7 @@
     "is-ci": "4.1.0",
     "lint-staged": "16.2.7",
     "prettier": "3.6.2",
-    "rimraf": "6.0.1",
+    "rimraf": "6.1.2",
     "true-myth": "^6.2.0",
     "turbo": "^1.10.7",
     "type-fest": "^4.0.0",
