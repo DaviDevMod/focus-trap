@@ -282,14 +282,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@changesets/changelog-github@npm:0.5.1"
+"@changesets/changelog-github@npm:0.5.2":
+  version: 0.5.2
+  resolution: "@changesets/changelog-github@npm:0.5.2"
   dependencies:
-    "@changesets/get-github-info": ^0.6.0
+    "@changesets/get-github-info": ^0.7.0
     "@changesets/types": ^6.1.0
     dotenv: ^8.1.0
-  checksum: 7a538fcbde5a13522d856e3b29c27685922b25c1ab268a735eaddf078045a97f2ebc3ba54a610147266acaadcab939f5c01a172e38bb9adf0128fea886a50fce
+  checksum: 94692af0978fbb8f2d15f9095cf65170fc26225892a46fb47ee5227fdf2a78011ab083871d2242f59438f3a495c6196d0534176879a23ce074a99f8478bac557
   languageName: node
   linkType: hard
 
@@ -367,13 +367,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@changesets/get-github-info@npm:0.6.0"
+"@changesets/get-github-info@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@changesets/get-github-info@npm:0.7.0"
   dependencies:
     dataloader: ^1.4.0
     node-fetch: ^2.5.0
-  checksum: 753173bda536aa79cb0502f59ce13889b23ae8463d04893d43ff22966818060837d9db4052b6cbfbd95dfb242fbfd38890a38c56832948e83bf358a47812b708
+  checksum: 7c4f37851262fcbb59475381a843f02945f55395503ff7b86b58bab2f5fd78e3234f3ee0c89648e0391d01b1c683e383fb74b73bd53f6501692c06c2bb74517c
   languageName: node
   linkType: hard
 
@@ -3913,7 +3913,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "focus-trap-monorepo@workspace:."
   dependencies:
-    "@changesets/changelog-github": 0.5.1
+    "@changesets/changelog-github": 0.5.2
     "@changesets/cli": 2.29.7
     concurrently: 9.2.1
     cypress: 15.7.0
