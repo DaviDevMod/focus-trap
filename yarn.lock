@@ -238,11 +238,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/apply-release-plan@npm:^7.0.13":
-  version: 7.0.13
-  resolution: "@changesets/apply-release-plan@npm:7.0.13"
+"@changesets/apply-release-plan@npm:^7.0.14":
+  version: 7.0.14
+  resolution: "@changesets/apply-release-plan@npm:7.0.14"
   dependencies:
-    "@changesets/config": ^3.1.1
+    "@changesets/config": ^3.1.2
     "@changesets/get-version-range-type": ^0.4.0
     "@changesets/git": ^3.0.4
     "@changesets/should-skip-package": ^0.1.2
@@ -255,7 +255,7 @@ __metadata:
     prettier: ^2.7.1
     resolve-from: ^5.0.0
     semver: ^7.5.3
-  checksum: 444bfe20753f0c1fb5dcbd85ec1e126111919030243d09b85254ab4de5f648808f0eaf6d231e67e75535cb83ecf07942dcc1fa2fca0f61b7aad3228bbcf4164d
+  checksum: 93d72d2b4654a83c9763705d580ba42c436b57dd16e2afe39d7feb56dde6d552d70424c5e3080e01f9ccb09620b1dfdcafd0fb8b8415221ad4a67f1946f467d4
   languageName: node
   linkType: hard
 
@@ -293,25 +293,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/cli@npm:2.29.7":
-  version: 2.29.7
-  resolution: "@changesets/cli@npm:2.29.7"
+"@changesets/cli@npm:2.29.8":
+  version: 2.29.8
+  resolution: "@changesets/cli@npm:2.29.8"
   dependencies:
-    "@changesets/apply-release-plan": ^7.0.13
+    "@changesets/apply-release-plan": ^7.0.14
     "@changesets/assemble-release-plan": ^6.0.9
     "@changesets/changelog-git": ^0.2.1
-    "@changesets/config": ^3.1.1
+    "@changesets/config": ^3.1.2
     "@changesets/errors": ^0.2.0
     "@changesets/get-dependents-graph": ^2.1.3
-    "@changesets/get-release-plan": ^4.0.13
+    "@changesets/get-release-plan": ^4.0.14
     "@changesets/git": ^3.0.4
     "@changesets/logger": ^0.1.1
     "@changesets/pre": ^2.0.2
-    "@changesets/read": ^0.6.5
+    "@changesets/read": ^0.6.6
     "@changesets/should-skip-package": ^0.1.2
     "@changesets/types": ^6.1.0
     "@changesets/write": ^0.4.0
-    "@inquirer/external-editor": ^1.0.0
+    "@inquirer/external-editor": ^1.0.2
     "@manypkg/get-packages": ^1.1.3
     ansi-colors: ^4.1.3
     ci-info: ^3.7.0
@@ -327,13 +327,13 @@ __metadata:
     term-size: ^2.1.0
   bin:
     changeset: bin.js
-  checksum: a7ab7e05768f7d0948a391e7598003ad1876d511a4c820d6dda7767a4479db2146f19c402a1d55170dde7625cdd77dabd83323100909c882c530992a66e9c2d5
+  checksum: e06acdbaed78f8d700bf0866fe707f17418781235ceba1600fb560392987f12d7b569f3fa9b966cab202a8903d28555ed8c3de49bac0423957fa9327da43bc7c
   languageName: node
   linkType: hard
 
-"@changesets/config@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@changesets/config@npm:3.1.1"
+"@changesets/config@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@changesets/config@npm:3.1.2"
   dependencies:
     "@changesets/errors": ^0.2.0
     "@changesets/get-dependents-graph": ^2.1.3
@@ -342,7 +342,7 @@ __metadata:
     "@manypkg/get-packages": ^1.1.3
     fs-extra: ^7.0.1
     micromatch: ^4.0.8
-  checksum: ba1f0c369497ae67ed2bdc3f1b3ee51b22bf71d7829dbf0fc8b150b6b198efc61065f3f7bd01625e633a05d6465e4394552db33685b5480fc232d07cf9a422b4
+  checksum: 9f58213acce4232259283bfab0695f878057162366ff6177e840b5836be2ccbe073e5c8046d1573e65793e5b9189efac58dae44f0696ff502b6e23bf13c6d583
   languageName: node
   linkType: hard
 
@@ -377,17 +377,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-release-plan@npm:^4.0.13":
-  version: 4.0.13
-  resolution: "@changesets/get-release-plan@npm:4.0.13"
+"@changesets/get-release-plan@npm:^4.0.14":
+  version: 4.0.14
+  resolution: "@changesets/get-release-plan@npm:4.0.14"
   dependencies:
     "@changesets/assemble-release-plan": ^6.0.9
-    "@changesets/config": ^3.1.1
+    "@changesets/config": ^3.1.2
     "@changesets/pre": ^2.0.2
-    "@changesets/read": ^0.6.5
+    "@changesets/read": ^0.6.6
     "@changesets/types": ^6.1.0
     "@manypkg/get-packages": ^1.1.3
-  checksum: d44cf571ce253ec7940c5373d81010f999fd92926fd1f65e8699a569887b233e56d06c462efa7973d88ec6426987317e4c7e5034f2f44c709cd9fa8f26863242
+  checksum: 359784240379859c5596ee30a59b98687258a8153ef784aa047ba5c638d8d753befd8a0e45634645e535b446b934e15c4c514db8c2c3814f7ddee832a5cfebd6
   languageName: node
   linkType: hard
 
@@ -420,13 +420,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/parse@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@changesets/parse@npm:0.4.1"
+"@changesets/parse@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@changesets/parse@npm:0.4.2"
   dependencies:
     "@changesets/types": ^6.1.0
-    js-yaml: ^3.13.1
-  checksum: e45c0c818266294c57147e51dad34e145c1e7ae2edf1607a7944eb165ac6fa75dd9080bd3bb02b08f56bd49b33a6ed1bb6d77e452692b89562a604ce9d9218e4
+    js-yaml: ^4.1.1
+  checksum: 1f25968f918da7d930dffd3c5eb3bf24718061a2e73836dcd73b02832621457016760340fb65a0e19a0a8e539b1ab499d643dbe7f240e25a4d88a2ad49414801
   languageName: node
   linkType: hard
 
@@ -442,18 +442,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/read@npm:^0.6.5":
-  version: 0.6.5
-  resolution: "@changesets/read@npm:0.6.5"
+"@changesets/read@npm:^0.6.6":
+  version: 0.6.6
+  resolution: "@changesets/read@npm:0.6.6"
   dependencies:
     "@changesets/git": ^3.0.4
     "@changesets/logger": ^0.1.1
-    "@changesets/parse": ^0.4.1
+    "@changesets/parse": ^0.4.2
     "@changesets/types": ^6.1.0
     fs-extra: ^7.0.1
     p-filter: ^2.1.0
     picocolors: ^1.1.0
-  checksum: d8a56e4f6e46ba0520b91520992e87bc2ce4c0c8f5d3c62e532b433f1be9da2e0ca22c6ccf59acdff5550b4dae6060b620b6e64657d4e9ed244e45792dacc506
+  checksum: 5d3d9ad9cfd68a7d95b9adcb6bc4f3c01b97b678ce92a3914635b55be5bcaa09e6a99ead7ab57ea07ff5165e96fd5b999947f727405e61b8144e7221968df2d2
   languageName: node
   linkType: hard
 
@@ -977,18 +977,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/external-editor@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "@inquirer/external-editor@npm:1.0.1"
+"@inquirer/external-editor@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@inquirer/external-editor@npm:1.0.3"
   dependencies:
-    chardet: ^2.1.0
-    iconv-lite: ^0.6.3
+    chardet: ^2.1.1
+    iconv-lite: ^0.7.0
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 6f1753d31db52c7088bad5209c7fccb23c3803d248be0e9f3f49ec5972628782c690086defc19fe8d740b2c45f67a746884ef41df9299a526f297813babd8281
+  checksum: 9bd7a05247a00408c194648c74046d8a212df1e6b9fe0879b945ebfc35c2524e995e43f7ecd83f14d0bd4e31f985d18819efc31c27810e2c2b838ded7261431f
   languageName: node
   linkType: hard
 
@@ -2468,10 +2468,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chardet@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "chardet@npm:2.1.0"
-  checksum: 491f8ea54ed3693598c98cb8785531b94b71e59b04ef8dd2b6fea4947f785297fb5c2ae1109adca6fdd453a8a7181cfc4a85c07dbbe96a156d0908f4188a6b9a
+"chardet@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "chardet@npm:2.1.1"
+  checksum: 4e3dba2699018b79bb90a9562b5e5be27fcaab55250c12fa72f026b859fb24846396c346968546c14efc69b9f23aca3ef2b9816775012d08a4686ce3c362415c
   languageName: node
   linkType: hard
 
@@ -3914,7 +3914,7 @@ __metadata:
   resolution: "focus-trap-monorepo@workspace:."
   dependencies:
     "@changesets/changelog-github": 0.5.2
-    "@changesets/cli": 2.29.7
+    "@changesets/cli": 2.29.8
     concurrently: 9.2.1
     cypress: 15.7.0
     eslint: 9.39.1
@@ -4527,12 +4527,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
+"iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
     safer-buffer: "npm:>= 2.1.2 < 3.0.0"
   checksum: 3f60d47a5c8fc3313317edfd29a00a692cc87a19cac0159e2ce711d0ebc9019064108323b5e493625e25594f11c6236647d8e256fbe7a58f4a3b33b89e6d30bf
+  languageName: node
+  linkType: hard
+
+"iconv-lite@npm:^0.7.0":
+  version: 0.7.1
+  resolution: "iconv-lite@npm:0.7.1"
+  dependencies:
+    safer-buffer: ">= 2.1.2 < 3.0.0"
+  checksum: d20ea696c8bace51b8d4e1c7e7eda3e51a2ffd72fde2caa54aeff6dc6bc23a60db0b111db750c84b397874a04923c5b0f1cc8beb400349fb1a83a797a85ec082
   languageName: node
   linkType: hard
 
@@ -5011,7 +5020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
+"js-yaml@npm:4.1.0":
   version: 4.1.0
   resolution: "js-yaml@npm:4.1.0"
   dependencies:
@@ -5031,6 +5040,17 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: bef146085f472d44dee30ec34e5cf36bf89164f5d585435a3d3da89e52622dff0b188a580e4ad091c3341889e14cb88cac6e4deb16dc5b1e9623bb0601fc255c
+  languageName: node
+  linkType: hard
+
+"js-yaml@npm:^4.1.0, js-yaml@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "js-yaml@npm:4.1.1"
+  dependencies:
+    argparse: ^2.0.1
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: ea2339c6930fe048ec31b007b3c90be2714ab3e7defcc2c27ebf30c74fd940358f29070b4345af0019ef151875bf3bc3f8644bea1bab0372652b5044813ac02d
   languageName: node
   linkType: hard
 
