@@ -583,7 +583,7 @@ __metadata:
   dependencies:
     "@cypress/code-coverage": 3.14.7
     "@istanbuljs/nyc-config-typescript": 1.0.2
-    "@types/node": 20.19.25
+    "@types/node": 20.19.26
     concurrently: 9.2.1
     cypress: 15.7.0
     cypress-real-events: 1.15.0
@@ -1599,12 +1599,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.19.25":
-  version: 20.19.25
-  resolution: "@types/node@npm:20.19.25"
+"@types/node@npm:*, @types/node@npm:20.19.26":
+  version: 20.19.26
+  resolution: "@types/node@npm:20.19.26"
   dependencies:
     undici-types: ~6.21.0
-  checksum: f6d854995d173e9d85c7ffd4ca69ee645daac8c0a150fc3ed2f7b21dfc7ece34e44063213c4e9b11de56fe7de807d59c1bb717fca8af8590b40bfb9d9068e629
+  checksum: 2d7f44cade660e688177c120fdf458da1efb1bd78ad1e3096da44a7047141847543a4421b534a18161df10988a34a304b9dceebcc87123502f16533eb187799c
   languageName: node
   linkType: hard
 
@@ -3018,7 +3018,7 @@ __metadata:
     "@headlessui/react": ^2.0.0
     "@headlessui/tailwindcss": ^0.2.0
     "@heroicons/react": ^2.0.18
-    "@types/node": 20.19.25
+    "@types/node": 20.19.26
     "@types/react": 18.2.33
     "@types/react-dom": 18.2.14
     autoprefixer: 10.4.22
