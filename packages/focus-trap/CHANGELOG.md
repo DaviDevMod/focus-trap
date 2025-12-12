@@ -1,5 +1,25 @@
 # @davidevmod/focus-trap
 
+## 5.0.0
+
+### Major Changes
+
+- [`eed2b37`](https://github.com/DaviDevMod/focus-trap/commit/eed2b37e4a93b8b12855c356a70466bc62ce97a6) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Add "tabbable" as dependency
+
+  Since v6.2.0, "tabbable" adds `getTabIndex()` to its API, reducing the friction to being adopted as a dependency.
+  https://github.com/focus-trap/tabbable/releases/tag/v6.2.0
+
+  Now the only code that has to be duplicated is the `candidateSelector` used to query elements that are likely to be tabbable.
+
+  Using "tabbable" marginally affects the performance of the library (in a bad way) and significantly increases (doubles up) the final bundle size.
+  However I believe that it's best to have it as a dependency; at least for the long term maintainability of the library, but also to give the right credits to the people who wrote the code "@davidevmod/focus-trap" is using.
+
+### Minor Changes
+
+- [`8fae02f`](https://github.com/DaviDevMod/focus-trap/commit/8fae02fd4d25b639109c6682fab8f14d77865d13) Thanks [@DaviDevMod](https://github.com/DaviDevMod)! - Add support for the [`inert`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) attribute
+
+  This was a direct consequence of using "tabbable" as a dependency (see: eed2b37).
+
 ## 4.0.1
 
 ### Patch Changes
