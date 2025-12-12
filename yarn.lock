@@ -3027,7 +3027,7 @@ __metadata:
     next: 13.4.8
     postcss: 8.5.6
     prettier: 3.6.2
-    prettier-plugin-tailwindcss: 0.7.1
+    prettier-plugin-tailwindcss: 0.7.2
     react: 18.2.0
     react-dom: 18.2.0
     rimraf: ^6.0.0
@@ -6530,9 +6530,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:0.7.1":
-  version: 0.7.1
-  resolution: "prettier-plugin-tailwindcss@npm:0.7.1"
+"prettier-plugin-tailwindcss@npm:0.7.2":
+  version: 0.7.2
+  resolution: "prettier-plugin-tailwindcss@npm:0.7.2"
   peerDependencies:
     "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-hermes": "*"
@@ -6584,7 +6584,7 @@ __metadata:
       optional: true
     prettier-plugin-svelte:
       optional: true
-  checksum: a87fcfa4eb115daa50e9cdf8ceb3e214477480bca02233fb6a3d31fd1756700de652e650b347944aa29415853d300308b6fbafb49ba2f06e777750be499d105b
+  checksum: d93acdad895b7c59c68f4251a13640cd0b35fb906e7eb711c9880f773d220633508109fbf4cb63aee00cad0060648dafe647c5ff267197036c053be4b6ba3ed5
   languageName: node
   linkType: hard
 
