@@ -583,7 +583,7 @@ __metadata:
   dependencies:
     "@cypress/code-coverage": 3.14.7
     "@istanbuljs/nyc-config-typescript": 1.0.2
-    "@types/node": 20.19.26
+    "@types/node": 24.10.4
     concurrently: 9.2.1
     cypress: 15.7.1
     cypress-real-events: 1.15.0
@@ -1599,12 +1599,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.19.26":
-  version: 20.19.26
-  resolution: "@types/node@npm:20.19.26"
+"@types/node@npm:*, @types/node@npm:24.10.4":
+  version: 24.10.4
+  resolution: "@types/node@npm:24.10.4"
   dependencies:
-    undici-types: ~6.21.0
-  checksum: 2d7f44cade660e688177c120fdf458da1efb1bd78ad1e3096da44a7047141847543a4421b534a18161df10988a34a304b9dceebcc87123502f16533eb187799c
+    undici-types: ~7.16.0
+  checksum: 27db63085116aec2b92a36405ab4e8838eafd361ab05ba043e16b70e58b41572145b8078244aa5fd51b1f80076b2e7422c848c31c5a0df0dc5e20053e24720d3
   languageName: node
   linkType: hard
 
@@ -3018,7 +3018,7 @@ __metadata:
     "@headlessui/react": ^2.0.0
     "@headlessui/tailwindcss": ^0.2.0
     "@heroicons/react": ^2.0.18
-    "@types/node": 20.19.26
+    "@types/node": 24.10.4
     "@types/react": 18.2.33
     "@types/react-dom": 18.2.14
     autoprefixer: 10.4.22
@@ -8041,10 +8041,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 46331c7d6016bf85b3e8f20c159d62f5ae471aba1eb3dc52fff35a0259d58dcc7d592d4cc4f00c5f9243fa738a11cfa48bd20203040d4a9e6bc25e807fab7ab3
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 1ef68fc6c5bad200c8b6f17de8e5bc5cfdcadc164ba8d7208cd087cfa8583d922d8316a7fd76c9a658c22b4123d3ff847429185094484fbc65377d695c905857
   languageName: node
   linkType: hard
 
