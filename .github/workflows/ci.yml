@@ -31,7 +31,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           # Fetch all git history so that yarn workspaces --since can compare with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
